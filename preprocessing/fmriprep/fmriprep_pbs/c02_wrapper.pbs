@@ -1,0 +1,14 @@
+#!/bin/bash -l
+#PBS -N fmriprep_cnfrm
+#PBS -q default
+#PBS -l nodes=1:ppn=8
+#PBS -l walltime=20:00:00
+#PBS -m bea
+
+cd $PBS_O_WORKDIR
+
+SUBJECT=${1}
+
+CMD="/dartfs-hpc/rc/lab/C/CANlab/labdata/data/conformity.01/scripts/fmriprep/fmriprep_conform.sh ${SUBJECT}"
+echo "Running $CMD"
+exec $CMD
