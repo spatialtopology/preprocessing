@@ -1,0 +1,434 @@
+------------------------- Prologue ----------------------------
+         Started: Sat Apr 17 12:31:12 EDT 2021
+          Job ID: 200908[15].pearl.hpcc.dartmouth.edu
+         User ID: f0042x1
+        Group ID: rc-users
+        Job Name: mriqc_spacetop-15
+ Resources Req'd: nodes=1:ppn=16,walltime=12:00:00,mem=10gb,vmem=20gb,neednodes=1:ppn=16
+      Queue Name: default
+    Account Name: DBIC
+------------------------- Prologue ----------------------------
+
+2021-04-17 12:31:28,939 mriqc:IMPORTANT 
+    Running MRIQC version 0.14.2:
+      * BIDS dataset path: /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/spacetop_heudiconv.
+      * Output folder: /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc.
+      * Analysis levels: participant.
+    
+210417-12:31:34,968 nipype.workflow INFO:
+	 Building anatomical MRIQC workflow, datasets list: ['sub-0015/ses-01/anat/sub-0015_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz']
+2021-04-17 12:31:34,968 nipype.workflow:INFO Building anatomical MRIQC workflow, datasets list: ['sub-0015/ses-01/anat/sub-0015_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz']
+210417-12:31:37,651 nipype.workflow INFO:
+	 Generated workflow graph: /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/anatMRIQCT1w/graph.png (graph2use=hierarchical, simple_form=True).
+2021-04-17 12:31:37,651 nipype.workflow:INFO Generated workflow graph: /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/anatMRIQCT1w/graph.png (graph2use=hierarchical, simple_form=True).
+210417-12:31:38,553 nipype.workflow INFO:
+	 Generated workflow graph: /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/funcMRIQC/graph.png (graph2use=hierarchical, simple_form=True).
+2021-04-17 12:31:38,553 nipype.workflow:INFO Generated workflow graph: /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/funcMRIQC/graph.png (graph2use=hierarchical, simple_form=True).
+2021-04-17 12:31:42,704 mriqc:WARNING Anonymized quality metrics will be submitted to MRIQC's metrics repository. Use --no-sub to disable submission.
+210417-12:31:54,395 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.anatMRIQCT1w.segmentation" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/anatMRIQCT1w/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..anat..sub-0015_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz/segmentation".
+210417-12:31:54,441 nipype.workflow INFO:
+	 [Node] Running "segmentation" ("nipype.interfaces.fsl.preprocess.FAST"), a CommandLine Interface with command:
+fast -t 1 -o segment -g -S 1 /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/anatMRIQCT1w/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..anat..sub-0015_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz/segmentation/sub-0015_ses-01_acq-MPRAGEXp3X08mm_T1w_conformed_calc.nii.gz
+210417-12:32:12,797 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.ICA" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-social_acq-apXmb8_run-06_bold.nii.gz/ICA".
+210417-12:32:12,958 nipype.workflow INFO:
+	 [Node] Running "ICA" ("niworkflows.interfaces.segmentation.MELODICRPT"), a CommandLine Interface with command:
+melodic -i /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-social_acq-apXmb8_run-06_bold.nii.gz/sanitize/sub-0015_ses-01_task-social_acq-apXmb8_run-06_bold_valid.nii.gz --nobet --nomask --no_mm -o /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-social_acq-apXmb8_run-06_bold.nii.gz/ICA
+210417-12:32:16,295 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.UploadMetrics" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-social_acq-apXmb8_run-06_bold.nii.gz/UploadMetrics".
+2021-04-17 12:32:16,295 nipype.workflow:INFO [Node] Setting-up "workflow_enumerator.funcMRIQC.UploadMetrics" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-social_acq-apXmb8_run-06_bold.nii.gz/UploadMetrics".
+210417-12:32:16,297 nipype.workflow INFO:
+	 [Node] Outdated cache found for "workflow_enumerator.funcMRIQC.UploadMetrics".
+2021-04-17 12:32:16,297 nipype.workflow:INFO [Node] Outdated cache found for "workflow_enumerator.funcMRIQC.UploadMetrics".
+210417-12:32:16,402 nipype.workflow INFO:
+	 [Node] Running "UploadMetrics" ("mriqc.interfaces.webapi.UploadIQMs")
+2021-04-17 12:32:16,402 nipype.workflow:INFO [Node] Running "UploadMetrics" ("mriqc.interfaces.webapi.UploadIQMs")
+210417-12:32:16,409 nipype.interface INFO:
+	 MRIQC Web API: submitting to <https://mriqc.nimh.nih.gov:443/api/v1/bold>
+2021-04-17 12:32:16,409 nipype.interface:INFO MRIQC Web API: submitting to <https://mriqc.nimh.nih.gov:443/api/v1/bold>
+210417-12:32:16,671 nipype.interface WARNING:
+	 QC metrics upload failed to create an ID for the record uplOADED. rEsponse from server follows: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+2021-04-17 12:32:16,671 nipype.interface:WARNING QC metrics upload failed to create an ID for the record uplOADED. rEsponse from server follows: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+210417-12:32:16,672 nipype.interface WARNING:
+	 QC metrics failed to upload. Status 422: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+2021-04-17 12:32:16,672 nipype.interface:WARNING QC metrics failed to upload. Status 422: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+210417-12:32:16,757 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.UploadMetrics".
+2021-04-17 12:32:16,757 nipype.workflow:INFO [Node] Finished "workflow_enumerator.funcMRIQC.UploadMetrics".
+210417-12:39:58,508 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.anatMRIQCT1w.segmentation".
+210417-12:40:00,975 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.anatMRIQCT1w.ComputeIQMs.harmonize" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/anatMRIQCT1w/ComputeIQMs/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..anat..sub-0015_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz/harmonize".
+2021-04-17 12:40:00,975 nipype.workflow:INFO [Node] Setting-up "workflow_enumerator.anatMRIQCT1w.ComputeIQMs.harmonize" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/anatMRIQCT1w/ComputeIQMs/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..anat..sub-0015_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz/harmonize".
+210417-12:40:01,56 nipype.workflow INFO:
+	 [Node] Running "harmonize" ("mriqc.interfaces.anatomical.Harmonize")
+2021-04-17 12:40:01,056 nipype.workflow:INFO [Node] Running "harmonize" ("mriqc.interfaces.anatomical.Harmonize")
+210417-12:40:07,183 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.ICA" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-social_acq-apXmb8_run-05_bold.nii.gz/ICA".
+210417-12:40:07,333 nipype.workflow INFO:
+	 [Node] Running "ICA" ("niworkflows.interfaces.segmentation.MELODICRPT"), a CommandLine Interface with command:
+melodic -i /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-social_acq-apXmb8_run-05_bold.nii.gz/sanitize/sub-0015_ses-01_task-social_acq-apXmb8_run-05_bold_valid.nii.gz --nobet --nomask --no_mm -o /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-social_acq-apXmb8_run-05_bold.nii.gz/ICA
+210417-12:40:09,19 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.UploadMetrics" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-social_acq-apXmb8_run-05_bold.nii.gz/UploadMetrics".
+2021-04-17 12:40:09,019 nipype.workflow:INFO [Node] Setting-up "workflow_enumerator.funcMRIQC.UploadMetrics" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-social_acq-apXmb8_run-05_bold.nii.gz/UploadMetrics".
+210417-12:40:09,21 nipype.workflow INFO:
+	 [Node] Outdated cache found for "workflow_enumerator.funcMRIQC.UploadMetrics".
+2021-04-17 12:40:09,021 nipype.workflow:INFO [Node] Outdated cache found for "workflow_enumerator.funcMRIQC.UploadMetrics".
+210417-12:40:09,181 nipype.workflow INFO:
+	 [Node] Running "UploadMetrics" ("mriqc.interfaces.webapi.UploadIQMs")
+2021-04-17 12:40:09,181 nipype.workflow:INFO [Node] Running "UploadMetrics" ("mriqc.interfaces.webapi.UploadIQMs")
+210417-12:40:09,189 nipype.interface INFO:
+	 MRIQC Web API: submitting to <https://mriqc.nimh.nih.gov:443/api/v1/bold>
+2021-04-17 12:40:09,189 nipype.interface:INFO MRIQC Web API: submitting to <https://mriqc.nimh.nih.gov:443/api/v1/bold>
+210417-12:40:09,398 nipype.interface WARNING:
+	 QC metrics upload failed to create an ID for the record uplOADED. rEsponse from server follows: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+2021-04-17 12:40:09,398 nipype.interface:WARNING QC metrics upload failed to create an ID for the record uplOADED. rEsponse from server follows: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+210417-12:40:09,399 nipype.interface WARNING:
+	 QC metrics failed to upload. Status 422: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+2021-04-17 12:40:09,399 nipype.interface:WARNING QC metrics failed to upload. Status 422: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+210417-12:40:09,463 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.UploadMetrics".
+2021-04-17 12:40:09,463 nipype.workflow:INFO [Node] Finished "workflow_enumerator.funcMRIQC.UploadMetrics".
+210417-12:40:13,695 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.anatMRIQCT1w.ComputeIQMs.harmonize".
+2021-04-17 12:40:13,695 nipype.workflow:INFO [Node] Finished "workflow_enumerator.anatMRIQCT1w.ComputeIQMs.harmonize".
+210417-12:40:16,919 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.anatMRIQCT1w.ComputeIQMs.measures" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/anatMRIQCT1w/ComputeIQMs/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..anat..sub-0015_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz/measures".
+2021-04-17 12:40:16,919 nipype.workflow:INFO [Node] Setting-up "workflow_enumerator.anatMRIQCT1w.ComputeIQMs.measures" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/anatMRIQCT1w/ComputeIQMs/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..anat..sub-0015_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz/measures".
+210417-12:40:16,949 nipype.workflow INFO:
+	 [Node] Running "measures" ("mriqc.interfaces.anatomical.StructuralQC")
+2021-04-17 12:40:16,949 nipype.workflow:INFO [Node] Running "measures" ("mriqc.interfaces.anatomical.StructuralQC")
+210417-12:40:29,16 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.UploadMetrics" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-social_acq-apXmb8_run-04_bold.nii.gz/UploadMetrics".
+2021-04-17 12:40:29,016 nipype.workflow:INFO [Node] Setting-up "workflow_enumerator.funcMRIQC.UploadMetrics" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-social_acq-apXmb8_run-04_bold.nii.gz/UploadMetrics".
+210417-12:40:29,18 nipype.workflow INFO:
+	 [Node] Outdated cache found for "workflow_enumerator.funcMRIQC.UploadMetrics".
+2021-04-17 12:40:29,018 nipype.workflow:INFO [Node] Outdated cache found for "workflow_enumerator.funcMRIQC.UploadMetrics".
+210417-12:40:29,74 nipype.workflow INFO:
+	 [Node] Running "UploadMetrics" ("mriqc.interfaces.webapi.UploadIQMs")
+2021-04-17 12:40:29,074 nipype.workflow:INFO [Node] Running "UploadMetrics" ("mriqc.interfaces.webapi.UploadIQMs")
+210417-12:40:29,80 nipype.interface INFO:
+	 MRIQC Web API: submitting to <https://mriqc.nimh.nih.gov:443/api/v1/bold>
+2021-04-17 12:40:29,080 nipype.interface:INFO MRIQC Web API: submitting to <https://mriqc.nimh.nih.gov:443/api/v1/bold>
+210417-12:40:29,265 nipype.interface WARNING:
+	 QC metrics upload failed to create an ID for the record uplOADED. rEsponse from server follows: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+2021-04-17 12:40:29,265 nipype.interface:WARNING QC metrics upload failed to create an ID for the record uplOADED. rEsponse from server follows: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+210417-12:40:29,266 nipype.interface WARNING:
+	 QC metrics failed to upload. Status 422: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+2021-04-17 12:40:29,266 nipype.interface:WARNING QC metrics failed to upload. Status 422: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+210417-12:40:29,294 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.UploadMetrics".
+2021-04-17 12:40:29,294 nipype.workflow:INFO [Node] Finished "workflow_enumerator.funcMRIQC.UploadMetrics".
+210417-12:40:37,306 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.anatMRIQCT1w.ComputeIQMs.measures".
+2021-04-17 12:40:37,306 nipype.workflow:INFO [Node] Finished "workflow_enumerator.anatMRIQCT1w.ComputeIQMs.measures".
+210417-12:40:42,937 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.anatMRIQCT1w.ReportsWorkflow.GenerateReport" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/anatMRIQCT1w/ReportsWorkflow/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..anat..sub-0015_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz/GenerateReport".
+210417-12:40:42,971 nipype.workflow INFO:
+	 [Node] Running "GenerateReport" ("nipype.interfaces.utility.wrappers.Function")
+210417-12:40:43,400 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.anatMRIQCT1w.UploadMetrics" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/anatMRIQCT1w/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..anat..sub-0015_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz/UploadMetrics".
+2021-04-17 12:40:43,400 nipype.workflow:INFO [Node] Setting-up "workflow_enumerator.anatMRIQCT1w.UploadMetrics" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/anatMRIQCT1w/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..anat..sub-0015_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz/UploadMetrics".
+210417-12:40:43,436 nipype.workflow INFO:
+	 [Node] Running "UploadMetrics" ("mriqc.interfaces.webapi.UploadIQMs")
+2021-04-17 12:40:43,436 nipype.workflow:INFO [Node] Running "UploadMetrics" ("mriqc.interfaces.webapi.UploadIQMs")
+210417-12:40:43,442 nipype.interface INFO:
+	 MRIQC Web API: submitting to <https://mriqc.nimh.nih.gov:443/api/v1/T1w>
+2021-04-17 12:40:43,442 nipype.interface:INFO MRIQC Web API: submitting to <https://mriqc.nimh.nih.gov:443/api/v1/T1w>
+210417-12:40:43,570 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.UploadMetrics" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-social_acq-apXmb8_run-03_bold.nii.gz/UploadMetrics".
+2021-04-17 12:40:43,570 nipype.workflow:INFO [Node] Setting-up "workflow_enumerator.funcMRIQC.UploadMetrics" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-social_acq-apXmb8_run-03_bold.nii.gz/UploadMetrics".
+210417-12:40:43,573 nipype.workflow INFO:
+	 [Node] Outdated cache found for "workflow_enumerator.funcMRIQC.UploadMetrics".
+2021-04-17 12:40:43,573 nipype.workflow:INFO [Node] Outdated cache found for "workflow_enumerator.funcMRIQC.UploadMetrics".
+210417-12:40:43,637 nipype.workflow INFO:
+	 [Node] Running "UploadMetrics" ("mriqc.interfaces.webapi.UploadIQMs")
+2021-04-17 12:40:43,637 nipype.workflow:INFO [Node] Running "UploadMetrics" ("mriqc.interfaces.webapi.UploadIQMs")
+210417-12:40:43,642 nipype.interface INFO:
+	 QC metrics successfully uploaded.
+2021-04-17 12:40:43,642 nipype.interface:INFO QC metrics successfully uploaded.
+210417-12:40:43,643 nipype.interface INFO:
+	 MRIQC Web API: submitting to <https://mriqc.nimh.nih.gov:443/api/v1/bold>
+2021-04-17 12:40:43,643 nipype.interface:INFO MRIQC Web API: submitting to <https://mriqc.nimh.nih.gov:443/api/v1/bold>
+210417-12:40:43,672 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.anatMRIQCT1w.UploadMetrics".
+2021-04-17 12:40:43,672 nipype.workflow:INFO [Node] Finished "workflow_enumerator.anatMRIQCT1w.UploadMetrics".
+210417-12:40:43,856 nipype.interface WARNING:
+	 QC metrics upload failed to create an ID for the record uplOADED. rEsponse from server follows: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+2021-04-17 12:40:43,856 nipype.interface:WARNING QC metrics upload failed to create an ID for the record uplOADED. rEsponse from server follows: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+210417-12:40:43,856 nipype.interface WARNING:
+	 QC metrics failed to upload. Status 422: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+2021-04-17 12:40:43,856 nipype.interface:WARNING QC metrics failed to upload. Status 422: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+210417-12:40:43,886 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.UploadMetrics".
+2021-04-17 12:40:43,886 nipype.workflow:INFO [Node] Finished "workflow_enumerator.funcMRIQC.UploadMetrics".
+210417-12:40:43,889 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.anatMRIQCT1w.ReportsWorkflow.GenerateReport".
+2021-04-17 12:40:43,889 nipype.workflow:INFO [Node] Finished "workflow_enumerator.anatMRIQCT1w.ReportsWorkflow.GenerateReport".
+210417-12:41:07,401 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.UploadMetrics" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-social_acq-apXmb8_run-02_bold.nii.gz/UploadMetrics".
+2021-04-17 12:41:07,401 nipype.workflow:INFO [Node] Setting-up "workflow_enumerator.funcMRIQC.UploadMetrics" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-social_acq-apXmb8_run-02_bold.nii.gz/UploadMetrics".
+210417-12:41:07,403 nipype.workflow INFO:
+	 [Node] Outdated cache found for "workflow_enumerator.funcMRIQC.UploadMetrics".
+2021-04-17 12:41:07,403 nipype.workflow:INFO [Node] Outdated cache found for "workflow_enumerator.funcMRIQC.UploadMetrics".
+210417-12:41:07,502 nipype.workflow INFO:
+	 [Node] Running "UploadMetrics" ("mriqc.interfaces.webapi.UploadIQMs")
+2021-04-17 12:41:07,502 nipype.workflow:INFO [Node] Running "UploadMetrics" ("mriqc.interfaces.webapi.UploadIQMs")
+210417-12:41:07,509 nipype.interface INFO:
+	 MRIQC Web API: submitting to <https://mriqc.nimh.nih.gov:443/api/v1/bold>
+2021-04-17 12:41:07,509 nipype.interface:INFO MRIQC Web API: submitting to <https://mriqc.nimh.nih.gov:443/api/v1/bold>
+210417-12:41:07,710 nipype.interface WARNING:
+	 QC metrics upload failed to create an ID for the record uplOADED. rEsponse from server follows: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+2021-04-17 12:41:07,710 nipype.interface:WARNING QC metrics upload failed to create an ID for the record uplOADED. rEsponse from server follows: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+210417-12:41:07,710 nipype.interface WARNING:
+	 QC metrics failed to upload. Status 422: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+2021-04-17 12:41:07,710 nipype.interface:WARNING QC metrics failed to upload. Status 422: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+210417-12:41:07,739 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.UploadMetrics".
+2021-04-17 12:41:07,739 nipype.workflow:INFO [Node] Finished "workflow_enumerator.funcMRIQC.UploadMetrics".
+210417-12:41:13,7 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.fMRI_HMC_afni.TimeShifts" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-pa_bold.nii.gz/TimeShifts".
+210417-12:41:13,133 nipype.workflow INFO:
+	 [Node] Running "TimeShifts" ("nipype.interfaces.afni.preprocess.TShift"), a CommandLine Interface with command:
+3dTshift -prefix sub-0015_ses-01_task-discorr_acq-pa_bold_valid_tshift.nii.gz /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-pa_bold.nii.gz/TimeShifts/sub-0015_ses-01_task-discorr_acq-pa_bold_valid.nii.gz
+210417-12:41:13,511 nipype.workflow WARNING:
+	 [Node] Error on "workflow_enumerator.funcMRIQC.fMRI_HMC_afni.TimeShifts" (/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-pa_bold.nii.gz/TimeShifts)
+210417-12:41:13,540 nipype.workflow ERROR:
+	 Node TimeShifts.a05 failed to run on host n12.hpcc.dartmouth.edu.
+2021-04-17 12:41:13,540 nipype.workflow:ERROR Node TimeShifts.a05 failed to run on host n12.hpcc.dartmouth.edu.
+210417-12:41:13,541 nipype.workflow ERROR:
+	 Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/logs/crash-20210417-124113-f0042x1-TimeShifts.a05-ce436202-a797-47ff-af8b-0ca69dce6074.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/afni/base.py", line 110, in _run_interface
+    return super(AFNICommandBase, self)._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 1033, in _run_interface
+    self.raise_exception(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 970, in raise_exception
+    ).format(**runtime.dictcopy()))
+RuntimeError: Command:
+3dTshift -prefix sub-0015_ses-01_task-discorr_acq-pa_bold_valid_tshift.nii.gz /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-pa_bold.nii.gz/TimeShifts/sub-0015_ses-01_task-discorr_acq-pa_bold_valid.nii.gz
+Standard output:
+
+Standard error:
+++ 3dTshift: AFNI version=AFNI_17.3.03 (Nov  9 2017) [64-bit]
+** AFNI converts NIFTI_datatype=512 (UINT16) in file /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-pa_bold.nii.gz/TimeShifts/sub-0015_ses-01_task-discorr_acq-pa_bold_valid.nii.gz to FLOAT32
+     Warnings of this type will be muted for this session.
+     Set AFNI_NIFTI_TYPE_WARN to YES to see them all, NO to see none.
+[7m*+ WARNING:[0m   If you are performing spatial transformations on an oblique dset, 
+  such as /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-pa_bold.nii.gz/TimeShifts/sub-0015_ses-01_task-discorr_acq-pa_bold_valid.nii.gz,
+  or viewing/combining it with volumes of differing obliquity,
+  you should consider running: 
+     3dWarp -deoblique 
+  on this and  other oblique datasets in the same session.
+ See 3dWarp -help for details.
+++ Oblique dataset:/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-pa_bold.nii.gz/TimeShifts/sub-0015_ses-01_task-discorr_acq-pa_bold_valid.nii.gz is 7.742505 degrees from plumb.
+[7m** FATAL ERROR:[0m -ignore value 0 is too large
+** Program compile date = Nov  9 2017
+Return code: 1
+
+2021-04-17 12:41:13,541 nipype.workflow:ERROR Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/logs/crash-20210417-124113-f0042x1-TimeShifts.a05-ce436202-a797-47ff-af8b-0ca69dce6074.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/afni/base.py", line 110, in _run_interface
+    return super(AFNICommandBase, self)._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 1033, in _run_interface
+    self.raise_exception(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 970, in raise_exception
+    ).format(**runtime.dictcopy()))
+RuntimeError: Command:
+3dTshift -prefix sub-0015_ses-01_task-discorr_acq-pa_bold_valid_tshift.nii.gz /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-pa_bold.nii.gz/TimeShifts/sub-0015_ses-01_task-discorr_acq-pa_bold_valid.nii.gz
+Standard output:
+
+Standard error:
+++ 3dTshift: AFNI version=AFNI_17.3.03 (Nov  9 2017) [64-bit]
+** AFNI converts NIFTI_datatype=512 (UINT16) in file /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-pa_bold.nii.gz/TimeShifts/sub-0015_ses-01_task-discorr_acq-pa_bold_valid.nii.gz to FLOAT32
+     Warnings of this type will be muted for this session.
+     Set AFNI_NIFTI_TYPE_WARN to YES to see them all, NO to see none.
+[7m*+ WARNING:[0m   If you are performing spatial transformations on an oblique dset, 
+  such as /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-pa_bold.nii.gz/TimeShifts/sub-0015_ses-01_task-discorr_acq-pa_bold_valid.nii.gz,
+  or viewing/combining it with volumes of differing obliquity,
+  you should consider running: 
+     3dWarp -deoblique 
+  on this and  other oblique datasets in the same session.
+ See 3dWarp -help for details.
+++ Oblique dataset:/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-pa_bold.nii.gz/TimeShifts/sub-0015_ses-01_task-discorr_acq-pa_bold_valid.nii.gz is 7.742505 degrees from plumb.
+[7m** FATAL ERROR:[0m -ignore value 0 is too large
+** Program compile date = Nov  9 2017
+Return code: 1
+
+210417-12:41:29,381 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.UploadMetrics" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-social_acq-apXmb8_run-01_bold.nii.gz/UploadMetrics".
+2021-04-17 12:41:29,381 nipype.workflow:INFO [Node] Setting-up "workflow_enumerator.funcMRIQC.UploadMetrics" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-social_acq-apXmb8_run-01_bold.nii.gz/UploadMetrics".
+210417-12:41:29,384 nipype.workflow INFO:
+	 [Node] Outdated cache found for "workflow_enumerator.funcMRIQC.UploadMetrics".
+2021-04-17 12:41:29,384 nipype.workflow:INFO [Node] Outdated cache found for "workflow_enumerator.funcMRIQC.UploadMetrics".
+210417-12:41:29,440 nipype.workflow INFO:
+	 [Node] Running "UploadMetrics" ("mriqc.interfaces.webapi.UploadIQMs")
+2021-04-17 12:41:29,440 nipype.workflow:INFO [Node] Running "UploadMetrics" ("mriqc.interfaces.webapi.UploadIQMs")
+210417-12:41:29,446 nipype.interface INFO:
+	 MRIQC Web API: submitting to <https://mriqc.nimh.nih.gov:443/api/v1/bold>
+2021-04-17 12:41:29,446 nipype.interface:INFO MRIQC Web API: submitting to <https://mriqc.nimh.nih.gov:443/api/v1/bold>
+210417-12:41:29,669 nipype.interface WARNING:
+	 QC metrics upload failed to create an ID for the record uplOADED. rEsponse from server follows: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+2021-04-17 12:41:29,669 nipype.interface:WARNING QC metrics upload failed to create an ID for the record uplOADED. rEsponse from server follows: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+210417-12:41:29,670 nipype.interface WARNING:
+	 QC metrics failed to upload. Status 422: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+2021-04-17 12:41:29,670 nipype.interface:WARNING QC metrics failed to upload. Status 422: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+210417-12:41:29,697 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.UploadMetrics".
+2021-04-17 12:41:29,697 nipype.workflow:INFO [Node] Finished "workflow_enumerator.funcMRIQC.UploadMetrics".
+210417-12:41:33,31 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.fMRI_HMC_afni.TimeShifts" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-ap_bold.nii.gz/TimeShifts".
+210417-12:41:33,117 nipype.workflow INFO:
+	 [Node] Running "TimeShifts" ("nipype.interfaces.afni.preprocess.TShift"), a CommandLine Interface with command:
+3dTshift -prefix sub-0015_ses-01_task-discorr_acq-ap_bold_valid_tshift.nii.gz /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-ap_bold.nii.gz/TimeShifts/sub-0015_ses-01_task-discorr_acq-ap_bold_valid.nii.gz
+210417-12:41:33,275 nipype.workflow WARNING:
+	 [Node] Error on "workflow_enumerator.funcMRIQC.fMRI_HMC_afni.TimeShifts" (/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-ap_bold.nii.gz/TimeShifts)
+210417-12:41:33,570 nipype.workflow ERROR:
+	 Node TimeShifts.a04 failed to run on host n12.hpcc.dartmouth.edu.
+2021-04-17 12:41:33,570 nipype.workflow:ERROR Node TimeShifts.a04 failed to run on host n12.hpcc.dartmouth.edu.
+210417-12:41:33,571 nipype.workflow ERROR:
+	 Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/logs/crash-20210417-124133-f0042x1-TimeShifts.a04-7275704d-f051-40fa-b8dc-0ee07de42ac5.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/afni/base.py", line 110, in _run_interface
+    return super(AFNICommandBase, self)._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 1033, in _run_interface
+    self.raise_exception(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 970, in raise_exception
+    ).format(**runtime.dictcopy()))
+RuntimeError: Command:
+3dTshift -prefix sub-0015_ses-01_task-discorr_acq-ap_bold_valid_tshift.nii.gz /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-ap_bold.nii.gz/TimeShifts/sub-0015_ses-01_task-discorr_acq-ap_bold_valid.nii.gz
+Standard output:
+
+Standard error:
+++ 3dTshift: AFNI version=AFNI_17.3.03 (Nov  9 2017) [64-bit]
+** AFNI converts NIFTI_datatype=512 (UINT16) in file /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-ap_bold.nii.gz/TimeShifts/sub-0015_ses-01_task-discorr_acq-ap_bold_valid.nii.gz to FLOAT32
+     Warnings of this type will be muted for this session.
+     Set AFNI_NIFTI_TYPE_WARN to YES to see them all, NO to see none.
+[7m*+ WARNING:[0m   If you are performing spatial transformations on an oblique dset, 
+  such as /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-ap_bold.nii.gz/TimeShifts/sub-0015_ses-01_task-discorr_acq-ap_bold_valid.nii.gz,
+  or viewing/combining it with volumes of differing obliquity,
+  you should consider running: 
+     3dWarp -deoblique 
+  on this and  other oblique datasets in the same session.
+ See 3dWarp -help for details.
+++ Oblique dataset:/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-ap_bold.nii.gz/TimeShifts/sub-0015_ses-01_task-discorr_acq-ap_bold_valid.nii.gz is 7.742505 degrees from plumb.
+[7m** FATAL ERROR:[0m -ignore value 0 is too large
+** Program compile date = Nov  9 2017
+Return code: 1
+
+2021-04-17 12:41:33,571 nipype.workflow:ERROR Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/logs/crash-20210417-124133-f0042x1-TimeShifts.a04-7275704d-f051-40fa-b8dc-0ee07de42ac5.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/afni/base.py", line 110, in _run_interface
+    return super(AFNICommandBase, self)._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 1033, in _run_interface
+    self.raise_exception(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 970, in raise_exception
+    ).format(**runtime.dictcopy()))
+RuntimeError: Command:
+3dTshift -prefix sub-0015_ses-01_task-discorr_acq-ap_bold_valid_tshift.nii.gz /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-ap_bold.nii.gz/TimeShifts/sub-0015_ses-01_task-discorr_acq-ap_bold_valid.nii.gz
+Standard output:
+
+Standard error:
+++ 3dTshift: AFNI version=AFNI_17.3.03 (Nov  9 2017) [64-bit]
+** AFNI converts NIFTI_datatype=512 (UINT16) in file /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-ap_bold.nii.gz/TimeShifts/sub-0015_ses-01_task-discorr_acq-ap_bold_valid.nii.gz to FLOAT32
+     Warnings of this type will be muted for this session.
+     Set AFNI_NIFTI_TYPE_WARN to YES to see them all, NO to see none.
+[7m*+ WARNING:[0m   If you are performing spatial transformations on an oblique dset, 
+  such as /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-ap_bold.nii.gz/TimeShifts/sub-0015_ses-01_task-discorr_acq-ap_bold_valid.nii.gz,
+  or viewing/combining it with volumes of differing obliquity,
+  you should consider running: 
+     3dWarp -deoblique 
+  on this and  other oblique datasets in the same session.
+ See 3dWarp -help for details.
+++ Oblique dataset:/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-discorr_acq-ap_bold.nii.gz/TimeShifts/sub-0015_ses-01_task-discorr_acq-ap_bold_valid.nii.gz is 7.742505 degrees from plumb.
+[7m** FATAL ERROR:[0m -ignore value 0 is too large
+** Program compile date = Nov  9 2017
+Return code: 1
+
+210417-12:41:57,769 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.UploadMetrics" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-alignvideo_acq-apXmb8_run-04_bold.nii.gz/UploadMetrics".
+2021-04-17 12:41:57,769 nipype.workflow:INFO [Node] Setting-up "workflow_enumerator.funcMRIQC.UploadMetrics" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-alignvideo_acq-apXmb8_run-04_bold.nii.gz/UploadMetrics".
+210417-12:41:57,771 nipype.workflow INFO:
+	 [Node] Outdated cache found for "workflow_enumerator.funcMRIQC.UploadMetrics".
+2021-04-17 12:41:57,771 nipype.workflow:INFO [Node] Outdated cache found for "workflow_enumerator.funcMRIQC.UploadMetrics".
+210417-12:41:57,851 nipype.workflow INFO:
+	 [Node] Running "UploadMetrics" ("mriqc.interfaces.webapi.UploadIQMs")
+2021-04-17 12:41:57,851 nipype.workflow:INFO [Node] Running "UploadMetrics" ("mriqc.interfaces.webapi.UploadIQMs")
+210417-12:41:57,857 nipype.interface INFO:
+	 MRIQC Web API: submitting to <https://mriqc.nimh.nih.gov:443/api/v1/bold>
+2021-04-17 12:41:57,857 nipype.interface:INFO MRIQC Web API: submitting to <https://mriqc.nimh.nih.gov:443/api/v1/bold>
+210417-12:41:58,17 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.ReportsWorkflow.PlotSpikes" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/ReportsWorkflow/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-alignvideo_acq-apXmb8_run-03_bold.nii.gz/PlotSpikes".
+2021-04-17 12:41:58,017 nipype.workflow:INFO [Node] Setting-up "workflow_enumerator.funcMRIQC.ReportsWorkflow.PlotSpikes" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/ReportsWorkflow/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-alignvideo_acq-apXmb8_run-03_bold.nii.gz/PlotSpikes".
+210417-12:41:58,86 nipype.interface WARNING:
+	 QC metrics upload failed to create an ID for the record uplOADED. rEsponse from server follows: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+2021-04-17 12:41:58,086 nipype.interface:WARNING QC metrics upload failed to create an ID for the record uplOADED. rEsponse from server follows: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+210417-12:41:58,86 nipype.interface WARNING:
+	 QC metrics failed to upload. Status 422: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+2021-04-17 12:41:58,086 nipype.interface:WARNING QC metrics failed to upload. Status 422: {"_status": "ERR", "_issues": {"spikes_num": "unknown field"}, "_error": {"code": 422, "message": "Insertion failure: 1 document(s) contain(s) error(s)"}}
+210417-12:41:58,86 nipype.workflow INFO:
+	 [Node] Running "PlotSpikes" ("mriqc.interfaces.viz.PlotSpikes")
+2021-04-17 12:41:58,086 nipype.workflow:INFO [Node] Running "PlotSpikes" ("mriqc.interfaces.viz.PlotSpikes")
+210417-12:41:58,116 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.UploadMetrics".
+2021-04-17 12:41:58,116 nipype.workflow:INFO [Node] Finished "workflow_enumerator.funcMRIQC.UploadMetrics".
+210417-12:42:02,210 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.fMRI_HMC_afni.motion_correct" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-alignvideo_acq-apXmb8_run-03_bold.nii.gz/motion_correct".
+210417-12:42:02,311 nipype.workflow INFO:
+	 [Node] Running "motion_correct" ("nipype.interfaces.afni.preprocess.Volreg"), a CommandLine Interface with command:
+3dvolreg -Fourier -twopass -1Dfile sub-0015_ses-01_task-alignvideo_acq-apXmb8_run-03_bold_valid_tshift.1D -1Dmatrix_save sub-0015_ses-01_task-alignvideo_acq-apXmb8_run-03_bold_valid_tshift.aff12.1D -prefix sub-0015_ses-01_task-alignvideo_acq-apXmb8_run-03_bold_valid_tshift_volreg.nii.gz -base /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-alignvideo_acq-apXmb8_run-03_bold.nii.gz/gen_ref/ref_image.nii.gz -zpad 4 -maxdisp1D sub-0015_ses-01_task-alignvideo_acq-apXmb8_run-03_bold_valid_tshift_md.1D /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/test_yarik/spacetop/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..test_yarik..spacetop..spacetop_heudiconv..sub-0015..ses-01..func..sub-0015_ses-01_task-alignvideo_acq-apXmb8_run-03_bold.nii.gz/motion_correct/sub-0015_ses-01_task-alignvideo_acq-apXmb8_run-03_bold_valid_tshift.nii.gz
+
+------------------------- Epilogue ----------------------------
+        Finished: Sat Apr 17 12:42:17 EDT 2021
+          Job ID: 200908[15].pearl.hpcc.dartmouth.edu
+         User ID: f0042x1
+        Group ID: rc-users
+        Job Name: mriqc_spacetop-15
+      Session ID: 141227
+ Resources Req'd: nodes=1:ppn=16,walltime=12:00:00,mem=10gb,vmem=20gb,neednodes=1:ppn=16
+  Resources Used: cput=00:22:46,vmem=24535984kb,walltime=00:11:07,mem=10426076kb,energy_used=0
+      Queue Name: default
+    Account Name: DBIC
+------------------------- Epilogue ----------------------------
+
