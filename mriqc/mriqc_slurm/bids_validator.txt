@@ -1,0 +1,200 @@
+bids-validator@1.7.2
+
+	[31m1: [ERR] Files with such naming scheme are not part of BIDS specification. This error is most commonly caused by typos in file names that make them not BIDS compatible. Please consult the specification and make sure your files are named correctly. If this is not a file naming issue (for example when including files not yet covered by the BIDS specification) you should include a ".bidsignore" file in your dataset (see https://github.com/bids-standard/bids-validator#bidsignore for details). Please note that derived (processed) data should be placed in /derivatives folder and source data (such as DICOMS or behavioural logs in proprietary formats) should be placed in the /sourcedata folder. (code: 1 - NOT_INCLUDED)[39m
+		./sub-0011/ses-01/dwi/sub-0011_ses-01_acq-96dirX6b0Xmb_dwi__dup-01.bval
+			Evidence: sub-0011_ses-01_acq-96dirX6b0Xmb_dwi__dup-01.bval
+		./sub-0011/ses-01/dwi/sub-0011_ses-01_acq-96dirX6b0Xmb_dwi__dup-01.bvec
+			Evidence: sub-0011_ses-01_acq-96dirX6b0Xmb_dwi__dup-01.bvec
+		./sub-0011/ses-01/dwi/sub-0011_ses-01_acq-96dirX6b0Xmb_dwi__dup-01.json
+			Evidence: sub-0011_ses-01_acq-96dirX6b0Xmb_dwi__dup-01.json
+		./sub-0011/ses-01/dwi/sub-0011_ses-01_acq-96dirX6b0Xmb_dwi__dup-01.nii.gz
+			Evidence: sub-0011_ses-01_acq-96dirX6b0Xmb_dwi__dup-01.nii.gz
+		./sub-0011/ses-01/fmap/sub-0011_ses-01_acq-96dirX6b0Xmb_dir-ap_epi__dup-01.json
+			Evidence: sub-0011_ses-01_acq-96dirX6b0Xmb_dir-ap_epi__dup-01.json
+		./sub-0011/ses-01/fmap/sub-0011_ses-01_acq-96dirX6b0Xmb_dir-ap_epi__dup-01.nii.gz
+			Evidence: sub-0011_ses-01_acq-96dirX6b0Xmb_dir-ap_epi__dup-01.nii.gz
+		./sub-0011/ses-01/fmap/sub-0011_ses-01_acq-96dirX6b0Xmb_dir-pa_epi__dup-01.json
+			Evidence: sub-0011_ses-01_acq-96dirX6b0Xmb_dir-pa_epi__dup-01.json
+		./sub-0011/ses-01/fmap/sub-0011_ses-01_acq-96dirX6b0Xmb_dir-pa_epi__dup-01.nii.gz
+			Evidence: sub-0011_ses-01_acq-96dirX6b0Xmb_dir-pa_epi__dup-01.nii.gz
+		./sub-0016/ses-01/fmap/sub-0016_ses-01_acq-mb8_dir-ap_run+-PVC-run-04_epi.json
+			Evidence: sub-0016_ses-01_acq-mb8_dir-ap_run+-PVC-run-04_epi.json
+		./sub-0016/ses-01/fmap/sub-0016_ses-01_acq-mb8_dir-ap_run+-PVC-run-04_epi.nii.gz
+			Evidence: sub-0016_ses-01_acq-mb8_dir-ap_run+-PVC-run-04_epi.nii.gz
+		[31m... and 6 more files having this issue (Use --verbose to see them all).[39m
+
+[36m	Please visit https://neurostars.org/search?q=NOT_INCLUDED for existing conversations about this issue.[39m
+
+	[31m2: [ERR] You have to define 'RepetitionTime' for this file. (code: 10 - REPETITION_TIME_MUST_DEFINE)[39m
+		./sub-0008/ses-03/func/sub-0008_ses-03_task-alignvideo_acq-mb8_run-01_bold.nii.gz
+		./sub-0008/ses-03/func/sub-0008_ses-03_task-shortvideo_acq-mb8_run-01_bold.nii.gz
+
+[36m	Please visit https://neurostars.org/search?q=REPETITION_TIME_MUST_DEFINE for existing conversations about this issue.[39m
+
+	[31m3: [ERR] Not a valid JSON file. (code: 27 - JSON_INVALID)[39m
+		./sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-02_bold.json
+			@ line: 1 character: 1
+			Evidence: /annex/objects/MD5E-s122281--5459a52d0ff2b2c6d0b1293a90507c0d.json
+		./sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-02_bold.json
+			@ line: 1 character: 8
+			Evidence: /annex/objects/MD5E-s122281--5459a52d0ff2b2c6d0b1293a90507c0d.json
+		./sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-02_bold.json
+			@ line: 1 character: 30
+			Evidence: /annex/objects/MD5E-s122281--5459a52d0ff2b2c6d0b1293a90507c0d.json
+		./sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-02_bold.json
+			@ line: 1 character: 28
+			Evidence: /annex/objects/MD5E-s122281--5459a52d0ff2b2c6d0b1293a90507c0d.json
+		./sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-02_bold.json
+			@ line: 1 character: 30
+			Evidence: /annex/objects/MD5E-s122281--5459a52d0ff2b2c6d0b1293a90507c0d.json
+
+[36m	Please visit https://neurostars.org/search?q=JSON_INVALID for existing conversations about this issue.[39m
+
+	[31m4: [ERR] This file is too small to contain the minimal NIfTI header. (code: 36 - NIFTI_TOO_SMALL)[39m
+		./sub-0001/ses-01/anat/sub-0001_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz
+		./sub-0001/ses-01/dwi/sub-0001_ses-01_acq-96dirX6b0Xmb_dwi.nii.gz
+		./sub-0001/ses-01/fmap/sub-0001_ses-01_acq-96dirX6b0Xmb_dir-ap_epi.nii.gz
+		./sub-0001/ses-01/fmap/sub-0001_ses-01_acq-96dirX6b0Xmb_dir-pa_epi.nii.gz
+		./sub-0001/ses-01/fmap/sub-0001_ses-01_acq-mb8_dir-ap_run-01_epi.nii.gz
+		./sub-0001/ses-01/fmap/sub-0001_ses-01_acq-mb8_dir-ap_run-04_epi.nii.gz
+		./sub-0001/ses-01/fmap/sub-0001_ses-01_acq-mb8_dir-pa_run-01_epi.nii.gz
+		./sub-0001/ses-01/fmap/sub-0001_ses-01_acq-mb8_dir-pa_run-04_epi.nii.gz
+		./sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-01_bold.nii.gz
+		./sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-01_sbref.nii.gz
+		[31m... and 1006 more files having this issue (Use --verbose to see them all).[39m
+
+[36m	Please visit https://neurostars.org/search?q=NIFTI_TOO_SMALL for existing conversations about this issue.[39m
+
+	[31m5: [ERR] You have to define 'TaskName' for this file. (code: 50 - TASK_NAME_MUST_DEFINE)[39m
+		./sub-0008/ses-03/func/sub-0008_ses-03_task-alignvideo_acq-mb8_run-01_bold.nii.gz
+		./sub-0008/ses-03/func/sub-0008_ses-03_task-shortvideo_acq-mb8_run-01_bold.nii.gz
+
+[36m	Please visit https://neurostars.org/search?q=TASK_NAME_MUST_DEFINE for existing conversations about this issue.[39m
+
+	[31m6: [ERR] acq Name contain an Illegal Character hyphen or underscore. Please edit the filename as per BIDS spec. (code: 59 - ACQ_NAME_CONTAIN_ILLEGAL_CHARACTER)[39m
+		./sub-0011/ses-01/dwi/sub-0011_ses-01_acq-96dirX6b0Xmb_dwi__dup-01.bval
+			Evidence: acq name contains illegal character:/sub-0011/ses-01/dwi/sub-0011_ses-01_acq-96dirX6b0Xmb_dwi__dup-01.bval
+		./sub-0011/ses-01/dwi/sub-0011_ses-01_acq-96dirX6b0Xmb_dwi__dup-01.json
+			Evidence: acq name contains illegal character:/sub-0011/ses-01/dwi/sub-0011_ses-01_acq-96dirX6b0Xmb_dwi__dup-01.json
+
+[36m	Please visit https://neurostars.org/search?q=ACQ_NAME_CONTAIN_ILLEGAL_CHARACTER for existing conversations about this issue.[39m
+
+	[33m1: [WARN] You should define 'EchoTime' for this file. If you don't provide this information field map correction will not be possible. (code: 6 - ECHO_TIME_NOT_DEFINED)[39m
+		./sub-0008/ses-03/func/sub-0008_ses-03_task-alignvideo_acq-mb8_run-01_bold.nii.gz
+		./sub-0008/ses-03/func/sub-0008_ses-03_task-shortvideo_acq-mb8_run-01_bold.nii.gz
+
+[36m	Please visit https://neurostars.org/search?q=ECHO_TIME_NOT_DEFINED for existing conversations about this issue.[39m
+
+	[33m2: [WARN] You should define 'PhaseEncodingDirection' for this file. If you don't provide this information field map correction will not be possible. (code: 7 - PHASE_ENCODING_DIRECTION_NOT_DEFINED)[39m
+		./sub-0008/ses-03/func/sub-0008_ses-03_task-alignvideo_acq-mb8_run-01_bold.nii.gz
+		./sub-0008/ses-03/func/sub-0008_ses-03_task-shortvideo_acq-mb8_run-01_bold.nii.gz
+
+[36m	Please visit https://neurostars.org/search?q=PHASE_ENCODING_DIRECTION_NOT_DEFINED for existing conversations about this issue.[39m
+
+	[33m3: [WARN] You should define 'EffectiveEchoSpacing' for this file. If you don't provide this information field map correction will not be possible. (code: 8 - EFFECTIVE_ECHO_SPACING_NOT_DEFINED)[39m
+		./sub-0008/ses-03/func/sub-0008_ses-03_task-alignvideo_acq-mb8_run-01_bold.nii.gz
+		./sub-0008/ses-03/func/sub-0008_ses-03_task-shortvideo_acq-mb8_run-01_bold.nii.gz
+
+[36m	Please visit https://neurostars.org/search?q=EFFECTIVE_ECHO_SPACING_NOT_DEFINED for existing conversations about this issue.[39m
+
+	[33m4: [WARN] You should define 'SliceTiming' for this file. If you don't provide this information slice time correction will not be possible. 'Slice Timing' is the time at which each slice was acquired within each volume (frame) of the acquisition. Slice timing is not slice order -- rather, it is a list of times containing the time (in seconds) of each slice acquisition in relation to the beginning of volume acquisition. (code: 13 - SLICE_TIMING_NOT_DEFINED)[39m
+		./sub-0008/ses-03/func/sub-0008_ses-03_task-alignvideo_acq-mb8_run-01_bold.nii.gz
+		./sub-0008/ses-03/func/sub-0008_ses-03_task-shortvideo_acq-mb8_run-01_bold.nii.gz
+
+[36m	Please visit https://neurostars.org/search?q=SLICE_TIMING_NOT_DEFINED for existing conversations about this issue.[39m
+
+	[33m5: [WARN] Not all subjects contain the same files. Each subject should contain the same number of files with the same naming unless some files are known to be missing. (code: 38 - INCONSISTENT_SUBJECTS)[39m
+		./sub-0001/ses-01/fmap/sub-0001_ses-01_acq-mb8_dir-ap_run-07_epi.json
+			Evidence: Subject: sub-0001; Missing file: sub-0001_ses-01_acq-mb8_dir-ap_run-07_epi.json
+		./sub-0001/ses-01/fmap/sub-0001_ses-01_acq-mb8_dir-ap_run-07_epi.nii.gz
+			Evidence: Subject: sub-0001; Missing file: sub-0001_ses-01_acq-mb8_dir-ap_run-07_epi.nii.gz
+		./sub-0001/ses-01/fmap/sub-0001_ses-01_acq-mb8_dir-pa_run-07_epi.json
+			Evidence: Subject: sub-0001; Missing file: sub-0001_ses-01_acq-mb8_dir-pa_run-07_epi.json
+		./sub-0001/ses-01/fmap/sub-0001_ses-01_acq-mb8_dir-pa_run-07_epi.nii.gz
+			Evidence: Subject: sub-0001; Missing file: sub-0001_ses-01_acq-mb8_dir-pa_run-07_epi.nii.gz
+		./sub-0001/ses-01/func/sub-0001_ses-01_task-social_acq-mb8_run-04_bold.json
+			Evidence: Subject: sub-0001; Missing file: sub-0001_ses-01_task-social_acq-mb8_run-04_bold.json
+		./sub-0001/ses-01/func/sub-0001_ses-01_task-social_acq-mb8_run-04_bold.nii.gz
+			Evidence: Subject: sub-0001; Missing file: sub-0001_ses-01_task-social_acq-mb8_run-04_bold.nii.gz
+		./sub-0001/ses-01/func/sub-0001_ses-01_task-social_acq-mb8_run-04_events.tsv
+			Evidence: Subject: sub-0001; Missing file: sub-0001_ses-01_task-social_acq-mb8_run-04_events.tsv
+		./sub-0001/ses-01/func/sub-0001_ses-01_task-social_acq-mb8_run-04_sbref.json
+			Evidence: Subject: sub-0001; Missing file: sub-0001_ses-01_task-social_acq-mb8_run-04_sbref.json
+		./sub-0001/ses-01/func/sub-0001_ses-01_task-social_acq-mb8_run-04_sbref.nii.gz
+			Evidence: Subject: sub-0001; Missing file: sub-0001_ses-01_task-social_acq-mb8_run-04_sbref.nii.gz
+		./sub-0001/ses-01/func/sub-0001_ses-01_task-social_acq-mb8_run-05_bold.json
+			Evidence: Subject: sub-0001; Missing file: sub-0001_ses-01_task-social_acq-mb8_run-05_bold.json
+		[33m... and 858 more files having this issue (Use --verbose to see them all).[39m
+
+[36m	Please visit https://neurostars.org/search?q=INCONSISTENT_SUBJECTS for existing conversations about this issue.[39m
+
+	[33m6: [WARN] Not all subjects/sessions/runs have the same scanning parameters. (code: 39 - INCONSISTENT_PARAMETERS)[39m
+		./sub-0003/ses-01/func/sub-0003_ses-01_task-alignvideo_acq-mb8_run-02_bold.nii.gz
+		./sub-0003/ses-01/func/sub-0003_ses-01_task-alignvideo_acq-mb8_run-03_bold.nii.gz
+		./sub-0003/ses-01/func/sub-0003_ses-01_task-alignvideo_acq-mb8_run-04_bold.nii.gz
+		./sub-0003/ses-02/func/sub-0003_ses-02_task-alignvideo_acq-mb8_run-02_bold.nii.gz
+		./sub-0003/ses-02/func/sub-0003_ses-02_task-alignvideo_acq-mb8_run-03_bold.nii.gz
+		./sub-0003/ses-02/func/sub-0003_ses-02_task-alignvideo_acq-mb8_run-04_bold.nii.gz
+		./sub-0003/ses-02/func/sub-0003_ses-02_task-narratives_acq-mb8_run-02_bold.nii.gz
+		./sub-0003/ses-02/func/sub-0003_ses-02_task-narratives_acq-mb8_run-03_bold.nii.gz
+		./sub-0003/ses-02/func/sub-0003_ses-02_task-narratives_acq-mb8_run-04_bold.nii.gz
+		./sub-0003/ses-03/func/sub-0003_ses-03_task-alignvideo_acq-mb8_run-02_bold.nii.gz
+		[33m... and 68 more files having this issue (Use --verbose to see them all).[39m
+
+[36m	Please visit https://neurostars.org/search?q=INCONSISTENT_PARAMETERS for existing conversations about this issue.[39m
+
+	[33m7: [WARN] Tabular file contains custom columns not described in a data dictionary (code: 82 - CUSTOM_COLUMN_WITHOUT_DESCRIPTION)[39m
+		./sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-01_events.tsv
+			Evidence: Columns: TODO -- fill in rows and add more tab-separated columns if desired not defined, please define in: /events.json, /task-alignvideo_events.json,/acq-mb8_events.json,/task-alignvideo_acq-mb8_events.json,/run-01_events.json,/task-alignvideo_run-01_events.json,/acq-mb8_run-01_events.json,/task-alignvideo_acq-mb8_run-01_events.json,/sub-0001/sub-0001_events.json,/sub-0001/sub-0001_task-alignvideo_events.json,/sub-0001/sub-0001_acq-mb8_events.json,/sub-0001/sub-0001_task-alignvideo_acq-mb8_events.json,/sub-0001/sub-0001_run-01_events.json,/sub-0001/sub-0001_task-alignvideo_run-01_events.json,/sub-0001/sub-0001_acq-mb8_run-01_events.json,/sub-0001/sub-0001_task-alignvideo_acq-mb8_run-01_events.json,/sub-0001/ses-01/sub-0001_ses-01_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-alignvideo_events.json,/sub-0001/ses-01/sub-0001_ses-01_acq-mb8_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-alignvideo_acq-mb8_events.json,/sub-0001/ses-01/sub-0001_ses-01_run-01_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-alignvideo_run-01_events.json,/sub-0001/ses-01/sub-0001_ses-01_acq-mb8_run-01_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-alignvideo_acq-mb8_run-01_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_acq-mb8_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_run-01_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_run-01_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_acq-mb8_run-01_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-01_events.json
+		./sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-02_events.tsv
+			Evidence: Columns: TODO -- fill in rows and add more tab-separated columns if desired not defined, please define in: /events.json, /task-alignvideo_events.json,/acq-mb8_events.json,/task-alignvideo_acq-mb8_events.json,/run-02_events.json,/task-alignvideo_run-02_events.json,/acq-mb8_run-02_events.json,/task-alignvideo_acq-mb8_run-02_events.json,/sub-0001/sub-0001_events.json,/sub-0001/sub-0001_task-alignvideo_events.json,/sub-0001/sub-0001_acq-mb8_events.json,/sub-0001/sub-0001_task-alignvideo_acq-mb8_events.json,/sub-0001/sub-0001_run-02_events.json,/sub-0001/sub-0001_task-alignvideo_run-02_events.json,/sub-0001/sub-0001_acq-mb8_run-02_events.json,/sub-0001/sub-0001_task-alignvideo_acq-mb8_run-02_events.json,/sub-0001/ses-01/sub-0001_ses-01_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-alignvideo_events.json,/sub-0001/ses-01/sub-0001_ses-01_acq-mb8_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-alignvideo_acq-mb8_events.json,/sub-0001/ses-01/sub-0001_ses-01_run-02_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-alignvideo_run-02_events.json,/sub-0001/ses-01/sub-0001_ses-01_acq-mb8_run-02_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-alignvideo_acq-mb8_run-02_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_acq-mb8_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_run-02_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_run-02_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_acq-mb8_run-02_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-02_events.json
+		./sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-03_events.tsv
+			Evidence: Columns: TODO -- fill in rows and add more tab-separated columns if desired not defined, please define in: /events.json, /task-alignvideo_events.json,/acq-mb8_events.json,/task-alignvideo_acq-mb8_events.json,/run-03_events.json,/task-alignvideo_run-03_events.json,/acq-mb8_run-03_events.json,/task-alignvideo_acq-mb8_run-03_events.json,/sub-0001/sub-0001_events.json,/sub-0001/sub-0001_task-alignvideo_events.json,/sub-0001/sub-0001_acq-mb8_events.json,/sub-0001/sub-0001_task-alignvideo_acq-mb8_events.json,/sub-0001/sub-0001_run-03_events.json,/sub-0001/sub-0001_task-alignvideo_run-03_events.json,/sub-0001/sub-0001_acq-mb8_run-03_events.json,/sub-0001/sub-0001_task-alignvideo_acq-mb8_run-03_events.json,/sub-0001/ses-01/sub-0001_ses-01_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-alignvideo_events.json,/sub-0001/ses-01/sub-0001_ses-01_acq-mb8_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-alignvideo_acq-mb8_events.json,/sub-0001/ses-01/sub-0001_ses-01_run-03_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-alignvideo_run-03_events.json,/sub-0001/ses-01/sub-0001_ses-01_acq-mb8_run-03_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-alignvideo_acq-mb8_run-03_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_acq-mb8_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_run-03_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_run-03_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_acq-mb8_run-03_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-03_events.json
+		./sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-04_events.tsv
+			Evidence: Columns: TODO -- fill in rows and add more tab-separated columns if desired not defined, please define in: /events.json, /task-alignvideo_events.json,/acq-mb8_events.json,/task-alignvideo_acq-mb8_events.json,/run-04_events.json,/task-alignvideo_run-04_events.json,/acq-mb8_run-04_events.json,/task-alignvideo_acq-mb8_run-04_events.json,/sub-0001/sub-0001_events.json,/sub-0001/sub-0001_task-alignvideo_events.json,/sub-0001/sub-0001_acq-mb8_events.json,/sub-0001/sub-0001_task-alignvideo_acq-mb8_events.json,/sub-0001/sub-0001_run-04_events.json,/sub-0001/sub-0001_task-alignvideo_run-04_events.json,/sub-0001/sub-0001_acq-mb8_run-04_events.json,/sub-0001/sub-0001_task-alignvideo_acq-mb8_run-04_events.json,/sub-0001/ses-01/sub-0001_ses-01_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-alignvideo_events.json,/sub-0001/ses-01/sub-0001_ses-01_acq-mb8_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-alignvideo_acq-mb8_events.json,/sub-0001/ses-01/sub-0001_ses-01_run-04_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-alignvideo_run-04_events.json,/sub-0001/ses-01/sub-0001_ses-01_acq-mb8_run-04_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-alignvideo_acq-mb8_run-04_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_acq-mb8_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_run-04_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_run-04_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_acq-mb8_run-04_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-04_events.json
+		./sub-0001/ses-01/func/sub-0001_ses-01_task-social_acq-mb8_run-01_events.tsv
+			Evidence: Columns: TODO -- fill in rows and add more tab-separated columns if desired not defined, please define in: /events.json, /task-social_events.json,/acq-mb8_events.json,/task-social_acq-mb8_events.json,/run-01_events.json,/task-social_run-01_events.json,/acq-mb8_run-01_events.json,/task-social_acq-mb8_run-01_events.json,/sub-0001/sub-0001_events.json,/sub-0001/sub-0001_task-social_events.json,/sub-0001/sub-0001_acq-mb8_events.json,/sub-0001/sub-0001_task-social_acq-mb8_events.json,/sub-0001/sub-0001_run-01_events.json,/sub-0001/sub-0001_task-social_run-01_events.json,/sub-0001/sub-0001_acq-mb8_run-01_events.json,/sub-0001/sub-0001_task-social_acq-mb8_run-01_events.json,/sub-0001/ses-01/sub-0001_ses-01_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-social_events.json,/sub-0001/ses-01/sub-0001_ses-01_acq-mb8_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-social_acq-mb8_events.json,/sub-0001/ses-01/sub-0001_ses-01_run-01_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-social_run-01_events.json,/sub-0001/ses-01/sub-0001_ses-01_acq-mb8_run-01_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-social_acq-mb8_run-01_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-social_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_acq-mb8_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-social_acq-mb8_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_run-01_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-social_run-01_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_acq-mb8_run-01_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-social_acq-mb8_run-01_events.json
+		./sub-0001/ses-01/func/sub-0001_ses-01_task-social_acq-mb8_run-02_events.tsv
+			Evidence: Columns: TODO -- fill in rows and add more tab-separated columns if desired not defined, please define in: /events.json, /task-social_events.json,/acq-mb8_events.json,/task-social_acq-mb8_events.json,/run-02_events.json,/task-social_run-02_events.json,/acq-mb8_run-02_events.json,/task-social_acq-mb8_run-02_events.json,/sub-0001/sub-0001_events.json,/sub-0001/sub-0001_task-social_events.json,/sub-0001/sub-0001_acq-mb8_events.json,/sub-0001/sub-0001_task-social_acq-mb8_events.json,/sub-0001/sub-0001_run-02_events.json,/sub-0001/sub-0001_task-social_run-02_events.json,/sub-0001/sub-0001_acq-mb8_run-02_events.json,/sub-0001/sub-0001_task-social_acq-mb8_run-02_events.json,/sub-0001/ses-01/sub-0001_ses-01_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-social_events.json,/sub-0001/ses-01/sub-0001_ses-01_acq-mb8_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-social_acq-mb8_events.json,/sub-0001/ses-01/sub-0001_ses-01_run-02_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-social_run-02_events.json,/sub-0001/ses-01/sub-0001_ses-01_acq-mb8_run-02_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-social_acq-mb8_run-02_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-social_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_acq-mb8_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-social_acq-mb8_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_run-02_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-social_run-02_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_acq-mb8_run-02_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-social_acq-mb8_run-02_events.json
+		./sub-0001/ses-01/func/sub-0001_ses-01_task-social_acq-mb8_run-03_events.tsv
+			Evidence: Columns: TODO -- fill in rows and add more tab-separated columns if desired not defined, please define in: /events.json, /task-social_events.json,/acq-mb8_events.json,/task-social_acq-mb8_events.json,/run-03_events.json,/task-social_run-03_events.json,/acq-mb8_run-03_events.json,/task-social_acq-mb8_run-03_events.json,/sub-0001/sub-0001_events.json,/sub-0001/sub-0001_task-social_events.json,/sub-0001/sub-0001_acq-mb8_events.json,/sub-0001/sub-0001_task-social_acq-mb8_events.json,/sub-0001/sub-0001_run-03_events.json,/sub-0001/sub-0001_task-social_run-03_events.json,/sub-0001/sub-0001_acq-mb8_run-03_events.json,/sub-0001/sub-0001_task-social_acq-mb8_run-03_events.json,/sub-0001/ses-01/sub-0001_ses-01_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-social_events.json,/sub-0001/ses-01/sub-0001_ses-01_acq-mb8_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-social_acq-mb8_events.json,/sub-0001/ses-01/sub-0001_ses-01_run-03_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-social_run-03_events.json,/sub-0001/ses-01/sub-0001_ses-01_acq-mb8_run-03_events.json,/sub-0001/ses-01/sub-0001_ses-01_task-social_acq-mb8_run-03_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-social_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_acq-mb8_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-social_acq-mb8_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_run-03_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-social_run-03_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_acq-mb8_run-03_events.json,/sub-0001/ses-01/func/sub-0001_ses-01_task-social_acq-mb8_run-03_events.json
+		./sub-0001/ses-02/func/sub-0001_ses-02_task-alignvideo_acq-mb8_run-01_events.tsv
+			Evidence: Columns: TODO -- fill in rows and add more tab-separated columns if desired not defined, please define in: /events.json, /task-alignvideo_events.json,/acq-mb8_events.json,/task-alignvideo_acq-mb8_events.json,/run-01_events.json,/task-alignvideo_run-01_events.json,/acq-mb8_run-01_events.json,/task-alignvideo_acq-mb8_run-01_events.json,/sub-0001/sub-0001_events.json,/sub-0001/sub-0001_task-alignvideo_events.json,/sub-0001/sub-0001_acq-mb8_events.json,/sub-0001/sub-0001_task-alignvideo_acq-mb8_events.json,/sub-0001/sub-0001_run-01_events.json,/sub-0001/sub-0001_task-alignvideo_run-01_events.json,/sub-0001/sub-0001_acq-mb8_run-01_events.json,/sub-0001/sub-0001_task-alignvideo_acq-mb8_run-01_events.json,/sub-0001/ses-02/sub-0001_ses-02_events.json,/sub-0001/ses-02/sub-0001_ses-02_task-alignvideo_events.json,/sub-0001/ses-02/sub-0001_ses-02_acq-mb8_events.json,/sub-0001/ses-02/sub-0001_ses-02_task-alignvideo_acq-mb8_events.json,/sub-0001/ses-02/sub-0001_ses-02_run-01_events.json,/sub-0001/ses-02/sub-0001_ses-02_task-alignvideo_run-01_events.json,/sub-0001/ses-02/sub-0001_ses-02_acq-mb8_run-01_events.json,/sub-0001/ses-02/sub-0001_ses-02_task-alignvideo_acq-mb8_run-01_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_task-alignvideo_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_acq-mb8_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_task-alignvideo_acq-mb8_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_run-01_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_task-alignvideo_run-01_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_acq-mb8_run-01_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_task-alignvideo_acq-mb8_run-01_events.json
+		./sub-0001/ses-02/func/sub-0001_ses-02_task-alignvideo_acq-mb8_run-02_events.tsv
+			Evidence: Columns: TODO -- fill in rows and add more tab-separated columns if desired not defined, please define in: /events.json, /task-alignvideo_events.json,/acq-mb8_events.json,/task-alignvideo_acq-mb8_events.json,/run-02_events.json,/task-alignvideo_run-02_events.json,/acq-mb8_run-02_events.json,/task-alignvideo_acq-mb8_run-02_events.json,/sub-0001/sub-0001_events.json,/sub-0001/sub-0001_task-alignvideo_events.json,/sub-0001/sub-0001_acq-mb8_events.json,/sub-0001/sub-0001_task-alignvideo_acq-mb8_events.json,/sub-0001/sub-0001_run-02_events.json,/sub-0001/sub-0001_task-alignvideo_run-02_events.json,/sub-0001/sub-0001_acq-mb8_run-02_events.json,/sub-0001/sub-0001_task-alignvideo_acq-mb8_run-02_events.json,/sub-0001/ses-02/sub-0001_ses-02_events.json,/sub-0001/ses-02/sub-0001_ses-02_task-alignvideo_events.json,/sub-0001/ses-02/sub-0001_ses-02_acq-mb8_events.json,/sub-0001/ses-02/sub-0001_ses-02_task-alignvideo_acq-mb8_events.json,/sub-0001/ses-02/sub-0001_ses-02_run-02_events.json,/sub-0001/ses-02/sub-0001_ses-02_task-alignvideo_run-02_events.json,/sub-0001/ses-02/sub-0001_ses-02_acq-mb8_run-02_events.json,/sub-0001/ses-02/sub-0001_ses-02_task-alignvideo_acq-mb8_run-02_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_task-alignvideo_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_acq-mb8_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_task-alignvideo_acq-mb8_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_run-02_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_task-alignvideo_run-02_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_acq-mb8_run-02_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_task-alignvideo_acq-mb8_run-02_events.json
+		./sub-0001/ses-02/func/sub-0001_ses-02_task-alignvideo_acq-mb8_run-03_events.tsv
+			Evidence: Columns: TODO -- fill in rows and add more tab-separated columns if desired not defined, please define in: /events.json, /task-alignvideo_events.json,/acq-mb8_events.json,/task-alignvideo_acq-mb8_events.json,/run-03_events.json,/task-alignvideo_run-03_events.json,/acq-mb8_run-03_events.json,/task-alignvideo_acq-mb8_run-03_events.json,/sub-0001/sub-0001_events.json,/sub-0001/sub-0001_task-alignvideo_events.json,/sub-0001/sub-0001_acq-mb8_events.json,/sub-0001/sub-0001_task-alignvideo_acq-mb8_events.json,/sub-0001/sub-0001_run-03_events.json,/sub-0001/sub-0001_task-alignvideo_run-03_events.json,/sub-0001/sub-0001_acq-mb8_run-03_events.json,/sub-0001/sub-0001_task-alignvideo_acq-mb8_run-03_events.json,/sub-0001/ses-02/sub-0001_ses-02_events.json,/sub-0001/ses-02/sub-0001_ses-02_task-alignvideo_events.json,/sub-0001/ses-02/sub-0001_ses-02_acq-mb8_events.json,/sub-0001/ses-02/sub-0001_ses-02_task-alignvideo_acq-mb8_events.json,/sub-0001/ses-02/sub-0001_ses-02_run-03_events.json,/sub-0001/ses-02/sub-0001_ses-02_task-alignvideo_run-03_events.json,/sub-0001/ses-02/sub-0001_ses-02_acq-mb8_run-03_events.json,/sub-0001/ses-02/sub-0001_ses-02_task-alignvideo_acq-mb8_run-03_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_task-alignvideo_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_acq-mb8_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_task-alignvideo_acq-mb8_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_run-03_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_task-alignvideo_run-03_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_acq-mb8_run-03_events.json,/sub-0001/ses-02/func/sub-0001_ses-02_task-alignvideo_acq-mb8_run-03_events.json
+		[33m... and 624 more files having this issue (Use --verbose to see them all).[39m
+
+[36m	Please visit https://neurostars.org/search?q=CUSTOM_COLUMN_WITHOUT_DESCRIPTION for existing conversations about this issue.[39m
+
+	[33m8: [WARN] Not all subjects contain the same sessions. (code: 97 - MISSING_SESSION)[39m
+		./sub-0014/ses-04
+			Evidence: Subject: sub-0014; Missing session: ses-04
+		./sub-0015/ses-02
+			Evidence: Subject: sub-0015; Missing session: ses-02
+		./sub-0015/ses-03
+			Evidence: Subject: sub-0015; Missing session: ses-03
+		./sub-0015/ses-04
+			Evidence: Subject: sub-0015; Missing session: ses-04
+		./sub-0020/ses-04
+			Evidence: Subject: sub-0020; Missing session: ses-04
+
+[36m	Please visit https://neurostars.org/search?q=MISSING_SESSION for existing conversations about this issue.[39m
+
+	[33m9: [WARN] The recommended file /README is very small. Please consider expanding it with additional information about the dataset. (code: 213 - README_FILE_SMALL)[39m
+
+[36m	Please visit https://neurostars.org/search?q=README_FILE_SMALL for existing conversations about this issue.[39m
+
+
+        [34m[4mSummary:[24m[39m                    [34m[4mAvailable Tasks:[24m[39m        [34m[4mAvailable Modalities:[24m[39m 
+        4002 Files, 112.91GB        alignvideo              T1w                   
+        17 - Subjects                                       dwi                   
+        4 - Sessions                                        bold                  
+                                                            events                
+                                                            sbref                 
+                                                            fieldmap              
+
+
+[36m	If you have any questions, please post on https://neurostars.org/tags/bids.[39m
+

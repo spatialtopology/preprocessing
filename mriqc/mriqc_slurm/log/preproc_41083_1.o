@@ -1,0 +1,690 @@
+array id:  1, subject id:  0002, session id: 
+/usr/local/bin:/usr/local/sbin:/opt/java/latest/bin:/optnfs/python/el7/2.7-Anaconda/bin:/optnfs/python/el7/2.7-Anaconda/condabin:/dartfs-hpc/admin/opt/el7/intel/compilers_and_libraries_2018.1.163/linux/bin/intel64:/usr/local/bin:/usr/lib64/qt-3.3/bin:/opt/java/latest/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/bin:/opt/slurm/bin:/optnfs/moab/active/bin:/dartfs-hpc/admin/etc/cluster_files/scripts:/optnfs/mkerberos/bin:/dartfs-hpc/admin/local/bin:/dartfs-hpc/rc/home/1/f0042x1/bin:/opt/bin:/optnfs/moab/active/bin:/dartfs-hpc/admin/etc/cluster_files/scripts:/optnfs/mkerberos/bin:/dartfs-hpc/admin/local/bin:/dartfs-hpc/rc/home/1/f0042x1/bin
+
+2021-06-23 11:12:11,943 mriqc:IMPORTANT 
+    Running MRIQC version 0.14.2:
+      * BIDS dataset path: /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth.
+      * Output folder: /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc.
+      * Analysis levels: participant.
+    
+210623-11:12:28,773 nipype.workflow INFO:
+	 Building anatomical MRIQC workflow, datasets list: ['sub-0002/ses-01/anat/sub-0002_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz']
+2021-06-23 11:12:28,773 nipype.workflow:INFO Building anatomical MRIQC workflow, datasets list: ['sub-0002/ses-01/anat/sub-0002_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz']
+210623-11:12:31,756 nipype.workflow INFO:
+	 Generated workflow graph: /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/anatMRIQCT1w/graph.png (graph2use=hierarchical, simple_form=True).
+2021-06-23 11:12:31,756 nipype.workflow:INFO Generated workflow graph: /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/anatMRIQCT1w/graph.png (graph2use=hierarchical, simple_form=True).
+210623-11:12:32,676 nipype.workflow INFO:
+	 Generated workflow graph: /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/funcMRIQC/graph.png (graph2use=hierarchical, simple_form=True).
+2021-06-23 11:12:32,676 nipype.workflow:INFO Generated workflow graph: /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/funcMRIQC/graph.png (graph2use=hierarchical, simple_form=True).
+2021-06-23 11:12:35,330 mriqc:WARNING Anonymized quality metrics will be submitted to MRIQC's metrics repository. Use --no-sub to disable submission.
+210623-11:12:37,710 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.non_steady_state_detector" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-social_acq-mb8_run-06_bold.nii.gz/non_steady_state_detector".
+210623-11:12:37,767 nipype.workflow INFO:
+	 [Node] Running "non_steady_state_detector" ("nipype.algorithms.confounds.NonSteadyStateDetector")
+210623-11:12:37,788 nipype.workflow WARNING:
+	 [Node] Error on "workflow_enumerator.funcMRIQC.non_steady_state_detector" (/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-social_acq-mb8_run-06_bold.nii.gz/non_steady_state_detector)
+210623-11:12:37,985 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.anatMRIQCT1w.ComputeIQMs.metadata" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/anatMRIQCT1w/ComputeIQMs/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..anat..sub-0002_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz/metadata".
+2021-06-23 11:12:37,985 nipype.workflow:INFO [Node] Setting-up "workflow_enumerator.anatMRIQCT1w.ComputeIQMs.metadata" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/anatMRIQCT1w/ComputeIQMs/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..anat..sub-0002_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz/metadata".
+210623-11:12:38,33 nipype.workflow INFO:
+	 [Node] Running "metadata" ("mriqc.interfaces.bids.ReadSidecarJSON")
+2021-06-23 11:12:38,033 nipype.workflow:INFO [Node] Running "metadata" ("mriqc.interfaces.bids.ReadSidecarJSON")
+210623-11:12:38,38 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.anatMRIQCT1w.conform" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/anatMRIQCT1w/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..anat..sub-0002_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz/conform".
+2021-06-23 11:12:38,038 nipype.workflow:INFO [Node] Setting-up "workflow_enumerator.anatMRIQCT1w.conform" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/anatMRIQCT1w/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..anat..sub-0002_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz/conform".
+210623-11:12:38,78 nipype.workflow INFO:
+	 [Node] Running "conform" ("mriqc.interfaces.common.ConformImage")
+2021-06-23 11:12:38,078 nipype.workflow:INFO [Node] Running "conform" ("mriqc.interfaces.common.ConformImage")
+210623-11:12:38,115 nipype.workflow WARNING:
+	 [Node] Error on "workflow_enumerator.anatMRIQCT1w.conform" (/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/anatMRIQCT1w/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..anat..sub-0002_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz/conform)
+2021-06-23 11:12:38,115 nipype.workflow:WARNING [Node] Error on "workflow_enumerator.anatMRIQCT1w.conform" (/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/anatMRIQCT1w/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..anat..sub-0002_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz/conform)
+210623-11:12:38,509 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.anatMRIQCT1w.ComputeIQMs.metadata".
+2021-06-23 11:12:38,509 nipype.workflow:INFO [Node] Finished "workflow_enumerator.anatMRIQCT1w.ComputeIQMs.metadata".
+210623-11:12:38,883 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.non_steady_state_detector" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-social_acq-mb8_run-05_bold.nii.gz/non_steady_state_detector".
+210623-11:12:38,919 nipype.workflow INFO:
+	 [Node] Running "non_steady_state_detector" ("nipype.algorithms.confounds.NonSteadyStateDetector")
+210623-11:12:38,960 nipype.workflow WARNING:
+	 [Node] Error on "workflow_enumerator.funcMRIQC.non_steady_state_detector" (/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-social_acq-mb8_run-05_bold.nii.gz/non_steady_state_detector)
+210623-11:12:40,335 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.non_steady_state_detector" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-social_acq-mb8_run-04_bold.nii.gz/non_steady_state_detector".
+210623-11:12:40,387 nipype.workflow INFO:
+	 [Node] Running "non_steady_state_detector" ("nipype.algorithms.confounds.NonSteadyStateDetector")
+210623-11:12:40,442 nipype.workflow WARNING:
+	 [Node] Error on "workflow_enumerator.funcMRIQC.non_steady_state_detector" (/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-social_acq-mb8_run-04_bold.nii.gz/non_steady_state_detector)
+210623-11:12:41,900 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.non_steady_state_detector" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-social_acq-mb8_run-03_bold.nii.gz/non_steady_state_detector".
+210623-11:12:41,960 nipype.workflow INFO:
+	 [Node] Running "non_steady_state_detector" ("nipype.algorithms.confounds.NonSteadyStateDetector")
+210623-11:12:41,978 nipype.workflow WARNING:
+	 [Node] Error on "workflow_enumerator.funcMRIQC.non_steady_state_detector" (/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-social_acq-mb8_run-03_bold.nii.gz/non_steady_state_detector)
+210623-11:12:43,239 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.non_steady_state_detector" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-social_acq-mb8_run-02_bold.nii.gz/non_steady_state_detector".
+210623-11:12:43,283 nipype.workflow INFO:
+	 [Node] Running "non_steady_state_detector" ("nipype.algorithms.confounds.NonSteadyStateDetector")
+210623-11:12:43,327 nipype.workflow WARNING:
+	 [Node] Error on "workflow_enumerator.funcMRIQC.non_steady_state_detector" (/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-social_acq-mb8_run-02_bold.nii.gz/non_steady_state_detector)
+210623-11:12:44,611 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.non_steady_state_detector" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-social_acq-mb8_run-01_bold.nii.gz/non_steady_state_detector".
+210623-11:12:44,649 nipype.workflow INFO:
+	 [Node] Running "non_steady_state_detector" ("nipype.algorithms.confounds.NonSteadyStateDetector")
+210623-11:12:44,662 nipype.workflow WARNING:
+	 [Node] Error on "workflow_enumerator.funcMRIQC.non_steady_state_detector" (/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-social_acq-mb8_run-01_bold.nii.gz/non_steady_state_detector)
+210623-11:12:44,747 nipype.workflow WARNING:
+	 [Node] Error on "workflow_enumerator.funcMRIQC.ComputeIQMs.metadata" (/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/ComputeIQMs/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-alignvideo_acq-mb8_run-04_bold.nii.gz/metadata)
+2021-06-23 11:12:44,747 nipype.workflow:WARNING [Node] Error on "workflow_enumerator.funcMRIQC.ComputeIQMs.metadata" (/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/ComputeIQMs/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-alignvideo_acq-mb8_run-04_bold.nii.gz/metadata)
+210623-11:12:44,767 nipype.workflow ERROR:
+	 Node metadata.a3 failed to run on host n12.hpcc.dartmouth.edu.
+2021-06-23 11:12:44,767 nipype.workflow:ERROR Node metadata.a3 failed to run on host n12.hpcc.dartmouth.edu.
+210623-11:12:44,767 nipype.workflow ERROR:
+	 Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111244-f0042x1-metadata.a3-57a5640e-5a09-44de-ae77-b9e428319fef.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 308, in _send_procs_to_workers
+    self.procs[jobid].run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/mriqc/interfaces/bids.py", line 43, in _run_interface
+    metadata = get_metadata_for_nifti(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/mriqc/interfaces/bids.py", line 254, in get_metadata_for_nifti
+    param_dict = json.load(jsonfile)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/simplejson/__init__.py", line 461, in load
+    use_decimal=use_decimal, **kw)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/simplejson/__init__.py", line 518, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/simplejson/decoder.py", line 370, in decode
+    obj, end = self.raw_decode(s)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/simplejson/decoder.py", line 400, in raw_decode
+    return self.scan_once(s, idx=_w(s, idx).end())
+simplejson.errors.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+2021-06-23 11:12:44,767 nipype.workflow:ERROR Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111244-f0042x1-metadata.a3-57a5640e-5a09-44de-ae77-b9e428319fef.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 308, in _send_procs_to_workers
+    self.procs[jobid].run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/mriqc/interfaces/bids.py", line 43, in _run_interface
+    metadata = get_metadata_for_nifti(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/mriqc/interfaces/bids.py", line 254, in get_metadata_for_nifti
+    param_dict = json.load(jsonfile)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/simplejson/__init__.py", line 461, in load
+    use_decimal=use_decimal, **kw)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/simplejson/__init__.py", line 518, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/simplejson/decoder.py", line 370, in decode
+    obj, end = self.raw_decode(s)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/simplejson/decoder.py", line 400, in raw_decode
+    return self.scan_once(s, idx=_w(s, idx).end())
+simplejson.errors.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+210623-11:12:45,755 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.non_steady_state_detector" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-alignvideo_acq-mb8_run-04_bold.nii.gz/non_steady_state_detector".
+210623-11:12:45,796 nipype.workflow INFO:
+	 [Node] Running "non_steady_state_detector" ("nipype.algorithms.confounds.NonSteadyStateDetector")
+210623-11:12:45,819 nipype.workflow WARNING:
+	 [Node] Error on "workflow_enumerator.funcMRIQC.non_steady_state_detector" (/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-alignvideo_acq-mb8_run-04_bold.nii.gz/non_steady_state_detector)
+210623-11:12:46,58 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.non_steady_state_detector" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-alignvideo_acq-mb8_run-03_bold.nii.gz/non_steady_state_detector".
+210623-11:12:46,99 nipype.workflow INFO:
+	 [Node] Running "non_steady_state_detector" ("nipype.algorithms.confounds.NonSteadyStateDetector")
+210623-11:12:46,125 nipype.workflow WARNING:
+	 [Node] Error on "workflow_enumerator.funcMRIQC.non_steady_state_detector" (/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-alignvideo_acq-mb8_run-03_bold.nii.gz/non_steady_state_detector)
+210623-11:12:46,460 nipype.workflow WARNING:
+	 [Node] Error on "workflow_enumerator.funcMRIQC.ComputeIQMs.metadata" (/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/ComputeIQMs/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-alignvideo_acq-mb8_run-02_bold.nii.gz/metadata)
+2021-06-23 11:12:46,460 nipype.workflow:WARNING [Node] Error on "workflow_enumerator.funcMRIQC.ComputeIQMs.metadata" (/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/ComputeIQMs/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-alignvideo_acq-mb8_run-02_bold.nii.gz/metadata)
+210623-11:12:46,478 nipype.workflow ERROR:
+	 Node metadata.a1 failed to run on host n12.hpcc.dartmouth.edu.
+2021-06-23 11:12:46,478 nipype.workflow:ERROR Node metadata.a1 failed to run on host n12.hpcc.dartmouth.edu.
+210623-11:12:46,479 nipype.workflow ERROR:
+	 Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111246-f0042x1-metadata.a1-375f5c2d-b3fb-4ec6-b4b7-a0277c808c69.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 308, in _send_procs_to_workers
+    self.procs[jobid].run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/mriqc/interfaces/bids.py", line 43, in _run_interface
+    metadata = get_metadata_for_nifti(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/mriqc/interfaces/bids.py", line 254, in get_metadata_for_nifti
+    param_dict = json.load(jsonfile)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/simplejson/__init__.py", line 461, in load
+    use_decimal=use_decimal, **kw)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/simplejson/__init__.py", line 518, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/simplejson/decoder.py", line 370, in decode
+    obj, end = self.raw_decode(s)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/simplejson/decoder.py", line 400, in raw_decode
+    return self.scan_once(s, idx=_w(s, idx).end())
+simplejson.errors.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+2021-06-23 11:12:46,479 nipype.workflow:ERROR Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111246-f0042x1-metadata.a1-375f5c2d-b3fb-4ec6-b4b7-a0277c808c69.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 308, in _send_procs_to_workers
+    self.procs[jobid].run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/mriqc/interfaces/bids.py", line 43, in _run_interface
+    metadata = get_metadata_for_nifti(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/mriqc/interfaces/bids.py", line 254, in get_metadata_for_nifti
+    param_dict = json.load(jsonfile)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/simplejson/__init__.py", line 461, in load
+    use_decimal=use_decimal, **kw)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/simplejson/__init__.py", line 518, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/simplejson/decoder.py", line 370, in decode
+    obj, end = self.raw_decode(s)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/simplejson/decoder.py", line 400, in raw_decode
+    return self.scan_once(s, idx=_w(s, idx).end())
+simplejson.errors.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+210623-11:12:47,588 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.non_steady_state_detector" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-alignvideo_acq-mb8_run-02_bold.nii.gz/non_steady_state_detector".
+210623-11:12:47,625 nipype.workflow INFO:
+	 [Node] Running "non_steady_state_detector" ("nipype.algorithms.confounds.NonSteadyStateDetector")
+210623-11:12:47,640 nipype.workflow WARNING:
+	 [Node] Error on "workflow_enumerator.funcMRIQC.non_steady_state_detector" (/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-alignvideo_acq-mb8_run-02_bold.nii.gz/non_steady_state_detector)
+210623-11:12:47,872 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.non_steady_state_detector" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-alignvideo_acq-mb8_run-01_bold.nii.gz/non_steady_state_detector".
+210623-11:12:47,913 nipype.workflow INFO:
+	 [Node] Running "non_steady_state_detector" ("nipype.algorithms.confounds.NonSteadyStateDetector")
+210623-11:12:47,945 nipype.workflow WARNING:
+	 [Node] Error on "workflow_enumerator.funcMRIQC.non_steady_state_detector" (/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0002..ses-01..func..sub-0002_ses-01_task-alignvideo_acq-mb8_run-01_bold.nii.gz/non_steady_state_detector)
+210623-11:12:48,186 nipype.workflow ERROR:
+	 Node conform.a0 failed to run on host n12.hpcc.dartmouth.edu.
+2021-06-23 11:12:48,186 nipype.workflow:ERROR Node conform.a0 failed to run on host n12.hpcc.dartmouth.edu.
+210623-11:12:48,187 nipype.workflow ERROR:
+	 Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-conform.a0-808c4771-7a53-4442-bc5d-dfa7f79d3280.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/mriqc/interfaces/common.py", line 100, in _run_interface
+    nii = nb.squeeze_image(nb.load(self.inputs.in_file))
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/anat/sub-0002_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz"
+
+2021-06-23 11:12:48,187 nipype.workflow:ERROR Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-conform.a0-808c4771-7a53-4442-bc5d-dfa7f79d3280.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/mriqc/interfaces/common.py", line 100, in _run_interface
+    nii = nb.squeeze_image(nb.load(self.inputs.in_file))
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/anat/sub-0002_ses-01_acq-MPRAGEXp3X08mm_T1w.nii.gz"
+
+210623-11:12:48,206 nipype.workflow ERROR:
+	 Node non_steady_state_detector.a9 failed to run on host n12.hpcc.dartmouth.edu.
+2021-06-23 11:12:48,206 nipype.workflow:ERROR Node non_steady_state_detector.a9 failed to run on host n12.hpcc.dartmouth.edu.
+210623-11:12:48,206 nipype.workflow ERROR:
+	 Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-non_steady_state_detector.a9-5839adcf-4128-4392-9661-67bdbf0ef89e.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/algorithms/confounds.py", line 827, in _run_interface
+    in_nii = nb.load(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/func/sub-0002_ses-01_task-social_acq-mb8_run-06_bold.nii.gz"
+
+2021-06-23 11:12:48,206 nipype.workflow:ERROR Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-non_steady_state_detector.a9-5839adcf-4128-4392-9661-67bdbf0ef89e.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/algorithms/confounds.py", line 827, in _run_interface
+    in_nii = nb.load(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/func/sub-0002_ses-01_task-social_acq-mb8_run-06_bold.nii.gz"
+
+210623-11:12:48,228 nipype.workflow ERROR:
+	 Node non_steady_state_detector.a8 failed to run on host n12.hpcc.dartmouth.edu.
+2021-06-23 11:12:48,228 nipype.workflow:ERROR Node non_steady_state_detector.a8 failed to run on host n12.hpcc.dartmouth.edu.
+210623-11:12:48,229 nipype.workflow ERROR:
+	 Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-non_steady_state_detector.a8-d55c7e28-d28b-4d56-a991-c07cf44ca9bd.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/algorithms/confounds.py", line 827, in _run_interface
+    in_nii = nb.load(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/func/sub-0002_ses-01_task-social_acq-mb8_run-05_bold.nii.gz"
+
+2021-06-23 11:12:48,229 nipype.workflow:ERROR Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-non_steady_state_detector.a8-d55c7e28-d28b-4d56-a991-c07cf44ca9bd.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/algorithms/confounds.py", line 827, in _run_interface
+    in_nii = nb.load(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/func/sub-0002_ses-01_task-social_acq-mb8_run-05_bold.nii.gz"
+
+210623-11:12:48,247 nipype.workflow ERROR:
+	 Node non_steady_state_detector.a7 failed to run on host n12.hpcc.dartmouth.edu.
+2021-06-23 11:12:48,247 nipype.workflow:ERROR Node non_steady_state_detector.a7 failed to run on host n12.hpcc.dartmouth.edu.
+210623-11:12:48,248 nipype.workflow ERROR:
+	 Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-non_steady_state_detector.a7-3d082cc8-4d19-4a0d-a6e3-ca522562618a.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/algorithms/confounds.py", line 827, in _run_interface
+    in_nii = nb.load(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/func/sub-0002_ses-01_task-social_acq-mb8_run-04_bold.nii.gz"
+
+2021-06-23 11:12:48,248 nipype.workflow:ERROR Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-non_steady_state_detector.a7-3d082cc8-4d19-4a0d-a6e3-ca522562618a.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/algorithms/confounds.py", line 827, in _run_interface
+    in_nii = nb.load(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/func/sub-0002_ses-01_task-social_acq-mb8_run-04_bold.nii.gz"
+
+210623-11:12:48,273 nipype.workflow ERROR:
+	 Node non_steady_state_detector.a6 failed to run on host n12.hpcc.dartmouth.edu.
+2021-06-23 11:12:48,273 nipype.workflow:ERROR Node non_steady_state_detector.a6 failed to run on host n12.hpcc.dartmouth.edu.
+210623-11:12:48,274 nipype.workflow ERROR:
+	 Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-non_steady_state_detector.a6-728e78d8-d68f-4bf7-bc20-d0dd023b50c6.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/algorithms/confounds.py", line 827, in _run_interface
+    in_nii = nb.load(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/func/sub-0002_ses-01_task-social_acq-mb8_run-03_bold.nii.gz"
+
+2021-06-23 11:12:48,274 nipype.workflow:ERROR Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-non_steady_state_detector.a6-728e78d8-d68f-4bf7-bc20-d0dd023b50c6.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/algorithms/confounds.py", line 827, in _run_interface
+    in_nii = nb.load(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/func/sub-0002_ses-01_task-social_acq-mb8_run-03_bold.nii.gz"
+
+210623-11:12:48,295 nipype.workflow ERROR:
+	 Node non_steady_state_detector.a5 failed to run on host n12.hpcc.dartmouth.edu.
+2021-06-23 11:12:48,295 nipype.workflow:ERROR Node non_steady_state_detector.a5 failed to run on host n12.hpcc.dartmouth.edu.
+210623-11:12:48,296 nipype.workflow ERROR:
+	 Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-non_steady_state_detector.a5-e070ef6f-2984-442b-a8d3-ea07090bbbb8.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/algorithms/confounds.py", line 827, in _run_interface
+    in_nii = nb.load(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/func/sub-0002_ses-01_task-social_acq-mb8_run-02_bold.nii.gz"
+
+2021-06-23 11:12:48,296 nipype.workflow:ERROR Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-non_steady_state_detector.a5-e070ef6f-2984-442b-a8d3-ea07090bbbb8.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/algorithms/confounds.py", line 827, in _run_interface
+    in_nii = nb.load(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/func/sub-0002_ses-01_task-social_acq-mb8_run-02_bold.nii.gz"
+
+210623-11:12:48,325 nipype.workflow ERROR:
+	 Node non_steady_state_detector.a4 failed to run on host n12.hpcc.dartmouth.edu.
+2021-06-23 11:12:48,325 nipype.workflow:ERROR Node non_steady_state_detector.a4 failed to run on host n12.hpcc.dartmouth.edu.
+210623-11:12:48,326 nipype.workflow ERROR:
+	 Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-non_steady_state_detector.a4-000d6223-9cb9-4296-9ce0-1039d3cbaa7c.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/algorithms/confounds.py", line 827, in _run_interface
+    in_nii = nb.load(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/func/sub-0002_ses-01_task-social_acq-mb8_run-01_bold.nii.gz"
+
+2021-06-23 11:12:48,326 nipype.workflow:ERROR Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-non_steady_state_detector.a4-000d6223-9cb9-4296-9ce0-1039d3cbaa7c.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/algorithms/confounds.py", line 827, in _run_interface
+    in_nii = nb.load(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/func/sub-0002_ses-01_task-social_acq-mb8_run-01_bold.nii.gz"
+
+210623-11:12:48,348 nipype.workflow ERROR:
+	 Node non_steady_state_detector.a3 failed to run on host n12.hpcc.dartmouth.edu.
+2021-06-23 11:12:48,348 nipype.workflow:ERROR Node non_steady_state_detector.a3 failed to run on host n12.hpcc.dartmouth.edu.
+210623-11:12:48,348 nipype.workflow ERROR:
+	 Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-non_steady_state_detector.a3-0a25c680-5546-4478-9f7f-0ec92e6c75d5.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/algorithms/confounds.py", line 827, in _run_interface
+    in_nii = nb.load(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/func/sub-0002_ses-01_task-alignvideo_acq-mb8_run-04_bold.nii.gz"
+
+2021-06-23 11:12:48,348 nipype.workflow:ERROR Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-non_steady_state_detector.a3-0a25c680-5546-4478-9f7f-0ec92e6c75d5.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/algorithms/confounds.py", line 827, in _run_interface
+    in_nii = nb.load(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/func/sub-0002_ses-01_task-alignvideo_acq-mb8_run-04_bold.nii.gz"
+
+210623-11:12:48,370 nipype.workflow ERROR:
+	 Node non_steady_state_detector.a2 failed to run on host n12.hpcc.dartmouth.edu.
+2021-06-23 11:12:48,370 nipype.workflow:ERROR Node non_steady_state_detector.a2 failed to run on host n12.hpcc.dartmouth.edu.
+210623-11:12:48,371 nipype.workflow ERROR:
+	 Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-non_steady_state_detector.a2-36cdec78-4476-4979-9b19-da11303d434e.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/algorithms/confounds.py", line 827, in _run_interface
+    in_nii = nb.load(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/func/sub-0002_ses-01_task-alignvideo_acq-mb8_run-03_bold.nii.gz"
+
+2021-06-23 11:12:48,371 nipype.workflow:ERROR Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-non_steady_state_detector.a2-36cdec78-4476-4979-9b19-da11303d434e.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/algorithms/confounds.py", line 827, in _run_interface
+    in_nii = nb.load(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/func/sub-0002_ses-01_task-alignvideo_acq-mb8_run-03_bold.nii.gz"
+
+210623-11:12:48,390 nipype.workflow ERROR:
+	 Node non_steady_state_detector.a1 failed to run on host n12.hpcc.dartmouth.edu.
+2021-06-23 11:12:48,390 nipype.workflow:ERROR Node non_steady_state_detector.a1 failed to run on host n12.hpcc.dartmouth.edu.
+210623-11:12:48,391 nipype.workflow ERROR:
+	 Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-non_steady_state_detector.a1-cc241221-da26-4dc6-aad2-8d48b853cbb2.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/algorithms/confounds.py", line 827, in _run_interface
+    in_nii = nb.load(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/func/sub-0002_ses-01_task-alignvideo_acq-mb8_run-02_bold.nii.gz"
+
+2021-06-23 11:12:48,391 nipype.workflow:ERROR Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-non_steady_state_detector.a1-cc241221-da26-4dc6-aad2-8d48b853cbb2.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/algorithms/confounds.py", line 827, in _run_interface
+    in_nii = nb.load(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/func/sub-0002_ses-01_task-alignvideo_acq-mb8_run-02_bold.nii.gz"
+
+210623-11:12:48,409 nipype.workflow ERROR:
+	 Node non_steady_state_detector.a0 failed to run on host n12.hpcc.dartmouth.edu.
+2021-06-23 11:12:48,409 nipype.workflow:ERROR Node non_steady_state_detector.a0 failed to run on host n12.hpcc.dartmouth.edu.
+210623-11:12:48,410 nipype.workflow ERROR:
+	 Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-non_steady_state_detector.a0-c62f2414-4cb3-4214-9d14-bed2ad54fac1.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/algorithms/confounds.py", line 827, in _run_interface
+    in_nii = nb.load(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/func/sub-0002_ses-01_task-alignvideo_acq-mb8_run-01_bold.nii.gz"
+
+2021-06-23 11:12:48,410 nipype.workflow:ERROR Saving crash info to /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/logs/crash-20210623-111248-f0042x1-non_steady_state_detector.a0-c62f2414-4cb3-4214-9d14-bed2ad54fac1.txt
+Traceback (most recent call last):
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/plugins/multiproc.py", line 69, in run_node
+    result['result'] = node.run(updatehash=updatehash)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 471, in run
+    result = self._run_interface(execute=True)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 555, in _run_interface
+    return self._run_command(execute)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/pipeline/engine/nodes.py", line 635, in _run_command
+    result = self._interface.run(cwd=outdir)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/interfaces/base/core.py", line 521, in run
+    runtime = self._run_interface(runtime)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nipype/algorithms/confounds.py", line 827, in _run_interface
+    in_nii = nb.load(self.inputs.in_file)
+  File "/usr/local/miniconda/lib/python3.6/site-packages/nibabel/loadsave.py", line 53, in load
+    filename)
+nibabel.filebasedimages.ImageFileError: Cannot work out file type of "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0002/ses-01/func/sub-0002_ses-01_task-alignvideo_acq-mb8_run-01_bold.nii.gz"
+
+210623-11:12:50,176 nipype.workflow ERROR:
+	 could not run node: workflow_enumerator.anatMRIQCT1w.conform.a0
+2021-06-23 11:12:50,176 nipype.workflow:ERROR could not run node: workflow_enumerator.anatMRIQCT1w.conform.a0
+210623-11:12:50,177 nipype.workflow ERROR:
+	 could not run node: workflow_enumerator.funcMRIQC.non_steady_state_detector.a9
+2021-06-23 11:12:50,177 nipype.workflow:ERROR could not run node: workflow_enumerator.funcMRIQC.non_steady_state_detector.a9
+210623-11:12:50,178 nipype.workflow ERROR:
+	 could not run node: workflow_enumerator.funcMRIQC.non_steady_state_detector.a8
+2021-06-23 11:12:50,178 nipype.workflow:ERROR could not run node: workflow_enumerator.funcMRIQC.non_steady_state_detector.a8
+210623-11:12:50,178 nipype.workflow ERROR:
+	 could not run node: workflow_enumerator.funcMRIQC.non_steady_state_detector.a7
+2021-06-23 11:12:50,178 nipype.workflow:ERROR could not run node: workflow_enumerator.funcMRIQC.non_steady_state_detector.a7
+210623-11:12:50,178 nipype.workflow ERROR:
+	 could not run node: workflow_enumerator.funcMRIQC.non_steady_state_detector.a6
+2021-06-23 11:12:50,178 nipype.workflow:ERROR could not run node: workflow_enumerator.funcMRIQC.non_steady_state_detector.a6
+210623-11:12:50,178 nipype.workflow ERROR:
+	 could not run node: workflow_enumerator.funcMRIQC.non_steady_state_detector.a5
+2021-06-23 11:12:50,178 nipype.workflow:ERROR could not run node: workflow_enumerator.funcMRIQC.non_steady_state_detector.a5
+210623-11:12:50,178 nipype.workflow ERROR:
+	 could not run node: workflow_enumerator.funcMRIQC.non_steady_state_detector.a4
+2021-06-23 11:12:50,178 nipype.workflow:ERROR could not run node: workflow_enumerator.funcMRIQC.non_steady_state_detector.a4
+210623-11:12:50,179 nipype.workflow ERROR:
+	 could not run node: workflow_enumerator.funcMRIQC.non_steady_state_detector.a3
+2021-06-23 11:12:50,179 nipype.workflow:ERROR could not run node: workflow_enumerator.funcMRIQC.non_steady_state_detector.a3
+210623-11:12:50,179 nipype.workflow ERROR:
+	 could not run node: workflow_enumerator.funcMRIQC.non_steady_state_detector.a2
+2021-06-23 11:12:50,179 nipype.workflow:ERROR could not run node: workflow_enumerator.funcMRIQC.non_steady_state_detector.a2
+210623-11:12:50,179 nipype.workflow ERROR:
+	 could not run node: workflow_enumerator.funcMRIQC.non_steady_state_detector.a1
+2021-06-23 11:12:50,179 nipype.workflow:ERROR could not run node: workflow_enumerator.funcMRIQC.non_steady_state_detector.a1
+210623-11:12:50,179 nipype.workflow ERROR:
+	 could not run node: workflow_enumerator.funcMRIQC.non_steady_state_detector.a0
+2021-06-23 11:12:50,179 nipype.workflow:ERROR could not run node: workflow_enumerator.funcMRIQC.non_steady_state_detector.a0
+COMPLETING mriqc ... COPYING over
+process complete

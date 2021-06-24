@@ -1,0 +1,1 @@
+slurmstepd: error: *** JOB 41777 ON n01 CANCELLED AT 2021-06-24T10:11:53 DUE TO TIME LIMIT ***

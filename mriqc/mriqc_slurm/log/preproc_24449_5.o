@@ -1,0 +1,155 @@
+array id:  5, subject id:  0006
+/usr/local/bin:/usr/local/sbin:/opt/java/latest/bin:/usr/local/bin:/usr/local/sbin:/opt/java/latest/bin:/optnfs/python/el7/2.7-Anaconda/bin:/optnfs/python/el7/2.7-Anaconda/condabin:/dartfs-hpc/admin/opt/el7/intel/compilers_and_libraries_2018.1.163/linux/bin/intel64:/usr/local/bin:/usr/lib64/qt-3.3/bin:/opt/java/latest/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/bin:/opt/slurm/bin:/optnfs/moab/active/bin:/dartfs-hpc/admin/etc/cluster_files/scripts:/optnfs/mkerberos/bin:/dartfs-hpc/admin/local/bin:/dartfs-hpc/rc/home/1/f0042x1/bin:/opt/bin:/optnfs/moab/active/bin:/dartfs-hpc/admin/etc/cluster_files/scripts:/optnfs/mkerberos/bin:/dartfs-hpc/admin/local/bin:/opt/bin:/optnfs/moab/active/bin:/dartfs-hpc/admin/etc/cluster_files/scripts:/optnfs/mkerberos/bin:/dartfs-hpc/admin/local/bin:/dartfs-hpc/rc/home/1/f0042x1/bin
+
+2021-06-15 17:15:30,241 mriqc:IMPORTANT 
+    Running MRIQC version 0.14.2:
+      * BIDS dataset path: /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth.
+      * Output folder: /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc.
+      * Analysis levels: participant.
+    
+210615-17:15:57,235 nipype.workflow INFO:
+	 Generated workflow graph: /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/funcMRIQC/graph.png (graph2use=hierarchical, simple_form=True).
+2021-06-15 17:15:57,235 nipype.workflow:INFO Generated workflow graph: /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/funcMRIQC/graph.png (graph2use=hierarchical, simple_form=True).
+2021-06-15 17:16:00,374 mriqc:WARNING Anonymized quality metrics will be submitted to MRIQC's metrics repository. Use --no-sub to disable submission.
+210615-17:16:06,524 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.non_steady_state_detector" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-06_bold.nii.gz/non_steady_state_detector".
+210615-17:16:06,590 nipype.workflow INFO:
+	 [Node] Running "non_steady_state_detector" ("nipype.algorithms.confounds.NonSteadyStateDetector")
+210615-17:16:10,681 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.non_steady_state_detector" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-05_bold.nii.gz/non_steady_state_detector".
+210615-17:16:10,734 nipype.workflow INFO:
+	 [Node] Running "non_steady_state_detector" ("nipype.algorithms.confounds.NonSteadyStateDetector")
+210615-17:16:15,115 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.non_steady_state_detector" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-04_bold.nii.gz/non_steady_state_detector".
+210615-17:16:15,158 nipype.workflow INFO:
+	 [Node] Running "non_steady_state_detector" ("nipype.algorithms.confounds.NonSteadyStateDetector")
+210615-17:16:16,307 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.non_steady_state_detector".
+210615-17:16:19,396 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.non_steady_state_detector" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-03_bold.nii.gz/non_steady_state_detector".
+210615-17:16:19,482 nipype.workflow INFO:
+	 [Node] Running "non_steady_state_detector" ("nipype.algorithms.confounds.NonSteadyStateDetector")
+210615-17:16:20,176 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.non_steady_state_detector".
+210615-17:16:23,493 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.non_steady_state_detector" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-02_bold.nii.gz/non_steady_state_detector".
+210615-17:16:23,536 nipype.workflow INFO:
+	 [Node] Running "non_steady_state_detector" ("nipype.algorithms.confounds.NonSteadyStateDetector")
+210615-17:16:24,418 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.non_steady_state_detector".
+210615-17:16:27,750 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.non_steady_state_detector" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-01_bold.nii.gz/non_steady_state_detector".
+210615-17:16:27,794 nipype.workflow INFO:
+	 [Node] Running "non_steady_state_detector" ("nipype.algorithms.confounds.NonSteadyStateDetector")
+210615-17:16:28,386 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.sanitize" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-04_bold.nii.gz/sanitize".
+210615-17:16:28,424 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.sanitize" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-06_bold.nii.gz/sanitize".
+210615-17:16:28,437 nipype.workflow INFO:
+	 [Node] Running "sanitize" ("niworkflows.interfaces.utils.SanitizeImage")
+210615-17:16:28,490 nipype.workflow INFO:
+	 [Node] Running "sanitize" ("niworkflows.interfaces.utils.SanitizeImage")
+210615-17:16:28,529 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.sanitize" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-05_bold.nii.gz/sanitize".
+210615-17:16:28,554 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.sanitize".
+210615-17:16:28,587 nipype.workflow INFO:
+	 [Node] Running "sanitize" ("niworkflows.interfaces.utils.SanitizeImage")
+210615-17:16:28,672 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.sanitize".
+210615-17:16:28,731 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.non_steady_state_detector".
+210615-17:16:31,840 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.ReportsWorkflow.SpikesMask" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/ReportsWorkflow/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-06_bold.nii.gz/SpikesMask".
+210615-17:16:31,847 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.ReportsWorkflow.SpikesMask" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/ReportsWorkflow/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-05_bold.nii.gz/SpikesMask".
+210615-17:16:31,893 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.ComputeIQMs.SpikesFinderFFT" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/ComputeIQMs/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-06_bold.nii.gz/SpikesFinderFFT".
+210615-17:16:31,951 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.ComputeIQMs.SpikesFinderFFT" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/ComputeIQMs/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-05_bold.nii.gz/SpikesFinderFFT".
+210615-17:16:31,969 nipype.workflow INFO:
+	 [Node] Running "SpikesFinderFFT" ("nipype.interfaces.utility.wrappers.Function")
+210615-17:16:31,981 nipype.workflow INFO:
+	 [Node] Running "SpikesMask" ("nipype.interfaces.utility.wrappers.Function")
+210615-17:16:31,992 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.fMRI_HMC_afni.drop_trs" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-05_bold.nii.gz/drop_trs".
+210615-17:16:32,3 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.fMRI_HMC_afni.drop_trs" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-06_bold.nii.gz/drop_trs".
+210615-17:16:32,8 nipype.workflow INFO:
+	 [Node] Running "SpikesMask" ("nipype.interfaces.utility.wrappers.Function")
+210615-17:16:32,33 nipype.workflow INFO:
+	 [Node] Running "SpikesFinderFFT" ("nipype.interfaces.utility.wrappers.Function")
+210615-17:16:32,115 nipype.workflow INFO:
+	 [Node] Running "drop_trs" ("nipype.interfaces.afni.utils.Calc"), a CommandLine Interface with command:
+3dcalc -a /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0006/ses-01/func/sub-0006_ses-01_task-social_acq-mb8_run-05_bold.nii.gz -expr "a" -prefix sub-0006_ses-01_task-social_acq-mb8_run-05_bold_calc.nii.gz
+210615-17:16:32,115 nipype.workflow INFO:
+	 [Node] Running "drop_trs" ("nipype.interfaces.afni.utils.Calc"), a CommandLine Interface with command:
+3dcalc -a /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/sub-0006/ses-01/func/sub-0006_ses-01_task-social_acq-mb8_run-06_bold.nii.gz -expr "a" -prefix sub-0006_ses-01_task-social_acq-mb8_run-06_bold_calc.nii.gz
+210615-17:16:32,556 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.non_steady_state_detector".
+210615-17:16:33,56 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.sanitize" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-03_bold.nii.gz/sanitize".
+210615-17:16:33,97 nipype.workflow INFO:
+	 [Node] Running "sanitize" ("niworkflows.interfaces.utils.SanitizeImage")
+210615-17:16:38,638 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.non_steady_state_detector".
+210615-17:17:46,186 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.sanitize".
+210615-17:17:57,545 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.ReportsWorkflow.SpikesMask" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/ReportsWorkflow/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-03_bold.nii.gz/SpikesMask".
+210615-17:17:58,225 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.ComputeIQMs.SpikesFinderFFT" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/ComputeIQMs/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-03_bold.nii.gz/SpikesFinderFFT".
+210615-17:18:00,814 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.ReportsWorkflow.SpikesMask".
+210615-17:18:00,961 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.ReportsWorkflow.SpikesMask".
+210615-17:18:02,453 nipype.workflow INFO:
+	 [Node] Running "SpikesMask" ("nipype.interfaces.utility.wrappers.Function")
+210615-17:18:03,664 nipype.workflow INFO:
+	 [Node] Running "SpikesFinderFFT" ("nipype.interfaces.utility.wrappers.Function")
+210615-17:18:09,808 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.fMRI_HMC_afni.drop_trs" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-03_bold.nii.gz/drop_trs".
+210615-17:18:11,938 nipype.workflow INFO:
+	 [Node] Running "drop_trs" ("nipype.interfaces.afni.utils.Calc"), a CommandLine Interface with command:
+3dcalc -a /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-03_bold.nii.gz/sanitize/sub-0006_ses-01_task-social_acq-mb8_run-03_bold_valid.nii.gz -expr "a" -prefix sub-0006_ses-01_task-social_acq-mb8_run-03_bold_valid_calc.nii.gz
+210615-17:18:19,509 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.sanitize".
+210615-17:18:32,207 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.ReportsWorkflow.SpikesMask" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/ReportsWorkflow/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-04_bold.nii.gz/SpikesMask".
+210615-17:18:36,219 nipype.workflow INFO:
+	 [Node] Running "SpikesMask" ("nipype.interfaces.utility.wrappers.Function")
+210615-17:18:35,265 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.ComputeIQMs.SpikesFinderFFT" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/ComputeIQMs/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-04_bold.nii.gz/SpikesFinderFFT".
+210615-17:18:42,632 nipype.workflow INFO:
+	 [Node] Running "SpikesFinderFFT" ("nipype.interfaces.utility.wrappers.Function")
+210615-17:18:44,107 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.ReportsWorkflow.SpikesFinderBgMask" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/ReportsWorkflow/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-06_bold.nii.gz/SpikesFinderBgMask".
+2021-06-15 17:18:44,107 nipype.workflow:INFO [Node] Setting-up "workflow_enumerator.funcMRIQC.ReportsWorkflow.SpikesFinderBgMask" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/ReportsWorkflow/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-06_bold.nii.gz/SpikesFinderBgMask".
+210615-17:18:46,362 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.ReportsWorkflow.SpikesFinderBgMask" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/ReportsWorkflow/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-05_bold.nii.gz/SpikesFinderBgMask".
+2021-06-15 17:18:46,362 nipype.workflow:INFO [Node] Setting-up "workflow_enumerator.funcMRIQC.ReportsWorkflow.SpikesFinderBgMask" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/ReportsWorkflow/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-05_bold.nii.gz/SpikesFinderBgMask".
+210615-17:18:47,645 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.fMRI_HMC_afni.drop_trs" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-04_bold.nii.gz/drop_trs".
+210615-17:18:48,301 nipype.workflow INFO:
+	 [Node] Running "SpikesFinderBgMask" ("mriqc.interfaces.functional.Spikes")
+2021-06-15 17:18:48,301 nipype.workflow:INFO [Node] Running "SpikesFinderBgMask" ("mriqc.interfaces.functional.Spikes")
+210615-17:18:48,996 nipype.workflow INFO:
+	 [Node] Running "drop_trs" ("nipype.interfaces.afni.utils.Calc"), a CommandLine Interface with command:
+3dcalc -a /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-04_bold.nii.gz/sanitize/sub-0006_ses-01_task-social_acq-mb8_run-04_bold_valid.nii.gz -expr "a" -prefix sub-0006_ses-01_task-social_acq-mb8_run-04_bold_valid_calc.nii.gz
+210615-17:18:51,82 nipype.workflow INFO:
+	 [Node] Running "SpikesFinderBgMask" ("mriqc.interfaces.functional.Spikes")
+2021-06-15 17:18:51,082 nipype.workflow:INFO [Node] Running "SpikesFinderBgMask" ("mriqc.interfaces.functional.Spikes")
+210615-17:19:20,510 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.fMRI_HMC_afni.drop_trs".
+210615-17:19:23,79 nipype.workflow INFO:
+	 [Node] Finished "workflow_enumerator.funcMRIQC.fMRI_HMC_afni.drop_trs".
+210615-17:19:26,7 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.fMRI_HMC_afni.TimeShifts" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-06_bold.nii.gz/TimeShifts".
+210615-17:19:26,336 nipype.workflow INFO:
+	 [Node] Running "TimeShifts" ("nipype.interfaces.afni.preprocess.TShift"), a CommandLine Interface with command:
+3dTshift -prefix sub-0006_ses-01_task-social_acq-mb8_run-06_bold_calc_tshift.nii.gz /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-06_bold.nii.gz/TimeShifts/sub-0006_ses-01_task-social_acq-mb8_run-06_bold_calc.nii.gz
+210615-17:19:30,592 nipype.workflow INFO:
+	 [Node] Setting-up "workflow_enumerator.funcMRIQC.fMRI_HMC_afni.TimeShifts" in "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-05_bold.nii.gz/TimeShifts".
+210615-17:19:37,560 nipype.workflow INFO:
+	 [Node] Running "TimeShifts" ("nipype.interfaces.afni.preprocess.TShift"), a CommandLine Interface with command:
+3dTshift -prefix sub-0006_ses-01_task-social_acq-mb8_run-05_bold_calc_tshift.nii.gz /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth/derivatives/mriqc/work/workflow_enumerator/funcMRIQC/fMRI_HMC_afni/_in_file_..dartfs-hpc..rc..lab..C..CANlab..labdata..data..spacetop..dartmouth..sub-0006..ses-01..func..sub-0006_ses-01_task-social_acq-mb8_run-05_bold.nii.gz/TimeShifts/sub-0006_ses-01_task-social_acq-mb8_run-05_bold_calc.nii.gz
