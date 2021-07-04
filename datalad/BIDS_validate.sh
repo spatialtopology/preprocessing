@@ -1,0 +1,1 @@
+singularity run -B /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth:/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth /dartfs-hpc/rc/lab/C/CANlab/modules/bidsvalidator-1.7.2.sif /dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/dartmouth > bids_validator.txt
