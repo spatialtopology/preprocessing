@@ -19,6 +19,7 @@
 CONTAINER_IMAGE="/dartfs-hpc/rc/lab/C/CANlab/modules/fmriprep-20.2.1-LTS.sif"
 MAINDIR="/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop"
 BIDS_DIRECTORY="${MAINDIR}/dartmouth"
+# TODO: /dartfs-hpc/scratch/f0042x1
 SCRATCH_DIR="/scratch/f0042x1/spacetop/preproc"
 SCRATCH_WORK="${SCRATCH_DIR}/work"
 OUTPUT_DIR="${MAINDIR}/derivatives/dartmouth/fmriprep"
@@ -62,6 +63,7 @@ ${BIDS_DIRECTORY} ${OUTPUT_DIR} participant --participant_label ${PARTICIPANT_LA
 echo "COMPLETING fmriprep ... COPYING over"
 
 # cp ${SCRATCH_DIR} ${OUTPUT_DIR}
+# TODO: do not copy over the work folder
 # cp ${SCRATCH_WORK} ${OUTPUT_WORK}
 
 echo "process complete"
