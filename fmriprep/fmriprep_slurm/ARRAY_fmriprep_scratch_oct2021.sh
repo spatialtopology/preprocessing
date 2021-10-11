@@ -1,14 +1,14 @@
 #!/bin/bash -l
 #SBATCH --job-name=fmriprep
 #SBATCH --nodes=1
-#SBATCH --cpus-per-task=8
+#SBATCH --cpus-per-task=10
 #SBATCH --mem-per-cpu=8gb
-#SBATCH --time=03:00:00
+#SBATCH --time=12:00:00
 #SBATCH -o ./log/FMRIPREP_%A_%a.o
 #SBATCH -e ./log/FMRIPREP_%A_%a.e
 #SBATCH --account=DBIC
 #SBATCH --partition=standard
-#SBATCH --array=1-2
+#SBATCH --array=11-34%15
 ## --array=1-17%5
 
 #source /optnfs/common/miniconda3/etc/profile.d/conda.sh
@@ -18,6 +18,7 @@
 CONTAINER_IMAGE="/dartfs-hpc/rc/lab/C/CANlab/modules/fmriprep-20.2.3-LTS.sif"
 MAINDIR="/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop"
 #MAINDIR=/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/temp_sfn
+#/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/derivatives/dartmouth
 BIDS_DIRECTORY=${MAINDIR}/dartmouth
 # BIDS_DIRECTORY="${MAINDIR}/temp_sfn"
 SCRATCH_DIR="/dartfs-hpc/scratch/f0042x1/spacetop/preproc"
@@ -28,7 +29,11 @@ CODE_DIR="/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/scripts/fmriprep/fmr
 #subjects=("0001" "0002" "0003" "0004" "0005"  "0007" "0008" "0009" "0010" \
 #"0011" "0013" "0014" "0015" "0016" "0017" "0020")
 # subjects=("0029" "0028" "0026" "0025" "0024" "0023" "0021" "0020" "0019" "0018" "0017" "0016" "0015" "0014" "0013" "0011")
-subjects=("0053" "0055")
+subjects=("0011" "0013" "0014" "0015" "0016" "0017" "0018" "0019" "0020" "0030" "0031" \
+"0032" "0033" "0034" "0035" "0036" "0037" "0038" "0039" "0040" \
+"0041" "0043" "0044" "0046" "0047" "0050" \
+"0051" "0052" "0056" "0057" "0058" "0059" "0060" \
+"0061" "0062" "0063" "0064" "0065" "0066" "0068" "0069" "0070" "0071")
 PARTICIPANT_LABEL=${subjects[$((SLURM_ARRAY_TASK_ID - 1 ))]}
 echo "array id: " ${SLURM_ARRAY_TASK_ID}, "subject id: " ${PARTICIPANT_LABEL}
 
@@ -45,11 +50,12 @@ unset $PYTHONPATH;
 
 singularity run --bind ${BIDS_DIRECTORY}:${BIDS_DIRECTORY} \
 --bind ${SCRATCH_DIR}:${SCRATCH_DIR} \
+--bind ${OUTPUT_DIR}:${OUTPUT_DIR} \
 --bind ${SCRATCH_WORK}:${SCRATCH_WORK}  \
 --bind ${CODE_DIR}:${CODE_DIR} \
 --bind /optnfs/freesurfer \
-${CONTAINER_IMAGE} fmriprep \
-${BIDS_DIRECTORY} ${SCRATCH_DIR} participant --participant_label ${PARTICIPANT_LABEL} -w ${SCRATCH_WORK} \
+${CONTAINER_IMAGE}  \
+${BIDS_DIRECTORY} ${OUTPUT_DIR} participant --participant_label ${PARTICIPANT_LABEL} -w ${SCRATCH_WORK} \
 --task-id social \
 --write-graph \
 --n-cpus 8 \
@@ -63,12 +69,13 @@ ${BIDS_DIRECTORY} ${SCRATCH_DIR} participant --participant_label ${PARTICIPANT_L
 
 echo "STARTING fmriprep ___________________________________________"
 echo singularity exec --bind ${BIDS_DIRECTORY}:${BIDS_DIRECTORY} \
+--bind ${OUTPUT_DIR}:${OUTPUT_DIR} \
 --bind ${SCRATCH_DIR}:${SCRATCH_DIR} \
 --bind ${SCRATCH_WORK}:${SCRATCH_WORK}  \
 --bind ${CODE_DIR}:${CODE_DIR} \
 --bind /optnfs/freesurfer \
-${CONTAINER_IMAGE}  fmriprep \
-${BIDS_DIRECTORY} ${SCRATCH_DIR} participant --participant_label ${PARTICIPANT_LABEL} -w ${SCRATCH_WORK} \
+${CONTAINER_IMAGE}  \
+${BIDS_DIRECTORY} ${OUTPUT_DIR} participant --participant_label ${PARTICIPANT_LABEL} -w ${SCRATCH_WORK} \
 --task-id social \
 --write-graph \
 --n-cpus 8 \
@@ -81,9 +88,9 @@ ${BIDS_DIRECTORY} ${SCRATCH_DIR} participant --participant_label ${PARTICIPANT_L
 
 echo "COMPLETING fmriprep ___________________________ COPYING over"
 # if folder in CANlab exists, delete and then copy
-SUB_FMRIPREP_DIR=${OUTPUT_DIR}/fmriprep/sub-${PARTICIPANT_LABEL}
-rm -rf ${SUB_FMRIPREP_DIR}*
-cp ${SCRATCH_DIR}/fmriprep/sub-${PARTICIPANT_LABEL}* ${OUTPUT_DIR}/fmriprep/
+#SUB_FMRIPREP_DIR=${OUTPUT_DIR}/fmriprep/sub-${PARTICIPANT_LABEL}
+#rm -rf ${SUB_FMRIPREP_DIR}/*
+#cp ${SCRATCH_DIR}/fmriprep/sub-${PARTICIPANT_LABEL}/* ${OUTPUT_DIR}/fmriprep/
 #cp ${SCRATCH_WORK} ${OUTPUT_WORK}
 
 echo "_______________________ PROCESS COMPLETE ${PARTICIPANT_LABEL}"
