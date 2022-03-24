@@ -40,9 +40,9 @@ for ind, dup_fpath in enumerate(dup_glob):
 # 2. open fieldmap .json with corresponding .dup files _____________________________________________________________
     fmap_glob = glob.glob(join(main_dir, f'{sub}/{ses}/fmap/{sub}_{ses}_acq-mb8_dir-*_epi.json'))
     for fmap_ind, fmap_fname in enumerate(fmap_glob):
-        f = load_json(fmap_fname)
+        sidecar = load_json(fmap_fname)
         # 2-1. check if "IntendedFor" field exists within json
-        key_field = [i for i, s in enumerate(f.keys()) if 'IntendedFor' in s]
+        if 'IntendedFor' in sidecar:
         if key_field:
             copy_list = f['IntendedFor']
             print(copy_list)
