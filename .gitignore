@@ -1,4 +1,5 @@
-/datalad/log
+./datalad/log/*
 ./mriqc/mriqc_slurm/log/*
+./fmriprep/fmriprep_slurm/log/*
 *.e
 *.o
