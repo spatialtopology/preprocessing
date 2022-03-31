@@ -1,0 +1,30 @@
+Traceback (most recent call last):
+  File "<ipython-input-56-340583f32d8c>", line 15, in <module>
+    shutil.move(acq, new_dir)
+  File "/dartfs-hpc/rc/home/1/f0042x1/.conda/envs/spacetop_env/lib/python3.7/shutil.py", line 564, in move
+    raise Error("Destination path '%s' already exists" % real_dst)
+shutil.Error: Destination path '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/biopac/dartmouth/b02_sorted/sub-0026/ses-01/SOCIAL_spacetop_sub-0026_ses-01_task-social_ANISO.acq' already exists
+Traceback (most recent call last):
+  File "<ipython-input-57-abe685151cb4>", line 14, in <module>
+    shutil.move(acq, new_dir)
+  File "/dartfs-hpc/rc/home/1/f0042x1/.conda/envs/spacetop_env/lib/python3.7/shutil.py", line 564, in move
+    raise Error("Destination path '%s' already exists" % real_dst)
+shutil.Error: Destination path '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/biopac/dartmouth/b02_sorted/sub-0026/ses-01/SOCIAL_spacetop_sub-0026_ses-01_task-social_ANISO.acq' already exists
+Traceback (most recent call last):
+  File "<ipython-input-58-c0da351af829>", line 15, in <module>
+    shutil.move(acq, new_dir)
+  File "/dartfs-hpc/rc/home/1/f0042x1/.conda/envs/spacetop_env/lib/python3.7/shutil.py", line 564, in move
+    raise Error("Destination path '%s' already exists" % real_dst)
+shutil.Error: Destination path '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/biopac/dartmouth/b02_sorted/sub-0026/ses-01/SOCIAL_spacetop_sub-0026_ses-01_task-social_ANISO.acq' already exists
+Traceback (most recent call last):
+  File "<ipython-input-59-2b4a59df49cc>", line 14, in <module>
+    shutil.move(acq, new_dir)
+  File "/dartfs-hpc/rc/home/1/f0042x1/.conda/envs/spacetop_env/lib/python3.7/shutil.py", line 564, in move
+    raise Error("Destination path '%s' already exists" % real_dst)
+shutil.Error: Destination path '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/biopac/dartmouth/b02_sorted/sub-0026/ses-01/SOCIAL_spacetop_sub-0026_ses-01_task-social_ANISO.acq' already exists
+Traceback (most recent call last):
+  File "<ipython-input-60-6da1b3af2990>", line 15, in <module>
+    shutil.move(acq, new_dir)
+  File "/dartfs-hpc/rc/home/1/f0042x1/.conda/envs/spacetop_env/lib/python3.7/shutil.py", line 564, in move
+    raise Error("Destination path '%s' already exists" % real_dst)
+shutil.Error: Destination path '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/biopac/dartmouth/b02_sorted/sub-0026/ses-01/SOCIAL_spacetop_sub-0026_ses-01_task-social_ANISO.acq' already exists

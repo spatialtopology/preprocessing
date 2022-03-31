@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "c01_bidsify_discovery.py", line 23, in <module>
+    task = [match for match in filename.split('_') if "task" in match][0]
+IndexError: list index out of range
