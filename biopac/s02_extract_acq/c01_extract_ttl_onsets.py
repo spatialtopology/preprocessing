@@ -32,6 +32,7 @@ import json
 
 # %% temporary
 main_dir = '/Volumes/spacetop'
+main_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop'
 print(main_dir)
 save_dir = os.path.join(main_dir, 'biopac', 'dartmouth', 'b03_extract_ttl')
 print(save_dir)
@@ -196,7 +197,7 @@ for acq in acq_list:
     except:
         flaglist.append(acq_list)
 
-txt_filename = os.path.join(save_dir, 'biopac_flaglist.txt')
+txt_filename = os.path.join(save_dir, 'biopac_flaglist_03302022.txt')
 with open(txt_filename, 'w') as f:
     f.write(json.dumps(flaglist))
 
