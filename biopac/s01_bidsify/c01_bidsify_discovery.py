@@ -9,6 +9,7 @@ import traceback
 # %% directories ___________________________________
 current_dir = os.getcwd()
 main_dir = Path(current_dir).parents[1]
+main_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop'
 print(main_dir)
 
 acq_list = glob.glob(os.path.join(main_dir, 'biopac', 'dartmouth', 'rawdata', '**', '*.acq'), recursive = True)
