@@ -188,7 +188,7 @@ for acq in sorted(acq_list):
             
             print(f"runs with ttl: {acq_runs_with_ttl}", file = f)
             for i, run_num in enumerate(acq_runs_with_ttl):
-                run_subset = spacetop_data.loc[spacetop_data['run_num'] ==
+                run_subset = sdf.loc[sdf['run_num'] ==
                                                run_num + 1]
                 print(len(run_subset) / spacetop_samplingrate)
                 if 300 < len(run_subset)/spacetop_samplingrate < 450:  # TODO: check if run length is around 389 s
