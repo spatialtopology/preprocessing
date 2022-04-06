@@ -1,0 +1,40 @@
+#!/bin/bash
+#$ -cwd
+#$ -t 1-80
+#$ -N social
+#$ -o logs/social$TASK_ID.out
+#$ -e logs/social$TASK_ID.err
+#$ -pe local 12
+#$ -l mem_free=5G,h_vmem=5G,s_vmem=4.99G,h_fsize=900G,h_stack=256M
+
+date
+module load singularity/3.6.0
+
+set -xe
+
+read -ra ROW < <(sed -n "${SGE_TASK_ID}p" code/subs)
+declare -a flags
+flags=(--participant-label "${ROW[0]}")
+flags+=(--ignore slicetiming --fd-spike-threshold 0.9 --dummy-scans 6 --bold2t1w-dof 9 --task-id social)
+
+DCL=/dcl01/smart/data/psadil/spacetop
+BIDS=${DCL}/inputs/2ee2bfa7-6c1b-4cf6-87e9-297e30f42517
+WORK=${DCL}/derivatives/work/fmriprep
+DCS=/dcs04/smart/data/spacetop
+OUT=${DCS}/derivatives/fmriprep
+
+singularity run \
+  --cleanenv \
+  -B "${DCS}":/main \
+  -B "${BIDS}":/bids \
+  -B "${OUT}":/out \
+  -B "${WORK}":/scratch \
+  "${DCS}"/code/fmriprep_21.0.1.sif \
+  /bids /out participant -w /scratch/"${SGE_TASK_ID}" \
+  "${flags[@]}"  \
+  --notrack -vv --cifti-output 91k \
+  --mem_mb 50000 --nprocs 12 --fs-subjects-dir /out/sourcedata/freesurfer \
+  --fs-license-file /main/license.txt \
+  --skip-bids-validation --anat-derivatives /out/sub-"${ROW[0]}"/ses-01/anat \
+  --random-seed 1992 --skull-strip-fixed-seed \
+  --bids-database-dir /main/bids_db  

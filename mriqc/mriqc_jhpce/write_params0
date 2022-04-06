@@ -1,0 +1,2 @@
+#!/bin/bash
+find inputs/2ee2bfa7-6c1b-4cf6-87e9-297e30f42517 -name .git -prune -o  -name "*[bold,T1w].nii.gz" -print | sort > params0
