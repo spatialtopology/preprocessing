@@ -1,12 +1,20 @@
 #!/usr/bin/env python3
 """
-after downloading redcap data, convert it into table for Inclusion Enrollment Report
-# multiindex
-# grab rows that have "Consent" in it. "
-# TODO: insert columns
-# calculate totals
-"""
+The purpose of this script is to convert redcap data (ethnicity, gender, race)
+into a table for Inclusion Enrollment Report
 
+Parameters
+------------
+    csv_fname: str
+        the REDcap downloaded file, which contains ethnicity, gender, race information
+Return
+------------
+    df_tally: pandas dataframe
+        a table with tally of ethnicity, gender, race information. Saved as csv file
+    df_ier.index: list
+        a list of participants that were included in the tally. Saved as csv file
+"""
+# %%
 import os, sys, glob
 import itertools
 import pandas as pd
@@ -15,8 +23,8 @@ import datetime
 from pathlib import Path
 
 __author__ = "Heejung Jung"
-__copyright__ = "Spatial Topology Project"
-__credits__ = ["Heejung"] # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
+__copyright__ = "Canlab Utils"
+__credits__ = [""] # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
 __license__ = "GPL"
 __version__ = "0.0.1"
 __maintainer__ = "Heejung Jung"
@@ -24,12 +32,13 @@ __email__ = "heejung.jung@colorado.edu"
 __status__ = "Development" 
 
 # %% load data from RedCap ___________________________________________________________________________
+# TODO: Dear user, change csv_fname to your filename
 current_dir = os.getcwd()
 main_dir = Path(current_dir).parents[0]
-csv_fname = os.path.join(main_dir, 'redcap', 'IndividualizedSpatia_DATA_LABELS_2022-03-22_1638.csv')
+csv_fname = os.path.join(main_dir, 'redcap', 'YOURFILENAME.csv') # TODO: CHANGE THIS TO YOUR OWN FILENAME
 df = pd.read_csv(csv_fname)
 
-# create empty dataframe ___________________________________________________________________________
+# create empty dataframe with ethnicity, gender, and race  ___________________________________________________________________________
 eth = ['Not Hispanic or Latino', 'Hispanic or Latino', 'Unknown or Prefer Not to Answer']
 gen = ['Female', 'Male', 'Other']
 race = ['American Indian/Alaska Native', 'Asian',
@@ -65,10 +74,10 @@ pivot_sort = df_concat.reindex(index = race, columns = new_cols[0])
 pivot_sort['Total']=pivot_sort.iloc[:,:].sum(axis=1)
 new_row = pivot_sort.iloc[:,:].sum(axis = 0) 
 new_row.name = 'Total'
-df_final = pivot_sort.append([new_row])
+df_tally = pivot_sort.append([new_row])
 
 # save file _______________________________________________________________________________________
 date_str = datetime.date.today().isoformat()
-df_final.to_csv(f'./ier-table_include-all_{date_str}.csv')
+df_tally.to_csv(f'./ier-table_include-all_{date_str}.csv')
 df_ier.index.to_series().to_csv(f'./ier-subjects_include-all_{date_str}.csv', index = False)
 
