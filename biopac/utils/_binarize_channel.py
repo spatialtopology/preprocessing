@@ -28,6 +28,8 @@ def _binarize_channel(df, source_col, new_col, threshold, binary_high, binary_lo
         run_df.loc[run_df['expect'] > mid_val, 'expect_rating'] = 5
         run_df.loc[run_df['expect'] <= mid_val, 'expect_rating'] = 0
     """
+    
+    import numpy as np
 
     if not bool(threshold):
         threshold = (np.max(df[source_col]) - np.min(df[source_col]))/2
