@@ -28,14 +28,16 @@ __credits__ = [""] # people who reported bug fixes, made suggestions, etc. but d
 __license__ = "GPL"
 __version__ = "0.0.1"
 __maintainer__ = "Heejung Jung"
+__github__ = "jungheejung"
 __email__ = "heejung.jung@colorado.edu"
 __status__ = "Development" 
+
 
 # %% load data from RedCap ___________________________________________________________________________
 # TODO: Dear user, change csv_fname to your filename
 current_dir = os.getcwd()
 main_dir = Path(current_dir).parents[0]
-csv_fname = os.path.join(main_dir, 'redcap', 'YOURFILENAME.csv') # TODO: CHANGE THIS TO YOUR OWN FILENAME
+csv_fname = os.path.join(main_dir, 'redcap', 'IndividualizedSpatia_DATA_LABELS_2022-07-11_1618.csv') # NOTE: CHANGE THIS TO YOUR OWN FILENAME
 df = pd.read_csv(csv_fname)
 
 # create empty dataframe with ethnicity, gender, and race  ___________________________________________________________________________
@@ -49,12 +51,20 @@ tuples = list(itertools.product(eth, gen))
 columns = pd.MultiIndex.from_tuples(tuples, names=["Ethnicity", "Sex:"])
 empty_df = pd.DataFrame(np.zeros((7,9)), index = race,columns =columns  )
 empty_df.index.name = 'Race'
-
+# %%
 # select subset of IDs from Redcap ________________________________________________________________
 # sub = df[df['Record ID'].str.contains('sub-')]
 # sub = sub[~sub['Record ID'].str.contains('old')]
+# NOTE: User, if you have any id's that you'd like to exclude, feed in a list to 'dup'
+dup = ['old-sub-0055','old-sub-0103','old-sub-0118','old-sub-0128','old-sub-0130',
+'old-sub-0131','old_sub-0020','C-NA-36 (1)','C-NA-88 (2)','N-NA-260 (2)',
+'IE-9 (2)','IE-10 (2)','IE-23 (2)','IE-23 (3)','IE-43 (2)','IE-43 (3)',
+'IE-63 (2)','C-NA-36 (1)','IE-7','IE-8', 'IE-19', 'N-NA-279', 'N-NR-217']
+sub = df[~df['Record ID'].str.contains('|'.join(dup))]
+df = df[df['Record ID'].str.contains('|'.join(dup))==False]
 sub_i = df.set_index('Record ID').copy()
 # identify subjects that consented, then check their screening info for race, sex, ethnicity ______
+# %%
 sub_consent = sub_i[sub_i['Event Name'].str.contains('Consent')]
 sub_screen = sub_i[sub_i['Event Name'].str.contains('Screening')]
 df_consent = sub_screen.loc[list(sub_consent.index) ]
@@ -81,3 +91,4 @@ date_str = datetime.date.today().isoformat()
 df_tally.to_csv(f'./ier-table_include-all_{date_str}.csv')
 df_ier.index.to_series().to_csv(f'./ier-subjects_include-all_{date_str}.csv', index = False)
 
+# %%
