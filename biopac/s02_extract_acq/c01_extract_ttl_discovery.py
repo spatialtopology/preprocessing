@@ -52,7 +52,8 @@ def _binarize_channel(data, origin_col, new_col, threshold, binary_h, binary_l):
 
 # %% directories ___________________________________
 current_dir = os.getcwd()
-main_dir = Path(current_dir).parents[1]
+main_dir = Path(current_dir).parents[2]
+print(main_dir)
 
 # %% temporary
 # main_dir = '/Volumes/spacetop'
@@ -71,7 +72,7 @@ txt_filename = os.path.join(
     save_dir, f'biopac_flaglist_{datetime.date.today().isoformat()}.txt')
 # with open(txt_filename, 'w') as f:
 #     f.write(json.dumps(flaglist))
-f = open(txt_filename, "w")
+f = open(txt_filename, "a")
 # print()
 # %%
 for acq in sorted(acq_list):
@@ -79,7 +80,8 @@ for acq in sorted(acq_list):
     sub = [match for match in acq_fname.split('_') if "sub" in match][0]
     ses = [match for match in acq_fname.split('_') if "ses" in match][0]  # 'ses-03'
     task = [match for match in acq_fname.split('_') if "task" in match][0]
-    print(f"\n__________________{sub} {ses} {task}__________________", file = f)
+    #f.write(f"\n__________________{sub} {ses} {task}__________________")
+    print(f"\n__________________{sub} {ses} {task}__________________")
     try:
         
         spacetop_data, spacetop_samplingrate = nk.read_acqknowledge(acq)
@@ -320,6 +322,7 @@ for acq in sorted(acq_list):
                                index=False)
 
                     print(f"[x] success :: saved to {new_dir}", file = f)
+                    print(f"[x] success :: saved to {new_dir}")
                 else:
                     print(f'\nrun length is shorter than 380s or longer than 410s' ,file = f)
                     print(acq, file = f)
