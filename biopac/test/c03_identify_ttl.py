@@ -66,12 +66,12 @@ acq_list = glob.glob(os.path.join(main_dir, 'biopac', 'dartmouth',
                                   'b02_sorted', 'sub-' + ('[0-9]' * 4), '*',
                                   '*task-social*_physio.acq'),
                      recursive=True)
+acq_list = TODO: INSERT FILE NAME
 flaglist = []
 runmeta = pd.read_csv('/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social/data/spacetop_task-social_run-metadata.csv')
 txt_filename = os.path.join(
     save_dir, f'biopac_flaglist_{datetime.date.today().isoformat()}.txt')
-# with open(txt_filename, 'w') as f:
-#     f.write(json.dumps(flaglist))
+
 f = open(txt_filename, "w")
 # print()
 # %%
@@ -116,8 +116,8 @@ for acq in sorted(acq_list[0]):
                             source_col='mr_aniso_boxcar',
                             new_col='mr_boxcar',
                             threshold=mid_val,
-                            binary_h=5,
-                            binary_l=0)
+                            binary_high=5,
+                            binary_low=0)
         dict_experiment = utils.preprocess._identify_boundary(physio_df, 'mr_boxcar')
         #start_df = physio_df[physio_df['mr_boxcar'] > physio_df['mr_boxcar'].shift(1)].index
         #stop_df = physio_df[physio_df['mr_boxcar'] < physio_df['mr_boxcar'].shift(1)].index
@@ -143,8 +143,8 @@ for acq in sorted(acq_list[0]):
                             origin_col='adjusted_boxcar',
                             new_col='adjust_run',
                             threshold=mid_val,
-                            binary_h=5,
-                            binary_l=0)
+                            binary_high=5,
+                            binary_low=0)
         dict_adjust_experiment = utils.preprocess._identify_boundary(sdf, 'adjust_run')
         # astart_df = sdf[sdf['adjust_run'] > sdf['adjust_run'].shift(1)].index
         # astop_df = sdf[sdf['adjust_run'] < sdf['adjust_run'].shift(1)].index
@@ -156,7 +156,7 @@ for acq in sorted(acq_list[0]):
         sdf['TTL'] = sdf['TSA2 TTL - CBLCFMA - Current Feedback M'].rolling(window=sampling_rate).mean()
         # sdf.loc[sdf['TTL'] > 5, 'ttl_aniso'] = 5
         # sdf.loc[sdf['TTL'] <= 5, 'ttl_aniso'] = 0
-        utils.preprocess_binarize_channel(sdf,
+        utils.preprocess._binarize_channel(sdf,
                     source_col='TTL',
                     new_col='ttl_aniso',
                     threshold=5,
@@ -168,7 +168,7 @@ for acq in sorted(acq_list[0]):
         # mid_val = (np.max(sdf['administer']) - np.min(sdf['administer']))/2
         # sdf.loc[sdf['administer'] > mid_val, 'stimuli'] = 5
         # sdf.loc[sdf['administer'] <= mid_val, 'stimuli'] = 0
-        utils.preprocess_binarize_channel(sdf,
+        utils.preprocess._binarize_channel(sdf,
                     source_col='administer',
                     new_col='stimuli',
                     threshold=None,
@@ -252,9 +252,9 @@ for acq in sorted(acq_list[0]):
                     # stop_stim = run_df[
                     #     run_df['stimuli'] < run_df['stimuli'].shift(1)]
                     events = nk.events_create(
-                        event_onsets=list(start_stim.index),
+                        event_onsets=list(dict_stimuli['stop_stim'].index),
                         event_durations=list(
-                            (stop_stim.index - start_stim.index) /
+                            (dict_stimuli['stop_stim'].index - dict_stimuli['start_stim'].index) /
                             sampling_rate))
 
                     # # transform events :: transform to onset _________________
