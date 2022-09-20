@@ -37,7 +37,7 @@ __maintainer__ = "Heejung Jung"
 __email__ = "heejung.jung@colorado.edu"
 __status__ = "Development" 
 
-def binarize_channel(data, origin_col, new_col, threshold, binary_h, binary_l):
+def _binarize_channel(data, origin_col, new_col, threshold, binary_h, binary_l):
     """
     data: pandas dataframe. acquisition file
     origin_col: columns with raw signal
@@ -85,7 +85,7 @@ for acq in sorted(acq_list):
         spacetop_data, spacetop_samplingrate = nk.read_acqknowledge(acq)
         # ____________________________________ identify run transitions ____________________________________
         spacetop_data['mr_aniso'] = spacetop_data['fMRI Trigger - CBLCFMA - Current Feedba'].rolling(window=3).mean()
-        binarize_channel(spacetop_data,
+        _binarize_channel(spacetop_data,
                             origin_col='mr_aniso',
                             new_col='spike',
                             threshold=40,
@@ -100,7 +100,7 @@ for acq in sorted(acq_list):
         spacetop_data['mr_aniso_boxcar'] = spacetop_data['fMRI Trigger - CBLCFMA - Current Feedba'].rolling(window=2000).mean()
         mid_val = (np.max(spacetop_data['mr_aniso_boxcar']) -
                     np.min(spacetop_data['mr_aniso_boxcar'])) / 4
-        binarize_channel(spacetop_data,
+        _binarize_channel(spacetop_data,
                             origin_col='mr_aniso_boxcar',
                             new_col='mr_boxcar',
                             threshold=mid_val,
@@ -124,7 +124,7 @@ for acq in sorted(acq_list):
         sdf['adjusted_boxcar'] = sdf['bin_spike'].rolling(window=2000).mean()
         mid_val = (np.max(sdf['adjusted_boxcar']) -
                     np.min(sdf['adjusted_boxcar'])) / 4
-        binarize_channel(sdf,
+        _binarize_channel(sdf,
                             origin_col='adjusted_boxcar',
                             new_col='adjust_run',
                             threshold=mid_val,
