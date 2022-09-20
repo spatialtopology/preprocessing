@@ -77,9 +77,9 @@ operating = sys.argv[1]  # 'local' vs. 'discovery'
 task = sys.argv[2]  # 'task-social' 'task-fractional' 'task-alignvideos'
 cutoff_threshold = sys.argv[3]
 # %% TODO: TST remove after development
-operating = 'local'  # 'discovery'
-task = 'task-social'
-cutoff_threshold = 300
+#operating = 'local'  # 'discovery'
+#task = 'task-social'
+#cutoff_threshold = 300
 
 if operating == 'discovery':
     spacetop_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social'
