@@ -34,10 +34,7 @@ A: most-likely ignore
 A: No worries, we're using the channel with the MRtriggers "fMRI Trigger - CBLCFMA - Current Feedba"
 """
 
-
 # %% libraries ________________________
-import utils
-from utils import preprocess
 import neurokit2 as nk
 import pandas as pd
 import numpy as np
@@ -61,6 +58,8 @@ sys.path.append(os.path.join(main_dir))
 sys.path.insert(0, os.path.join(main_dir))
 print(sys.path)
 
+import utils
+from utils import preprocess
 
 __author__ = "Heejung Jung"
 __copyright__ = "Spatial Topology Project"
