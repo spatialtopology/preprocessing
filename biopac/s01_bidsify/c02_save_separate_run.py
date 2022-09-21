@@ -119,12 +119,21 @@ logger.setLevel(logging.INFO)
 
 # %% 1. glob acquisition files ____________________________________________________________________________
 # filename ='/Users/h/Dropbox/projects_dropbox/spacetop_biopac/data/sub-0026/SOCIAL_spacetop_sub-0026_ses-01_task-social_ANISO.acq'
-acq_list = glob.glob(os.path.join(biopac_dir,  "dartmouth", "b02_sorted", "sub-0029", "**", f"*{task}*.acq"),
-                     recursive=True)
 
+biopac_list = next(os.walk(join(biopac_dir, 'dartmouth', 'b02_sorted')))[1]  
+remove_int = [1, 2, 3, 4, 5, 6]
+remove_list = [f"sub-{x:04d}" for x in remove_int]
+sub_list = [x for x in biopac_list if x not in remove_list]
+acq_list = []
+for sub in sub_list:
+    acq = glob.glob(os.path.join(biopac_dir,  "dartmouth", "b02_sorted", sub, "**", f"*{task}*.acq"),
+                     recursive=True)
+    acq_list.append(acq)
+
+flat_acq_list = [item for sublist in acq_list  for item in sublist]
 
 # %%
-for acq in sorted(acq_list):
+for acq in sorted(flat_acq_list):
     # extract information from filenames _______________________________________________________________
     filename = os.path.basename(acq)
     sub = [match for match in filename.split('_') if 'sub' in match][0]
@@ -142,8 +151,14 @@ for acq in sorted(acq_list):
         flaglist.append(acq_list)
 
     # identify run transitions _________________________________________________________________________
-    spacetop_data['mr_aniso'] = spacetop_data['fMRI Trigger - CBLCFMA - Current Feedba'].rolling(
+    try:
+        spacetop_data['mr_aniso'] = spacetop_data['fMRI Trigger - CBLCFMA - Current Feedba'].rolling(
         window=3).mean()
+    except:
+        logger.info(f"\n\n__________________{sub} {ses} __________________")
+        logger.error(f"\tno MR trigger channel - this was the early days. re run and use the *trigger channel*")
+        flaglist.append(acq_list)
+
     utils.preprocess._binarize_channel(spacetop_data,
                                        source_col='mr_aniso',
                                        new_col='spike',
@@ -214,3 +229,5 @@ for acq in sorted(acq_list):
         run_dir = os.path.join(save_dir, task, sub, ses)
         Path(run_dir).mkdir(parents=True, exist_ok=True)
         run_df.to_csv(os.path.join(run_dir, run_basename), index=False)
+
+
