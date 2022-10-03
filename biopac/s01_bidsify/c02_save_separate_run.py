@@ -79,11 +79,12 @@ cutoff_threshold = sys.argv[3]
 #operating = 'local'  # 'discovery'
 #task = 'task-social'
 #cutoff_threshold = 300
-
+print(f"operating: {operating}")
 if operating == 'discovery':
     spacetop_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social'
     biopac_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/biopac/'
     save_dir = join(biopac_dir, 'dartmouth', 'b04_finalbids')
+
 elif operating == 'local':
     spacetop_dir = '/Volumes/spacetop_projects_social'
     # /biopac/dartmouth/b04_finalbids/task-social'
@@ -125,13 +126,14 @@ remove_int = [1, 2, 3, 4, 5, 6]
 remove_list = [f"sub-{x:04d}" for x in remove_int]
 sub_list = [x for x in biopac_list if x not in remove_list]
 acq_list = []
+print(sub_list)
 for sub in sub_list:
     acq = glob.glob(os.path.join(biopac_dir,  "dartmouth", "b02_sorted", sub, "**", f"*{task}*.acq"),
                      recursive=True)
     acq_list.append(acq)
 
 flat_acq_list = [item for sublist in acq_list  for item in sublist]
-
+#print(flat_acq_list)
 # %%
 for acq in sorted(flat_acq_list):
     # extract information from filenames _______________________________________________________________
@@ -146,10 +148,10 @@ for acq in sorted(flat_acq_list):
         logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.info(f"file exists! -- starting tranformation: ")
     except:
-        logger.info(f"\n\n__________________{sub} {ses} __________________")
+        logger.error(f"\n\n__________________{sub} {ses} __________________")
         logger.error(f"\tno biopac file exists")
         flaglist.append(acq_list)
-
+       #: continue
     # identify run transitions _________________________________________________________________________
     try:
         spacetop_data['mr_aniso'] = spacetop_data['fMRI Trigger - CBLCFMA - Current Feedba'].rolling(
@@ -158,7 +160,7 @@ for acq in sorted(flat_acq_list):
         logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.error(f"\tno MR trigger channel - this was the early days. re run and use the *trigger channel*")
         flaglist.append(acq_list)
-
+        continue
     utils.preprocess._binarize_channel(spacetop_data,
                                        source_col='mr_aniso',
                                        new_col='spike',
