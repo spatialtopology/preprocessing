@@ -126,8 +126,8 @@ logger.setLevel(logging.INFO)
 # filename ='/Users/h/Dropbox/projects_dropbox/spacetop_biopac/data/sub-0026/SOCIAL_spacetop_sub-0026_ses-01_task-social_ANISO.acq'
 
 biopac_list = next(os.walk(join(biopac_dir, 'dartmouth', 'b02_sorted')))[1]  
-# remove_int = [1, 2, 3, 4, 5, 6]
-remove_int = list(range(108))
+remove_int = [1, 2, 3, 4, 5, 6]
+# remove_int = list(range(108))
 remove_list = [f"sub-{x:04d}" for x in remove_int]
 sub_list = [x for x in biopac_list if x not in remove_list]
 acq_list = []
@@ -155,6 +155,7 @@ for acq in sorted(flat_acq_list):
         logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.error(f"\tno biopac file exists")
         flaglist.append(acq_list)
+        continue
         
 
     # identify run transitions _________________________________________________________________________
@@ -166,6 +167,7 @@ for acq in sorted(flat_acq_list):
         logger.error(f"\tno MR trigger channel - this was the early days. re run and use the *trigger channel*")
         flaglist.append(acq_list)
         logger.exception("message")
+        continue
         
 
     try:
@@ -179,6 +181,7 @@ for acq in sorted(flat_acq_list):
         logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.error(f"data is empty - this must have been an empty file or saved elsewhere")
         logger.exception("message")
+        continue
         
 
     start_spike = spacetop_data[spacetop_data['spike']
@@ -204,6 +207,7 @@ for acq in sorted(flat_acq_list):
         logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.error(f"ERROR:: binarize RF pulse TTL failure - ALTERNATIVE:: use channel trigger instead")
         logger.debug(logger.ERROR)
+        continue
         
 
     start_df = spacetop_data[spacetop_data['mr_boxcar']
@@ -242,15 +246,25 @@ for acq in sorted(flat_acq_list):
     run_bool = ((astop_df-astart_df)/spacetop_samplingrate) > 300
     clean_runlist = list(compress(run_list, run_bool))
     shorter_than_threshold_length = list(compress(run_list, ~run_bool))
+
+
     if len(shorter_than_threshold_length) > 0:
         flaglist.append(
             f"runs shorter than {cutoff_threshold} sec: {sub} {ses} {shorter_than_threshold_length} - run number in python order")
 
-    for ind, r in enumerate(clean_runlist):
-        run_df = spacetop_data.iloc[astart_df[r]:astop_df[r]]
-        run_basename = f"{sub}_{ses}_{task}_run-{ind+1:02d}_recording-ppg-eda_physio.acq"
-        run_dir = os.path.join(save_dir, task, sub, ses)
-        Path(run_dir).mkdir(parents=True, exist_ok=True)
-        run_df.to_csv(os.path.join(run_dir, run_basename), index=False)# %%
+    scannote_reference = runmeta.loc[(runmeta['sub'] == sub)& (runmeta['ses'] == ses)]
+    scannote_reference.dropna(axis = 1, inplace = True)
+    scannote_reference.drop(['sub', 'ses'], axis=1, inplace = True)
+
+    if len(scannote_reference.columns) == len(clean_runlist):
+        ref_dict = scannote_reference.to_dict('list')
+        for ind, r in enumerate(clean_runlist): 
+            clean_run = list(ref_dict.keys())[ind]
+            task_type = ref_dict[clean_run][0]
+            run_df = spacetop_data.iloc[astart_df[r]:astop_df[r]]
+            run_basename = f"{sub}_{ses}_{task}_run-{clean_run}-{task_type}_recording-ppg-eda_physio.acq"
+            run_dir = os.path.join(save_dir, task, sub, ses)
+            Path(run_dir).mkdir(parents=True, exist_ok=True)
+            run_df.to_csv(os.path.join(run_dir, run_basename), index=False)# %%
 
 # %%
