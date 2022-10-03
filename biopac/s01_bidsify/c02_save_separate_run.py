@@ -99,8 +99,13 @@ print(save_dir)
 flaglist = []
 runmeta = pd.read_csv(
     join(spacetop_dir, "data/spacetop_task-social_run-metadata.csv"))
+#TODO: come up with scheme to update logger files
+ver = 1
 txt_filename = os.path.join(
-    save_dir, f"biopac_flaglist_{task}_{datetime.date.today().isoformat()}.txt")
+    save_dir, f"biopac_flaglist_{task}_{datetime.date.today().isoformat()}_ver-4.txt")
+# while os.path.isfile(txt_filename % sequence):
+#     sequence = int(sequence or 0) + 1
+# txt_filename = txt_filename % sequence
 # with open(txt_filename, 'w') as f:
 f = open(txt_filename, "w")
 
@@ -121,7 +126,8 @@ logger.setLevel(logging.INFO)
 # filename ='/Users/h/Dropbox/projects_dropbox/spacetop_biopac/data/sub-0026/SOCIAL_spacetop_sub-0026_ses-01_task-social_ANISO.acq'
 
 biopac_list = next(os.walk(join(biopac_dir, 'dartmouth', 'b02_sorted')))[1]  
-remove_int = [1, 2, 3, 4, 5, 6]
+# remove_int = [1, 2, 3, 4, 5, 6]
+remove_int = list(range(108))
 remove_list = [f"sub-{x:04d}" for x in remove_int]
 sub_list = [x for x in biopac_list if x not in remove_list]
 acq_list = []
@@ -149,6 +155,7 @@ for acq in sorted(flat_acq_list):
         logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.error(f"\tno biopac file exists")
         flaglist.append(acq_list)
+        
 
     # identify run transitions _________________________________________________________________________
     try:
@@ -158,13 +165,22 @@ for acq in sorted(flat_acq_list):
         logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.error(f"\tno MR trigger channel - this was the early days. re run and use the *trigger channel*")
         flaglist.append(acq_list)
+        logger.exception("message")
+        
 
-    utils.preprocess._binarize_channel(spacetop_data,
-                                       source_col='mr_aniso',
-                                       new_col='spike',
-                                       threshold=40,
-                                       binary_high=5,
-                                       binary_low=0)
+    try:
+        utils.preprocess._binarize_channel(spacetop_data,
+                                        source_col='mr_aniso',
+                                        new_col='spike',
+                                        threshold=40,
+                                        binary_high=5,
+                                        binary_low=0)
+    except:
+        logger.info(f"\n\n__________________{sub} {ses} __________________")
+        logger.error(f"data is empty - this must have been an empty file or saved elsewhere")
+        logger.exception("message")
+        
+
     start_spike = spacetop_data[spacetop_data['spike']
                                 > spacetop_data['spike'].shift(1)].index
     stop_spike = spacetop_data[spacetop_data['spike']
@@ -173,16 +189,23 @@ for acq in sorted(flat_acq_list):
     spacetop_data['bin_spike'] = 0
     spacetop_data.loc[start_spike, 'bin_spike'] = 5
     # 2)
-    spacetop_data['mr_aniso_boxcar'] = spacetop_data['fMRI Trigger - CBLCFMA - Current Feedba'].rolling(
-        window=2000).mean()
-    mid_val = (np.max(spacetop_data['mr_aniso_boxcar']) -
-               np.min(spacetop_data['mr_aniso_boxcar'])) / 4
-    utils.preprocess._binarize_channel(spacetop_data,
-                                       source_col='mr_aniso_boxcar',
-                                       new_col='mr_boxcar',
-                                       threshold=mid_val,
-                                       binary_high=5,
-                                       binary_low=0)
+    try:
+        spacetop_data['mr_aniso_boxcar'] = spacetop_data['fMRI Trigger - CBLCFMA - Current Feedba'].rolling(
+            window=1900).mean()
+        mid_val = (np.max(spacetop_data['mr_aniso_boxcar']) -
+                np.min(spacetop_data['mr_aniso_boxcar'])) / 5
+        utils.preprocess._binarize_channel(spacetop_data,
+                                        source_col='mr_aniso_boxcar',
+                                        new_col='mr_boxcar',
+                                        threshold=mid_val,
+                                        binary_high=5,
+                                        binary_low=0)
+    except:
+        logger.info(f"\n\n__________________{sub} {ses} __________________")
+        logger.error(f"ERROR:: binarize RF pulse TTL failure - ALTERNATIVE:: use channel trigger instead")
+        logger.debug(logger.ERROR)
+        
+
     start_df = spacetop_data[spacetop_data['mr_boxcar']
                              > spacetop_data['mr_boxcar'].shift(1)].index
     stop_df = spacetop_data[spacetop_data['mr_boxcar']
@@ -228,6 +251,6 @@ for acq in sorted(flat_acq_list):
         run_basename = f"{sub}_{ses}_{task}_run-{r+1:02d}_recording-ppg-eda_physio.acq"
         run_dir = os.path.join(save_dir, task, sub, ses)
         Path(run_dir).mkdir(parents=True, exist_ok=True)
-        run_df.to_csv(os.path.join(run_dir, run_basename), index=False)
+        run_df.to_csv(os.path.join(run_dir, run_basename), index=False)# %%
 
-
+# %%
