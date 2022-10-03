@@ -246,9 +246,9 @@ for acq in sorted(flat_acq_list):
         flaglist.append(
             f"runs shorter than {cutoff_threshold} sec: {sub} {ses} {shorter_than_threshold_length} - run number in python order")
 
-    for r in clean_runlist:
+    for ind, r in enumerate(clean_runlist):
         run_df = spacetop_data.iloc[astart_df[r]:astop_df[r]]
-        run_basename = f"{sub}_{ses}_{task}_run-{r+1:02d}_recording-ppg-eda_physio.acq"
+        run_basename = f"{sub}_{ses}_{task}_run-{ind+1:02d}_recording-ppg-eda_physio.acq"
         run_dir = os.path.join(save_dir, task, sub, ses)
         Path(run_dir).mkdir(parents=True, exist_ok=True)
         run_df.to_csv(os.path.join(run_dir, run_basename), index=False)# %%
