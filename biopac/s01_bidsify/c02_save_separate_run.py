@@ -140,7 +140,7 @@ for sub in sub_list:
     acq_list.append(acq)
 
 flat_acq_list = [item for sublist in acq_list  for item in sublist]
-#print(flat_acq_list)
+print(flat_acq_list)
 # %%
 for acq in sorted(flat_acq_list):
     # extract information from filenames _______________________________________________________________
@@ -158,6 +158,7 @@ for acq in sorted(flat_acq_list):
         logger.error(f"\n\n__________________{sub} {ses} __________________")
         logger.error(f"\tno biopac file exists")
         flaglist.append(acq_list)
+        continue
     # identify run transitions _________________________________________________________________________
     try:
         spacetop_data['mr_aniso'] = spacetop_data['fMRI Trigger - CBLCFMA - Current Feedba'].rolling(
@@ -167,7 +168,7 @@ for acq in sorted(flat_acq_list):
         logger.error(f"\tno MR trigger channel - this was the early days. re run and use the *trigger channel*")
         flaglist.append(acq_list)
         logger.exception("message")
-        
+        continue
 
     try:
         utils.preprocess._binarize_channel(spacetop_data,
@@ -180,7 +181,7 @@ for acq in sorted(flat_acq_list):
         logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.error(f"data is empty - this must have been an empty file or saved elsewhere")
         logger.exception("message")
-        
+        continue
 
     start_spike = spacetop_data[spacetop_data['spike']
                                 > spacetop_data['spike'].shift(1)].index
@@ -205,7 +206,7 @@ for acq in sorted(flat_acq_list):
         logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.error(f"ERROR:: binarize RF pulse TTL failure - ALTERNATIVE:: use channel trigger instead")
         logger.debug(logger.ERROR)
-        
+        continue
 
     start_df = spacetop_data[spacetop_data['mr_boxcar']
                              > spacetop_data['mr_boxcar'].shift(1)].index
