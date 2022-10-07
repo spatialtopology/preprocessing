@@ -156,14 +156,6 @@ for acq in sorted(flat_acq_list):
         main_df, samplingrate = nk.read_acqknowledge(acq)
         logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.info(f"file exists! -- starting tranformation: ")
-<<<<<<< HEAD
-    except:
-        logger.error(f"\n\n__________________{sub} {ses} __________________")
-        logger.error(f"\tno biopac file exists")
-        flaglist.append(acq_list)
-        continue
-    # identify run transitions _________________________________________________________________________
-=======
     else:
         logger.error(f"\tno biopac file exists")
         logger.debug(logger.error)
@@ -172,7 +164,6 @@ for acq in sorted(flat_acq_list):
         
 
 # NOTE create an mr_aniso channel for TTL channel _________________________________________________________________________
->>>>>>> 3a3de266fcbda9d7e9d1a55291066eda7b121477
     try:
         main_df['mr_aniso'] = main_df['fMRI Trigger - CBLCFMA - Current Feedba'].rolling(
         window=3).mean()
@@ -182,10 +173,6 @@ for acq in sorted(flat_acq_list):
         flaglist.append(acq_list)
         logger.exception("message")
         continue
-<<<<<<< HEAD
-=======
-        
->>>>>>> 3a3de266fcbda9d7e9d1a55291066eda7b121477
 
     try:
         utils.preprocess._binarize_channel(main_df,
@@ -199,10 +186,6 @@ for acq in sorted(flat_acq_list):
         logger.error(f"data is empty - this must have been an empty file or saved elsewhere")
         logger.exception("message")
         continue
-<<<<<<< HEAD
-=======
-        
->>>>>>> 3a3de266fcbda9d7e9d1a55291066eda7b121477
 
     # start_spike = main_df[main_df['spike']
     #                             > main_df['spike'].shift(1)].index
@@ -227,15 +210,9 @@ for acq in sorted(flat_acq_list):
     except:
         logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.error(f"ERROR:: binarize RF pulse TTL failure - ALTERNATIVE:: use channel trigger instead")
-<<<<<<< HEAD
-        logger.debug(logger.ERROR)
-        continue
-=======
         logger.debug(logger.error)
         continue
         
->>>>>>> 3a3de266fcbda9d7e9d1a55291066eda7b121477
-
     # start_df = main_df[main_df['mr_boxcar']
     #                          > main_df['mr_boxcar'].shift(1)].index
     # stop_df = main_df[main_df['mr_boxcar']
