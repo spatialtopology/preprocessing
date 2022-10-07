@@ -76,9 +76,9 @@ operating = sys.argv[1]  # 'local' vs. 'discovery'
 task = sys.argv[2]  # 'task-social' 'task-fractional' 'task-alignvideos'
 cutoff_threshold = sys.argv[3]
 # %% TODO: TST remove after development
-operating = 'local'  # 'discovery'
-task = 'task-social'
-cutoff_threshold = 300
+# operating = 'local'  # 'discovery'
+# task = 'task-social'
+# cutoff_threshold = 300
 
 if operating == 'discovery':
     spacetop_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social'
@@ -127,7 +127,6 @@ logger.setLevel(logging.INFO)
 
 biopac_list = next(os.walk(join(biopac_dir, 'dartmouth', 'b02_sorted')))[1]  
 remove_int = [1, 2, 3, 4, 5, 6]
-# remove_int = list(range(108))
 remove_list = [f"sub-{x:04d}" for x in remove_int]
 sub_list = [x for x in biopac_list if x not in remove_list]
 acq_list = []
@@ -140,27 +139,29 @@ flat_acq_list = [item for sublist in acq_list  for item in sublist]
 
 # %%
 for acq in sorted(flat_acq_list):
-    # extract information from filenames _______________________________________________________________
+# NOTE: extract information from filenames _______________________________________________________________
     filename = os.path.basename(acq)
     sub = [match for match in filename.split('_') if 'sub' in match][0]
     ses = [match for match in filename.split(
         '_') if 'ses' in match][0]  # 'ses-03'
     task = [match for match in filename.split('_') if 'task' in match][0]
 
-    try:
-        spacetop_data, spacetop_samplingrate = nk.read_acqknowledge(acq)
+# NOTE: open physio dataframe (check if exists) __________________________________________________________
+    if os.path.exists(acq):
+        main_df, samplingrate = nk.read_acqknowledge(acq)
         logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.info(f"file exists! -- starting tranformation: ")
-    except:
+    else:
         logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.error(f"\tno biopac file exists")
-        flaglist.append(acq_list)
+        logger.debug(logger.error)
+        logger.error(acq_list)
         continue
         
 
-    # identify run transitions _________________________________________________________________________
+# NOTE create an mr_aniso channel for TTL channel _________________________________________________________________________
     try:
-        spacetop_data['mr_aniso'] = spacetop_data['fMRI Trigger - CBLCFMA - Current Feedba'].rolling(
+        main_df['mr_aniso'] = main_df['fMRI Trigger - CBLCFMA - Current Feedba'].rolling(
         window=3).mean()
     except:
         logger.info(f"\n\n__________________{sub} {ses} __________________")
@@ -171,7 +172,7 @@ for acq in sorted(flat_acq_list):
         
 
     try:
-        utils.preprocess._binarize_channel(spacetop_data,
+        utils.preprocess._binarize_channel(main_df,
                                         source_col='mr_aniso',
                                         new_col='spike',
                                         threshold=40,
@@ -184,20 +185,21 @@ for acq in sorted(flat_acq_list):
         continue
         
 
-    start_spike = spacetop_data[spacetop_data['spike']
-                                > spacetop_data['spike'].shift(1)].index
-    stop_spike = spacetop_data[spacetop_data['spike']
-                               < spacetop_data['spike'].shift(1)].index
-    logger.info(f"number of spikes within experiment: {len(start_spike)}")
-    spacetop_data['bin_spike'] = 0
-    spacetop_data.loc[start_spike, 'bin_spike'] = 5
+    # start_spike = main_df[main_df['spike']
+    #                             > main_df['spike'].shift(1)].index
+    # stop_spike = main_df[main_df['spike']
+    #                            < main_df['spike'].shift(1)].index
+    dict_spike = utils.preprocess._identify_boundary(main_df, 'spike')
+    logger.info(f"number of spikes within experiment: {len(dict_spike['start'])}")
+    main_df['bin_spike'] = 0
+    main_df.loc[dict_spike['start'], 'bin_spike'] = 5
     # 2)
     try:
-        spacetop_data['mr_aniso_boxcar'] = spacetop_data['fMRI Trigger - CBLCFMA - Current Feedba'].rolling(
-            window=1900).mean()
-        mid_val = (np.max(spacetop_data['mr_aniso_boxcar']) -
-                np.min(spacetop_data['mr_aniso_boxcar'])) / 5
-        utils.preprocess._binarize_channel(spacetop_data,
+        main_df['mr_aniso_boxcar'] = main_df['fMRI Trigger - CBLCFMA - Current Feedba'].rolling(
+            window=int(samplingrate-100)).mean()
+        mid_val = (np.max(main_df['mr_aniso_boxcar']) -
+                np.min(main_df['mr_aniso_boxcar'])) / 5
+        utils.preprocess._binarize_channel(main_df,
                                         source_col='mr_aniso_boxcar',
                                         new_col='mr_boxcar',
                                         threshold=mid_val,
@@ -206,28 +208,32 @@ for acq in sorted(flat_acq_list):
     except:
         logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.error(f"ERROR:: binarize RF pulse TTL failure - ALTERNATIVE:: use channel trigger instead")
-        logger.debug(logger.ERROR)
+        logger.debug(logger.error)
         continue
         
 
-    start_df = spacetop_data[spacetop_data['mr_boxcar']
-                             > spacetop_data['mr_boxcar'].shift(1)].index
-    stop_df = spacetop_data[spacetop_data['mr_boxcar']
-                            < spacetop_data['mr_boxcar'].shift(1)].index
-    print(f"* start_df: {start_df}")
-    print(f"* stop_df: {stop_df}")
-    print(f"* total of {len(start_df)} runs")
+    # start_df = main_df[main_df['mr_boxcar']
+    #                          > main_df['mr_boxcar'].shift(1)].index
+    # stop_df = main_df[main_df['mr_boxcar']
+    #                         < main_df['mr_boxcar'].shift(1)].index
+    dict_runs = utils.preprocess._identify_boundary(main_df, 'mr_boxcar')
+    # print(f"* start_df: {start_df}")
+    # print(f"* stop_df: {stop_df}")
+    # print(f"* total of {len(start_df)} runs")
+    logger.info(f"* start_df: {dict_runs['start']}")
+    logger.info(f"* stop_df: {dict_runs['stop']}")
+    logger.info(f"* total of {len(dict_runs['start'])} runs")
 
-    # _____________ adjust one TR (remove it!)__________________________________________________________
-    sdf = spacetop_data.copy()
-    sdf.loc[start_df, 'bin_spike'] = 0
+# NOTE: _____________ adjust one TR (remove it!)__________________________________________________________
+    sdf = main_df.copy()
+    sdf.loc[dict_runs['start'], 'bin_spike'] = 0
 
-    nstart_df = sdf[sdf['bin_spike'] > sdf['bin_spike'].shift(1)].index
-    nstop_df = sdf[sdf['bin_spike'] < sdf['bin_spike'].shift(1)].index
-    print(nstart_df)
-    print(nstop_df)
+    # nstart_df = sdf[sdf['bin_spike'] > sdf['bin_spike'].shift(1)].index
+    # nstop_df = sdf[sdf['bin_spike'] < sdf['bin_spike'].shift(1)].index
+    # print(nstart_df)
+    # print(nstop_df)
 
-    sdf['adjusted_boxcar'] = sdf['bin_spike'].rolling(window=2000).mean()
+    sdf['adjusted_boxcar'] = sdf['bin_spike'].rolling(window=1900).mean()
     mid_val = (np.max(sdf['adjusted_boxcar']) -
                np.min(sdf['adjusted_boxcar'])) / 4
     utils.preprocess._binarize_channel(sdf,
@@ -236,20 +242,27 @@ for acq in sorted(flat_acq_list):
                                        threshold=mid_val,
                                        binary_high=5,
                                        binary_low=0)
-    astart_df = sdf[sdf['adjust_run'] > sdf['adjust_run'].shift(1)].index
-    astop_df = sdf[sdf['adjust_run'] < sdf['adjust_run'].shift(1)].index
-    print(f"* adjusted start_df: {astart_df}")
-    print(f"* adjusted stop_df: {astop_df}")
+    dict_runs_adjust = utils.preprocess._identify_boundary(sdf, 'adjust_run')
+    # dict_runs_adjust['start'] = sdf[sdf['adjust_run'] > sdf['adjust_run'].shift(1)].index
+    # dict_runs_adjust['stop'] = sdf[sdf['adjust_run'] < sdf['adjust_run'].shift(1)].index
+    print(f"* adjusted start_df: {dict_runs_adjust['start']}")
+    print(f"* adjusted stop_df: {dict_runs_adjust['stop']}")
 
     # 2) identify transitions
-    run_list = list(range(len(astart_df)))
-    run_bool = ((astop_df-astart_df)/spacetop_samplingrate) > 300
+    run_list = list(range(len(dict_runs_adjust['start'])))
+    try:
+        run_bool = ((np.array(dict_runs_adjust['stop'])-np.array(dict_runs_adjust['start']))/samplingrate) > 300
+    except:
+        logger.info(f"\n\n__________________{sub} {ses} __________________")
+        logger.error(f"ERROR:: start and stop datapoints don't match")
+        logger.debug(logger.error)
+        continue
     clean_runlist = list(compress(run_list, run_bool))
     shorter_than_threshold_length = list(compress(run_list, ~run_bool))
 
 
     if len(shorter_than_threshold_length) > 0:
-        flaglist.append(
+        logger.info(
             f"runs shorter than {cutoff_threshold} sec: {sub} {ses} {shorter_than_threshold_length} - run number in python order")
 
     scannote_reference = runmeta.loc[(runmeta['sub'] == sub)& (runmeta['ses'] == ses)]
@@ -261,10 +274,13 @@ for acq in sorted(flat_acq_list):
         for ind, r in enumerate(clean_runlist): 
             clean_run = list(ref_dict.keys())[ind]
             task_type = ref_dict[clean_run][0]
-            run_df = spacetop_data.iloc[astart_df[r]:astop_df[r]]
-            run_basename = f"{sub}_{ses}_{task}_run-{clean_run}-{task_type}_recording-ppg-eda_physio.acq"
+            run_df = main_df.iloc[dict_runs_adjust['start'][r]:dict_runs_adjust['stop'][r]]
+            run_basename = f"{sub}_{ses}_{task}_{clean_run}-{task_type}_recording-ppg-eda_physio.acq"
             run_dir = os.path.join(save_dir, task, sub, ses)
             Path(run_dir).mkdir(parents=True, exist_ok=True)
             run_df.to_csv(os.path.join(run_dir, run_basename), index=False)# %%
+    else:
+        logger.info(f"\n\n__________________{sub} {ses} __________________")
+        logger.error(f"number of complete runs do not match scan notes")
+        logger.debug(logger.error)
 
-# %%
