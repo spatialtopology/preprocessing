@@ -73,8 +73,10 @@ __status__ = "Development"
 
 # TODO:
 operating = sys.argv[1]  # 'local' vs. 'discovery'
-task = sys.argv[2]  # 'task-social' 'task-fractional' 'task-alignvideos'
-cutoff_threshold = sys.argv[3]
+slurm_ind = sys.argv[2]
+task = sys.argv[3]  # 'task-social' 'task-fractional' 'task-alignvideos'
+cutoff_threshold = sys.argv[4]
+
 # %% TODO: TST remove after development
 # operating = 'local'  # 'discovery'
 # task = 'task-social'
@@ -103,10 +105,6 @@ runmeta = pd.read_csv(
 ver = 1
 txt_filename = os.path.join(
     save_dir, f"biopac_flaglist_{task}_{datetime.date.today().isoformat()}_ver-4.txt")
-# while os.path.isfile(txt_filename % sequence):
-#     sequence = int(sequence or 0) + 1
-# txt_filename = txt_filename % sequence
-# with open(txt_filename, 'w') as f:
 f = open(txt_filename, "w")
 
 formatter = logging.Formatter("%(levelname)s - %(message)s")
@@ -125,10 +123,14 @@ logger.setLevel(logging.INFO)
 # %% 1. glob acquisition files ____________________________________________________________________________
 # filename ='/Users/h/Dropbox/projects_dropbox/spacetop_biopac/data/sub-0026/SOCIAL_spacetop_sub-0026_ses-01_task-social_ANISO.acq'
 
-biopac_list = next(os.walk(join(biopac_dir, 'dartmouth', 'b02_sorted')))[1]  
+biopac_list = next(os.walk(join(biopac_dir, 'dartmouth', 'b02_sorted')))[1] 
 remove_int = [1, 2, 3, 4, 5, 6]
 remove_list = [f"sub-{x:04d}" for x in remove_int]
+include_int = list(np.arange(slurm_ind * 10 + 1, (slurm_ind + 1) * 10, 1))
+include_list = [f"sub-{x:04d}" for x in include_int]
 sub_list = [x for x in biopac_list if x not in remove_list]
+sub_list = [x for x in sub_list if x in include_list]
+
 acq_list = []
 for sub in sub_list:
     acq = glob.glob(os.path.join(biopac_dir,  "dartmouth", "b02_sorted", sub, "**", f"*{task}*.acq"),
@@ -152,7 +154,6 @@ for acq in sorted(flat_acq_list):
         logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.info(f"file exists! -- starting tranformation: ")
     else:
-        logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.error(f"\tno biopac file exists")
         logger.debug(logger.error)
         logger.error(acq_list)
