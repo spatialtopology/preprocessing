@@ -28,10 +28,11 @@ Steps (TODO coding)
 Questions: 
 ------------------
 1) What if the data is shorter than expected run 
-A: most-likely ignore
+A: depending on the thresdhold you provide, the code will identify a block of timepoints as a run or not.
 
 2) what if data is longer than expected (e.g. forgot to start and stop run)?
 A: No worries, we're using the channel with the MRtriggers "fMRI Trigger - CBLCFMA - Current Feedba"
+The data can't be longer than the MRI protocol, if the criteria is based on the MRtriggers ;)
 """
 
 # %% libraries ________________________
@@ -91,15 +92,16 @@ dict_column = {
 #     'TSA2_ttl':'Medoc TSA2 TTL Out'
 # }
 # %% TODO: TST remove after development
-# operating = 'local'  # 'discovery'
-# task = 'task-social'
-# cutoff_threshold = 300
-
+#operating = 'local'  # 'discovery'
+#task = 'task-social'
+#cutoff_threshold = 300
+print(f"operating: {operating}")
 if operating == 'discovery':
     spacetop_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social'
     biopac_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/biopac/'
     source_dir = join(biopac_dir, 'dartmouth', 'b02_sorted' )
     save_dir = join(biopac_dir, 'dartmouth', 'b04_finalbids')
+
 elif operating == 'local':
     spacetop_dir = '/Volumes/spacetop_projects_social'
     biopac_dir = '/Volumes/spacetop/biopac'
@@ -128,12 +130,13 @@ remove_int = [1, 2, 3, 4, 5, 6]
 sub_list = utils.initialize._sublist(source_dir, remove_int, slurm_ind, stride=10, sub_zeropad=4)
 
 acq_list = []
+print(sub_list)
 for sub in sub_list:
     acq = glob.glob(os.path.join(biopac_dir,  "dartmouth", "b02_sorted", sub, "**", f"*{task}*.acq"),
                      recursive=True)
     acq_list.append(acq)
 flat_acq_list = [item for sublist in acq_list  for item in sublist]
-
+print(flat_acq_list)
 # %%
 for acq in sorted(flat_acq_list):
 # NOTE: extract information from filenames _______________________________________________________________
@@ -194,7 +197,6 @@ for acq in sorted(flat_acq_list):
         logger.error(f"ERROR:: binarize RF pulse TTL failure - ALTERNATIVE:: use channel trigger instead")
         logger.debug(logger.error)
         continue
-
     dict_runs = utils.preprocess._identify_boundary(main_df, 'mr_boxcar')
     logger.info(f"* start_df: {dict_runs['start']}")
     logger.info(f"* stop_df: {dict_runs['stop']}")
