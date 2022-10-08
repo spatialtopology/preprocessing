@@ -60,6 +60,7 @@ print(sys.path)
 
 import utils
 from utils import preprocess
+from utils import preprocess, initialize
 
 __author__ = "Heejung Jung"
 __copyright__ = "Spatial Topology Project"
@@ -73,10 +74,22 @@ __status__ = "Development"
 
 # TODO:
 operating = sys.argv[1]  # 'local' vs. 'discovery'
-slurm_ind = sys.argv[2]
+slurm_ind = sys.argv[2] # process participants with increments of 10
 task = sys.argv[3]  # 'task-social' 'task-fractional' 'task-alignvideos'
-cutoff_threshold = sys.argv[4]
+run_cutoff = sys.argv[4] # in seconds, e.g. 300
+sub_zeropad = 4
+run_cutoff = 300
 
+# spacetop
+dict_column = {
+    'fMRI_ttl':'fMRI Trigger - CBLCFMA - Current Feedba',
+    'TSA2_ttl':'Medoc TSA2 TTL Out'
+}
+# wasabi
+# dict_column = {
+#     'fMRI_ttl':'MRI TR',#'fMRI Trigger - CBLCFMA - Current Feedba',
+#     'TSA2_ttl':'Medoc TSA2 TTL Out'
+# }
 # %% TODO: TST remove after development
 # operating = 'local'  # 'discovery'
 # task = 'task-social'
@@ -85,12 +98,12 @@ cutoff_threshold = sys.argv[4]
 if operating == 'discovery':
     spacetop_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social'
     biopac_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/biopac/'
+    source_dir = join(biopac_dir, 'dartmouth', 'b02_sorted' )
     save_dir = join(biopac_dir, 'dartmouth', 'b04_finalbids')
 elif operating == 'local':
     spacetop_dir = '/Volumes/spacetop_projects_social'
-    # /biopac/dartmouth/b04_finalbids/task-social'
     biopac_dir = '/Volumes/spacetop/biopac'
-    # /biopac/dartmouth/b04_finalbids/task-social'
+    source_dir = join(biopac_dir, 'dartmouth', 'b02_sorted' )
     save_dir = join(biopac_dir, 'dartmouth', 'b04_finalbids')
 
 print(spacetop_dir)
@@ -98,55 +111,37 @@ print(biopac_dir)
 print(save_dir)
 
 # set up logger _______________________________________________________________________________________
-flaglist = []
+
 runmeta = pd.read_csv(
     join(spacetop_dir, "data/spacetop_task-social_run-metadata.csv"))
 #TODO: come up with scheme to update logger files
 ver = 1
-txt_filename = os.path.join(
+logger_fname = os.path.join(
     save_dir, f"biopac_flaglist_{task}_{datetime.date.today().isoformat()}_ver-4.txt")
-f = open(txt_filename, "w")
+f = open(logger_fname, "w")
+logger = utils.initialize._logger(logger_fname)
 
-formatter = logging.Formatter("%(levelname)s - %(message)s")
-handler = logging.FileHandler(txt_filename)
-handler.setFormatter(formatter)
-handler.setLevel(logging.DEBUG)
-# create console handler with a higher log level
-ch = logging.StreamHandler()
-ch.setFormatter(formatter)
-ch.setLevel(logging.INFO)
-logging.getLogger().addHandler(handler)
-logging.getLogger().addHandler(ch)
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
 
 # %% 1. glob acquisition files ____________________________________________________________________________
 # filename ='/Users/h/Dropbox/projects_dropbox/spacetop_biopac/data/sub-0026/SOCIAL_spacetop_sub-0026_ses-01_task-social_ANISO.acq'
-
-biopac_list = next(os.walk(join(biopac_dir, 'dartmouth', 'b02_sorted')))[1] 
 remove_int = [1, 2, 3, 4, 5, 6]
-remove_list = [f"sub-{x:04d}" for x in remove_int]
-include_int = list(np.arange(slurm_ind * 10 + 1, (slurm_ind + 1) * 10, 1))
-include_list = [f"sub-{x:04d}" for x in include_int]
-sub_list = [x for x in biopac_list if x not in remove_list]
-sub_list = [x for x in sub_list if x in include_list]
+sub_list = utils.initialize._sublist(source_dir, remove_int, slurm_ind, stride=10, sub_zeropad=4)
 
 acq_list = []
 for sub in sub_list:
     acq = glob.glob(os.path.join(biopac_dir,  "dartmouth", "b02_sorted", sub, "**", f"*{task}*.acq"),
                      recursive=True)
     acq_list.append(acq)
-
 flat_acq_list = [item for sublist in acq_list  for item in sublist]
 
 # %%
 for acq in sorted(flat_acq_list):
 # NOTE: extract information from filenames _______________________________________________________________
     filename = os.path.basename(acq)
-    sub = [match for match in filename.split('_') if 'sub' in match][0]
-    ses = [match for match in filename.split(
-        '_') if 'ses' in match][0]  # 'ses-03'
-    task = [match for match in filename.split('_') if 'task' in match][0]
+    bids_dict = {}
+    bids_dict['sub']=  sub = utils.initialize._extract_bids(filename, 'sub')
+    bids_dict['ses']= ses = utils.initialize._extract_bids(filename, 'ses')
+    bids_dict['task']= task = utils.initialize._extract_bids(filename, 'task')
 
 # NOTE: open physio dataframe (check if exists) __________________________________________________________
     if os.path.exists(acq):
@@ -156,22 +151,18 @@ for acq in sorted(flat_acq_list):
     else:
         logger.error(f"\tno biopac file exists")
         logger.debug(logger.error)
-        logger.error(acq_list)
+        logger.error(acq)
         continue
         
-
 # NOTE create an mr_aniso channel for TTL channel _________________________________________________________________________
     try:
-        main_df['mr_aniso'] = main_df['fMRI Trigger - CBLCFMA - Current Feedba'].rolling(
+        main_df['mr_aniso'] = main_df[dict_column['fMRI_ttl']].rolling(
         window=3).mean()
     except:
-        logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.error(f"\tno MR trigger channel - this was the early days. re run and use the *trigger channel*")
-        flaglist.append(acq_list)
-        logger.exception("message")
+        logger.error(acq)
         continue
         
-
     try:
         utils.preprocess._binarize_channel(main_df,
                                         source_col='mr_aniso',
@@ -180,23 +171,16 @@ for acq in sorted(flat_acq_list):
                                         binary_high=5,
                                         binary_low=0)
     except:
-        logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.error(f"data is empty - this must have been an empty file or saved elsewhere")
-        logger.exception("message")
         continue
-        
 
-    # start_spike = main_df[main_df['spike']
-    #                             > main_df['spike'].shift(1)].index
-    # stop_spike = main_df[main_df['spike']
-    #                            < main_df['spike'].shift(1)].index
     dict_spike = utils.preprocess._identify_boundary(main_df, 'spike')
     logger.info(f"number of spikes within experiment: {len(dict_spike['start'])}")
     main_df['bin_spike'] = 0
     main_df.loc[dict_spike['start'], 'bin_spike'] = 5
     # 2)
     try:
-        main_df['mr_aniso_boxcar'] = main_df['fMRI Trigger - CBLCFMA - Current Feedba'].rolling(
+        main_df['mr_aniso_boxcar'] = main_df[dict_column['fMRI_ttl']].rolling(
             window=int(samplingrate-100)).mean()
         mid_val = (np.max(main_df['mr_aniso_boxcar']) -
                 np.min(main_df['mr_aniso_boxcar'])) / 5
@@ -207,20 +191,11 @@ for acq in sorted(flat_acq_list):
                                         binary_high=5,
                                         binary_low=0)
     except:
-        logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.error(f"ERROR:: binarize RF pulse TTL failure - ALTERNATIVE:: use channel trigger instead")
         logger.debug(logger.error)
         continue
-        
 
-    # start_df = main_df[main_df['mr_boxcar']
-    #                          > main_df['mr_boxcar'].shift(1)].index
-    # stop_df = main_df[main_df['mr_boxcar']
-    #                         < main_df['mr_boxcar'].shift(1)].index
     dict_runs = utils.preprocess._identify_boundary(main_df, 'mr_boxcar')
-    # print(f"* start_df: {start_df}")
-    # print(f"* stop_df: {stop_df}")
-    # print(f"* total of {len(start_df)} runs")
     logger.info(f"* start_df: {dict_runs['start']}")
     logger.info(f"* stop_df: {dict_runs['stop']}")
     logger.info(f"* total of {len(dict_runs['start'])} runs")
@@ -228,13 +203,7 @@ for acq in sorted(flat_acq_list):
 # NOTE: _____________ adjust one TR (remove it!)__________________________________________________________
     sdf = main_df.copy()
     sdf.loc[dict_runs['start'], 'bin_spike'] = 0
-
-    # nstart_df = sdf[sdf['bin_spike'] > sdf['bin_spike'].shift(1)].index
-    # nstop_df = sdf[sdf['bin_spike'] < sdf['bin_spike'].shift(1)].index
-    # print(nstart_df)
-    # print(nstop_df)
-
-    sdf['adjusted_boxcar'] = sdf['bin_spike'].rolling(window=1900).mean()
+    sdf['adjusted_boxcar'] = sdf['bin_spike'].rolling(window=int(samplingrate-100)).mean()
     mid_val = (np.max(sdf['adjusted_boxcar']) -
                np.min(sdf['adjusted_boxcar'])) / 4
     utils.preprocess._binarize_channel(sdf,
@@ -244,44 +213,50 @@ for acq in sorted(flat_acq_list):
                                        binary_high=5,
                                        binary_low=0)
     dict_runs_adjust = utils.preprocess._identify_boundary(sdf, 'adjust_run')
-    # dict_runs_adjust['start'] = sdf[sdf['adjust_run'] > sdf['adjust_run'].shift(1)].index
-    # dict_runs_adjust['stop'] = sdf[sdf['adjust_run'] < sdf['adjust_run'].shift(1)].index
     print(f"* adjusted start_df: {dict_runs_adjust['start']}")
     print(f"* adjusted stop_df: {dict_runs_adjust['stop']}")
 
     # 2) identify transitions
     run_list = list(range(len(dict_runs_adjust['start'])))
     try:
-        run_bool = ((np.array(dict_runs_adjust['stop'])-np.array(dict_runs_adjust['start']))/samplingrate) > 300
+        run_bool = ((np.array(dict_runs_adjust['stop'])-np.array(dict_runs_adjust['start']))/samplingrate) > run_cutoff
     except:
-        logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.error(f"ERROR:: start and stop datapoints don't match")
         logger.debug(logger.error)
         continue
     clean_runlist = list(compress(run_list, run_bool))
     shorter_than_threshold_length = list(compress(run_list, ~run_bool))
 
-
+# NOTE: _____________ save identified runs after cross referencing metadata __________________________________________________________
     if len(shorter_than_threshold_length) > 0:
         logger.info(
-            f"runs shorter than {cutoff_threshold} sec: {sub} {ses} {shorter_than_threshold_length} - run number in python order")
-
-    scannote_reference = runmeta.loc[(runmeta['sub'] == sub)& (runmeta['ses'] == ses)]
-    scannote_reference.dropna(axis = 1, inplace = True)
-    scannote_reference.drop(['sub', 'ses'], axis=1, inplace = True)
-
+            f"runs shorter than {run_cutoff} sec: {sub} {ses} {shorter_than_threshold_length} - run number in python order")
+    scannote_reference = utils.initialize._subset_meta(runmeta, sub, ses)
     if len(scannote_reference.columns) == len(clean_runlist):
         ref_dict = scannote_reference.to_dict('list')
-        for ind, r in enumerate(clean_runlist): 
-            clean_run = list(ref_dict.keys())[ind]
-            task_type = ref_dict[clean_run][0]
-            run_df = main_df.iloc[dict_runs_adjust['start'][r]:dict_runs_adjust['stop'][r]]
-            run_basename = f"{sub}_{ses}_{task}_{clean_run}-{task_type}_recording-ppg-eda_physio.acq"
-            run_dir = os.path.join(save_dir, task, sub, ses)
-            Path(run_dir).mkdir(parents=True, exist_ok=True)
-            run_df.to_csv(os.path.join(run_dir, run_basename), index=False)# %%
+        run_basename = f"{sub}_{ses}_{task}_CLEAN_RUN-TASKTYLE_recording-ppg-eda_physio.acq"
+        utils.initialize._assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df, save_dir,run_basename,bids_dict)
+        logger.info("n__________________ :+: FINISHED :+: __________________")
     else:
-        logger.info(f"\n\n__________________{sub} {ses} __________________")
         logger.error(f"number of complete runs do not match scan notes")
         logger.debug(logger.error)
+    # scannote_reference = runmeta.loc[(runmeta['sub'] == sub)& (runmeta['ses'] == ses)]
+    # scannote_reference.dropna(axis = 1, inplace = True) # NOTE: if a run was aborted, keep as NA - we will drop this "run" column
+    # scannote_reference.drop(['sub', 'ses'], axis=1, inplace = True)
+
+    # if len(scannote_reference.columns) == len(clean_runlist):
+    #     ref_dict = scannote_reference.to_dict('list')
+    #     for ind, r in enumerate(clean_runlist): 
+    #         clean_run = list(ref_dict.keys())[ind]
+    #         task_type = ref_dict[clean_run][0]
+    #         run_df = main_df.iloc[dict_runs_adjust['start'][r]:dict_runs_adjust['stop'][r]]
+    #         run_basename = f"{sub}_{ses}_{task}_{clean_run}-{task_type}_recording-ppg-eda_physio.acq"
+    #         run_dir = os.path.join(save_dir, task, sub, ses)
+    #         Path(run_dir).mkdir(parents=True, exist_ok=True)
+    #         run_df.to_csv(os.path.join(run_dir, run_basename), index=False)# %%
+    #         logger.info("n__________________ :+: FINISHED :+: __________________")
+    # else:
+    #     logger.info(f"\n\n__________________{sub} {ses} __________________")
+    #     logger.error(f"number of complete runs do not match scan notes")
+    #     logger.debug(logger.error)
 
