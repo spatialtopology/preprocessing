@@ -66,7 +66,7 @@ acq_list = glob.glob(os.path.join(main_dir, 'biopac', 'dartmouth',
                                   'b02_sorted', 'sub-' + ('[0-9]' * 4), '*',
                                   '*task-social*_physio.acq'),
                      recursive=True)
-acq_list = TODO: INSERT FILE NAME
+acq_list = #TODO: INSERT FILE NAME
 flaglist = []
 runmeta = pd.read_csv('/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social/data/spacetop_task-social_run-metadata.csv')
 txt_filename = os.path.join(
