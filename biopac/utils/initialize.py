@@ -18,7 +18,7 @@ __status__ = "Development"
 
 def _logger(logger_fname):
     import logging
-    formatter = logging.Formatter("%(levelname)s - %(message)s")
+    formatter = logging.Formatter("%(levelname)s - %(funcName)s:%(lineno)d - %(message)s")
     handler = logging.FileHandler(logger_fname)
     handler.setFormatter(formatter)
     handler.setLevel(logging.DEBUG)
