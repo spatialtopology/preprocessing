@@ -153,8 +153,6 @@ for acq in sorted(flat_acq_list):
         logger.info(f"file exists! -- starting tranformation: ")
     else:
         logger.error(f"\tno biopac file exists")
-        logger.debug(logger.error)
-        logger.error(acq)
         continue
         
 # NOTE create an mr_aniso channel for TTL channel _________________________________________________________________________
@@ -242,23 +240,4 @@ for acq in sorted(flat_acq_list):
     else:
         logger.error(f"number of complete runs do not match scan notes")
         logger.debug(logger.error)
-    # scannote_reference = runmeta.loc[(runmeta['sub'] == sub)& (runmeta['ses'] == ses)]
-    # scannote_reference.dropna(axis = 1, inplace = True) # NOTE: if a run was aborted, keep as NA - we will drop this "run" column
-    # scannote_reference.drop(['sub', 'ses'], axis=1, inplace = True)
-
-    # if len(scannote_reference.columns) == len(clean_runlist):
-    #     ref_dict = scannote_reference.to_dict('list')
-    #     for ind, r in enumerate(clean_runlist): 
-    #         clean_run = list(ref_dict.keys())[ind]
-    #         task_type = ref_dict[clean_run][0]
-    #         run_df = main_df.iloc[dict_runs_adjust['start'][r]:dict_runs_adjust['stop'][r]]
-    #         run_basename = f"{sub}_{ses}_{task}_{clean_run}-{task_type}_recording-ppg-eda_physio.acq"
-    #         run_dir = os.path.join(save_dir, task, sub, ses)
-    #         Path(run_dir).mkdir(parents=True, exist_ok=True)
-    #         run_df.to_csv(os.path.join(run_dir, run_basename), index=False)# %%
-    #         logger.info("n__________________ :+: FINISHED :+: __________________")
-    # else:
-    #     logger.info(f"\n\n__________________{sub} {ses} __________________")
-    #     logger.error(f"number of complete runs do not match scan notes")
-    #     logger.debug(logger.error)
 
