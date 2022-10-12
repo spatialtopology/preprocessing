@@ -2,44 +2,28 @@
    <a href="https://github.com/badges/shields/graphs/contributors" alt="Contributors">
         <img src="https://img.shields.io/badge/Code-React-informational?style=flat&logo=react&color=61DAFB" /></a>
     <a href="https://github.com/spatialtopology/preprocessing" alt="Backers on Open Collective">
-        <img src="https://img.shields.io/badge/status-dev-brightgreen" /></a>
+        <img src="https://img.shields.io/badge/status-dev-brightgreen"/></a>
+<a href="https://github.com/spatialtopology/preprocessing"><img src="https://img.shields.io/badge/contributions-welcome-orange"></a>
+ </a>
+ <!-- Place this tag where you want the button to render. -->
+<a class="github-button" href="https://github.com/jungheejung" aria-label="Follow @jungheejung on GitHub">Follow @jungheejung</a>
 
-  <a href="#sponsors" alt="Sponsors on Open Collective">
-        <img src="https://img.shields.io/opencollective/sponsors/shields" /></a>
-    <a href="https://github.com/badges/shields/pulse" alt="Activity">
-        <img src="https://img.shields.io/github/commit-activity/m/badges/shields" /></a>
-    <a href="https://circleci.com/gh/badges/shields/tree/master">
-        <img src="https://img.shields.io/circleci/project/github/badges/shields/master" alt="build status"></a>
-    <a href="https://circleci.com/gh/badges/daily-tests">
-        <img src="https://img.shields.io/circleci/project/github/badges/daily-tests?label=service%20tests"
-            alt="service-test status"></a>
-    <a href="https://coveralls.io/github/badges/shields">
-        <img src="https://img.shields.io/coveralls/github/badges/shields"
-            alt="coverage"></a>
-    <a href="https://lgtm.com/projects/g/badges/shields/alerts/">
-        <img src="https://img.shields.io/lgtm/alerts/g/badges/shields"
-            alt="Total alerts"/></a>
-    <a href="https://discord.gg/HjJCwm5">
-        <img src="https://img.shields.io/discord/308323056592486420?logo=discord"
-            alt="chat on Discord"></a>
-    <a class="github-button" href="https://github.com/jungheejung" aria-label="Follow @jungheejung on GitHub">Follow @jungheejung</a>
-    <a href="https://twitter.com/intent/follow?screen_name=jungheejung">
-        <img src="https://img.shields.io/twitter/follow/shields_io?style=social&logo=twitter"
-            alt="follow on Twitter"></a>
 
-<github-button href="https://github.com/jungheejung" aria-label="Follow @jungheejung on GitHub">Follow @jungheejung</github-button>
+
+
 </p>
+[![Open In Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Naereen/badges)
 
 
 # About
-#### Spacetop's preprocessing biopac github is developed to **convert** raw physiological data (.acq) into BIDS-abiding files (.csv)
+#### Spacetop's preprocessing biopac code will *convert* raw physiological data (.acq) into BIDS-abiding files (.csv) It also introduces some backbone code for skin conductance analyses.
 ![Frame 6 (1)](https://user-images.githubusercontent.com/18406041/195249514-ddf01d35-3785-4ea1-a101-06507f896fe3.png)
 * We acheive this by using the RF pulses as markers for identifying run transitions.
 * From that every run is saved separately into a .csv files, now BIDS-compliant.
 * Based on these .csv files, you can treat it as a dataframe and run analyses.
 
 # Prerequisites: Are there any installations?
-* install the **biopac.yaml**
+* install the **biopac.yaml** (We need (neurokit)[https://github.com/neuropsychology/NeuroKit] and bioread)
 * utils should be included from this repository
 
 # Usage: How to run the code?
@@ -50,6 +34,12 @@ python c01_bidsify_discovery.py
 ```
 # step 02: identify run transitions and save as csv
 python c02_save_separate_run.py 'local' 'task-social' 300
+```
+
+step 03: Check out the tutorial
+[![Open In Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Naereen/badges)
+```
+
 ```
 
 ## Details
@@ -75,6 +65,8 @@ A: No worries, we're using the channel with the MRtriggers "fMRI Trigger - CBLCF
 The data can't be longer than the MRI protocol, if the criteria is based on the MRtriggers ;)
 
 # Contribution
+* Isabel Neumann (Integrating Neurokit, Identifying appropriate functions)
+* Bethany Hunt (Suggestions on Physio data structure, BIDS convention)
 
 ## How to contribute
 
