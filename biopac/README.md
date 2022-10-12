@@ -1,9 +1,9 @@
 <p align="center">
-    <a href="https://github.com/badges/shields/graphs/contributors" alt="Contributors">
+   <a href="https://github.com/badges/shields/graphs/contributors" alt="Contributors">
         <img src="https://img.shields.io/badge/Code-React-informational?style=flat&logo=react&color=61DAFB" /></a>
     <a href="https://github.com/spatialtopology/preprocessing" alt="Backers on Open Collective">
         <img src="https://img.shields.io/badge/status-dev-brightgreen" /></a>
-  <--  
+
   <a href="#sponsors" alt="Sponsors on Open Collective">
         <img src="https://img.shields.io/opencollective/sponsors/shields" /></a>
     <a href="https://github.com/badges/shields/pulse" alt="Activity">
@@ -22,21 +22,27 @@
     <a href="https://discord.gg/HjJCwm5">
         <img src="https://img.shields.io/discord/308323056592486420?logo=discord"
             alt="chat on Discord"></a>
-    <a href="https://twitter.com/intent/follow?screen_name=shields_io">
+    <a class="github-button" href="https://github.com/jungheejung" aria-label="Follow @jungheejung on GitHub">Follow @jungheejung</a>
+    <a href="https://twitter.com/intent/follow?screen_name=jungheejung">
         <img src="https://img.shields.io/twitter/follow/shields_io?style=social&logo=twitter"
             alt="follow on Twitter"></a>
-            -->
+
+<github-button href="https://github.com/jungheejung" aria-label="Follow @jungheejung on GitHub">Follow @jungheejung</github-button>
 </p>
 
 
 # About
-Spacetop's preprocessing biopac github is developed to **convert** raw physiological data (.acq) into BIDS-abiding files (.csv)
+#### Spacetop's preprocessing biopac github is developed to **convert** raw physiological data (.acq) into BIDS-abiding files (.csv)
 ![Frame 6 (1)](https://user-images.githubusercontent.com/18406041/195249514-ddf01d35-3785-4ea1-a101-06507f896fe3.png)
 * We acheive this by using the RF pulses as markers for identifying run transitions.
 * From that every run is saved separately into a .csv files, now BIDS-compliant.
 * Based on these .csv files, you can treat it as a dataframe and run analyses.
 
-# Usage
+# Prerequisites: Are there any installations?
+* install the **biopac.yaml**
+* utils should be included from this repository
+
+# Usage: How to run the code?
 ```
 # step 01: convert .acq
 python c01_bidsify_discovery.py
@@ -60,7 +66,7 @@ Steps (TODO coding)
 7) [x] save using bids naming convention
 
 
-Question: Questions:
+Question:
 ------------------
 Q1) What if the data is shorter than expected run?
 A: depending on the threshold you provide, the code will identify a block of timepoints as a run or not.
@@ -68,3 +74,8 @@ Q2) what if data is longer than expected (e.g. forgot to start and stop run)?
 A: No worries, we're using the channel with the MRtriggers "fMRI Trigger - CBLCFMA - Current Feedba"
 The data can't be longer than the MRI protocol, if the criteria is based on the MRtriggers ;)
 
+# Contribution
+
+## How to contribute
+
+# 
