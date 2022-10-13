@@ -1,4 +1,5 @@
 {
+
   "files": [
     "README.md"
   ],
@@ -6,6 +7,29 @@
   "commit": false,
   "commitConvention": "angular",
   "contributors": [
+  
+      {
+      "login": "jungheejung",
+      "name": "Heejung Jung",
+      "avatar_url": "https://avatars.githubusercontent.com/u/39889?v=4",
+      "profile": "",
+      "contributions": [
+        "infra",
+        "test",
+        "code",
+        "design
+      ]
+    },
+    
+    {
+      "login": "psadil",
+      "name": "Patrick Sadil",
+      "avatar_url": "",
+      "profile": "https://psadil.github.io/psadil",
+      "contributions": [
+        "design"
+      ]
+    },
     {
       "login": "yarikoptic",
       "name": "Yaroslav Halchenko",
@@ -24,4 +48,7 @@
   "repoHost": "https://github.com",
   "projectName": "preprocessing",
   "projectOwner": "spatialtopology"
+
+  ]
+
 }
