@@ -1,6 +1,25 @@
-# preprocessing
-code for transferring data and preprocessing
+<p align="center">
+    <img src="https://user-images.githubusercontent.com/54367954/195647242-1258eaf4-f838-43ea-b65c-f94dfe005e6b.png" width="600">
+    </p>
+<h1 align="center">
+    spacetop preprocessing
+    </h1>
+<h4 align="center">
+    Code for transferring data, tallying, and preprocessing
+    </h4>
+<p align="center">
+   <a href="https://github.com/badges/shields/graphs/contributors" alt="Contributors">
+         <img src="https://img.shields.io/badge/Code-React-informational?style=flat&logo=react&color=61DAFB" /></a>
+   <a href="https://github.com/spatialtopology/preprocessing" alt="Backers on Open Collective">
+         <img src="https://img.shields.io/badge/status-dev-brightgreen"/></a>
+   <a href="https://github.com/spatialtopology/preprocessing">
+         <img src="https://img.shields.io/badge/contributions-welcome-orange"></a>
+   <a href="https://github.com/git/git-scm.com/blob/main/MIT-LICENSE.txt">
+         <img src="https://img.shields.io/badge/license-MIT-blue"></a>
+</p>
 
+Code for transferring data, tallying, and preprocessing
+           
 ```
 tree structure of git repository
 ** preprocessing **
