@@ -11,7 +11,7 @@
       {
       "login": "jungheejung",
       "name": "Heejung Jung",
-      "avatar_url": "https://avatars.githubusercontent.com/u/39889?v=4",
+      "avatar_url": "https://avatars.githubusercontent.com/u/18406041?v=4",
       "profile": "",
       "contributions": [
         "infra",
@@ -24,10 +24,13 @@
     {
       "login": "psadil",
       "name": "Patrick Sadil",
-      "avatar_url": "",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8172767?v=4",
       "profile": "https://psadil.github.io/psadil",
       "contributions": [
-        "design"
+        "infra",
+        "test",
+        "code"
+        
       ]
     },
     {
@@ -37,8 +40,7 @@
       "profile": "http://www.onerussian.com",
       "contributions": [
         "infra",
-        "test",
-        "code"
+
       ]
     }
   ],
