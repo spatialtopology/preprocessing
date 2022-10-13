@@ -13,39 +13,59 @@
 
 </p>
 
+Table of contents
+-----------------
 
+* [About](#about)
+* [Prerequisites](#prerequisites)
+* [Usage](#usage)
+* [Questions](#questions)
+* [Getting help](#getting-help)
+* [Contributing](#contributing)
+* [License](#license)
+* [Authors and history](#authors-and-history)
+* [Acknowledgments](#acknowledgments)
 
-# About
+About
+---------
 #### Spacetop's preprocessing physio code will *convert* raw physiological data (.acq) into BIDS-abiding files (.csv) It also introduces some backbone code for skin conductance analyses.
 ![Frame 6 (1)](https://user-images.githubusercontent.com/18406041/195249514-ddf01d35-3785-4ea1-a101-06507f896fe3.png)
 * We acheive this by using the RF pulses as markers for identifying run transitions.
 * From that every run is saved separately into a .csv files, now BIDS-compliant.
 * Based on these .csv files, you can treat it as a dataframe and run analyses.
 
-# Prerequisites: 
-## -- Are there any installations?
+
+Prerequisites 
+------------------
+
+### Are there any installations?
+
+```
+conda env create -f biopac.yaml
+```
 * Install the conda environment via [**biopac.yaml**](https://github.com/spatialtopology/preprocessing/blob/0f352b6bd5a10f15f670936324108689c5a6c95c/biopac/biopac.yaml), included in this repo.
 * If you don't want to install an env via the yaml file, make sure to include the essential modules: [neurokit](https://github.com/neuropsychology/NeuroKit) and [bioread](https://github.com/uwmadison-chm/bioread)
-## -- What does my data structure need to be like?
+### What does my data structure need to be like?
+[ TODO: insert image of data structure ] 
+e.g. physio > physio01_raw / physio02_sort / physio03_bids / physio04_ttl
 
-# Usage: How to run the code?
+Usage
+----------------
+1. Rename to BIDS-compliant format: Sort raw .acq into semi-BIDS format
 ```
-# step 01: convert .acq
 python c01_bidsify_discovery.py
 ```
+2. Identify run transitions and save as csv: NOTE: need to pass in arguments
 ```
-# step 02: identify run transitions and save as csv
 python c02_save_separate_run.py 'local' 'task-social' 300
 ```
-
-step 03: preprocess signals and Check out the tutorial
+3. Preprocess signals and save as csv for group level analyses<br>
+Check out our tutorial!
 [![Open In Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Naereen/badges)
-```
 
-```
 
-## Details
-Steps (TODO coding)
+
+Details Steps (TODO coding)
 ------------------
 1) [x] glob acquisitions files
 2) [x] extract information from filesnames
@@ -58,18 +78,33 @@ Steps (TODO coding)
 7) [x] save using bids naming convention
 
 
-Question:
+Questions
 ------------------
-Q1) What if the data is shorter than expected run?
-A: depending on the threshold you provide, the code will identify a block of timepoints as a run or not.
-Q2) what if data is longer than expected (e.g. forgot to start and stop run)?
-A: No worries, we're using the channel with the MRtriggers "fMRI Trigger - CBLCFMA - Current Feedba"
-The data can't be longer than the MRI protocol, if the criteria is based on the MRtriggers ;)
+### Q1) What if the data is shorter than expected run?
+> A: Depending on the threshold you provide, the code will identify a block of timepoints as a run or not.
 
-# Contribution
-* Isabel Neumann (Integrating Neurokit, Identifying appropriate functions)
-* Bethany Hunt (Suggestions on Physio data structure, BIDS convention)
+### Q2) what if data is longer than expected (e.g. forgot to start and stop run)?
+> A: No worries, we're using the channel with the MRtriggers as our criteria.
+The data can't be longer than the MRI protocol, if the criteria is based on the MRtriggers ;) In other words, we're identifying run boundaries based on the scanner pulse, not on the experimenter's operation.
 
-## How to contribute
+Getting Help
+------------------
+* File and issue and notify the maintainers
+* Fork this repository, make changes, test it on your local repo.
+* Submit a pull request
 
-# 
+Contributing
+------------------
+
+License
+------------------
+
+Authors and History
+------------------
+* Heejung Jung [@jungheejung](github.com/jungheejung)
+* Isabel Neumann (Integrating Neurokit, Identifying appropriate functions) [@isabeln23](https://github.com/isabeln23)
+* Bethany Hunt (Suggestions on Physio data structure, BIDS convention) [@huntb9]([github.com](https://github.com)/huntb9)
+
+Acknowledgments
+------------------
+
