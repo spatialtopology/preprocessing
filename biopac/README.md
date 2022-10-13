@@ -20,8 +20,9 @@
 * Based on these .csv files, you can treat it as a dataframe and run analyses.
 
 # Prerequisites: Are there any installations?
-* install the **biopac.yaml** (We need (neurokit)[https://github.com/neuropsychology/NeuroKit] and bioread)
-* utils should be included from this repository
+* Install the conda environment via [**biopac.yaml**](https://github.com/spatialtopology/preprocessing/blob/0f352b6bd5a10f15f670936324108689c5a6c95c/biopac/biopac.yaml) in this repo.
+* If you don't want to install an env via the yaml file, make sure to include the essential modules: [neurokit](https://github.com/neuropsychology/NeuroKit) and [bioread](https://github.com/uwmadison-chm/bioread)
+
 
 # Usage: How to run the code?
 ```
@@ -33,7 +34,7 @@ python c01_bidsify_discovery.py
 python c02_save_separate_run.py 'local' 'task-social' 300
 ```
 
-step 03: Check out the tutorial
+step 03: preprocess signals and Check out the tutorial
 [![Open In Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Naereen/badges)
 ```
 
