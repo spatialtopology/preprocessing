@@ -23,7 +23,7 @@ Table of contents
 * [Getting help](#getting-help)
 * [Contributing](#contributing)
 * [License](#license)
-* [Authors and history](#authors-and-history)
+* [Contributors](#Contributors)
 * [Acknowledgments](#acknowledgments)
 
 About
@@ -99,8 +99,16 @@ Contributing
 License
 ------------------
 
-Authors and History
+Contributors
 ------------------
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 * Heejung Jung [@jungheejung](github.com/jungheejung)
 * Isabel Neumann (Integrating Neurokit, Identifying appropriate functions) [@isabeln23](https://github.com/isabeln23)
 * Bethany Hunt (Suggestions on Physio data structure, BIDS convention) [@huntb9]([github.com](https://github.com)/huntb9)
