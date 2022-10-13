@@ -1,27 +1,26 @@
 {
-  "projectName": "spacetop",
-  "projectOwner": "jungheejung",
-  "repoType": "github",
-  "repoHost": "https://github.com",
+
   "files": [
     "README.md"
   ],
   "imageSize": 100,
   "commit": false,
+  "commitConvention": "angular",
   "contributors": [
-    {
+  
+      {
       "login": "jungheejung",
       "name": "Heejung Jung",
-      "avatar_url": "",
+      "avatar_url": "https://avatars.githubusercontent.com/u/39889?v=4",
       "profile": "",
       "contributions": [
-        "code",
-        "ideas",
         "infra",
         "test",
+        "code",
         "design
       ]
     },
+    
     {
       "login": "psadil",
       "name": "Patrick Sadil",
@@ -34,16 +33,22 @@
     {
       "login": "yarikoptic",
       "name": "Yaroslav Halchenko",
-      "avatar_url": "",
-      "profile": "",
+      "avatar_url": "https://avatars.githubusercontent.com/u/39889?v=4",
+      "profile": "http://www.onerussian.com",
       "contributions": [
-        "design"
+        "infra",
+        "test",
+        "code"
       ]
     }
-
   ],
   "contributorsPerLine": 7,
-  "linkToUsage": true,
   "skipCi": true,
-  "commitConvention": "angular"
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "preprocessing",
+  "projectOwner": "spatialtopology"
+
+  ]
+
 }
