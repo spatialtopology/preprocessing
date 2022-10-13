@@ -1,18 +1,15 @@
+
+
 <p align="center">
+   <img src="https://user-images.githubusercontent.com/18406041/195492823-f5901c58-9d31-42b6-a5e3-0402d31155fb.png" width="400"><br>
    <a href="https://github.com/badges/shields/graphs/contributors" alt="Contributors">
         <img src="https://img.shields.io/badge/Code-React-informational?style=flat&logo=react&color=61DAFB" /></a>
     <a href="https://github.com/spatialtopology/preprocessing" alt="Backers on Open Collective">
         <img src="https://img.shields.io/badge/status-dev-brightgreen"/></a>
 <a href="https://github.com/spatialtopology/preprocessing"><img src="https://img.shields.io/badge/contributions-welcome-orange"></a>
  </a>
- <!-- Place this tag where you want the button to render. -->
-<a class="github-button" href="https://github.com/jungheejung" aria-label="Follow @jungheejung on GitHub">Follow @jungheejung</a>
-
-
-
-
 </p>
-[![Open In Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Naereen/badges)
+
 
 
 # About
