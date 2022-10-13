@@ -19,7 +19,52 @@
 </p>
 
 Code for transferring data, tallying, and preprocessing
-           
+
+
+Table of contents
+-----------------
+
+* [About](#about)
+* [Prerequisites](#prerequisites)
+* [Usage](#usage)
+* [Questions](#questions)
+* [Getting help](#getting-help)
+* [Contributing](#contributing)
+* [License](#license)
+* [Authors and history](#authors-and-history)
+* [Acknowledgments](#acknowledgments)
+
+
+About
+-----------------
+
+Prerequisites
+-----------------
+
+Usage
+-----------------
+
+Questions
+-----------------
+
+Getting help
+-----------------
+
+Contributing
+-----------------
+
+License
+-----------------
+
+Authors and history
+-----------------
+* Heejung Jung
+* Patrick Sadil
+
+Acknowledgments
+-----------------
+Grant funding National Institute of Biomedical Imaging and Bioengineering (NIBIB) 1R01EB026549-01
+
 ```
 tree structure of git repository
 ** preprocessing **
