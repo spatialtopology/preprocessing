@@ -57,7 +57,7 @@ for acq in acq_list:
         sub = utils.initialize._extract_bids(filename, 'sub') # 'sub-0056'
         ses = utils.initialize._extract_bids(filename, 'ses') # 'ses-03'
         task = utils.initialize._extract_bids(filename, 'task')
-        logger.info(f"\n\n__________________{sub} {ses} {task}__________________")
+        logger.info("__________________%s %s %s__________________", sub, ses, task)
         new_dir = os.path.join(physio_dir,'physio02_sort', sub, ses)
         Path(new_dir).mkdir(parents=True,exist_ok=True )
         shutil.copy(acq,new_dir)
