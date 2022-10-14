@@ -16,7 +16,7 @@ cutoff_threshold: int
     Anything shorter than that is discarded and not converted into a run
 """
 
-# %% libraries ________________________
+# %% libraries _______________________________________________________________________________________________
 import neurokit2 as nk
 import pandas as pd
 import numpy as np
@@ -62,15 +62,11 @@ sub_zeropad = 4
 run_cutoff = 300
 
 # spacetop
+dict_task = {'task-cue':'task-social'}
 dict_column = {
     'fMRI_ttl':'fMRI Trigger - CBLCFMA - Current Feedba',
     'TSA2_ttl':'Medoc TSA2 TTL Out'
 }
-# wasabi
-# dict_column = {
-#     'fMRI_ttl':'MRI TR',#'fMRI Trigger - CBLCFMA - Current Feedba',
-#     'TSA2_ttl':'Medoc TSA2 TTL Out'
-# }
 # %% TODO: TST remove after development
 #operating = 'local'  # 'discovery'
 #task = 'task-social'
@@ -78,21 +74,21 @@ dict_column = {
 print(f"operating: {operating}")
 if operating == 'discovery':
     spacetop_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social'
-    biopac_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop/biopac/'
-    source_dir = join(biopac_dir, 'dartmouth', 'b02_sorted' )
-    save_dir = join(biopac_dir, 'dartmouth', 'b04_finalbids')
+    physio_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/physio'
+    source_dir = join(physio_dir, 'physio02_sort')
+    save_dir = join(physio_dir, 'physio03_bids', task)
 
 elif operating == 'local':
     spacetop_dir = '/Volumes/spacetop_projects_social'
-    biopac_dir = '/Volumes/spacetop/biopac'
-    source_dir = join(biopac_dir, 'dartmouth', 'b02_sorted' )
-    save_dir = join(biopac_dir, 'dartmouth', 'b04_finalbids')
+    physio_dir = '/Volumes/spacetop_data/physio'
+    source_dir = join(physio_dir, 'physio02_sort')
+    save_dir = join(physio_dir, 'physio03_bids', task)
 
 print(spacetop_dir)
-print(biopac_dir)
+print(physio_dir)
 print(save_dir)
 
-# set up logger _______________________________________________________________________________________
+# set up logger ______________________________________________________________________________________________
 runmeta = pd.read_csv(
     join(spacetop_dir, "data/spacetop_task-social_run-metadata.csv"))
 #TODO: come up with scheme to update logger files
@@ -103,7 +99,7 @@ f = open(logger_fname, "w")
 logger = utils.initialize._logger(logger_fname)
 
 
-# %% NOTE: 1. glob acquisition files ____________________________________________________________________________
+# %% NOTE: 1. glob acquisition files _________________________________________________________________________
 # filename ='../spacetop_biopac/data/sub-0026/SOCIAL_spacetop_sub-0026_ses-01_task-social_ANISO.acq'
 remove_int = [1, 2, 3, 4, 5, 6]
 sub_list = utils.initialize._sublist(source_dir, remove_int, slurm_ind, stride=10, sub_zeropad=4)
@@ -111,7 +107,7 @@ sub_list = utils.initialize._sublist(source_dir, remove_int, slurm_ind, stride=1
 acq_list = []
 print(sub_list)
 for sub in sub_list:
-    acq = glob.glob(os.path.join(biopac_dir,  "dartmouth", "b02_sorted", sub, "**", f"*{task}*.acq"),
+    acq = glob.glob(os.path.join(physio_dir,  "dartmouth", "b02_sorted", sub, "**", f"*{task}*.acq"),
                      recursive=True)
     acq_list.append(acq)
 flat_acq_list = [item for sublist in acq_list  for item in sublist]
@@ -120,14 +116,18 @@ print(flat_acq_list)
 # %%
 flat_acq_list = ['/Users/h/Dropbox/projects_dropbox/spacetop_biopac/sandbox/SOCIAL_spacetop_sub-0056_ses-01_task-social_ANISO.acq']
 for acq in sorted(flat_acq_list):
-# NOTE: 2. extract information from filenames _______________________________________________________________
+# NOTE: 2. extract information from filenames ________________________________________________________________
     filename = os.path.basename(acq)
     bids_dict = {}
     bids_dict['sub'] = sub  = utils.initialize._extract_bids(filename, 'sub')
     bids_dict['ses'] = ses  = utils.initialize._extract_bids(filename, 'ses')
     bids_dict['task']= task = utils.initialize._extract_bids(filename, 'task')
+    if dict_task:
+        bids_dict['task'] = dict_task[task]
+        task = bids_dict['task']
 
-# NOTE: 3. open physio dataframe (check if exists) __________________________________________________________
+
+# NOTE: 3. open physio dataframe (check if exists) ___________________________________________________________
     if os.path.exists(acq):
         main_df, samplingrate = nk.read_acqknowledge(acq)
         logger.info(f"\n\n__________________{sub} {ses} __________________")
