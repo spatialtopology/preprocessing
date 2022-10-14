@@ -227,9 +227,7 @@ for acq in sorted(flat_acq_list):
     if len(scannote_reference.columns) == len(clean_runlist):
         ref_dict = scannote_reference.to_dict('list')
         run_basename = f"{sub}_{ses}_{task}_CLEAN_RUN-TASKTYLE_recording-ppg-eda_physio.acq"
-        sub_save_dir = join(save_dir, sub, ses)
-        Path(sub_save_dir).mkdir(parents=True,exist_ok=True )
-        utils.initialize._assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df, sub_save_dir,run_basename,bids_dict)
+        utils.initialize._assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df, save_dir,run_basename,bids_dict)
         logger.info("__________________ :+: FINISHED :+: __________________")
     else:
         logger.error(f"number of complete runs do not match scan notes")
