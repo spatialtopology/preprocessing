@@ -45,9 +45,7 @@ __status__ = "Development"
 
 # %% directories ___________________________________
 # NOTE: USER INPUT:
-#current_dir = os.getcwd()
-#main_dir = Path(current_dir).parents[1]
-physio_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/physio'
+#physio_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/physio'
 log_savedir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/log'
 logger_fname = os.path.join(
     log_savedir, f"data-physio_step-01-bidsify_{datetime.date.today().isoformat()}.txt")
