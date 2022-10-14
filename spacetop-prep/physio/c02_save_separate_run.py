@@ -75,7 +75,7 @@ print(f"operating: {operating}")
 if operating == 'discovery':
     spacetop_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social'
     physio_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/physio'
-    source_dir = join(physio_dir, 'physio02_sort')
+    source_dir = join(physio_dir, 'physio02_sort', task)
     save_dir = join(physio_dir, 'physio03_bids', task)
 
 elif operating == 'local':
@@ -107,7 +107,7 @@ sub_list = utils.initialize._sublist(source_dir, remove_int, slurm_ind, stride=1
 acq_list = []
 print(sub_list)
 for sub in sub_list:
-    acq = glob.glob(os.path.join(physio_dir,  "dartmouth", "b02_sorted", sub, "**", f"*{task}*.acq"),
+    acq = glob.glob(os.path.join(source_dir, sub, "**", f"*{task}*.acq"),
                      recursive=True)
     acq_list.append(acq)
 flat_acq_list = [item for sublist in acq_list  for item in sublist]
