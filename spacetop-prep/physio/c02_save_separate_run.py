@@ -130,10 +130,10 @@ for acq in sorted(flat_acq_list):
 # NOTE: 3. open physio dataframe (check if exists) ___________________________________________________________
     if os.path.exists(acq):
         main_df, samplingrate = nk.read_acqknowledge(acq)
-        logger.info(f"\n\n__________________{sub} {ses} __________________")
-        logger.info(f"file exists! -- starting tranformation: ")
+        logger.info("__________________%s %s __________________", sub, ses)
+        logger.info("file exists! -- starting tranformation: ")
     else:
-        logger.error(f"\tno biopac file exists")
+        logger.error("no biopac file exists")
         continue
         
 # NOTE: 4. create an mr_aniso channel for MRI RF pulse channel ________________________________________________
@@ -141,7 +141,7 @@ for acq in sorted(flat_acq_list):
         main_df['mr_aniso'] = main_df[dict_column['fMRI_ttl']].rolling(
         window=3).mean()
     except:
-        logger.error(f"\tno MR trigger channel - this was the early days. re run and use the *trigger channel*")
+        logger.error("no MR trigger channel - this was the early days. re run and use the *trigger channel*")
         logger.error(acq)
         continue
         
@@ -157,7 +157,7 @@ for acq in sorted(flat_acq_list):
         continue
 
     dict_spike = utils.preprocess._identify_boundary(main_df, 'spike')
-    logger.info(f"number of spikes within experiment: {len(dict_spike['start'])}")
+    logger.info("number of spikes within experiment: %d", len(dict_spike['start']))
     main_df['bin_spike'] = 0
     main_df.loc[dict_spike['start'], 'bin_spike'] = 5
     
@@ -178,9 +178,9 @@ for acq in sorted(flat_acq_list):
         logger.debug(logger.error)
         continue
     dict_runs = utils.preprocess._identify_boundary(main_df, 'mr_boxcar')
-    logger.info(f"* start_df: {dict_runs['start']}")
-    logger.info(f"* stop_df: {dict_runs['stop']}")
-    logger.info(f"* total of {len(dict_runs['start'])} runs")
+    logger.info("* start_df: %s", dict_runs['start'])
+    logger.info("* stop_df: %s", dict_runs['stop'])
+    logger.info("* total of %s runs", len(dict_runs['start']))
 
 # NOTE: 6. adjust one TR (remove it!)_________________________________________________________________________
     sdf = main_df.copy()
@@ -195,15 +195,15 @@ for acq in sorted(flat_acq_list):
                                        binary_high=5,
                                        binary_low=0)
     dict_runs_adjust = utils.preprocess._identify_boundary(sdf, 'adjust_run')
-    print(f"* adjusted start_df: {dict_runs_adjust['start']}")
-    print(f"* adjusted stop_df: {dict_runs_adjust['stop']}")
+    logger.info("* adjusted start_df: %s", dict_runs_adjust['start'])
+    logger.info("* adjusted stop_df: %s", dict_runs_adjust['stop'])
 
 # NOTE: 7. identify run transitions ___________________________________________________________________________
     run_list = list(range(len(dict_runs_adjust['start'])))
     try:
         run_bool = ((np.array(dict_runs_adjust['stop'])-np.array(dict_runs_adjust['start']))/samplingrate) > run_cutoff
     except:
-        logger.error(f"ERROR:: start and stop datapoints don't match")
+        logger.error("start and stop datapoints don't match")
         logger.debug(logger.error)
         continue
     clean_runlist = list(compress(run_list, run_bool))
@@ -212,13 +212,14 @@ for acq in sorted(flat_acq_list):
 # NOTE: 8. save identified runs after cross referencing metadata __________________________________________________________
     if len(shorter_than_threshold_length) > 0:
         logger.info(
-            f"runs shorter than {run_cutoff} sec: {sub} {ses} {shorter_than_threshold_length} - run number in python order")
+            "runs shorter than %d sec: %s %s %s - run number in python order", 
+            run_cutoff, sub, ses, shorter_than_threshold_length)
     scannote_reference = utils.initialize._subset_meta(runmeta, sub, ses)
     if len(scannote_reference.columns) == len(clean_runlist):
         ref_dict = scannote_reference.to_dict('list')
         run_basename = f"{sub}_{ses}_{task}_CLEAN_RUN-TASKTYLE_recording-ppg-eda_physio.acq"
         utils.initialize._assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df, save_dir,run_basename,bids_dict)
-        logger.info("n__________________ :+: FINISHED :+: __________________")
+        logger.info("__________________ :+: FINISHED :+: __________________")
     else:
         logger.error(f"number of complete runs do not match scan notes")
         logger.debug(logger.error)
