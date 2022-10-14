@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-""" Separates acq into runs and saves as bids format. 
+""" 
+save_seperate_run_WASABI.py
+adjustments for WASABI
+Separates acq into runs and saves as bids format. 
 This script reads the acquisition file collected straight from our biopac PC
 
 Parameters
@@ -12,26 +15,6 @@ run_cutoff: int
     threshold for determining "kosher" runs versus not. 
     for instance, task-social is 398 seconds long. I use the threshold of 300 as a threshold. 
     Anything shorter than that is discarded and not converted into a run
-
-Steps (TODO coding)
-------------------
-1) [x] glob acquisitions files
-2) [x] extract information from filesnames
-3) [x] binarize signals based on MR Trigger channel (received RF pulse)
-4) [x] convert dataframe to seconds, instead of 2000 sampling rate.
-5) [x] identify transitions
-6) [x] check if transition is longer than expected TR (threshold 300 s)
-6-1) if longer than threshold, include and save as separate run
-6-2) if less than expected, flag and keep a note in the flatlist. Pop that index using boolean mask. 
-7) [x] save using bids naming convention
-
-Questions: 
-------------------
-1) What if the data is shorter than expected run 
-A: most-likely ignore
-
-2) what if data is longer than expected (e.g. forgot to start and stop run)?
-A: No worries, we're using the channel with the MRtriggers "fMRI Trigger - CBLCFMA - Current Feedba"
 """
 
 # %% libraries ________________________
@@ -141,8 +124,8 @@ for acq in sorted(flat_acq_list):
 # NOTE: extract information from filenames _______________________________________________________________
     filename = os.path.basename(acq)
     bids_dict = {}
-    bids_dict['sub']=  sub = utils.initialize._extract_bids(filename, 'sub')
-    bids_dict['ses']= ses = utils.initialize._extract_bids(filename, 'ses')
+    bids_dict['sub'] = sub  = utils.initialize._extract_bids(filename, 'sub')
+    bids_dict['ses'] = ses  = utils.initialize._extract_bids(filename, 'ses')
     bids_dict['task']= task = utils.initialize._extract_bids(filename, 'task')
 
 # NOTE: open physio dataframe (check if exists) __________________________________________________________
