@@ -62,7 +62,7 @@ sub_zeropad = 4
 run_cutoff = 300
 
 # spacetop
-dict_task = {'task-cue':'task-social'}
+dict_task = {'task-social':'task-cue'}
 dict_column = {
     'fMRI_ttl':'fMRI Trigger - CBLCFMA - Current Feedba',
     'TSA2_ttl':'Medoc TSA2 TTL Out'
@@ -90,7 +90,6 @@ elif operating == 'local':
         save_dir = join(physio_dir, 'physio03_bids', dict_task[task])
     else:
         save_dir = join(physio_dir, 'physio03_bids', task)
-    save_dir = join(physio_dir, 'physio03_bids', task)
     log_savedir = join(physio_dir, 'log')
 
 Path(save_dir).mkdir(parents=True,exist_ok=True )
