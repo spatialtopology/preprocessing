@@ -63,5 +63,3 @@ for acq in acq_list:
         shutil.copy(acq,new_dir)
     except:
         logger.debug(logger.error)
-        # with open("exceptions.log", "a") as logfile:
-        #     traceback.print_exc(file=logfile)
