@@ -21,6 +21,9 @@ from pathlib import Path
 import traceback
 import datetime
 
+physio_dir = sys.argv[1]
+sub_digit = sys.argv[2]
+ses_digit = sys.argv[3]
 pwd = os.getcwd()
 main_dir = Path(pwd).parents[0]
 sys.path.append(os.path.join(main_dir))
@@ -54,8 +57,8 @@ acq_list = glob.glob(os.path.join(physio_dir, 'physio01_raw', '**', '*.acq'), re
 for acq in acq_list:
     try: 
         filename  = os.path.basename(acq)
-        sub = f"sub-{utils.initialize._extract_bids_num(filename, 'sub')}" # 'sub-0056'
-        ses = f"sub-{utils.initialize._extract_bids_num(filename, 'ses')}" # 'ses-03'
+        sub = f"sub-{utils.initialize._extract_bids_num(filename, 'sub'):0{sub_digit}d}" # 'sub-0056'
+        ses = f"sub-{utils.initialize._extract_bids_num(filename, 'ses'):0{ses_digit}d}" # 'ses-03'
         task = f"sub-{utils.initialize._extract_bids_num(filename, 'task')}"
         logger.info("__________________%s %s %s__________________", sub, ses, task)
         new_dir = os.path.join(physio_dir,'physio02_sort', sub, ses)
