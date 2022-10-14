@@ -1,8 +1,8 @@
 <p align="center">
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
-    <img src="https://user-images.githubusercontent.com/54367954/195647242-1258eaf4-f838-43ea-b65c-f94dfe005e6b.png" width="600">
+
+<img src="https://user-images.githubusercontent.com/54367954/195647242-1258eaf4-f838-43ea-b65c-f94dfe005e6b.png" width="600">
     </p>
 <h1 align="center">
     spacetop preprocessing
@@ -30,6 +30,11 @@ Table of contents
 * [About](#about)
 * [Prerequisites](#prerequisites)
 * [Usage](#usage)
+    *  [datalad](#datalad)
+    *  [fmriprep](#fmriprep)
+    *  [mriqc](#mriqc)
+    *  [physio](#physio)
+    *  [redcap](#redcap)
 * [Questions](#questions)
 * [Getting help](#getting-help)
 * [Contributing](#contributing)
@@ -46,6 +51,12 @@ Prerequisites
 
 Usage
 -----------------
+
+### datalad
+### fmriprep @psadil
+### mriqc @psadil
+### physio @jungheejung
+### redcap @jungheejung
 
 Questions
 -----------------
