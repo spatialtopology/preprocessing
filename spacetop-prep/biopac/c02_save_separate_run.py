@@ -118,6 +118,7 @@ flat_acq_list = [item for sublist in acq_list  for item in sublist]
 print(flat_acq_list)
 
 # %%
+flat_acq_list = ['/Users/h/Dropbox/projects_dropbox/spacetop_biopac/sandbox/SOCIAL_spacetop_sub-0056_ses-01_task-social_ANISO.acq']
 for acq in sorted(flat_acq_list):
 # NOTE: 2. extract information from filenames _______________________________________________________________
     filename = os.path.basename(acq)
@@ -221,4 +222,3 @@ for acq in sorted(flat_acq_list):
     else:
         logger.error(f"number of complete runs do not match scan notes")
         logger.debug(logger.error)
-
