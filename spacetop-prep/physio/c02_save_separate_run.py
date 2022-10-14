@@ -77,12 +77,14 @@ if operating == 'discovery':
     physio_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/physio'
     source_dir = join(physio_dir, 'physio02_sort', task)
     save_dir = join(physio_dir, 'physio03_bids', task)
+    log_savedir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/log'
 
 elif operating == 'local':
     spacetop_dir = '/Volumes/spacetop_projects_social'
     physio_dir = '/Volumes/spacetop_data/physio'
     source_dir = join(physio_dir, 'physio02_sort')
     save_dir = join(physio_dir, 'physio03_bids', task)
+    log_savedir = join(physio_dir, 'log')
 
 print(spacetop_dir)
 print(physio_dir)
@@ -94,7 +96,7 @@ runmeta = pd.read_csv(
 #TODO: come up with scheme to update logger files
 ver = 1
 logger_fname = os.path.join(
-    save_dir, f"biopac_flaglist_{task}_{datetime.date.today().isoformat()}_ver-4.txt")
+    log_savedir, f"biopac_flaglist_{task}_{datetime.date.today().isoformat()}_ver-4.txt")
 f = open(logger_fname, "w")
 logger = utils.initialize._logger(logger_fname)
 
@@ -144,7 +146,7 @@ for acq in sorted(flat_acq_list):
         logger.error("no MR trigger channel - this was the early days. re run and use the *trigger channel*")
         logger.error(acq)
         continue
-        
+# TST: files without trigger keyword in the acq files should raise exception        
     try:
         utils.preprocess._binarize_channel(main_df,
                                         source_col='mr_aniso',
@@ -180,7 +182,7 @@ for acq in sorted(flat_acq_list):
     dict_runs = utils.preprocess._identify_boundary(main_df, 'mr_boxcar')
     logger.info("* start_df: %s", dict_runs['start'])
     logger.info("* stop_df: %s", dict_runs['stop'])
-    logger.info("* total of %s runs", len(dict_runs['start']))
+    logger.info("* total of %d runs", len(dict_runs['start']))
 
 # NOTE: 6. adjust one TR (remove it!)_________________________________________________________________________
     sdf = main_df.copy()
