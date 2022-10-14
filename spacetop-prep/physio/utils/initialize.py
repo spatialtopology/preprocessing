@@ -48,7 +48,7 @@ def _extract_bids_num(filename, key):
     bids_info = [match for match in filename.split('_') if key in match][0]
     bids_info_rmext = os.path.splitext(bids_info)[0] 
     bids_num =  int(re.findall('\d+', bids_info_rmext )[0].lstrip('0'))    
-return bids_num
+    return bids_num
 
 def _extract_bids(filename, key):
     """
