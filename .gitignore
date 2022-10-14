@@ -3,3 +3,4 @@
 ./fmriprep/fmriprep_slurm/log/*
 *.e
 *.o
+**/.DS_Store
