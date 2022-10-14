@@ -54,9 +54,9 @@ acq_list = glob.glob(os.path.join(physio_dir, 'physio01_raw', '**', '*.acq'), re
 for acq in acq_list:
     try: 
         filename  = os.path.basename(acq)
-        sub = utils.initialize._extract_bids(filename, 'sub') # 'sub-0056'
-        ses = utils.initialize._extract_bids(filename, 'ses') # 'ses-03'
-        task = utils.initialize._extract_bids(filename, 'task')
+        sub = f"sub-{utils.initialize._extract_bids_num(filename, 'sub')}" # 'sub-0056'
+        ses = f"sub-{utils.initialize._extract_bids_num(filename, 'ses')}" # 'ses-03'
+        task = f"sub-{utils.initialize._extract_bids_num(filename, 'task')}"
         logger.info("__________________%s %s %s__________________", sub, ses, task)
         new_dir = os.path.join(physio_dir,'physio02_sort', sub, ses)
         Path(new_dir).mkdir(parents=True,exist_ok=True )
