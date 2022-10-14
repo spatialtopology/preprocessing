@@ -5,6 +5,7 @@ import os
 from os.path import join
 import numpy as np
 from pathlib import Path
+import re
 
 __author__ = "Heejung Jung"
 __copyright__ = "Spatial Topology Project"
@@ -31,6 +32,23 @@ def _logger(logger_fname):
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
     return logger
+
+def _extract_bids_num(filename, key):
+    """
+    Extracts BIDS information based on input "key" prefix.
+    If filename includes an extention, code will remove it.
+
+    Parameters
+    ----------
+    filename: str
+        acquisition filename
+    key: str
+        BIDS prefix, such as 'sub', 'ses', 'task'
+    """
+    bids_info = [match for match in filename.split('_') if key in match][0]
+    bids_info_rmext = os.path.splitext(bids_info)[0] 
+    bids_num =  (re.findall('\d+', bids_info_rmext ))
+    return bids_num
 
 def _extract_bids(filename, key):
     """
