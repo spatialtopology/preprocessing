@@ -75,7 +75,7 @@ print(f"operating: {operating}")
 if operating == 'discovery':
     spacetop_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social'
     physio_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/physio'
-    source_dir = join(physio_dir, 'physio02_sort', task)
+    source_dir = join(physio_dir, 'physio02_sort')
     save_dir = join(physio_dir, 'physio03_bids', task)
     log_savedir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/log'
 
@@ -86,6 +86,7 @@ elif operating == 'local':
     save_dir = join(physio_dir, 'physio03_bids', task)
     log_savedir = join(physio_dir, 'log')
 
+Path(save_dir).mkdir(parents=True,exist_ok=True )
 print(spacetop_dir)
 print(physio_dir)
 print(save_dir)
@@ -113,10 +114,10 @@ for sub in sub_list:
                      recursive=True)
     acq_list.append(acq)
 flat_acq_list = [item for sublist in acq_list  for item in sublist]
-print(flat_acq_list)
+#print(flat_acq_list)
 
 # %%
-flat_acq_list = ['/Users/h/Dropbox/projects_dropbox/spacetop_biopac/sandbox/SOCIAL_spacetop_sub-0056_ses-01_task-social_ANISO.acq']
+#flat_acq_list = ['/Users/h/Dropbox/projects_dropbox/spacetop_biopac/sandbox/SOCIAL_spacetop_sub-0056_ses-01_task-social_ANISO.acq']
 for acq in sorted(flat_acq_list):
 # NOTE: 2. extract information from filenames ________________________________________________________________
     filename = os.path.basename(acq)
