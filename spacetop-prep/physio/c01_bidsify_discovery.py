@@ -7,7 +7,11 @@ Parameters
 ------------------
 physio_dir: str
     path where physio data lives
-acqlist: str
+sub_digit: int
+    how many zeros to pad for BIDS subject id
+ses_digit: int
+    how many zeros to pad for BIDS session id
+DEP:acqlist: str
     designate substructure underneath physio_dir
 log_savedir: str
     path where error logs should be saved
@@ -55,12 +59,18 @@ acq_list = glob.glob(os.path.join(physio_dir, 'physio01_raw', '**', '*.acq'), re
 for acq in acq_list:
     try: 
         filename  = os.path.basename(acq)
-        sub = f"sub-{utils.initialize._extract_bids_num(filename, 'sub'):0{sub_digit}d}" # 'sub-0056'
-        ses = f"sub-{utils.initialize._extract_bids_num(filename, 'ses'):0{ses_digit}d}" # 'ses-03'
-        task = f"sub-{utils.initialize._extract_bids_num(filename, 'task')}"
+        sub_num = utils.initialize._extract_bids_num(filename, 'sub')
+        sub = f"sub-{sub_num:0{sub_digit}d}" # 'sub-0056'
+        ses_num = utils.initialize._extract_bids_num(filename, 'ses')
+        ses = f"ses-{ses_num:0{ses_digit}d}" # 'ses-03'
+        task = utils.initialize._extract_bids(filename, 'task')
         logger.info("__________________%s %s %s__________________", sub, ses, task)
         new_dir = os.path.join(physio_dir,'physio02_sort', sub, ses)
         Path(new_dir).mkdir(parents=True,exist_ok=True )
-        shutil.copy(acq,new_dir)
+        if 'ANISO' in acq:
+            new_fname = f"{sub}_{ses}_{task}_recording-ppg-eda-trigger_physio.acq"
+        else:
+            new_fname = f"{sub}_{ses}_{task}_recording-ppg-eda_physio.acq"
+        shutil.copy(acq,os.path.join(new_dir,new_fname))
     except:
         logger.debug(logger.error)
