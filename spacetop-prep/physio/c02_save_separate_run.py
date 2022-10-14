@@ -55,7 +55,7 @@ __status__ = "Development"
 
 # TODO:
 operating = sys.argv[1]  # 'local' vs. 'discovery'
-slurm_ind = sys.argv[2] # process participants with increments of 10
+slurm_ind = int(sys.argv[2]) # process participants with increments of 10
 task = sys.argv[3]  # 'task-social' 'task-fractional' 'task-alignvideos'
 run_cutoff = sys.argv[4] # in seconds, e.g. 300
 sub_zeropad = 4
@@ -76,13 +76,20 @@ if operating == 'discovery':
     spacetop_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social'
     physio_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/physio'
     source_dir = join(physio_dir, 'physio02_sort')
-    save_dir = join(physio_dir, 'physio03_bids', task)
+    if dict_task:
+        save_dir = join(physio_dir, 'physio03_bids', dict_task[task])
+    else:
+        save_dir = join(physio_dir, 'physio03_bids', task)
     log_savedir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/log'
 
 elif operating == 'local':
     spacetop_dir = '/Volumes/spacetop_projects_social'
     physio_dir = '/Volumes/spacetop_data/physio'
     source_dir = join(physio_dir, 'physio02_sort')
+    if dict_task:
+        save_dir = join(physio_dir, 'physio03_bids', dict_task[task])
+    else:
+        save_dir = join(physio_dir, 'physio03_bids', task)
     save_dir = join(physio_dir, 'physio03_bids', task)
     log_savedir = join(physio_dir, 'log')
 
@@ -221,7 +228,9 @@ for acq in sorted(flat_acq_list):
     if len(scannote_reference.columns) == len(clean_runlist):
         ref_dict = scannote_reference.to_dict('list')
         run_basename = f"{sub}_{ses}_{task}_CLEAN_RUN-TASKTYLE_recording-ppg-eda_physio.acq"
-        utils.initialize._assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df, save_dir,run_basename,bids_dict)
+        sub_save_dir = join(save_dir, sub, ses)
+        Path(sub_save_dir).mkdir(parents=True,exist_ok=True )
+        utils.initialize._assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df, sub_save_dir,run_basename,bids_dict)
         logger.info("__________________ :+: FINISHED :+: __________________")
     else:
         logger.error(f"number of complete runs do not match scan notes")
