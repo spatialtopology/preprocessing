@@ -99,6 +99,7 @@ elif operating == 'local':
     log_savedir = join(physio_dir, 'log')
 
 Path(save_dir).mkdir(parents=True,exist_ok=True )
+Path(log_savedir).mkdir(parents=True,exist_ok=True )
 print(spacetop_dir)
 print(physio_dir)
 print(save_dir)
