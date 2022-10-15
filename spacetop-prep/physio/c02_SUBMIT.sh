@@ -1,11 +1,11 @@
 #!/bin/bash -l
-#SBATCH --job-name=biopac
+#SBATCH --job-name=physio
 #SBATCH --nodes=1
 #SBATCH --task=4
 #SBATCH --mem-per-cpu=8gb
-#SBATCH --time=00:30:00
-#SBATCH -o ./log/biopac_%A_%a.o
-#SBATCH -e ./log/biopac_%A_%a.e
+#SBATCH --time=05:30:00
+#SBATCH -o ./log/physio02_%A_%a.o
+#SBATCH -e ./log/physio02_%A_%a.e
 #SBATCH --account=DBIC
 #SBATCH --partition=standard
 #SBATCH --array=3-14%5
