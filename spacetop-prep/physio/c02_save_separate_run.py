@@ -127,7 +127,7 @@ for sub in sub_list:
                      recursive=True)
     acq_list.append(acq)
 flat_acq_list = [item for sublist in acq_list  for item in sublist]
-#print(flat_acq_list)
+print(flat_acq_list)
 
 # %%
 #flat_acq_list = ['/Users/h/Dropbox/projects_dropbox/spacetop_biopac/sandbox/SOCIAL_spacetop_sub-0056_ses-01_task-social_ANISO.acq']
@@ -155,7 +155,9 @@ for acq in sorted(flat_acq_list):
 # NOTE: 4. create an mr_aniso channel for MRI RF pulse channel ________________________________________________
     try:
         trigger_mri = [i for i in dict_column if dict_column[i]=="trigger_mri"][0]
-        main_df['mr_aniso'] = main_df[dict_column[trigger_mri]].rolling(
+        print(trigger_mri)
+        print(dict_column[trigger_mri])
+        main_df['mr_aniso'] = main_df[trigger_mri].rolling(
         window=3).mean()
     except:
         logger.error("no MR trigger channel - this was the early days. re run and use the *trigger channel*")
@@ -180,7 +182,7 @@ for acq in sorted(flat_acq_list):
     
 # NOTE: 5. create an mr_aniso channel for MRI RF pulse channel ________________________________________________
     try:
-        main_df['mr_aniso_boxcar'] = main_df[dict_column[trigger_mri]].rolling(
+        main_df['mr_aniso_boxcar'] = main_df[trigger_mri].rolling(
             window=int(samplingrate-100)).mean()
         mid_val = (np.max(main_df['mr_aniso_boxcar']) -
                 np.min(main_df['mr_aniso_boxcar'])) / 5
@@ -236,7 +238,8 @@ for acq in sorted(flat_acq_list):
         ref_dict = scannote_reference.to_dict('list')
         run_basename = f"{sub}_{ses}_{task}_CLEAN_RUN-TASKTYLE_recording-ppg-eda_physio.csv"
         main_df.rename(columns=dict_column, inplace=True)
-        utils.initialize._assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df, save_dir,run_basename,bids_dict)
+        main_df_drop = main_df[main_df.columns.intersection(list(dict_column.values()))]
+        utils.initialize._assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df_drop, save_dir,run_basename,bids_dict)
         logger.info("__________________ :+: FINISHED :+: __________________")
     else:
         logger.error(f"number of complete runs do not match scan notes")
