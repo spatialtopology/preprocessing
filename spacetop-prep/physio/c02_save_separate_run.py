@@ -33,6 +33,7 @@ from itertools import compress
 import datetime
 from os.path import join
 import logging
+import argparse
 
 pwd = os.getcwd()
 main_dir = Path(pwd).parents[0]
@@ -54,12 +55,28 @@ __email__ = "heejung.jung@colorado.edu"
 __status__ = "Development"
 
 # TODO:
-operating = sys.argv[1]  # 'local' vs. 'discovery'
-slurm_ind = int(sys.argv[2]) # process participants with increments of 10
-task = sys.argv[3]  # 'task-social' 'task-fractional' 'task-alignvideos'
-run_cutoff = sys.argv[4] # in seconds, e.g. 300
+# operating = sys.argv[1]  # 'local' vs. 'discovery'
+# slurm_id = int(sys.argv[2]) # process participants with increments of 10
+# task = sys.argv[3]  # 'task-social' 'task-fractional' 'task-alignvideos'
+# run_cutoff = sys.argv[4] # in seconds, e.g. 300
 sub_zeropad = 4
-run_cutoff = 300
+#run_cutoff = 300
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-o", "--operating",
+                    choices=['local', 'discovery'],
+                    help="specify where jobs will run: local or discovery")
+parser.add_argument("--slurm_id", type=int,
+                    help="specify slurm array id")
+parser.add_argument("-t", "--task",
+                    type=str, help="specify task name (e.g. task-alignvideos)")
+parser.add_argument("-c", "--run-cutoff", type=int, help="specify cutoff threshold for distinguishing runs (in seconds)")
+args = parser.parse_args()
+
+operating = args.operating # 'local', 'discovery'
+slurm_id = args.slurm_id # e.g. 1, 2
+task = args.task # e.g. 'task-social' 'task-fractional' 'task-alignvideos'
+run_cutoff = args.run_cutoff # e.g. 300
 
 # spacetop
 dict_task = {'task-social':'task-cue'}
@@ -118,7 +135,7 @@ logger = utils.initialize._logger(logger_fname)
 # %% NOTE: 1. glob acquisition files _________________________________________________________________________
 # filename ='../spacetop_biopac/data/sub-0026/SOCIAL_spacetop_sub-0026_ses-01_task-social_ANISO.acq'
 remove_int = [1, 2, 3, 4, 5, 6]
-sub_list = utils.initialize._sublist(source_dir, remove_int, slurm_ind, stride=10, sub_zeropad=4)
+sub_list = utils.initialize._sublist(source_dir, remove_int, slurm_id, stride=10, sub_zeropad=4)
 
 acq_list = []
 print(sub_list)
