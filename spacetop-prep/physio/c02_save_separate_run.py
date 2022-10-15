@@ -122,7 +122,7 @@ sub_list = utils.initialize._sublist(source_dir, remove_int, slurm_ind, stride=1
 acq_list = []
 print(sub_list)
 for sub in sub_list:
-    acq = glob.glob(os.path.join(source_dir, sub, "**", f"*{task}*.csv"),
+    acq = glob.glob(os.path.join(source_dir, sub, "**", f"*{task}*.acq"),
                      recursive=True)
     acq_list.append(acq)
 flat_acq_list = [item for sublist in acq_list  for item in sublist]
