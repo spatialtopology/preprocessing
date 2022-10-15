@@ -94,7 +94,7 @@ dict_column = {
 #operating = 'local'  # 'discovery'
 #task = 'task-social'
 #cutoff_threshold = 300
-print(f"operating: {operating}")
+#print(f"operating: {operating}")
 if operating == 'discovery':
     spacetop_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social'
     physio_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/physio'
@@ -138,13 +138,13 @@ remove_int = [1, 2, 3, 4, 5, 6]
 sub_list = utils.initialize._sublist(source_dir, remove_int, slurm_id, stride=10, sub_zeropad=4)
 
 acq_list = []
-print(sub_list)
+logger.info(sub_list)
 for sub in sub_list:
     acq = glob.glob(os.path.join(source_dir, sub, "**", f"*{task}*.acq"),
                      recursive=True)
     acq_list.append(acq)
 flat_acq_list = [item for sublist in acq_list  for item in sublist]
-print(flat_acq_list)
+#print(flat_acq_list)
 
 # %%
 #flat_acq_list = ['/Users/h/Dropbox/projects_dropbox/spacetop_biopac/sandbox/SOCIAL_spacetop_sub-0056_ses-01_task-social_ANISO.acq']
@@ -172,8 +172,6 @@ for acq in sorted(flat_acq_list):
 # NOTE: 4. create an mr_aniso channel for MRI RF pulse channel ________________________________________________
     try:
         trigger_mri = [i for i in dict_column if dict_column[i]=="trigger_mri"][0]
-        print(trigger_mri)
-        print(dict_column[trigger_mri])
         main_df['mr_aniso'] = main_df[trigger_mri].rolling(
         window=3).mean()
     except:
@@ -244,13 +242,14 @@ for acq in sorted(flat_acq_list):
         continue
     clean_runlist = list(compress(run_list, run_bool))
     shorter_than_threshold_length = list(compress(run_list, ~run_bool))
-
+    
 # NOTE: 8. save identified runs after cross referencing metadata __________________________________________________________
     if len(shorter_than_threshold_length) > 0:
         logger.info(
             "runs shorter than %d sec: %s %s %s - run number in python order", 
             run_cutoff, sub, ses, shorter_than_threshold_length)
     scannote_reference = utils.initialize._subset_meta(runmeta, sub, ses)
+
     if len(scannote_reference.columns) == len(clean_runlist):
         ref_dict = scannote_reference.to_dict('list')
         run_basename = f"{sub}_{ses}_{task}_CLEAN_RUN-TASKTYLE_recording-ppg-eda_physio.csv"
@@ -260,4 +259,6 @@ for acq in sorted(flat_acq_list):
         logger.info("__________________ :+: FINISHED :+: __________________")
     else:
         logger.error(f"number of complete runs do not match scan notes")
+        logger.error("clean_runlist: %s, scannote_reference.columns: %s", clean_runlist, scannote_reference.columns)
+        
         logger.debug(logger.error)
