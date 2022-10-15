@@ -153,8 +153,8 @@ for acq in sorted(flat_acq_list):
         
 # NOTE: 4. create an mr_aniso channel for MRI RF pulse channel ________________________________________________
     try:
-        mr_ttl = {i for i in dict_column if dict_column[i]=="trigger_mri"}
-        main_df['mr_aniso'] = main_df[dict_column[mr_ttl]].rolling(
+        trigger_mri = [i for i in dict_column if dict_column[i]=="trigger_mri"][0]
+        main_df['mr_aniso'] = main_df[dict_column[trigger_mri]].rolling(
         window=3).mean()
     except:
         logger.error("no MR trigger channel - this was the early days. re run and use the *trigger channel*")
@@ -179,7 +179,7 @@ for acq in sorted(flat_acq_list):
     
 # NOTE: 5. create an mr_aniso channel for MRI RF pulse channel ________________________________________________
     try:
-        main_df['mr_aniso_boxcar'] = main_df[dict_column[mr_ttl]].rolling(
+        main_df['mr_aniso_boxcar'] = main_df[dict_column[trigger_mri]].rolling(
             window=int(samplingrate-100)).mean()
         mid_val = (np.max(main_df['mr_aniso_boxcar']) -
                 np.min(main_df['mr_aniso_boxcar'])) / 5
