@@ -57,7 +57,8 @@ python c01_bidsify_discovery.py
 ```
 2. Identify run transitions and save as csv: NOTE: need to pass in arguments
 ```
-python c02_save_separate_run.py 'local' 'task-social' 300
+python c02_save_separate_run.py --operating ${CLUSTER} --slurm_id ${SLURM_ID} --task ${TASK} --run-cutoff ${CUTOFF}
+>>> python c02_save_separate_run.py --operating 'discovery' --slurm_id 1 --task 'task-alignvideos' --run-cutoff 300
 ```
 3. Preprocess signals and save as csv for group level analyses<br>
 Check out our tutorial!
