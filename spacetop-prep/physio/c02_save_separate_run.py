@@ -64,8 +64,14 @@ run_cutoff = 300
 # spacetop
 dict_task = {'task-social':'task-cue'}
 dict_column = {
-    'fMRI_ttl':'fMRI Trigger - CBLCFMA - Current Feedba',
-    'TSA2_ttl':'Medoc TSA2 TTL Out'
+    'fMRI Trigger - CBLCFMA - Current Feedba':'trigger_mri',
+    'Medoc TSA2 TTL Out':'trigger_heat',
+    'Skin Conductance (EDA) - EDA100C-MRI':'physio_eda',
+    'Pulse (PPG) - PPG100C':'physio_ppg',
+    'cue': 'event_cue',
+    'expect': 'event_expectrating',
+    'administer': 'event_stimuli',
+    'actual': 'event_actualrating',
 }
 # %% TODO: TST remove after development
 #operating = 'local'  # 'discovery'
@@ -147,7 +153,8 @@ for acq in sorted(flat_acq_list):
         
 # NOTE: 4. create an mr_aniso channel for MRI RF pulse channel ________________________________________________
     try:
-        main_df['mr_aniso'] = main_df[dict_column['fMRI_ttl']].rolling(
+        mr_ttl = {i for i in dict_column if dict_column[i]=="trigger_mri"}
+        main_df['mr_aniso'] = main_df[dict_column[mr_ttl]].rolling(
         window=3).mean()
     except:
         logger.error("no MR trigger channel - this was the early days. re run and use the *trigger channel*")
@@ -172,7 +179,7 @@ for acq in sorted(flat_acq_list):
     
 # NOTE: 5. create an mr_aniso channel for MRI RF pulse channel ________________________________________________
     try:
-        main_df['mr_aniso_boxcar'] = main_df[dict_column['fMRI_ttl']].rolling(
+        main_df['mr_aniso_boxcar'] = main_df[dict_column[mr_ttl]].rolling(
             window=int(samplingrate-100)).mean()
         mid_val = (np.max(main_df['mr_aniso_boxcar']) -
                 np.min(main_df['mr_aniso_boxcar'])) / 5
@@ -226,7 +233,8 @@ for acq in sorted(flat_acq_list):
     scannote_reference = utils.initialize._subset_meta(runmeta, sub, ses)
     if len(scannote_reference.columns) == len(clean_runlist):
         ref_dict = scannote_reference.to_dict('list')
-        run_basename = f"{sub}_{ses}_{task}_CLEAN_RUN-TASKTYLE_recording-ppg-eda_physio.acq"
+        run_basename = f"{sub}_{ses}_{task}_CLEAN_RUN-TASKTYLE_recording-ppg-eda_physio.csv"
+        main_df.rename(columns=dict_column, inplace=True)
         utils.initialize._assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df, save_dir,run_basename,bids_dict)
         logger.info("__________________ :+: FINISHED :+: __________________")
     else:
