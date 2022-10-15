@@ -1,5 +1,4 @@
 {
-
   "files": [
     "README.md"
   ],
@@ -7,8 +6,7 @@
   "commit": false,
   "commitConvention": "angular",
   "contributors": [
-  
-      {
+    {
       "login": "jungheejung",
       "name": "Heejung Jung",
       "avatar_url": "https://avatars.githubusercontent.com/u/18406041?v=4",
@@ -20,7 +18,6 @@
         "design"
       ]
     },
-    
     {
       "login": "psadil",
       "name": "Patrick Sadil",
@@ -30,7 +27,6 @@
         "infra",
         "test",
         "code"
-        
       ]
     },
     {
@@ -39,18 +35,15 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/39889?v=4",
       "profile": "http://www.onerussian.com",
       "contributions": [
-        "infra","mentor"
-
+        "infra",
+        "mentor"
       ]
     }
   ],
-  "contributorsPerLine": 7,
+  "contributorsPerLine": 10,
   "skipCi": true,
   "repoType": "github",
   "repoHost": "https://github.com",
   "projectName": "spacetop-prep",
   "projectOwner": "spatialtopology"
-
-  
-
 }
