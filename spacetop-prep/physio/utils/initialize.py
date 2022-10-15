@@ -121,16 +121,17 @@ def _subset_meta(metadata_df, sub, ses):
         a list of subject ids to operate on
     """
     scannote_reference = metadata_df.loc[(metadata_df['sub'] == sub)& (metadata_df['ses'] == ses)]
-    scannote_reference.dropna(axis = 1, inplace = True) # NOTE: if a run was aborted, keep as NA - we will drop this "run" column
-    scannote_reference.drop(['sub', 'ses'], axis=1, inplace = True)
-    return scannote_reference
+    scannote_na = scannote_reference.dropna(axis = 1).copy() # NOTE: if a run was aborted, keep as NA - we will drop this "run" column
+    scannote_runcol = scannote_na.drop(['sub', 'ses'], axis=1)
+    return scannote_runcol
 
 def _assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df, save_dir, run_basename, bids_dict):
     for ind, r in enumerate(clean_runlist): 
         clean_run = list(ref_dict.keys())[ind]
         task_type = ref_dict[clean_run][0]
         run_df = main_df.iloc[dict_runs_adjust['start'][r]:dict_runs_adjust['stop'][r]]
-        run_basename = f"{bids_dict['sub']}_{bids_dict['ses']}_{bids_dict['task']}_{clean_run}-{task_type}_recording-ppg-eda-trigger_physio.csv"
+        
+        run_basename = f"{bids_dict['sub']}_{bids_dict['ses']}_{bids_dict['task']}_{clean_run}-{task_type}_recording-ppg-eda-trigger_physio.acq"
         run_dir = os.path.join(save_dir, bids_dict['sub'], bids_dict['ses'])
         Path(run_dir).mkdir(parents=True, exist_ok=True)
         run_df.to_csv(os.path.join(run_dir, run_basename), index=False)# %%
