@@ -17,7 +17,7 @@
         "infra",
         "test",
         "code",
-        "design
+        "design"
       ]
     },
     
@@ -39,7 +39,7 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/39889?v=4",
       "profile": "http://www.onerussian.com",
       "contributions": [
-        "infra",
+        "infra","mentor"
 
       ]
     }
@@ -51,6 +51,6 @@
   "projectName": "spacetop-prep",
   "projectOwner": "spatialtopology"
 
-  ]
+  
 
 }
