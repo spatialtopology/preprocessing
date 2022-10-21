@@ -5,7 +5,8 @@ import os
 from os.path import join
 import numpy as np
 from pathlib import Path
-import re
+import re, logging
+from . import get_logger, set_logger_level
 
 __author__ = "Heejung Jung"
 __copyright__ = "Spatial Topology Project"
@@ -16,8 +17,10 @@ __maintainer__ = "Heejung Jung"
 __email__ = "heejung.jung@colorado.edu"
 __status__ = "Development"
 
+logger = get_logger("initialize")
+set_logger_level(logger, os.environ.get("SPACETOP_PHYSIO_LOG_LEVEL", logging.INFO))
 
-def _logger(logger_fname):
+def _logger(logger_fname, name):
     import logging
     formatter = logging.Formatter("%(levelname)s - %(funcName)s:%(lineno)d - %(message)s")
     handler = logging.FileHandler(logger_fname)
@@ -29,7 +32,7 @@ def _logger(logger_fname):
     ch.setLevel(logging.INFO)
     logging.getLogger().addHandler(handler)
     logging.getLogger().addHandler(ch)
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
     return logger
 
