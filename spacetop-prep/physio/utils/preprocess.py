@@ -1,3 +1,16 @@
+import pandas as pd
+import numpy as np
+import logging
+import os
+import utils
+from utils import preprocess
+from utils import preprocess, initialize
+import itertools
+from . import get_logger, set_logger_level
+
+logger = get_logger("preprocess")
+set_logger_level(logger, os.environ.get("SPACETOP_PHYSIO_LOG_LEVEL", logging.INFO))
+
 def _binarize_channel(df, source_col, new_col, threshold, binary_high, binary_low):
     """
     Function binarizes signals from biopac digital channels.
@@ -91,3 +104,97 @@ def _identify_boundary(df, binary_col):
     dict = {'start': start,
             'stop': stop}
     return dict
+
+def _binarize_trigger_mri(df, dict_column, samplingrate, run_cutoff):
+    """
+    Function used to turn `trigger_mri` channel into a boxcar. 
+    The function identifies TRs within a (1/samplingrate * 3) second period, transforms them into a continuous signal of boxcars.
+    Using the outputs of this function, we can identify run transitions 
+
+    Parameters
+    ----------
+    run_list: list
+        full list of identified run transitions
+    clean_runlist: list
+        partial list of identified runs that are longer than the run cutoff
+    shorter_than_threshold_length: list
+        partial list of identified runs that are shorter than the run cutoff
+    """
+    # TODO: need help from Yarik
+    try:
+        trigger_mri = [i for i in dict_column if dict_column[i]=="trigger_mri"][0]
+        df['trigger_mri_win_3'] = df[trigger_mri].rolling(
+        window=3).mean()
+    except:
+        logger.error("no MR trigger channel - this was the early days. re run and use the *trigger channel*")
+        # logger.error(acq)
+        # continue
+    # TST: files without trigger keyword in the acq files should raise exception        
+    try:
+        utils.preprocess._binarize_channel(df,
+                                        source_col='trigger_mri_win_3',
+                                        new_col='trigger_mri_win_3',
+                                        threshold=40,
+                                        binary_high=5,
+                                        binary_low=0)
+    except:
+        logger.error(f"data is empty - this must have been an empty file or saved elsewhere")
+        # continue
+        raise
+
+    dict_spike = utils.preprocess._identify_boundary(df, 'trigger_mri_win_3')
+    logger.info("number of spikes within experiment: %d", len(dict_spike['start']))
+    df['bin_spike'] = 0
+    df.loc[dict_spike['start'], 'bin_spike'] = 5
+    
+    # NOTE: 5. create an trigger_mri_win_3 channel for MRI RF pulse channel ________________________________________________
+    try:
+        df['trigger_mri_win_samprate'] = df[trigger_mri].rolling(
+            window=int(samplingrate-100)).mean()
+        mid_val = (np.max(df['trigger_mri_win_samprate']) -
+                np.min(df['trigger_mri_win_samprate'])) / 5
+        utils.preprocess._binarize_channel(df,
+                                        source_col='trigger_mri_win_samprate',
+                                        new_col='mr_boxcar',
+                                        threshold=mid_val,
+                                        binary_high=5,
+                                        binary_low=0)
+    except:
+        logger.error(f"ERROR:: binarize RF pulse TTL failure - ALTERNATIVE:: use channel trigger instead")
+        logger.debug(logger.error)
+        raise
+        # continue
+    dict_runs = utils.preprocess._identify_boundary(df, 'mr_boxcar')
+    logger.info("* start_df: %s", dict_runs['start'])
+    logger.info("* stop_df: %s", dict_runs['stop'])
+    logger.info("* total of %d runs", len(dict_runs['start']))
+
+    # NOTE: 6. adjust one TR (remove it!)_________________________________________________________________________
+    sdf = df.copy()
+    sdf.loc[dict_runs['start'], 'bin_spike'] = 0
+    sdf['adjusted_boxcar'] = sdf['bin_spike'].rolling(window=int(samplingrate-100)).mean()
+    mid_val = (np.max(sdf['adjusted_boxcar']) -
+               np.min(sdf['adjusted_boxcar'])) / 4
+    utils.preprocess._binarize_channel(sdf,
+                                       source_col='adjusted_boxcar',
+                                       new_col='adjust_run',
+                                       threshold=mid_val,
+                                       binary_high=5,
+                                       binary_low=0)
+    dict_runs_adjust = utils.preprocess._identify_boundary(sdf, 'adjust_run')
+    logger.info("* adjusted start_df: %s", dict_runs_adjust['start'])
+    logger.info("* adjusted stop_df: %s", dict_runs_adjust['stop'])
+
+    # NOTE: 7. identify run transitions ___________________________________________________________________________
+    run_list = list(range(len(dict_runs_adjust['start'])))
+    try:
+        run_bool = ((np.array(dict_runs_adjust['stop'])-np.array(dict_runs_adjust['start']))/samplingrate) > run_cutoff
+    except:
+        logger.error("start and stop datapoints don't match")
+        logger.debug(logger.error)
+        raise
+        # continue
+    clean_runlist = list(itertools.compress(run_list, run_bool))
+    shorter_than_threshold_length = list(itertools.compress(run_list, ~run_bool))
+
+    return run_list, clean_runlist, shorter_than_threshold_length

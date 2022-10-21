@@ -234,18 +234,18 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     print(f"this amounts to {fix_bool/samplingrate} seconds")
     # baseline correction method 02: use the fixation period from the entire run
     mask = physio_df['fixation'].astype(bool)
-    baseline_method02 = physio_df['Skin Conductance (EDA) - EDA100C-MRI'].loc[
+    baseline_method02 = physio_df['physio_eda'].loc[
         mask].mean()
     physio_df['EDA_corrected_02fixation'] = physio_df[
-        'Skin Conductance (EDA) - EDA100C-MRI'] - baseline_method02
+        'physio_eda'] - baseline_method02
 
     print(f"baseline using fixation from entire run: {baseline_method02}")
 
 # NOTE: extract epochs ___________________________________________________________________________________
-    dict_channel = {'cue': 'cue',
-    'expect': 'expectrating',
-    'administer': 'stimuli',
-    'actual': 'actualrating',
+    dict_channel = {'event_cue': 'event_cue',
+    'event_expectrating': 'event_expectrating',
+    'event_stimuli': 'event_stimuli',
+    'event_actualrating': 'event_actualrating',
     }
     dict_onset = {}
     for i, (key, value) in enumerate(dict_channel.items()):
@@ -267,9 +267,9 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
         # binarize TTL channels (raise error if channel has no TTL, despite being a pain run)
         metadata_df, plateau_start = _ttl_extraction(
             physio_df = physio_df, 
-            dict_beforettl = dict_onset['expectrating'], 
-            dict_afterttl = dict_onset['actualrating'], 
-            dict_stimuli = dict_onset['stimuli'], 
+            dict_beforettl = dict_onset['event_expectrating'], 
+            dict_afterttl = dict_onset['event_actualrating'], 
+            dict_stimuli = dict_onset['event_stimuli'], 
             samplingrate = samplingrate, 
             metadata_df = metadata_df)
 
@@ -282,14 +282,14 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
         }
         # TODO: interim plot to check if TTL matches with signals
         run_physio = physio_df[[
-            'EDA_corrected_02fixation', 'Pulse (PPG) - PPG100C', 'ttl'
+            'EDA_corrected_02fixation', 'physio_ppg', 'trigger_heat'
         ]]
         # run_physio
         # stim_plot = nk.events_plot(event_stimuli, run_physio)
         # TODO: plot and save
     else:
         event_stimuli = {
-            'onset': np.array(dict_onset['stimuli']['start']),
+            'onset': np.array(dict_onset['event_stimuli']['start']),
             'duration': np.repeat(samplingrate * 5, 12),
             'label': np.array(np.arange(12), dtype='<U21'),
             'condition': beh_df['param_stimulus_type'].values.tolist()
@@ -297,7 +297,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
         # TODO: plot the ttl and visulize the alignment
         # interim plot to check if TTL matches with signals
         run_physio = physio_df[[
-            'EDA_corrected_02fixation', 'Pulse (PPG) - PPG100C', 'stimuli'
+            'EDA_corrected_02fixation', 'physio_ppg', 'event_stimuli'
         ]]
         #run_physio
         stim_plot = nk.events_plot(event_stimuli, run_physio)
@@ -305,13 +305,13 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
 # NOTE: neurokit analysis :+: HIGHLIGHT :+: filter signal ________________________________________________
 
     # IF you want to use raw signal
-    # eda_signal = nk.signal_sanitize(run_physio["Skin Conductance (EDA) - EDA100C-MRI"])
-    # eda_raw_plot = plt.plot(run_df["Skin Conductance (EDA) - EDA100C-MRI"])
+    # eda_signal = nk.signal_sanitize(run_physio["physio_eda"])
+    # eda_raw_plot = plt.plot(run_df["physio_eda"])
 
 # NOTE: PHASIC_____________________________________________________________________________
     amp_min = 0.01
     scr_signal = nk.signal_sanitize(
-        physio_df['Skin Conductance (EDA) - EDA100C-MRI'])
+        physio_df['physio_eda'])
     scr_filters = nk.signal_filter(scr_signal,
                                    sampling_rate=samplingrate,
                                    highcut=1,
@@ -379,15 +379,15 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     if run_type == 'pain':
         bio_df = pd.concat([
             physio_df[[
-                'trigger', 'fixation', 'cue', 'expect', 'administer', 'actual',
-                'ttl'
+                'trigger_mri', 'event_fixation', 'event_cue', 'event_expectrating', 'event_stimuli', 'event_actualrating',
+                'trigger_heat'
             ]], scr_processed
         ],
                         axis=1)
     else:
         bio_df = pd.concat([
             physio_df[[
-                'trigger', 'fixation', 'cue', 'expect', 'administer', 'actual',
+                'trigger_mri', 'event_fixation', 'event_cue', 'event_expectrating', 'event_stimuli', 'event_actualrating',
             ]], scr_processed
         ],
                         axis=1)
