@@ -7,7 +7,6 @@ import itertools
 from . import get_logger, set_logger_level
 
 logger = get_logger("preprocess")
-set_logger_level(logger, os.environ.get("SPACETOP_PHYSIO_LOG_LEVEL", logging.INFO))
 
 def _binarize_channel(df, source_col, new_col, threshold, binary_high, binary_low):
     """
