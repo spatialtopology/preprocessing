@@ -134,7 +134,7 @@ def _assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df, save_d
         task_type = ref_dict[clean_run][0]
         run_df = main_df.iloc[dict_runs_adjust['start'][r]:dict_runs_adjust['stop'][r]]
         
-        run_basename = f"{bids_dict['sub']}_{bids_dict['ses']}_{bids_dict['task']}_{clean_run}-{task_type}_recording-ppg-eda-trigger_physio.acq"
+        run_basename = f"{bids_dict['sub']}_{bids_dict['ses']}_{bids_dict['task']}_{clean_run}-{task_type}_recording-ppg-eda-trigger_physio.tsv"
         run_dir = os.path.join(save_dir, bids_dict['sub'], bids_dict['ses'])
         Path(run_dir).mkdir(parents=True, exist_ok=True)
-        run_df.to_csv(os.path.join(run_dir, run_basename), index=False)# %%
+        run_df.to_csv(os.path.join(run_dir, run_basename), sep = '\t', index=False)# %%

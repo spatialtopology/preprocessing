@@ -129,7 +129,7 @@ runmeta = pd.read_csv(
     join(project_dir, "data/spacetop_task-social_run-metadata.csv"))
 #TODO: come up with scheme to update logger files
 f = open(logger_fname, "w")
-logger = utils.initialize._logger(logger_fname)
+logger = utils.initialize._logger(logger_fname, "physio")
 
 def _extract_bids(fname):
     entities = dict(
