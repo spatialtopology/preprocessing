@@ -122,13 +122,12 @@ def _subset_meta(metadata_df, sub, ses):
     """
     scannote_reference = metadata_df.loc[(metadata_df['sub'] == sub)& (metadata_df['ses'] == ses)]
     scannote_na = scannote_reference.dropna(axis = 1).copy() # NOTE: if a run was aborted, keep as NA - we will drop this "run" column
-    scannote_runcol = scannote_na.drop(['sub', 'ses'], axis=1)
+    scannote_runcol = scannote_na.drop(['sub', 'ses'], axis=1).copy()
     return scannote_runcol
 
 def _assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df, save_dir, run_basename, bids_dict):
     for ind, r in enumerate(clean_runlist): 
         clean_run = list(ref_dict.keys())[ind]
-        logger.info("clean_run: %s, ref_dict: %s",clean_run, ref_dict.keys())
         task_type = ref_dict[clean_run][0]
         run_df = main_df.iloc[dict_runs_adjust['start'][r]:dict_runs_adjust['stop'][r]]
         
