@@ -82,9 +82,11 @@ run_cutoff = args.run_cutoff # e.g. 300
 dict_task = {'task-social':'task-cue'}
 dict_column = {
     'fMRI Trigger - CBLCFMA - Current Feedba':'trigger_mri',
-    'Medoc TSA2 TTL Out':'trigger_heat',
+    'TSA2 TTL - CBLCFMA - Current Feedback M':'trigger_heat',
     'Skin Conductance (EDA) - EDA100C-MRI':'physio_eda',
     'Pulse (PPG) - PPG100C':'physio_ppg',
+    'trigger': 'event_experimentduration',
+    'fixation': 'event_fixation',
     'cue': 'event_cue',
     'expect': 'event_expectrating',
     'administer': 'event_stimuli',
