@@ -37,9 +37,9 @@ import itertools
 from statistics import mean
 import logging
 from datetime import datetime
-
+import argparse
 # cluster = sys.argv[1]
-# slurm_ind = sys.argv[2]
+# slurm_id = sys.argv[2]
 pwd = os.getcwd()
 main_dir = Path(pwd).parents[1]
 cluster = 'local'
@@ -55,7 +55,7 @@ import utils
 from utils import preprocess
 from utils import checkfiles
 from utils import initialize
-from utils._ttl_extraction import _ttl_extraction
+# from utils._ttl_extraction import _ttl_extraction
 
 __author__ = "Heejung Jung, Isabel Neumann"
 __copyright__ = "Spatial Topology Project"
@@ -70,16 +70,40 @@ __status__ = "Development"
 
 # TODO:
 # operating = sys.argv[1]  # 'local' vs. 'discovery'
-# slurm_ind = sys.argv[2] # process participants with increments of 10
+# slurm_id = sys.argv[2] # process participants with increments of 10
 # task = sys.argv[3]  # 'task-social' 'task-fractional' 'task-alignvideos'
 # run_cutoff = sys.argv[4] # in seconds, e.g. 300
-operating = 'local' # 'local' vs. 'discovery'
-slurm_ind = 1 # process participants with increments of 10
-task = 'task-social'  # 'task-cue' 'task-fractional' 'task-alignvideos'
-run_cutoff = 300 # in seconds, e.g. 300
-sub_zeropad = 4
-run_cutoff = 300
-samplingrate = 2000
+# operating = 'local' # 'local' vs. 'discovery'
+# slurm_id = 1 # process participants with increments of 10
+# task = 'task-social'  # 'task-cue' 'task-fractional' 'task-alignvideos'
+# run_cutoff = 300 # in seconds, e.g. 300
+# stride = 10
+# sub_zeropad = 4
+# samplingrate = 2000
+# task = 'task-cue'
+# cluster='local'
+parser = argparse.ArgumentParser()
+parser.add_argument("-o", "--operating",
+                    choices=['local', 'discovery'],
+                    help="specify where jobs will run: local or discovery")
+parser.add_argument("-sid", "--slurm_id", type=int,
+                    help="specify slurm array id")
+parser.add_argument("--stride", help="how many participants to batch per jobarray")
+parser.add_argument("-z", "--zeropad", help="how many zeros are padded for BIDS subject id")
+parser.add_argument("-t", "--task",
+                    type=str, help="specify task name (e.g. task-alignvideos)")
+parser.add_argument("-c", "--run-cutoff", type=int, help="specify cutoff threshold for distinguishing runs (in seconds)")
+parser.add_argument("-sr", "--samplingrate", type=int,
+                    help="sampling rate of acquisition file")
+args = parser.parse_args()
+
+operating = args.operating # 'local', 'discovery'
+slurm_id = args.slurm_id # e.g. 1, 2
+stride = args.stride # e.g. 5, 10, 20, 1000
+zeropad = args.zeropad # sub-0016 -> 4
+task = args.task # e.g. 'task-social' 'task-fractional' 'task-alignvideos'
+run_cutoff = args.run_cutoff # e.g. 300
+samplingrate = args.samplingrate # e.g. 2000
 
 plt.rcParams['figure.figsize'] = [15, 5]  # Bigger images
 plt.rcParams['font.size'] = 14
@@ -88,8 +112,7 @@ plt.rcParams['font.size'] = 14
 pwd = os.getcwd()
 main_dir = pwd
 flaglist = []
-task = 'task-cue'
-cluster='local'
+
 if cluster == 'discovery':
     physio_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social/data/physio/physio01_raw'  #'/Volumes/spacetop/biopac/dartmouth/b04_finalbids/'
     beh_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social/data/beh/d02_preproc-beh'  # '/Volumes/spacetop_projects_social/data/d02_preproc-beh'
@@ -105,7 +128,7 @@ else:
 sub_list = []
 #biopac_list = next(os.walk(physio_dir))[1]
 remove_int = [1, 2, 3, 4, 5, 6]
-sub_list = utils.initialize._sublist(physio_dir, remove_int, slurm_ind, stride=10, sub_zeropad=4)
+sub_list = utils.initialize._sublist(physio_dir, remove_int, slurm_id, stride=stride, sub_zeropad=zeropad)
 ses_list = [1, 3, 4]
 run_list = [1, 2, 3, 4, 5, 6]
 sub_ses = list(itertools.product(sorted(sub_list), ses_list, run_list))
@@ -230,7 +253,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     # 1) extract fixations:
     fix_bool = physio_df['fixation'].astype(bool).sum()
     print(
-        f"confirming the number of fixation non-szero timepoints: {fix_bool}")
+        f"confirming the number of fixation non-zero timepoints: {fix_bool}")
     print(f"this amounts to {fix_bool/samplingrate} seconds")
     # baseline correction method 02: use the fixation period from the entire run
     mask = physio_df['fixation'].astype(bool)
