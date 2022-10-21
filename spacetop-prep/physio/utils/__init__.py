@@ -3,8 +3,6 @@ __all__ = [ 'preprocess', 'initialize']
 # import utils._binarize_channel
 # import utils._identify_boundary
 # import utils._extract_runs
-import utils.preprocess
-import utils.initialize
 import logging
 import os
 
