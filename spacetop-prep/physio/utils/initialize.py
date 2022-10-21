@@ -18,7 +18,6 @@ __email__ = "heejung.jung@colorado.edu"
 __status__ = "Development"
 
 logger = get_logger("initialize")
-set_logger_level(logger, os.environ.get("SPACETOP_PHYSIO_LOG_LEVEL", logging.INFO))
 
 def _logger(logger_fname, name):
     import logging
