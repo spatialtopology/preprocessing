@@ -276,7 +276,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
             'onset': np.array(plateau_start).astype(pd.Int64Dtype),
             'duration': np.repeat(samplingrate * 5, 12),
             'label': np.array(np.arange(12)),
-            'condition': beh_df['param_stimulus_type'].values.tolist()
+            'condition': metadata_df['param_stimulus_type'].values.tolist()
         }
         # TODO: interim plot to check if TTL matches with signals
         run_physio = physio_df[[
