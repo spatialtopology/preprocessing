@@ -8,9 +8,11 @@ Parameters
 ------------------
 operating: str
     options: 'local' vs. 'discovery'
+slurm_id: int
+    if operating on discovery, it would be the job array id
 task: str
     options: 'task-social', 'task-fractional' 'task-alignvideos', 'task-faces', 'task-shortvideos'
-cutoff_threshold: int
+run_cutoff: int
     threshold for determining "kosher" runs versus not. 
     for instance, task-social is 398 seconds long. I use the threshold of 300 as a threshold. 
     Anything shorter than that is discarded and not converted into a run
@@ -167,14 +169,15 @@ for acq in sorted(flat_acq_list):
         main_df, samplingrate = nk.read_acqknowledge(acq)
         logger.info("__________________%s %s __________________", sub, ses)
         logger.info("file exists! -- starting tranformation: ")
+        main_df.rename(columns=dict_column, inplace=True)
     else:
         logger.error("no biopac file exists")
         continue
         
 # NOTE: 4. create an mr_aniso channel for MRI RF pulse channel ________________________________________________
     try:
-        trigger_mri = [i for i in dict_column if dict_column[i]=="trigger_mri"][0]
-        main_df['mr_aniso'] = main_df[trigger_mri].rolling(
+        # trigger_mri = [i for i in dict_column if dict_column[i]=="trigger_mri"][0]
+        main_df['mr_aniso'] = main_df['trigger_mri'].rolling(
         window=3).mean()
     except:
         logger.error("no MR trigger channel - this was the early days. re run and use the *trigger channel*")
@@ -199,8 +202,8 @@ for acq in sorted(flat_acq_list):
     
 # NOTE: 5. create an mr_aniso channel for MRI RF pulse channel ________________________________________________
     try:
-        main_df['mr_aniso_boxcar'] = main_df[trigger_mri].rolling(
-            window=int(samplingrate-100)).mean()
+        main_df['mr_aniso_boxcar'] = main_df['trigger_mri'].rolling(
+            window=int(samplingrate)).mean()
         mid_val = (np.max(main_df['mr_aniso_boxcar']) -
                 np.min(main_df['mr_aniso_boxcar'])) / 5
         utils.preprocess._binarize_channel(main_df,
@@ -221,7 +224,7 @@ for acq in sorted(flat_acq_list):
 # NOTE: 6. adjust one TR (remove it!)_________________________________________________________________________
     sdf = main_df.copy()
     sdf.loc[dict_runs['start'], 'bin_spike'] = 0
-    sdf['adjusted_boxcar'] = sdf['bin_spike'].rolling(window=int(samplingrate-100)).mean()
+    sdf['adjusted_boxcar'] = sdf['bin_spike'].rolling(window=int(samplingrate)).mean()
     mid_val = (np.max(sdf['adjusted_boxcar']) -
                np.min(sdf['adjusted_boxcar'])) / 4
     utils.preprocess._binarize_channel(sdf,
@@ -255,7 +258,7 @@ for acq in sorted(flat_acq_list):
     if len(scannote_reference.columns) == len(clean_runlist):
         ref_dict = scannote_reference.to_dict('list')
         run_basename = f"{sub}_{ses}_{task}_CLEAN_RUN-TASKTYLE_recording-ppg-eda_physio.csv"
-        main_df.rename(columns=dict_column, inplace=True)
+        # main_df.rename(columns=dict_column, inplace=True)
         main_df_drop = main_df[main_df.columns.intersection(list(dict_column.values()))]
         utils.initialize._assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df_drop, save_dir,run_basename,bids_dict)
         logger.info("__________________ :+: FINISHED :+: __________________")
