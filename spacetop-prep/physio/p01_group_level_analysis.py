@@ -1,16 +1,5 @@
-# assuming that we have all of the run-bids formatted acq.
-# load data
-# [x] append task info (PVC) from metadata
-# [x] move biopac final data into fmriprep: spacetop_data/data/sub/ses/physio
-# [x] move behavioral data preprocessed into fmriprep:  spacetop_data/data/sub/ses/beh
-# [x] allow to skip broken files
-# [x] allow to skip completed files
-# baseline correct
-# filter signal
-# extract mean signals
-# export as .csv file
-# extract timeseries signal
-# export as .csv file
+#!/usr/bin/env python
+# encoding: utf-8
 """
 # if Glob physiology df / ERROR if physiological doesn’t exist
 # Check if we already ran the analysis / if so, abort
@@ -22,8 +11,14 @@
 # TTL extraction
 # 1) binarize TTL channel / ERROR if TTL channel doesn’t have any data and fails to run
 # 2) assign TTL based on the event boundary
+# filter signal
+# extract mean signals
+# [x] append task info (PVC) from metadata
+# [x] move biopac final data into fmriprep: spacetop_data/data/sub/ses/physio
+# [x] move behavioral data preprocessed into fmriprep:  spacetop_data/data/sub/ses/beh
+# [x] allow to skip broken files
+# [x] allow to skip completed files
 """
-# 
 # %% libraries _________________________________________________________________________________________
 from tkinter import Variable
 import neurokit2 as nk
@@ -38,24 +33,6 @@ from statistics import mean
 import logging
 from datetime import datetime
 import argparse
-# cluster = sys.argv[1]
-# slurm_id = sys.argv[2]
-pwd = os.getcwd()
-main_dir = Path(pwd).parents[1]
-cluster = 'local'
-if cluster == 'discovery':
-    main_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_biopac/'
-else:
-    main_dir = '/Users/h/Dropbox/projects_dropbox/spacetop_biopac'
-
-sys.path.append(os.path.join(main_dir, 'scripts'))
-sys.path.insert(0, os.path.join(main_dir, 'scripts'))
-print(sys.path)
-import utils
-from utils import preprocess
-from utils import checkfiles
-from utils import initialize
-# from utils._ttl_extraction import _ttl_extraction
 
 __author__ = "Heejung Jung, Isabel Neumann"
 __copyright__ = "Spatial Topology Project"
@@ -68,20 +45,22 @@ __maintainer__ = "Heejung Jung"
 __email__ = "heejung.jung@colorado.edu"
 __status__ = "Development"
 
-# TODO:
-# operating = sys.argv[1]  # 'local' vs. 'discovery'
-# slurm_id = sys.argv[2] # process participants with increments of 10
-# task = sys.argv[3]  # 'task-social' 'task-fractional' 'task-alignvideos'
-# run_cutoff = sys.argv[4] # in seconds, e.g. 300
-# operating = 'local' # 'local' vs. 'discovery'
-# slurm_id = 1 # process participants with increments of 10
-# task = 'task-social'  # 'task-cue' 'task-fractional' 'task-alignvideos'
-# run_cutoff = 300 # in seconds, e.g. 300
-# stride = 10
-# sub_zeropad = 4
-# samplingrate = 2000
-# task = 'task-cue'
-# cluster='local'
+pwd = os.getcwd()
+main_dir = Path(pwd).parents[1]
+cluster = 'local'
+if cluster == 'discovery':
+    main_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_biopac/'
+else:
+    main_dir = '/Users/h/Dropbox/projects_dropbox/spacetop_biopac'
+
+# sys.path.append(os.path.join(main_dir, 'scripts'))
+# sys.path.insert(0, os.path.join(main_dir, 'scripts'))
+# print(sys.path)
+import utils
+from utils import preprocess
+from utils import checkfiles
+from utils import initialize
+
 parser = argparse.ArgumentParser()
 parser.add_argument("-o", "--operating",
                     choices=['local', 'discovery'],
@@ -109,10 +88,6 @@ plt.rcParams['figure.figsize'] = [15, 5]  # Bigger images
 plt.rcParams['font.size'] = 14
 
 # %% set parameters
-pwd = os.getcwd()
-main_dir = pwd
-flaglist = []
-
 if cluster == 'discovery':
     physio_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social/data/physio/physio01_raw'  #'/Volumes/spacetop/biopac/dartmouth/b04_finalbids/'
     beh_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social/data/beh/d02_preproc-beh'  # '/Volumes/spacetop_projects_social/data/d02_preproc-beh'
@@ -176,13 +151,13 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     
     ses = f"ses-{ses_ind:02d}"; run = f"run-{run_ind:02d}"
     logger.info(
-        f"\n\n__________________{sub} {ses} {run}__________________")
+        "__________________%s %s %s__________________", sub, ses, run)
     physio_flist = utils.checkfiles._glob_physio_bids(physio_dir,sub,ses,task,run)
 
     try:
         physio_fpath = physio_flist[0]
     except IndexError:
-        logger.error(f"\tmissing physio file - {sub} {ses} {run} DOES NOT exist")
+        logger.error("\t* missing physio file - %s %s %s DOES NOT exist", sub, ses, run)
         continue
     phasic_fname = os.path.basename(physio_fpath)
     bids_dict = {}
@@ -194,7 +169,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     # sub_num, ses_num, run_num, run_type = _extract_bids(
     #     os.path.basename(physio_fpath))
     logger.info(
-        f"\n\n__________________{sub} {ses} {run} __________________")
+        "__________________%s %s %s__________________", sub, ses, run)
     save_dir = join(project_dir, 'data', 'physio', 'physio02_preproc', sub,
                 ses)
     save_dir = join(log_dir, 'data', 'physio', 'physio02_preproc', sub,
@@ -238,7 +213,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
         match for match in os.path.basename(beh_fname).split('_')
         if "run" in match
     ][0]).split('-')[2]
-    print(f"{sub} {ses} {run} {run_type} ____________________")
+    print(f"__________________ {sub} {ses} {run} {run_type} ____________________")
     metadata_df = beh_df[[
         'src_subject_id', 'session_id', 'param_task_name', 'param_run_num',
         'param_cue_type', 'param_stimulus_type', 'param_cond_type'
@@ -252,9 +227,9 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
 # NOTE: baseline correct _________________________________________________________________________________
     # 1) extract fixations:
     fix_bool = physio_df['fixation'].astype(bool).sum()
-    print(
-        f"confirming the number of fixation non-zero timepoints: {fix_bool}")
-    print(f"this amounts to {fix_bool/samplingrate} seconds")
+    logger.info(
+        f"* confirming the number of fixation non-zero timepoints: {fix_bool}")
+    logger.info("\t* this amounts to %f seconds", fix_bool/samplingrate)
     # baseline correction method 02: use the fixation period from the entire run
     mask = physio_df['fixation'].astype(bool)
     baseline_method02 = physio_df['physio_eda'].loc[
@@ -262,7 +237,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     physio_df['EDA_corrected_02fixation'] = physio_df[
         'physio_eda'] - baseline_method02
 
-    print(f"baseline using fixation from entire run: {baseline_method02}")
+    logger.info(f"* baseline using fixation from entire run: {baseline_method02}")
 
 # NOTE: extract epochs ___________________________________________________________________________________
     dict_channel = {'event_cue': 'event_cue',
@@ -281,14 +256,14 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
                                         binary_high=5,
                                         binary_low=0)
         dict_onset[value] = utils.preprocess._identify_boundary(physio_df, value)
-        logger.info(f"* total number of {value} trials: {len(dict_onset[value]['start'])}")
+        logger.info("\t* total number of %s trials: %d" ,value, len(dict_onset[value]['start']))
 
 
 # NOTE: TTL extraction ___________________________________________________________________________________
     if run_type == 'pain':
         final_df = pd.DataFrame()
         # binarize TTL channels (raise error if channel has no TTL, despite being a pain run)
-        metadata_df, plateau_start = _ttl_extraction(
+        metadata_df, plateau_start = utils._ttl_extraction(
             physio_df = physio_df, 
             dict_beforettl = dict_onset['event_expectrating'], 
             dict_afterttl = dict_onset['event_actualrating'], 
@@ -362,7 +337,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
                                       epochs_end=5,
                                       baseline_correction=True)  #
     except:
-        print("has NANS in the datafram")
+        logger.info("has NANS in the dataframe")
         continue
     scr_phasic = nk.eda_eventrelated(scr_epochs)
 
@@ -393,7 +368,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
                                      epochs_end=tonic_epoch_end,
                                      baseline_correction=False)
     except:
-        print("has NANS in the datafram")
+        logger.info("has NANS in the dataframe")
         continue
 
 #  NOTE: concatenate dataframes __________________________________________________________________________
@@ -491,7 +466,4 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     )  
     phasic_fname = f"{sub}_{ses}_{run}-{run_type}_epochstart-0_epochend-5_physio-scr.csv"
     phasic_meta_df.to_csv(join(save_dir, phasic_fname))
-    print(f"{sub}_{ses}_{run}-{run_type} finished")
-    #plt.clf()
-
-    print(f"complete {sub} {ses} {run}")
+    logger.info("__________________ :+: FINISHED :+: __________________")
