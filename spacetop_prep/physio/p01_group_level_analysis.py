@@ -54,10 +54,10 @@ else:
 # sys.path.append(os.path.join(main_dir, 'scripts'))
 # sys.path.insert(0, os.path.join(main_dir, 'scripts'))
 # print(sys.path)
-import utils
-from utils import preprocess
-from utils import checkfiles
-from utils import initialize
+from . import utils
+from .utils import preprocess
+from .utils import checkfiles
+from .utils import initialize
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-o", "--operating",
