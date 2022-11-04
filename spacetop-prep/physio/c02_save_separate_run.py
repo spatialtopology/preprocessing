@@ -10,12 +10,17 @@ operating: str
     options: 'local' vs. 'discovery'
 slurm_id: int
     if operating on discovery, it would be the job array id
+stride: int
+    how many participants to batch per jobarray (i.e. slurm)id
+zeropad: int
+    how many zeros are padded for BIDS subject id
 task: str
-    options: 'task-social', 'task-fractional' 'task-alignvideos', 'task-faces', 'task-shortvideos'
+    specify task name (e.g., 'task-social', 'task-fractional' 'task-alignvideos', 'task-faces', 'task-shortvideos')
 run_cutoff: int
     threshold for determining "kosher" runs versus not. 
     for instance, task-social is 398 seconds long. I use the threshold of 300 as a threshold. 
     Anything shorter than that is discarded and not converted into a run
+
 """
 
 # %% libraries _______________________________________________________________________________________________
@@ -50,26 +55,22 @@ from utils import preprocess, initialize
 __author__ = "Heejung Jung"
 __copyright__ = "Spatial Topology Project"
 __credits__ = ["Heejung"] # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
-__license__ = "GPL"
-__version__ = "0.0.1"
+__license__ = "MIT"
+__version__ = "0.1"
 __maintainer__ = "Heejung Jung"
 __email__ = "heejung.jung@colorado.edu"
 __status__ = "Development"
 
-# TODO:
-# operating = sys.argv[1]  # 'local' vs. 'discovery'
-# slurm_id = int(sys.argv[2]) # process participants with increments of 10
-# task = sys.argv[3]  # 'task-social' 'task-fractional' 'task-alignvideos'
-# run_cutoff = sys.argv[4] # in seconds, e.g. 300
 sub_zeropad = 4
-#run_cutoff = 300
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-o", "--operating",
                     choices=['local', 'discovery'],
                     help="specify where jobs will run: local or discovery")
-parser.add_argument("--slurm_id", type=int,
+parser.add_argument("-sid", "--slurm_id", type=int,
                     help="specify slurm array id")
+parser.add_argument("--stride", help="how many participants to batch per jobarray")
+parser.add_argument("-z", "--zeropad", help="how many zeros are padded for BIDS subject id")
 parser.add_argument("-t", "--task",
                     type=str, help="specify task name (e.g. task-alignvideos)")
 parser.add_argument("-c", "--run-cutoff", type=int, help="specify cutoff threshold for distinguishing runs (in seconds)")
@@ -77,6 +78,8 @@ args = parser.parse_args()
 
 operating = args.operating # 'local', 'discovery'
 slurm_id = args.slurm_id # e.g. 1, 2
+stride = args.stride # e.g. 5, 10, 20, 1000
+zeropad = args.zeropad # sub-0016 -> 4
 task = args.task # e.g. 'task-social' 'task-fractional' 'task-alignvideos'
 run_cutoff = args.run_cutoff # e.g. 300
 
@@ -94,11 +97,7 @@ dict_column = {
     'administer': 'event_stimuli',
     'actual': 'event_actualrating',
 }
-# %% TODO: TST remove after development
-#operating = 'local'  # 'discovery'
-#task = 'task-social'
-#cutoff_threshold = 300
-#print(f"operating: {operating}")
+# %% 
 if operating == 'discovery':
     spacetop_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social'
     physio_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/physio'
@@ -107,7 +106,7 @@ if operating == 'discovery':
         save_dir = join(physio_dir, 'physio03_bids', dict_task[task])
     else:
         save_dir = join(physio_dir, 'physio03_bids', task)
-    log_savedir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/log'
+    log_savedir = os.path.join(physio_dir, 'log')
 
 elif operating == 'local':
     spacetop_dir = '/Volumes/spacetop_projects_social'
@@ -138,8 +137,8 @@ logger = utils.initialize._logger(logger_fname, "physio")
 
 # %% NOTE: 1. glob acquisition files _________________________________________________________________________
 # filename ='../spacetop_biopac/data/sub-0026/SOCIAL_spacetop_sub-0026_ses-01_task-social_ANISO.acq'
-remove_int = [1, 2, 3, 4, 5, 6]
-sub_list = utils.initialize._sublist(source_dir, remove_int, slurm_id, stride=10, sub_zeropad=4)
+remove_sub = [1, 2, 3, 4, 5, 6]
+sub_list = utils.initialize._sublist(source_dir, remove_sub, slurm_id, stride=10, sub_zeropad=4)
 
 acq_list = []
 logger.info(sub_list)
@@ -148,10 +147,8 @@ for sub in sub_list:
                      recursive=True)
     acq_list.append(acq)
 flat_acq_list = [item for sublist in acq_list  for item in sublist]
-#print(flat_acq_list)
 
 # %%
-#flat_acq_list = ['/Users/h/Dropbox/projects_dropbox/spacetop_biopac/sandbox/SOCIAL_spacetop_sub-0056_ses-01_task-social_ANISO.acq']
 for acq in sorted(flat_acq_list):
 # NOTE: 2. extract information from filenames ________________________________________________________________
     filename = os.path.basename(acq)
@@ -176,7 +173,6 @@ for acq in sorted(flat_acq_list):
         
 # NOTE: 4. create an mr_aniso channel for MRI RF pulse channel ________________________________________________
     try:
-        # trigger_mri = [i for i in dict_column if dict_column[i]=="trigger_mri"][0]
         main_df['mr_aniso'] = main_df['trigger_mri'].rolling(
         window=3).mean()
     except:

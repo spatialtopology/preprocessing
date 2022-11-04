@@ -36,9 +36,7 @@ import argparse
 
 __author__ = "Heejung Jung, Isabel Neumann"
 __copyright__ = "Spatial Topology Project"
-__credits__ = [
-    "Heejung"
-]  # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
+__credits__ = ["Yarik"]  # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
 __license__ = "MIT"
 __version__ = "0.1"
 __maintainer__ = "Heejung Jung"
