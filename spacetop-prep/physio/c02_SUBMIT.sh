@@ -12,8 +12,19 @@
 
 conda activate biopac
 
+# User, change parameter
 CLUSTER="discovery" # local
 SLURM_ID=${SLURM_ARRAY_TASK_ID}
+STRIDE=10
+ZEROPAD=4
 TASK="task-social"
 CUTOFF=300
-python ${PWD}/c02_save_separate_run.py --operating ${CLUSTER} --slurm_id ${SLURM_ID} --task ${TASK} --run-cutoff ${CUTOFF}
+
+
+python ${PWD}/c02_save_separate_run.py \
+--operating ${CLUSTER} \
+--slurm_id ${SLURM_ID} \
+--stride ${STRIDE} \
+--zeropad ${ZEROPAD}
+--task ${TASK} \
+--run-cutoff ${CUTOFF}
