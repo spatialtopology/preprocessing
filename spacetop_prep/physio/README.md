@@ -43,7 +43,7 @@ Prerequisites
 ```
 conda env create -f biopac.yaml
 ```
-* Install the conda environment via [**biopac.yaml**](https://github.com/spatialtopology/preprocessing/blob/0f352b6bd5a10f15f670936324108689c5a6c95c/biopac/biopac.yaml), included in this repo.
+* Install the conda environment via [**physio.yaml**](https://github.com/spatialtopology/spacetop-prep/blob/0f352b6bd5a10f15f670936324108689c5a6c95c/physio/physio.yaml), included in this repo.
 * If you don't want to install an env via the yaml file, make sure to include the essential modules: [neurokit](https://github.com/neuropsychology/NeuroKit) and [bioread](https://github.com/uwmadison-chm/bioread)
 ### What does my data structure need to be like?
 [ TODO: insert image of data structure ] 
