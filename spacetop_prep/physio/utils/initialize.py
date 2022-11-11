@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # encoding: utf-8
-
+# %%
 import os
 from os.path import join
 import numpy as np
@@ -8,9 +8,10 @@ from pathlib import Path
 import re, logging
 from . import get_logger, set_logger_level
 
+# %%
 __author__ = "Heejung Jung"
 __copyright__ = "Spatial Topology Project"
-__credits__ = ["Heejung"] # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
+__credits__ = ["Yarik"] # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
 __license__ = "GPL"
 __version__ = "0.0.1"
 __maintainer__ = "Heejung Jung"
@@ -19,7 +20,7 @@ __status__ = "Development"
 
 logger = get_logger("initialize")
 
-def _logger(logger_fname, name):
+def logger(logger_fname, name):
     import logging
     formatter = logging.Formatter("%(levelname)s - %(funcName)s:%(lineno)d - %(message)s")
     handler = logging.FileHandler(logger_fname)
@@ -35,7 +36,7 @@ def _logger(logger_fname, name):
     logger.setLevel(logging.INFO)
     return logger
 
-def _extract_bids_num(filename, key):
+def extract_bids_num(filename: str, key: str) -> int:
     """
     Extracts BIDS information based on input "key" prefix.
     If filename includes an extention, code will remove it.
@@ -48,11 +49,12 @@ def _extract_bids_num(filename, key):
         BIDS prefix, such as 'sub', 'ses', 'task'
     """
     bids_info = [match for match in filename.split('_') if key in match][0]
-    bids_info_rmext = os.path.splitext(bids_info)[0] 
-    bids_num =  int(re.findall('\d+', bids_info_rmext )[0].lstrip('0'))    
+    # bids_info_rmext = os.path.splitext(bids_info)[0] 
+    bids_info_rmext = bids_info.split(os.extsep, 1)
+    bids_num =  int(re.findall(r'\d+', bids_info_rmext[0] )[0].lstrip('0'))    
     return bids_num
 
-def _extract_bids(filename, key):
+def extract_bids(filename: str, key: str) -> str:
     """
     Extracts BIDS information based on input "key" prefix.
     If filename includes an extention, code will remove it.
@@ -65,10 +67,13 @@ def _extract_bids(filename, key):
         BIDS prefix, such as 'sub', 'ses', 'task'
     """
     bids_info = [match for match in filename.split('_') if key in match][0]
-    bids_info_rmext = os.path.splitext(bids_info)[0] 
-    return bids_info_rmext
+    bids_info_rmext = bids_info.split(os.extsep, 1)
+    print(bids_info_rmext)
+    # 'filename.ext1.ext2'.split(os.extsep, 1)
+    # bids_info_rmext = os.path.splitext(bids_info)[0] 
+    return bids_info_rmext[0]
 
-def _sublist(source_dir, remove_int, slurm_ind, sub_zeropad, stride=10 ):
+def sublist(source_dir:str, remove_int:list, slurm_ind:int, sub_zeropad:int, stride=10 ) -> list:
     """
     Create a subject list based on exclusion criterion. 
     Also, restricts the job to number of batches, based on slurm_ind and stride
@@ -102,9 +107,9 @@ def _sublist(source_dir, remove_int, slurm_ind, sub_zeropad, stride=10 ):
     include_list = [f"sub-{x:0{sub_zeropad}d}" for x in include_int]
     sub_list = [x for x in biopac_list if x not in remove_list]
     sub_list = [x for x in sub_list if x in include_list]
-    return sub_list
+    return sorted(sub_list)
 
-def _subset_meta(metadata_df, sub, ses):
+def subset_meta(metadata_df, sub:str, ses:str) -> list:
     """
     Selects a subset of metadata pandas, based on sub and ses key
 
@@ -127,7 +132,7 @@ def _subset_meta(metadata_df, sub, ses):
     scannote_runcol = scannote_na.drop(['sub', 'ses'], axis=1).copy()
     return scannote_runcol
 
-def _assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df, save_dir, run_basename, bids_dict):
+def assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df, save_dir, run_basename, bids_dict):
     for ind, r in enumerate(clean_runlist): 
         clean_run = list(ref_dict.keys())[ind]
         task_type = ref_dict[clean_run][0]
