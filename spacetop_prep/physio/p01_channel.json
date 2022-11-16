@@ -1,0 +1,6 @@
+{
+  "event_cue": "event_cue",
+  "event_expectrating": "event_expectrating",
+  "event_stimuli": "event_stimuli",
+  "event_actualrating": "event_actualrating"
+}
