@@ -124,7 +124,7 @@ plt.rcParams['font.size'] = 14
 sub_list = []
 #biopac_list = next(os.walk(physio_dir))[1]
 remove_int = [1, 2, 3, 4, 5, 6]
-sub_list = utils.initialize._sublist(physio_dir, remove_int, slurm_id, stride=stride, sub_zeropad=zeropad)
+sub_list = utils.initialize.sublist(physio_dir, remove_int, slurm_id, stride=stride, sub_zeropad=zeropad)
 ses_list = [1, 3, 4]
 run_list = [1, 2, 3, 4, 5, 6]
 sub_ses = list(itertools.product(sorted(sub_list), ses_list, run_list))
@@ -148,7 +148,7 @@ runmeta = pd.read_csv(metadata)
     # join(project_dir, "data/spacetop_task-social_run-metadata.csv"))
 #TODO: come up with scheme to update logger files
 f = open(logger_fname, "w")
-logger = utils.initialize._logger(logger_fname, "physio")
+logger = utils.initialize.logger(logger_fname, "physio")
 
 def _extract_bids(fname):
     entities = dict(
@@ -182,10 +182,10 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
         continue
     phasic_fname = os.path.basename(physio_fpath)
     bids_dict = {}
-    bids_dict['sub'] = sub = utils.initialize._extract_bids(phasic_fname, 'sub')
-    bids_dict['ses'] = ses = utils.initialize._extract_bids(phasic_fname, 'ses')
-    bids_dict['task']= task = utils.initialize._extract_bids(phasic_fname, 'task')
-    bids_dict['run'] = run = utils.initialize._extract_bids(phasic_fname, 'run')
+    bids_dict['sub'] = sub = utils.initialize.extract_bids(phasic_fname, 'sub')
+    bids_dict['ses'] = ses = utils.initialize.extract_bids(phasic_fname, 'ses')
+    bids_dict['task']= task = utils.initialize.extract_bids(phasic_fname, 'task')
+    bids_dict['run'] = run = utils.initialize.extract_bids(phasic_fname, 'run')
     logger.info(bids_dict)
     # sub_num, ses_num, run_num, run_type = _extract_bids(
     #     os.path.basename(physio_fpath))
