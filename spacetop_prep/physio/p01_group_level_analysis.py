@@ -97,13 +97,15 @@ beh_dir = args.input_behdir
 log_dir = args.output_logdir
 output_savedir = args.output_savedir
 metadata = args.metadata
-dict_channel = args.dictchannel
+dictchannel_json = args.dictchannel
 slurm_id = args.slurm_id # e.g. 1, 2
 stride = args.stride # e.g. 5, 10, 20, 1000
 zeropad = args.zeropad # sub-0016 -> 4
 task = args.task # e.g. 'task-social' 'task-fractional' 'task-alignvideos'
 # run_cutoff = args.run_cutoff # e.g. 300
 samplingrate = args.samplingrate # e.g. 2000
+
+dict_channel = json.load(open(dictchannel_json))
 
 plt.rcParams['figure.figsize'] = [15, 5]  # Bigger images
 plt.rcParams['font.size'] = 14
