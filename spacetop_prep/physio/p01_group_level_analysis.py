@@ -172,7 +172,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     ses = f"ses-{ses_ind:02d}"; run = f"run-{run_ind:02d}"
     logger.info(
         "__________________%s %s %s__________________", sub, ses, run)
-    physio_flist = utils.checkfiles._glob_physio_bids(physio_dir,sub,ses,task,run)
+    physio_flist = utils.checkfiles.glob_physio_bids(physio_dir,sub,ses,task,run)
 
     try:
         physio_fpath = physio_flist[0]
