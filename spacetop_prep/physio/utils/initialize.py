@@ -6,7 +6,7 @@ from os.path import join
 import numpy as np
 from pathlib import Path
 import re, logging
-from . import get_logger, set_logger_level
+# from . import get_logger, set_logger_level
 
 # %%
 __author__ = "Heejung Jung"
@@ -18,7 +18,8 @@ __maintainer__ = "Heejung Jung"
 __email__ = "heejung.jung@colorado.edu"
 __status__ = "Development"
 
-logger = get_logger("initialize")
+logger = logging.getLogger("physio.initialize")
+# logger = get_logger("initialize")
 
 def logger(logger_fname, name):
     import logging

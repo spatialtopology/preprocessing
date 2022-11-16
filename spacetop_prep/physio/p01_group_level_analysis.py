@@ -28,11 +28,12 @@ import matplotlib.pyplot as plt
 import os, glob, sys
 from pathlib import Path
 from os.path import join
-import itertools
 from statistics import mean
-import logging
+import logging, argparse, itertools
 from datetime import datetime
-import argparse
+import utils.preprocess
+import utils.checkfiles
+import utils.initialize
 
 __author__ = "Heejung Jung, Isabel Neumann"
 __copyright__ = "Spatial Topology Project"
@@ -54,28 +55,16 @@ ENH:
 allow for user to input which channels to use
 main channel (stimuli)
 boundary channel (cue) (rating)
-
-
 """
-
-
-
 # pwd = os.getcwd()
-# main_dir = Path(pwd).parents[1]
-# cluster = 'local'
-# if cluster == 'discovery':
-#     main_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_biopac/'
-# else:
-#     main_dir = '/Users/h/Dropbox/projects_dropbox/spacetop_biopac'
-
-# sys.path.append(os.path.join(main_dir, 'scripts'))
-# sys.path.insert(0, os.path.join(main_dir, 'scripts'))
+# main_dir = Path(pwd).parents[0]
+# sys.path.append(os.path.join(main_dir))
+# sys.path.insert(0, os.path.join(main_dir))
 # print(sys.path)
-from . import utils
-from .utils import preprocess
-from .utils import checkfiles
-from .utils import initialize
 
+
+
+# %%
 parser = argparse.ArgumentParser()
 # parser.add_argument("-o", "--operating",
 #                     choices=['local', 'discovery'],

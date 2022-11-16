@@ -14,7 +14,7 @@ from os.path import join
 import numpy as np
 from pathlib import Path
 import re, logging
-from . import get_logger, set_logger_level
+# from . import get_logger, set_logger_level
 def _ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, samplingrate, metadata_df):
     """
     Parameters
@@ -46,7 +46,7 @@ def _ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, samp
     import numpy as np
     import utils
     import logging
-    logger = logging.getLogger("ttl")
+    logger = logging.getLogger("physio.ttl")
     final_df = pd.DataFrame()
     # binarize TTL channels (raise error if channel has no TTL, despite being a pain run)
     # try:

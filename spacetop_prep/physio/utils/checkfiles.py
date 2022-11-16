@@ -5,7 +5,7 @@ import os
 import glob
 from os.path import join
 import re, logging
-from . import get_logger, set_logger_level
+# from . import get_logger, set_logger_level
 
 __author__ = "Heejung Jung"
 __copyright__ = "Spatial Topology Project"
@@ -16,8 +16,8 @@ __maintainer__ = "Heejung Jung"
 __email__ = "heejung.jung@colorado.edu"
 __status__ = "Development"
 
-logger = get_logger("checkfiles")
-
+# logger = get_logger("checkfiles")
+logger = logging.getLogger("physio.checkfiles")
 def _glob_physio_bids(biopac_dir, sub, ses, task, run):
     """
     * Globs the BIDS-formmated physio files. 

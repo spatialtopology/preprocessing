@@ -4,9 +4,25 @@ import logging
 import os
 import utils
 import itertools
-from . import get_logger, set_logger_level
+# from . import get_logger, set_logger_level
 
-logger = get_logger("preprocess")
+# def get_logger(name=None):
+#     """Return a logger to use"""
+#     return logging.getLogger("physio" + (".%s" % name if name else ""))
+
+# def set_logger_level(logger, level):
+#     if isinstance(level, int):
+#         pass
+#     elif level.isnumeric():
+#         level = int(level)
+#     elif level.isalpha():
+#         level = getattr(logging, level)
+#     else:
+#         logger.warning("Do not know how to treat loglevel %s" % level)
+#         return
+#     logger.setLevel(level)
+
+logger = logging.getLogger("physio.preprocess")
 
 def _binarize_channel(df, source_col, new_col, threshold, binary_high, binary_low):
     """
