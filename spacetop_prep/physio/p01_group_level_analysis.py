@@ -34,7 +34,7 @@ import utils.preprocess
 import utils.checkfiles
 import utils.initialize
 import json
-import utils.ttl_extraction
+from  utils import ttl_extraction
 __author__ = "Heejung Jung, Isabel Neumann"
 __copyright__ = "Spatial Topology Project"
 __credits__ = ["Yaroslav Halchenko"]  # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
@@ -287,7 +287,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     if run_type == 'pain':
         final_df = pd.DataFrame()
         # binarize TTL channels (raise error if channel has no TTL, despite being a pain run)
-        metadata_df, plateau_start = utils.ttl_extraction(
+        metadata_df, plateau_start = utils.ttl_extraction.ttl_extraction(
             physio_df = physio_df, 
             dict_beforettl = dict_onset['event_expectrating'], 
             dict_afterttl = dict_onset['event_actualrating'], 
