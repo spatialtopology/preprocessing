@@ -74,7 +74,7 @@ def extract_bids(filename: str, key: str) -> str:
     # bids_info_rmext = os.path.splitext(bids_info)[0] 
     return bids_info_rmext[0]
 
-def sublist(source_dir:str, remove_int:list, slurm_ind:int, sub_zeropad:int, stride=10 ) -> list:
+def sublist(source_dir:str, remove_int:list, slurm_ind:int, sub_zeropad:int, stride:int ) -> list:
     """
     Create a subject list based on exclusion criterion. 
     Also, restricts the job to number of batches, based on slurm_ind and stride
@@ -104,7 +104,7 @@ def sublist(source_dir:str, remove_int:list, slurm_ind:int, sub_zeropad:int, str
     """
     biopac_list = next(os.walk(join(source_dir)))[1] 
     remove_list = [f"sub-{x:0{sub_zeropad}d}" for x in remove_int]
-    include_int = list(np.arange(slurm_ind * stride + 1, (slurm_ind + 1) * stride, 1))
+    include_int = list(np.arange(slurm_id * stride + 1, (slurm_id + 1) * stride, 1))
     include_list = [f"sub-{x:0{sub_zeropad}d}" for x in include_int]
     sub_list = [x for x in biopac_list if x not in remove_list]
     sub_list = [x for x in sub_list if x in include_list]
