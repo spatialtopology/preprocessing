@@ -36,20 +36,37 @@ import argparse
 
 __author__ = "Heejung Jung, Isabel Neumann"
 __copyright__ = "Spatial Topology Project"
-__credits__ = ["Yarik"]  # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
+__credits__ = ["Yaroslav Halchenko"]  # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
 __license__ = "MIT"
 __version__ = "0.1"
 __maintainer__ = "Heejung Jung"
 __email__ = "heejung.jung@colorado.edu"
 __status__ = "Development"
 
-pwd = os.getcwd()
-main_dir = Path(pwd).parents[1]
-cluster = 'local'
-if cluster == 'discovery':
-    main_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_biopac/'
-else:
-    main_dir = '/Users/h/Dropbox/projects_dropbox/spacetop_biopac'
+"""
+TODO: 
+minimize spaghetti
+- make two separate functions 
+1) pain process python function 
+2) non pain run process python function
+
+ENH: 
+allow for user to input which channels to use
+main channel (stimuli)
+boundary channel (cue) (rating)
+
+
+"""
+
+
+
+# pwd = os.getcwd()
+# main_dir = Path(pwd).parents[1]
+# cluster = 'local'
+# if cluster == 'discovery':
+#     main_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_biopac/'
+# else:
+#     main_dir = '/Users/h/Dropbox/projects_dropbox/spacetop_biopac'
 
 # sys.path.append(os.path.join(main_dir, 'scripts'))
 # sys.path.insert(0, os.path.join(main_dir, 'scripts'))
@@ -60,44 +77,61 @@ from .utils import checkfiles
 from .utils import initialize
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-o", "--operating",
-                    choices=['local', 'discovery'],
-                    help="specify where jobs will run: local or discovery")
+# parser.add_argument("-o", "--operating",
+#                     choices=['local', 'discovery'],
+#                     help="specify where jobs will run: local or discovery")
+parser.add_argument("--input-physiodir",
+                    type=str, help="path where BIDS converted physio data lives")
+parser.add_argument("--input-behdir",
+                    type=str, help="path where BIDS converted behavioral data lives")
+parser.add_argument("--output-logdir",
+                    type=str, help="path where logs will be saved - essential for re-running failed participants")
+parser.add_argument("--output-savedir",
+                    type=str, help="path where transformed physio data will be saved")
+parser.add_argument("--metadata",
+                    type=str, help=".csv filepath to metadata file of run information (complete/runtype etc)")
+parser.add_argument("--dictchannel", 
+                    type=str, help=".json file for changing physio data channel names | key:value == old_channel_name:new_channel_name")
 parser.add_argument("-sid", "--slurm_id", type=int,
                     help="specify slurm array id")
 parser.add_argument("--stride", help="how many participants to batch per jobarray")
 parser.add_argument("-z", "--zeropad", help="how many zeros are padded for BIDS subject id")
 parser.add_argument("-t", "--task",
                     type=str, help="specify task name (e.g. task-alignvideos)")
-parser.add_argument("-c", "--run-cutoff", type=int, help="specify cutoff threshold for distinguishing runs (in seconds)")
 parser.add_argument("-sr", "--samplingrate", type=int,
                     help="sampling rate of acquisition file")
 args = parser.parse_args()
 
-operating = args.operating # 'local', 'discovery'
+# operating = args.operating # 'local', 'discovery'
+physio_dir = args.input_physiodir
+beh_dir = args.input_behdir
+log_dir = args.output_logdir
+output_savedir = args.output_savedir
+metadata = args.metadata
+dict_channel = args.dictchannel
 slurm_id = args.slurm_id # e.g. 1, 2
 stride = args.stride # e.g. 5, 10, 20, 1000
 zeropad = args.zeropad # sub-0016 -> 4
 task = args.task # e.g. 'task-social' 'task-fractional' 'task-alignvideos'
-run_cutoff = args.run_cutoff # e.g. 300
+# run_cutoff = args.run_cutoff # e.g. 300
 samplingrate = args.samplingrate # e.g. 2000
 
 plt.rcParams['figure.figsize'] = [15, 5]  # Bigger images
 plt.rcParams['font.size'] = 14
 
 # %% set parameters
-if cluster == 'discovery':
-    physio_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social/data/physio/physio01_raw'  #'/Volumes/spacetop/biopac/dartmouth/b04_finalbids/'
-    beh_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social/data/beh/d02_preproc-beh'  # '/Volumes/spacetop_projects_social/data/d02_preproc-beh'
-    project_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social'
-    log_dir = join(project_dir, "scripts", "logcenter")
+# if cluster == 'discovery':
+#     physio_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social/data/physio/physio01_raw'  #'/Volumes/spacetop/biopac/dartmouth/b04_finalbids/'
+#     beh_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social/data/beh/d02_preproc-beh'  # '/Volumes/spacetop_projects_social/data/d02_preproc-beh'
+#     project_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social'
+#     log_dir = join(project_dir, "scripts", "logcenter")
     
-else:
-    #physio_dir = '/Volumes/spacetop_projects_social/data/physio/physio01_raw'#'/Volumes/spacetop/biopac/dartmouth/b04_finalbids/'
-    physio_dir = '/Volumes/spacetop/biopac/dartmouth/b04_finalbids/task-social'
-    beh_dir = '/Volumes/spacetop_projects_social/data/beh/d02_preproc-beh'  # '/Volumes/spacetop_projects_social/data/d02_preproc-beh'
-    project_dir = '/Volumes/spacetop_projects_social'
-    log_dir = join(project_dir, "scripts", "logcenter")
+# else:
+#     #physio_dir = '/Volumes/spacetop_projects_social/data/physio/physio01_raw'#'/Volumes/spacetop/biopac/dartmouth/b04_finalbids/'
+#     physio_dir = '/Volumes/spacetop/biopac/dartmouth/b04_finalbids/task-social'
+#     beh_dir = '/Volumes/spacetop_projects_social/data/beh/d02_preproc-beh'  # '/Volumes/spacetop_projects_social/data/d02_preproc-beh'
+#     project_dir = '/Volumes/spacetop_projects_social'
+#     log_dir = join(project_dir, "scripts", "logcenter")
 sub_list = []
 #biopac_list = next(os.walk(physio_dir))[1]
 remove_int = [1, 2, 3, 4, 5, 6]
@@ -105,24 +139,24 @@ sub_list = utils.initialize._sublist(physio_dir, remove_int, slurm_id, stride=st
 ses_list = [1, 3, 4]
 run_list = [1, 2, 3, 4, 5, 6]
 sub_ses = list(itertools.product(sorted(sub_list), ses_list, run_list))
-"""
-# NOTE: TEST ______________________________________
-"""
+# """
+# # NOTE: TEST ______________________________________
+# """
 
-sub_list = ['sub-0074']; ses_list = [1]; run_list = [1,2,3,4,5,6]
-sub_ses = list(itertools.product(sorted(sub_list), ses_list, run_list))
-log_dir = '/Users/h/Dropbox/projects_dropbox/spacetop_biopac/sandbox'
-physio_dir = '/Users/h/Dropbox/projects_dropbox/spacetop_biopac/sandbox'
-"""
-# NOTE: TEST ______________________________________
-"""
-logger_fname = os.path.join(log_dir, f"data-physio_step-04-groupanalysis_{datetime.date.today().isoformat()}.txt")
+# sub_list = ['sub-0074']; ses_list = [1]; run_list = [1,2,3,4,5,6]
+# sub_ses = list(itertools.product(sorted(sub_list), ses_list, run_list))
+# log_dir = '/Users/h/Dropbox/projects_dropbox/spacetop_biopac/sandbox'
+# physio_dir = '/Users/h/Dropbox/projects_dropbox/spacetop_biopac/sandbox'
+# """
+# # NOTE: TEST ______________________________________
+# """
+logger_fname = os.path.join(log_dir, f"data-physio_step-03-groupanalysis_{datetime.date.today().isoformat()}.txt")
 
 
 # set up logger _______________________________________________________________________________________
 
-runmeta = pd.read_csv(
-    join(project_dir, "data/spacetop_task-social_run-metadata.csv"))
+runmeta = pd.read_csv(metadata)
+    # join(project_dir, "data/spacetop_task-social_run-metadata.csv"))
 #TODO: come up with scheme to update logger files
 f = open(logger_fname, "w")
 logger = utils.initialize._logger(logger_fname, "physio")
@@ -168,10 +202,10 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     #     os.path.basename(physio_fpath))
     logger.info(
         "__________________%s %s %s__________________", sub, ses, run)
-    save_dir = join(project_dir, 'data', 'physio', 'physio02_preproc', sub,
-                ses)
-    save_dir = join(log_dir, 'data', 'physio', 'physio02_preproc', sub,
-                ses)
+    # save_dir = join(project_dir, 'data', 'physio', 'physio02_preproc', sub,
+    #             ses)
+    # save_dir = join(log_dir, 'data', 'physio', 'physio02_preproc', sub,
+    #             ses)
 # NOTE: if output derivative already exists, skip loop: __________________________________________________
     # try:
     #     save_dir = join(project_dir, 'data', 'physio', 'physio02_preproc',
@@ -238,11 +272,11 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     logger.info(f"* baseline using fixation from entire run: {baseline_method02}")
 
 # NOTE: extract epochs ___________________________________________________________________________________
-    dict_channel = {'event_cue': 'event_cue',
-    'event_expectrating': 'event_expectrating',
-    'event_stimuli': 'event_stimuli',
-    'event_actualrating': 'event_actualrating',
-    }
+    # dict_channel = {'event_cue': 'event_cue',
+    # 'event_expectrating': 'event_expectrating',
+    # 'event_stimuli': 'event_stimuli',
+    # 'event_actualrating': 'event_actualrating',
+    # }
     dict_onset = {}
     for i, (key, value) in enumerate(dict_channel.items()):
         dict_onset[value] = {}
@@ -449,19 +483,21 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     tonic_timecourse = pd.concat(
         [metadata_df, metadata_tonic, eda_level_timecourse], axis=1)
 # NOTE: save tonic data __________________________________________________________________________________
-
-    Path(save_dir).mkdir(parents=True, exist_ok=True)
+    tonic_save_dir = join(output_savedir, 'physio01_SCL', sub, ses)
+    Path(tonic_save_dir).mkdir(parents=True, exist_ok=True)
     tonic_fname = f"{sub}_{ses}_{run}-{run_type}_epochstart--1_epochend-8_physio-scl.csv"
     tonictime_fname = f"{sub}_{ses}_{run}-{run_type}_epochstart--1_epochend-8_physio-scltimecourse.csv"
     tonic_df.to_csv(join(save_dir, tonic_fname))
     tonic_timecourse.to_csv(join(save_dir, tonictime_fname))
 
 # NOTE: save phasic data _________________________________________________________________________________
+    phasic_save_dir = join(output_savedir, 'physio02_SCR', sub, ses)
+    Path(phasic_save_dir).mkdir(parents=True, exist_ok=True)
     metadata_df = metadata_df.reset_index(drop=True)
     scr_phasic = scr_phasic.reset_index(drop=True)
     phasic_meta_df = pd.concat(
         [metadata_df, scr_phasic], axis=1
     )  
     phasic_fname = f"{sub}_{ses}_{run}-{run_type}_epochstart-0_epochend-5_physio-scr.csv"
-    phasic_meta_df.to_csv(join(save_dir, phasic_fname))
+    phasic_meta_df.to_csv(join(phasic_save_dir, phasic_fname))
     logger.info("__________________ :+: FINISHED :+: __________________")
