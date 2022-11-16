@@ -216,7 +216,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     logger.info({physio_fname})
     task = [match for match in physio_fname.split('_') if "task" in match][0]
     # DEP: physio_df, samplingrate = nk.read_acqknowledge(physio_fpath) output file is pandas
-    physio_df = pd.read_csv(physio_fpath)
+    physio_df = pd.read_csv(physio_fpath, sep = '\t')
     
 
 # NOTE: identify behavioral file for corresponding sub/ses/run ____________________________________
