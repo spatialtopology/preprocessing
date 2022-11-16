@@ -33,6 +33,7 @@ import datetime, logging, argparse, itertools
 import utils.preprocess
 import utils.checkfiles
 import utils.initialize
+import json
 
 __author__ = "Heejung Jung, Isabel Neumann"
 __copyright__ = "Spatial Topology Project"
@@ -412,10 +413,11 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
             ]], scr_processed
         ],
                         axis=1)
-    fig_save_dir = join(project_dir, 'data', 'physio', 'qc', sub, ses)
-    Path(fig_save_dir).mkdir(parents=True, exist_ok=True)
+    # TODO: find a way to save neurokit plots
+    # fig_save_dir = join(project_dir, 'data', 'physio', 'qc', sub, ses)
+    #Path(fig_save_dir).mkdir(parents=True, exist_ok=True)
 
-    fig_savename = f"{sub}_{ses}_{run}-{run_type}_physio-scr-scl.png"
+    #fig_savename = f"{sub}_{ses}_{run}-{run_type}_physio-scr-scl.png"
     # processed_fig = nk.events_plot(
     #     event_stimuli,
     #     bio_df[['administer', 'EDA_Tonic', 'EDA_Phasic', 'SCR_Peaks']])
@@ -478,8 +480,8 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     Path(tonic_save_dir).mkdir(parents=True, exist_ok=True)
     tonic_fname = f"{sub}_{ses}_{run}-{run_type}_epochstart--1_epochend-8_physio-scl.csv"
     tonictime_fname = f"{sub}_{ses}_{run}-{run_type}_epochstart--1_epochend-8_physio-scltimecourse.csv"
-    tonic_df.to_csv(join(save_dir, tonic_fname))
-    tonic_timecourse.to_csv(join(save_dir, tonictime_fname))
+    tonic_df.to_csv(join(tonic_save_dir, tonic_fname))
+    tonic_timecourse.to_csv(join(tonic_save_dir, tonictime_fname))
 
 # NOTE: save phasic data _________________________________________________________________________________
     phasic_save_dir = join(output_savedir, 'physio02_SCR', sub, ses)
