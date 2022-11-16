@@ -41,9 +41,9 @@ sys.path.append(os.path.join(main_dir))
 sys.path.insert(0, os.path.join(main_dir))
 print(sys.path)
 
-import utils
-from utils import preprocess
-from utils import initialize
+from . import utils
+from .utils import preprocess
+from .utils import initialize
 
 __author__ = "Heejung Jung"
 __copyright__ = "Spatial Topology Project"

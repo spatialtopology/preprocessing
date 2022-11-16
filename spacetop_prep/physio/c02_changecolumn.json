@@ -1,0 +1,12 @@
+{
+    "fMRI Trigger - CBLCFMA - Current Feedba":"trigger_mri",
+    "TSA2 TTL - CBLCFMA - Current Feedback M":"trigger_heat",
+    "Skin Conductance (EDA) - EDA100C-MRI":"physio_eda",
+    "Pulse (PPG) - PPG100C":"physio_ppg",
+    "trigger":"event_experimentduration",
+    "fixation":"event_fixation",
+    "cue":"event_cue",
+    "expect":"event_expectrating",
+    "administer":"event_stimuli",
+    "actual":"event_actualrating"
+ }

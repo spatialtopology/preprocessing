@@ -36,9 +36,7 @@ import argparse
 
 __author__ = "Heejung Jung, Isabel Neumann"
 __copyright__ = "Spatial Topology Project"
-__credits__ = [
-    "Heejung"
-]  # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
+__credits__ = ["Yarik"]  # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
 __license__ = "MIT"
 __version__ = "0.1"
 __maintainer__ = "Heejung Jung"
@@ -56,10 +54,10 @@ else:
 # sys.path.append(os.path.join(main_dir, 'scripts'))
 # sys.path.insert(0, os.path.join(main_dir, 'scripts'))
 # print(sys.path)
-import utils
-from utils import preprocess
-from utils import checkfiles
-from utils import initialize
+from . import utils
+from .utils import preprocess
+from .utils import checkfiles
+from .utils import initialize
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-o", "--operating",
@@ -276,7 +274,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
             'onset': np.array(plateau_start).astype(pd.Int64Dtype),
             'duration': np.repeat(samplingrate * 5, 12),
             'label': np.array(np.arange(12)),
-            'condition': beh_df['param_stimulus_type'].values.tolist()
+            'condition': metadata_df['param_stimulus_type'].values.tolist()
         }
         # TODO: interim plot to check if TTL matches with signals
         run_physio = physio_df[[

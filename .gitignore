@@ -3,4 +3,7 @@
 ./fmriprep/fmriprep_slurm/log/*
 *.e
 *.o
+*.py[cod]
 **/.DS_Store
+**/__pycache__
+**/spacetop_prep/redcap/*.csv
