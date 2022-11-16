@@ -29,8 +29,7 @@ import os, glob, sys
 from pathlib import Path
 from os.path import join
 from statistics import mean
-import logging, argparse, itertools
-from datetime import datetime
+import datetime, logging, argparse, itertools
 import utils.preprocess
 import utils.checkfiles
 import utils.initialize
