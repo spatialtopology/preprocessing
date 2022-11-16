@@ -35,7 +35,7 @@ python ${PWD}/p01_group_level_analysis.py \
 --output-savedir ${OUTPUT_SAVEDIR} \
 --metadata ${METADATA} \
 --dictchannel ${CHANNELJSON}
---slurm_id ${SLURM_ID} \
+--slurm-id ${SLURM_ID} \
 --stride ${STRIDE} \
 --zeropad ${ZEROPAD} \
 --task ${TASK} \
