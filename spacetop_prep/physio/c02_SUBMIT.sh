@@ -14,17 +14,26 @@ conda activate biopac
 
 # User, change parameter
 CLUSTER="discovery" # local
+TOPDIR="/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/physio"
+METADATA="/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social/data/spacetop_task-social_run-metadata.csv"
 SLURM_ID=${SLURM_ARRAY_TASK_ID}
 STRIDE=10
 ZEROPAD=4
 TASK="task-social"
 CUTOFF=300
+CHANGETASK="./c02_changetaskname.json"
+CHANGECOL="./c02_changecolumn.json"
 
 
 python ${PWD}/c02_save_separate_run.py \
---operating ${CLUSTER} \
+--topdir ${TOPDIR} \
+--metadata ${METADATA} \
+# --operating ${CLUSTER} \
 --slurm_id ${SLURM_ID} \
 --stride ${STRIDE} \
---zeropad ${ZEROPAD}
+--zeropad ${ZEROPAD} \
 --task ${TASK} \
---run-cutoff ${CUTOFF}
+--run-cutoff ${CUTOFF} \
+--colnamechange ${CHANGECOL} \ 
+--tasknamechange ${CHANGETASK}
+
