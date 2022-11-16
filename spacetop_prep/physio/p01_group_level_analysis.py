@@ -83,7 +83,7 @@ parser.add_argument("--dictchannel",
                     type=str, help=".json file for changing physio data channel names | key:value == old_channel_name:new_channel_name")
 parser.add_argument("-sid", "--slurm-id", type=int,
                     help="specify slurm array id")
-parser.add_argument("--stride", help="how many participants to batch per jobarray")
+parser.add_argument("--stride", type=int, help="how many participants to batch per jobarray")
 parser.add_argument("-z", "--zeropad", help="how many zeros are padded for BIDS subject id")
 parser.add_argument("-t", "--task",
                     type=str, help="specify task name (e.g. task-alignvideos)")
