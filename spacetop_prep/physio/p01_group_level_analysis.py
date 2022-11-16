@@ -80,9 +80,14 @@ parser.add_argument("--metadata",
                     type=str, help=".csv filepath to metadata file of run information (complete/runtype etc)")
 parser.add_argument("--dictchannel", 
                     type=str, help=".json file for changing physio data channel names | key:value == old_channel_name:new_channel_name")
+<<<<<<< HEAD
 parser.add_argument("-sid", "--slurm-id", type=int,
                     help="specify slurm array id")
 parser.add_argument("--stride", type=int, help="how many participants to batch per jobarray")
+=======
+parser.add_argument("-sid", "--slurm-id", type=int,help="specify slurm array id")
+parser.add_argument("--stride", help="how many participants to batch per jobarray")
+>>>>>>> d6706da7532a46e0e0791677e44b9e44344c96ce
 parser.add_argument("-z", "--zeropad", help="how many zeros are padded for BIDS subject id")
 parser.add_argument("-t", "--task",
                     type=str, help="specify task name (e.g. task-alignvideos)")
@@ -149,7 +154,7 @@ runmeta = pd.read_csv(metadata)
 f = open(logger_fname, "w")
 logger = utils.initialize.logger(logger_fname, "physio")
 
-def _extract_bids(fname):
+def extract_bids(fname):
     entities = dict(
         match.split('-', 1) for match in fname.split('_') if '-' in match)
     sub_num = int(entities['sub'])
