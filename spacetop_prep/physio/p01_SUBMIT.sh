@@ -19,7 +19,7 @@ BEH_DIR="${PROJECT_DIR}/data/beh/beh02_preproc"
 OUTPUT_LOGDIR="${PROJECT_DIR}/scripts/logcenter"
 OUTPUT_SAVEDIR="${PROJECT_DIR}/analysis/physio"
 METADATA="${PROJECT_DIR}/data/spacetop_task-social_run-metadata.csv"
-CHANNELJSON=""
+CHANNELJSON="./p01_channel.json"
 SLURM_ID=${SLURM_ARRAY_TASK_ID}
 STRIDE=10
 ZEROPAD=4
@@ -34,7 +34,7 @@ python ${PWD}/p01_group_level_analysis.py \
 --output-logdir ${OUTPUT_LOGDIR} \
 --output-savedir ${OUTPUT_SAVEDIR} \
 --metadata ${METADATA} \
---dictchannel ${}
+--dictchannel ${CHANNELJSON}
 --slurm_id ${SLURM_ID} \
 --stride ${STRIDE} \
 --zeropad ${ZEROPAD} \
