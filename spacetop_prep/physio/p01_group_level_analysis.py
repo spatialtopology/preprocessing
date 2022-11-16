@@ -243,16 +243,16 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
 # NOTE: merge fixation columns (some files look different) handle slight changes in biopac dataframe
     if 'fixation-01' in physio_df.columns:
         physio_df[
-            'fixation'] = physio_df['fixation-01'] + physio_df['fixation-02']
+            'event_fixation'] = physio_df['fixation-01'] + physio_df['fixation-02']
 
 # NOTE: baseline correct _________________________________________________________________________________
     # 1) extract fixations:
-    fix_bool = physio_df['fixation'].astype(bool).sum()
+    fix_bool = physio_df['event_fixation'].astype(bool).sum()
     logger.info(
         f"* confirming the number of fixation non-zero timepoints: {fix_bool}")
     logger.info("\t* this amounts to %f seconds", fix_bool/samplingrate)
     # baseline correction method 02: use the fixation period from the entire run
-    mask = physio_df['fixation'].astype(bool)
+    mask = physio_df['event_fixation'].astype(bool)
     baseline_method02 = physio_df['physio_eda'].loc[
         mask].mean()
     physio_df['EDA_corrected_02fixation'] = physio_df[
