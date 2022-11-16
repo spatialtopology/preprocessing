@@ -14,8 +14,9 @@ from os.path import join
 import numpy as np
 from pathlib import Path
 import re, logging
+from utils import preprocess
 # from . import get_logger, set_logger_level
-def _ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, samplingrate, metadata_df):
+def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, samplingrate, metadata_df):
     """
     Parameters
     ----------
