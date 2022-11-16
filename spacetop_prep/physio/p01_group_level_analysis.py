@@ -479,8 +479,8 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
 # NOTE: save tonic data __________________________________________________________________________________
     tonic_save_dir = join(output_savedir, 'physio01_SCL', sub, ses)
     Path(tonic_save_dir).mkdir(parents=True, exist_ok=True)
-    tonic_fname = f"{sub}_{ses}_{run}-{run_type}_epochstart--1_epochend-8_physio-scl.csv"
-    tonictime_fname = f"{sub}_{ses}_{run}-{run_type}_epochstart--1_epochend-8_physio-scltimecourse.csv"
+    tonic_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart--1_epochend-8_physio-scl.csv"
+    tonictime_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart--1_epochend-8_physio-scltimecourse.csv"
     tonic_df.to_csv(join(tonic_save_dir, tonic_fname))
     tonic_timecourse.to_csv(join(tonic_save_dir, tonictime_fname))
 
@@ -492,6 +492,6 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     phasic_meta_df = pd.concat(
         [metadata_df, scr_phasic], axis=1
     )  
-    phasic_fname = f"{sub}_{ses}_{run}-{run_type}_epochstart-0_epochend-5_physio-scr.csv"
+    phasic_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-0_epochend-5_physio-scr.csv"
     phasic_meta_df.to_csv(join(phasic_save_dir, phasic_fname))
     logger.info("__________________ :+: FINISHED :+: __________________")
