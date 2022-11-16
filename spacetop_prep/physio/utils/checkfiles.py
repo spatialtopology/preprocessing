@@ -18,7 +18,7 @@ __status__ = "Development"
 
 # logger = get_logger("checkfiles")
 logger = logging.getLogger("physio.checkfiles")
-def _glob_physio_bids(biopac_dir, sub, ses, task, run):
+def glob_physio_bids(biopac_dir, sub, ses, task, run):
     """
     * Globs the BIDS-formmated physio files. 
     * Filenames must explicitly follow the structure of 
@@ -48,11 +48,11 @@ def _glob_physio_bids(biopac_dir, sub, ses, task, run):
     physio_flist = glob.glob(
     join(
         biopac_dir, sub, ses,
-        f"{sub}_{ses}_{task}_*{run}*_recording-ppg-eda_physio.acq"
+        f"{sub}_{ses}_{task}_*{run}*_recording-ppg-eda*_physio.tsv"
     ))
     return physio_flist
 
-def _preproc_scr(save_dir, phasic_fname):
+def preproc_scr(save_dir, phasic_fname):
 
     """
     if file does not exist, run code TODO: figure out how to continue
