@@ -188,7 +188,8 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     bids_dict['sub'] = sub = utils.initialize.extract_bids(phasic_fname, 'sub')
     bids_dict['ses'] = ses = utils.initialize.extract_bids(phasic_fname, 'ses')
     bids_dict['task']= task = utils.initialize.extract_bids(phasic_fname, 'task')
-    bids_dict['run'] = run = utils.initialize.extract_bids(phasic_fname, 'run')
+    bids_dict['run'] = run = f"run-{run_ind:02d}"
+    #bids_dict['run'] = run = utils.initialize.extract_bids(phasic_fname, 'run')
     logger.info(bids_dict)
     # sub_num, ses_num, run_num, run_type = _extract_bids(
     #     os.path.basename(physio_fpath))
