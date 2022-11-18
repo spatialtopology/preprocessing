@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-""" 
+"""
 save_seperate_run.py
-Separates acq into runs and saves as bids format. 
+Separates acq into runs and saves as bids format.
 This script reads the acquisition file collected straight from our biopac PC
 
 Parameters
@@ -17,36 +17,34 @@ zeropad: int
 task: str
     specify task name (e.g., 'task-social', 'task-fractional' 'task-alignvideos', 'task-faces', 'task-shortvideos')
 run_cutoff: int
-    threshold for determining "kosher" runs versus not. 
-    for instance, task-social is 398 seconds long. I use the threshold of 300 as a threshold. 
+    threshold for determining "kosher" runs versus not.
+    for instance, task-social is 398 seconds long. I use the threshold of 300 as a threshold.
     Anything shorter than that is discarded and not converted into a run
 
 """
 
+import argparse
+import datetime
+import glob
+import itertools
+import json
+import logging
+import os
+import shutil
+import sys
+from itertools import compress
+from os.path import join
+from pathlib import Path
+
+import matplotlib.pyplot as plt
 # %% libraries _______________________________________________________________________________________________
 import neurokit2 as nk
-import pandas as pd
 import numpy as np
+import pandas as pd
 import seaborn as sns
-import matplotlib.pyplot as plt
-import itertools
-import os
-import sys
-import shutil
-import glob
-from pathlib import Path
-import json
-from itertools import compress
-import datetime
-from os.path import join
-import logging
-import argparse
 
 from spacetop_prep.physio import utils
-from spacetop_prep.physio.utils import (
-    preprocess,
-    initialize,
-)
+from spacetop_prep.physio.utils import initialize, preprocess
 
 __author__ = "Heejung Jung"
 __copyright__ = "Spatial Topology Project"
@@ -61,12 +59,12 @@ sub_zeropad = 4
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--topdir",
-                    type=str, help="top directory of physio data")  
+                    type=str, help="top directory of physio data")
 parser.add_argument("-o", "--operating",
                     choices=['local', 'discovery'],
                     help="specify where jobs will run: local or discovery")
 parser.add_argument("-m", "--metadata",
-                    type=str, help="filepath to run completion metadata")     
+                    type=str, help="filepath to run completion metadata")
 parser.add_argument("-sid", "--slurm_id", type=int,
                     help="specify slurm array id")
 parser.add_argument("--stride", help="how many participants to batch per jobarray")
@@ -75,10 +73,10 @@ parser.add_argument("-t", "--task",
                     type=str, help="specify task name (e.g. task-alignvideos)")
 parser.add_argument("-c", "--run-cutoff", type=int, help="specify cutoff threshold for distinguishing runs (in seconds)")
 parser.add_argument("--colnamechange",
-                    type=str, help="to change column name within .acq file. provide json file with key:value as old_task_name:new_task_name", 
+                    type=str, help="to change column name within .acq file. provide json file with key:value as old_task_name:new_task_name",
                     required = True)
 parser.add_argument("--tasknamechange",
-                    type=str, help="to change task name. provide json file with key:value as old_task_name:new_task_name", 
+                    type=str, help="to change task name. provide json file with key:value as old_task_name:new_task_name",
                     required = False)
 args = parser.parse_args()
 
@@ -105,7 +103,7 @@ dict_column = {
     'administer': 'event_stimuli',
     'actual': 'event_actualrating',
 }
-# %% 
+# %%
 
 physio_dir = topdir
 source_dir = join(physio_dir, 'physio02_sort')
@@ -182,12 +180,12 @@ for acq in sorted(flat_acq_list):
     if os.path.exists(acq):
         main_df, samplingrate = nk.read_acqknowledge(acq)
         logger.info("__________________%s %s __________________", sub, ses)
-        logger.info("file exists! -- starting tranformation: ")
+        logger.info("file exists! -- starting transformation: ")
         main_df.rename(columns=dict_column, inplace=True)
     else:
         logger.error("no biopac file exists")
         continue
-        
+
 # NOTE: 4. create an mr_aniso channel for MRI RF pulse channel ________________________________________________
     try:
         main_df['mr_aniso'] = main_df['trigger_mri'].rolling(
@@ -196,7 +194,7 @@ for acq in sorted(flat_acq_list):
         logger.error("no MR trigger channel - this was the early days. re run and use the *trigger channel*")
         logger.error(acq)
         continue
-# TST: files without trigger keyword in the acq files should raise exception        
+# TST: files without trigger keyword in the acq files should raise exception
     try:
         utils.preprocess._binarize_channel(main_df,
                                         source_col='mr_aniso',
@@ -212,7 +210,7 @@ for acq in sorted(flat_acq_list):
     logger.info("number of spikes within experiment: %d", len(dict_spike['start']))
     main_df['bin_spike'] = 0
     main_df.loc[dict_spike['start'], 'bin_spike'] = 5
-    
+
 # NOTE: 5. create an mr_aniso channel for MRI RF pulse channel ________________________________________________
     try:
         main_df['mr_aniso_boxcar'] = main_df['trigger_mri'].rolling(
@@ -260,11 +258,11 @@ for acq in sorted(flat_acq_list):
         continue
     clean_runlist = list(compress(run_list, run_bool))
     shorter_than_threshold_length = list(compress(run_list, ~run_bool))
-    
+
 # NOTE: 8. save identified runs after cross referencing metadata __________________________________________________________
     if len(shorter_than_threshold_length) > 0:
         logger.info(
-            "runs shorter than %d sec: %s %s %s - run number in python order", 
+            "runs shorter than %d sec: %s %s %s - run number in python order",
             run_cutoff, sub, ses, shorter_than_threshold_length)
     scannote_reference = utils.initialize._subset_meta(runmeta, sub, ses)
 
@@ -278,5 +276,5 @@ for acq in sorted(flat_acq_list):
     else:
         logger.error(f"number of complete runs do not match scan notes")
         logger.error("clean_runlist: %s, scannote_reference.columns: %s", clean_runlist, scannote_reference.columns)
-        
+
         logger.debug(logger.error)
