@@ -20,6 +20,7 @@ Returns
 ------------------
     physio files saved under subject and session id, also named in semi-BIDS format
 """
+# %%
 import os, sys, glob, re, shutil
 from pathlib import Path
 import traceback
@@ -34,10 +35,13 @@ sys.path.append(os.path.join(main_dir))
 sys.path.insert(0, os.path.join(main_dir))
 print(sys.path)
 
-from . import utils
-from .utils import preprocess
-from .utils import initialize
+from spacetop_prep.physio import utils
+from spacetop_prep.physio.utils import (
+    preprocess,
+    initialize,
+)
 
+# %%
 __author__ = "Heejung Jung"
 __copyright__ = "Spatial Topology Project"
 __credits__ = ["Bethany Hunt"] # people who reported bug fixes, made suggestions, etc. but did not actually write the code.

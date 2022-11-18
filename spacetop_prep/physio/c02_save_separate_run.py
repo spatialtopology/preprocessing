@@ -42,19 +42,15 @@ from os.path import join
 import logging
 import argparse
 
-pwd = os.getcwd()
-main_dir = Path(pwd).parents[0]
-sys.path.append(os.path.join(main_dir))
-sys.path.insert(0, os.path.join(main_dir))
-print(sys.path)
-
-from . import utils
-from .utils import preprocess
-from .utils import preprocess, initialize
+from spacetop_prep.physio import utils
+from spacetop_prep.physio.utils import (
+    preprocess,
+    initialize,
+)
 
 __author__ = "Heejung Jung"
 __copyright__ = "Spatial Topology Project"
-__credits__ = ["Heejung"] # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
+__credits__ = [""] # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
 __license__ = "MIT"
 __version__ = "0.1"
 __maintainer__ = "Heejung Jung"
@@ -64,9 +60,13 @@ __status__ = "Development"
 sub_zeropad = 4
 
 parser = argparse.ArgumentParser()
+parser.add_argument("--topdir",
+                    type=str, help="top directory of physio data")  
 parser.add_argument("-o", "--operating",
                     choices=['local', 'discovery'],
                     help="specify where jobs will run: local or discovery")
+parser.add_argument("-m", "--metadata",
+                    type=str, help="filepath to run completion metadata")     
 parser.add_argument("-sid", "--slurm_id", type=int,
                     help="specify slurm array id")
 parser.add_argument("--stride", help="how many participants to batch per jobarray")
@@ -74,9 +74,17 @@ parser.add_argument("-z", "--zeropad", help="how many zeros are padded for BIDS 
 parser.add_argument("-t", "--task",
                     type=str, help="specify task name (e.g. task-alignvideos)")
 parser.add_argument("-c", "--run-cutoff", type=int, help="specify cutoff threshold for distinguishing runs (in seconds)")
+parser.add_argument("--colnamechange",
+                    type=str, help="to change column name within .acq file. provide json file with key:value as old_task_name:new_task_name", 
+                    required = True)
+parser.add_argument("--tasknamechange",
+                    type=str, help="to change task name. provide json file with key:value as old_task_name:new_task_name", 
+                    required = False)
 args = parser.parse_args()
 
 operating = args.operating # 'local', 'discovery'
+metadata_fname = args.metadata
+topdir = args.topdir
 slurm_id = args.slurm_id # e.g. 1, 2
 stride = args.stride # e.g. 5, 10, 20, 1000
 zeropad = args.zeropad # sub-0016 -> 4
@@ -98,35 +106,44 @@ dict_column = {
     'actual': 'event_actualrating',
 }
 # %% 
-if operating == 'discovery':
-    spacetop_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social'
-    physio_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/physio'
-    source_dir = join(physio_dir, 'physio02_sort')
-    if dict_task:
-        save_dir = join(physio_dir, 'physio03_bids', dict_task[task])
-    else:
-        save_dir = join(physio_dir, 'physio03_bids', task)
-    log_savedir = os.path.join(physio_dir, 'log')
 
-elif operating == 'local':
-    spacetop_dir = '/Volumes/spacetop_projects_social'
-    physio_dir = '/Volumes/spacetop_data/physio'
-    source_dir = join(physio_dir, 'physio02_sort')
-    if dict_task:
-        save_dir = join(physio_dir, 'physio03_bids', dict_task[task])
-    else:
-        save_dir = join(physio_dir, 'physio03_bids', task)
-    log_savedir = join(physio_dir, 'log')
+physio_dir = topdir
+source_dir = join(physio_dir, 'physio02_sort')
+if dict_task:
+    save_dir = join(physio_dir, 'physio03_bids', dict_task[task])
+else:
+    save_dir = join(physio_dir, 'physio03_bids', task)
+log_savedir = os.path.join(physio_dir, 'log')
+# if operating == 'discovery':
+#     spacetop_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social'
+#     physio_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/physio'
+#     source_dir = join(physio_dir, 'physio02_sort')
+#     if dict_task:
+#         save_dir = join(physio_dir, 'physio03_bids', dict_task[task])
+#     else:
+#         save_dir = join(physio_dir, 'physio03_bids', task)
+
+
+# elif operating == 'local':
+#     spacetop_dir = '/Volumes/spacetop_projects_social'
+#     physio_dir = '/Volumes/spacetop_data/physio'
+#     source_dir = join(physio_dir, 'physio02_sort')
+#     if dict_task:
+#         save_dir = join(physio_dir, 'physio03_bids', dict_task[task])
+#     else:
+#         save_dir = join(physio_dir, 'physio03_bids', task)
+#     log_savedir = join(physio_dir, 'log')
 
 Path(save_dir).mkdir(parents=True,exist_ok=True )
 Path(log_savedir).mkdir(parents=True,exist_ok=True )
-print(spacetop_dir)
+# print(spacetop_dir)
 print(physio_dir)
 print(save_dir)
 
 # set up logger ______________________________________________________________________________________________
-runmeta = pd.read_csv(
-    join(spacetop_dir, "data/spacetop_task-social_run-metadata.csv"))
+# runmeta = pd.read_csv(
+    # join(spacetop_dir, "data/spacetop_task-social_run-metadata.csv"))
+runmeta = pd.read_csv(metadata_fname)
 #TODO: come up with scheme to update logger files
 ver = 1
 logger_fname = os.path.join(
