@@ -41,7 +41,7 @@ import utils.initialize
 import utils.preprocess
 import utils.ttl_extraction
 
-from spacetop_prep.physio import utils
+#from spacetop_prep.physio import utils
 
 __author__ = "Heejung Jung, Isabel Neumann"
 __copyright__ = "Spatial Topology Project"
@@ -97,12 +97,12 @@ parser.add_argument("-t", "--task",
 parser.add_argument("-sr", "--samplingrate", type=int,
                     help="sampling rate of acquisition file")
 tonic_epoch_start = args.tonic_epoch_start
-parser.add_argument("--tonic-epoch-start", type=int,
+parser.add_argument("--tonic-epochstart", type=int,
                     help="beginning of epoch")
-parser.add_argument("--tonic-epoch-end", type=int,
+parser.add_argument("--tonic-epochend", type=int,
                     help="end of epoch")
 parser.add_argument("--ttl-index", type=int,
-                    help="end of epoch")
+                    help="index of which TTL to use")
 args = parser.parse_args()
 
 # operating = args.operating # 'local', 'discovery'
@@ -118,8 +118,8 @@ zeropad = args.zeropad # sub-0016 -> 4
 task = args.task # e.g. 'task-social' 'task-fractional' 'task-alignvideos'
 # run_cutoff = args.run_cutoff # e.g. 300
 samplingrate = args.samplingrate # e.g. 2000
-tonic_epoch_start = args.tonic_epoch_start
-tonic_epoch_end = args.tonic_epoch_end
+tonic_epoch_start = args.tonic_epochstart
+tonic_epoch_end = args.tonic_epochend
 ttl_index = args.ttl_index
 
 dict_channel = json.load(open(dictchannel_json))

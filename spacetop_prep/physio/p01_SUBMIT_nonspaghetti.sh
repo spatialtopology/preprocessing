@@ -8,7 +8,7 @@
 #SBATCH -e ./log/physio02_%A_%a.e
 #SBATCH --account=DBIC
 #SBATCH --partition=standard
-#SBATCH --array=1-14%5
+#SBATCH --array=1-2%5
 
 conda activate biopac
 
@@ -32,7 +32,7 @@ TONIC_EPOCH_END=20
 
 # TODO: these metadata -- cutoff, sampling rate -- could be pulled in from json sidecars
 #  -m pdb
-python ${PWD}/p01_group_level_analysis.py \
+python ${PWD}/p01_group_level_analysis_nonspaghetti.py \
 --input-physiodir ${PHYSIO_DIR} \
 --input-behdir ${BEH_DIR} \
 --output-logdir ${OUTPUT_LOGDIR} \
@@ -45,8 +45,8 @@ python ${PWD}/p01_group_level_analysis.py \
 --task ${TASK} \
 -sr ${SAMPLINGRATE} \
 --ttl-index ${TTL_INDEX} \
---epoch-start ${TONIC_EPOCH_START} \
---epoch-end ${TONIC_EPOCH_END}
+--tonic-epochstart ${TONIC_EPOCH_START} \
+--tonic-epochend ${TONIC_EPOCH_END}
 
 # required parameters
 # input_physio_dir
