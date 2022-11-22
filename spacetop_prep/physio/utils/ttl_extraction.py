@@ -1,53 +1,48 @@
 #!/usr/bin/env python
 # encoding: utf-8
-"""
-if pain run, 
-1) binarize trigger_heat TTL channel
-1-1) check if it can binarize
-ERROR: if cannot (primarily due to pain channels being)
-
-2) keep empty dataframe. we'll fill this up with event boundaries and assign TTLs
-"""
-
+import itertools
+import logging
 import os
+import re
 from os.path import join
-import numpy as np
 from pathlib import Path
-import re, logging
+
+import numpy as np
+import pandas as pd
+import utils
 from utils import preprocess
+
+
 # from . import get_logger, set_logger_level
-def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, samplingrate, metadata_df):
+def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, samplingrate, metadata_df, ttl_index):
     """
     Parameters
     ----------
     physio_df: pandas dataframe
         acquisition file (run-wise)
     dict_beforettl: dict
-        refers to event that happens before the ttl - a dictionary that contains "start" "stop" keys, 
+        refers to event that happens before the ttl - a dictionary that contains "start" "stop" keys,
         created via utils.preprocess._identify_boundary
     dict_afterttl: dict
-        refers to event that happens after the ttl - a dictionary that contains "start" "stop" keys, 
+        refers to event that happens after the ttl - a dictionary that contains "start" "stop" keys,
         created via utils.preprocess._identify_boundary
     dict_stimuli: dict
-        refers to event when TTL stimulus was supposed to be delivered - a dictionary that contains "start" "stop" keys, 
+        refers to event when TTL stimulus was supposed to be delivered - a dictionary that contains "start" "stop" keys,
         created via utils.preprocess._identify_boundary
-    samplingrate: int 
+    samplingrate: int
         sampling rate of the physiological signal
     metadata_df: pandas dataframe
         subset of behavioral data with the parameters necessary for sub/ses/run/condition information
-
+    ttl_index: int
+        which TTL to use (1st, 2nd, 3rd, 4th)
     Returns
     -------
     metadata_df: pandas dataframe
-        excludes trials where the 2nd TTL was not delivered (i.e. where trials did not reach intended temperature) 
-    plateau_start: TODO: identify data type
+        excludes trials where the 2nd TTL was not delivered (i.e. where trials did not reach intended temperature)
+    ttl_start: TODO: identify data type
     """
-    import pandas as pd
-    import itertools
-    import numpy as np
-    import utils
-    import logging
     logger = logging.getLogger("physio.ttl")
+
     final_df = pd.DataFrame()
     # binarize TTL channels (raise error if channel has no TTL, despite being a pain run)
     # try:
@@ -61,7 +56,6 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
     # except:
     #     logger.error(
     #         f"this pain run doesn't have any TTLs {sub} {ses} {run}")
-
 
     dict_ttl = utils.preprocess._identify_boundary(physio_df, 'ttl')
     """
@@ -125,7 +119,7 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
                 interval_idx = df_onset[idx.contains(trim)].index
                 iterlogger.info(
                     f"this TTL does not belong to any event boundary")
-                    
+
             interval_idx = interval_idx[0]
             iterlogger.info(f"\t\t* interval index: {interval_idx}")
         except:
@@ -152,17 +146,19 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
     final_df['ttl_r3'] = final_df['ttl_3'] - final_df['stim_start']
     final_df['ttl_r4'] = final_df['ttl_4'] - final_df['stim_start']
 
-    ttl2 = final_df['ttl_2'].values.tolist()
-    plateau_start = np.ceil(ttl2).astype(pd.Int64Dtype)
+    ttl_of_interest = f"ttl_r{ttl_index}"
+    ttl = final_df[ttl_of_interest].values.tolist()
+    ttl_start = np.ceil(ttl).astype(pd.Int64Dtype)
+    print(type(ttl_start))
     # TODO: before we merge the data, we have to figure out a way to remove the nans
     # [x] identify row with nan in ttl2 column
     # [x] for plateau remove items with that index
-    any_nans = np.argwhere(np.isnan(ttl2)).tolist()
+    any_nans = np.argwhere(np.isnan(ttl)).tolist()
     # if len(any_nans) != 0:
     flat_nans = [item for sublist in any_nans for item in sublist]
     for ind in flat_nans:
-        plateau_start = np.delete(plateau_start, ind)
+        ttl_start = np.delete(ttl_start, ind)
     metadata_df.drop(flat_nans, axis=0, inplace=True)
     metadata_df['trial_num'] = metadata_df.index + 1
 
-    return metadata_df, plateau_start
+    return metadata_df, ttl_start
