@@ -96,9 +96,12 @@ parser.add_argument("-t", "--task",
                     type=str, help="specify task name (e.g. task-alignvideos)")
 parser.add_argument("-sr", "--samplingrate", type=int,
                     help="sampling rate of acquisition file")
-parser.add_argument("--epoch-start", type=int,
+tonic_epoch_start = args.tonic_epoch_start
+parser.add_argument("--tonic-epoch-start", type=int,
                     help="beginning of epoch")
-parser.add_argument("--epoch-end", type=int,
+parser.add_argument("--tonic-epoch-end", type=int,
+                    help="end of epoch")
+parser.add_argument("--ttl-index", type=int,
                     help="end of epoch")
 args = parser.parse_args()
 
@@ -117,6 +120,7 @@ task = args.task # e.g. 'task-social' 'task-fractional' 'task-alignvideos'
 samplingrate = args.samplingrate # e.g. 2000
 tonic_epoch_start = args.tonic_epoch_start
 tonic_epoch_end = args.tonic_epoch_end
+ttl_index = args.ttl_index
 
 dict_channel = json.load(open(dictchannel_json))
 
@@ -295,7 +299,8 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
             dict_stimuli = dict_onset['event_stimuli'],
             samplingrate = samplingrate,
             metadata_df = metadata_df,
-            ttl_index = 1
+            ttl_index = ttl_index
+        )
 
         # create a dictionary for neurokit. this will serve as the events
         event_stimuli = {
