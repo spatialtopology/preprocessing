@@ -1,23 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 """
-# if Glob physiology df / ERROR if physiological doesn’t exist
-# Check if we already ran the analysis / if so, abort
-# Open physiology df
-# Open corresponding behavioral df / ERROR if corresponding behavioral df doesn’t exist
-# Clean fixation columns
-# Baseline correct
-# Extract epochs
-# TTL extraction
-# 1) binarize TTL channel / ERROR if TTL channel doesn’t have any data and fails to run
-# 2) assign TTL based on the event boundary
-# filter signal
-# extract mean signals
-# [x] append task info (PVC) from metadata
-# [x] move biopac final data into fmriprep: spacetop_data/data/sub/ses/physio
-# [x] move behavioral data preprocessed into fmriprep:  spacetop_data/data/sub/ses/beh
-# [x] allow to skip broken files
-# [x] allow to skip completed files
+
 """
 import argparse
 import datetime
@@ -64,12 +48,6 @@ allow for user to input which channels to use
 main channel (stimuli)
 boundary channel (cue) (rating)
 """
-# pwd = os.getcwd()
-# main_dir = Path(pwd).parents[0]
-# sys.path.append(os.path.join(main_dir))
-# sys.path.insert(0, os.path.join(main_dir))
-# print(sys.path)
-
 
 # %% argument parser _______________________________________________________________________________________
 parser = argparse.ArgumentParser()
@@ -95,7 +73,6 @@ parser.add_argument("-t", "--task",
                     type=str, help="specify task name (e.g. task-alignvideos)")
 parser.add_argument("-sr", "--samplingrate", type=int,
                     help="sampling rate of acquisition file")
-tonic_epoch_start = args.tonic_epoch_start
 parser.add_argument("--tonic-epochstart", type=int,
                     help="beginning of epoch")
 parser.add_argument("--tonic-epochend", type=int,
@@ -119,6 +96,11 @@ tonic_epoch_start = args.tonic_epochstart
 tonic_epoch_end = args.tonic_epochend
 ttl_index = args.ttl_index
 
+
+# %%
+physio_dir,beh_dir,log_dir,output_savedir,metadata, \
+    dictchannel_json,slurm_id,stride,zeropad,task,samplingrate, \
+    tonic_epoch_start,tonic_epoch_end,ttl_index = utils.initialize.argument_p01()
 dict_channel = json.load(open(dictchannel_json))
 
 plt.rcParams['figure.figsize'] = [15, 5]  # Bigger images
@@ -142,22 +124,6 @@ runmeta = pd.read_csv(metadata)
 # TODO: come up with scheme to update logger files
 f = open(logger_fname, "w")
 logger = utils.initialize.logger(logger_fname, "physio")
-
-
-def extract_bids(fname):
-    entities = dict(
-        match.split('-', 1) for match in fname.split('_') if '-' in match)
-    sub_num = int(entities['sub'])
-    ses_num = int(entities['ses'])
-    if 'run' in entities['run'].split('-'):
-        run_list = entities['run'].split('-')
-        run_list.remove('run')
-        run_num = run_list[0]
-        run_type = run_list[-1]
-    else:
-        run_num = int(entities['run'].split('-')[0])
-        run_type = entities['run'].split('-')[-1]
-    return sub_num, ses_num, run_num, run_type
 
 
 # %%____________________________________________________________________________________________________
@@ -204,20 +170,24 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
 # or outtside a functiono
 
 
-    def glob_one_beh(file2check: str):
-        """glob specific string and return one behavioral file
-        TODO: raise error if not existt"""
-        file2check = glob.glob(
-            join(beh_dir, sub, ses,
-                 f"{sub}_{ses}_task-social_{run}*_beh.csv"))
-        beh_fname = file2check[0]
-        return beh_fname
+    # def glob_corresponding_beh(file2check: str):
+    #     """glob specific string and return one behavioral file
+    #     TODO: raise error if not existt"""
+    #     file2check = glob.glob(
+    #         join(beh_dir, sub, ses,
+    #              f"{sub}_{ses}_task-social_{run}*_beh.csv"))
+    #     beh_fname = file2check[0]
+    #     return beh_fname
 
     def check_beh_exist(file2check: str):
         try:
-            beh_fname = glob_one_beh(file2check)
+            beh_glob = glob.glob(file2check)
+            beh_fname = beh_glob[0]
             return beh_fname
         except IndexError:
+            sub = utils.initialize.extract_bids(file2check, 'sub')
+            ses = utils.initialize.extract_bids(file2check, 'ses')
+            run = utils.initialize.extract_bids(file2check, 'run')
             logger.error(
                 "missing behavioral file: {sub} {ses} {run} DOES NOT exist")
 
@@ -226,12 +196,11 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
             beh_fname).split('_') if "run" in match][0]).split('-')[2]
         return run_type
 
-    beh_fpath = glob.glob(
-        join(beh_dir, sub, ses,
-             f"{sub}_{ses}_task-social_{run}*_beh.csv"))
-    beh_fname = check_beh_exist(beh_fpath)
+    beh_fpath = join(beh_dir, sub, ses,
+             f"{sub}_{ses}_task-social_{run}*_beh.csv")
+    beh_fname = utils.initialize.check_beh_exist(beh_fpath)
     beh_df = pd.read_csv(beh_fname)
-    run_type = check_run_type(beh_fname)
+    run_type = utils.initialize.check_run_type(beh_fname)
     print(
         f"__________________ {sub} {ses} {run} {run_type} ____________________")
     metadata_df = beh_df[[
@@ -295,18 +264,13 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
         df[f"{raw_eda_col}_blcorrect"] = df[raw_eda_col] - baseline
         return df
 
-    identify_fixation_sec(physio_df, 'event_fixation', 2000)
-    physio_df_bl = baseline_correct(
+    utils.preprocess.identify_fixation_sec(physio_df, 'event_fixation', 2000)
+    physio_df_bl = utils.preprocess.baseline_correct(
         df=physio_df, raw_eda_col='physio_eda', baseline_col='event_fixation')
 
     # ___________________________________________________________________________________
 
 # NOTE: extract epochs ___________________________________________________________________________________
-    # dict_channel = {'event_cue': 'event_cue',
-    # 'event_expectrating': 'event_expectrating',
-    # 'event_stimuli': 'event_stimuli',
-    # 'event_actualrating': 'event_actualrating',
-    # }
     dict_onset = {}
     for i, (key, value) in enumerate(dict_channel.items()):
         dict_onset[value] = {}
@@ -379,8 +343,20 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
                             'EDA_corrected_02fixation', 'physio_ppg', 'trigger_heat'], event_stimuli)
 
 # NOTE: save dict_onset __________________________________________________________________________________
-    def save_dict(save_dir, save_fname, dict):
+    def save_dict(save_dir:str, save_fname:str, dict_onset:dict):
         """
+        create save directory
+        save dictionary with onsets
+
+        parameter:
+        ----------
+        save_dir: str
+            path to save dictionary
+        save_fname: str
+            filename
+        dict_onset: dict
+            full dictionary with event onset times
+
         original code
         -------------
         dict_savedir = join(output_savedir, 'physio01_SCL', sub, ses)
@@ -397,7 +373,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
 
     dict_savedir = join(output_savedir, 'physio01_SCL', sub, ses)
     dict_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_onset.json"
-    save_dict(dict_savedir, dict_fname, dict_onset)
+    utils.preprocess.save_dict(dict_savedir, dict_fname, dict_onset)
 # NOTE: neurokit analysis :+: HIGHLIGHT :+: filter signal ________________________________________________
 
     # IF you want to use raw signal
@@ -434,7 +410,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
             ],
                 axis=1)
         # TODO: find a way to save neurokit plots
-        fig_save_dir = join(project_dir, 'data', 'physio', 'qc', sub, ses)
+        fig_save_dir = join(save_dir, 'data', 'physio', 'qc', sub, ses)
         Path(fig_save_dir).mkdir(parents=True, exist_ok=True)
 
         fig_savename = f"{sub}_{ses}_{run}-{run_type}_physio-scr-scl.png"
@@ -523,7 +499,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
                 logger.info("has NANS in the dataframe")
                 continue
         """
-    scr_phasic = extract_SCR(df=physio_df,
+    scr_phasic = utils.preprocess.extract_SCR(df=physio_df,
                              eda_col='physio_eda',
                              amp_min=0.01,
                              event_stimuli=event_stimuli, samplingrate=2000,
@@ -592,7 +568,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
             logger.info("has NANS in the dataframe")
             continue
 
-    tonic_length, scl_epoch = extract_SCL(df=physio_df_bl,
+    tonic_length, scl_epoch = utils.preprocess.extract_SCL(df=physio_df_bl,
                             eda_col='physio_eda_blcorrected', event_dict=event_stimuli, samplingrate=2000,
                             SCL_start=tonic_epoch_start, SCL_end=tonic_epoch_end, baseline_correction_tf=False)
 
@@ -667,7 +643,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
                         str(ind)]["Condition"].unique()[0]
             return metadata_tonic
 
-    metadata_tonic = combine_metadata_SCL(scl_epoch)
+    metadata_tonic = utils.preprocess.combine_metadata_SCL(scl_epoch)
     # 2. eda_level_timecourse ------------------------------------
 
     def resample_scl2pandas(scl_epoch: dict, tonic_length, sampling_rate:int, desired_sampling_rate: int):
@@ -718,7 +694,9 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
                     ind, :] = resamp
         return eda_level_timecourse
 
-    eda_level_timecourse = resample_scl2pandas(scl_epoch = scl_epoch, tonic_length = tonic_length, sampling_rate = 2000, desired_sampling_rate = 25):
+    resample_rate = 25
+    tonic_length = np.abs(tonic_epoch_start-tonic_epoch_end) * resample_rate
+    eda_level_timecourse = utils.preprocess.resample_scl2pandas(scl_epoch = scl_epoch, tonic_length = tonic_length, sampling_rate = samplingrate, desired_sampling_rate = resample_rate):
     tonic_df = pd.concat([metadata_df, metadata_tonic], axis=1)
     tonic_timecourse = pd.concat(
         [metadata_df, metadata_tonic, eda_level_timecourse], axis=1)
