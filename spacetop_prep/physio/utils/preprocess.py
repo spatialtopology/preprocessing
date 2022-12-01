@@ -1,9 +1,13 @@
-import pandas as pd
-import numpy as np
+import itertools
+import json
 import logging
 import os
+
+import neurokit2 as nk
+import numpy as np
+import pandas as pd
 import utils
-import itertools
+
 # from . import get_logger, set_logger_level
 
 # def get_logger(name=None):
@@ -27,7 +31,7 @@ logger = logging.getLogger("physio.preprocess")
 def _binarize_channel(df, source_col, new_col, threshold, binary_high, binary_low):
     """
     Function binarizes signals from biopac digital channels.
-    If an explicit threshold value is provided, the signals are binarized based on this input. 
+    If an explicit threshold value is provided, the signals are binarized based on this input.
     If not, the implicit threshold will default to the midpoint of the min/max values of the channel.
 
     Parameters
@@ -38,23 +42,23 @@ def _binarize_channel(df, source_col, new_col, threshold, binary_high, binary_lo
         column name of df that contains raw signal
     new_col: str
         new column name for saving binarized source_col values. (prevent from overwritting original data)
-    threshold: int 
+    threshold: int
         threshold for binarizing values within pandas column
-    binary_high, binary_low: int 
+    binary_high, binary_low: int
         minimum and maximum value for binarizing signal
-        e.g. binary_high = 5, binary_low = 0 
+        e.g. binary_high = 5, binary_low = 0
              or binary_high = 1, binary_low = 0
 
     Returns
     -------
-    dataframe with new_col, which consists of binary values. 
+    dataframe with new_col, which consists of binary values.
 
-    For example: 
+    For example:
         mid_val = (np.max(run_df['expect']) - np.min(run_df['expect']))/2
         run_df.loc[run_df['expect'] > mid_val, 'expect_rating'] = 5
         run_df.loc[run_df['expect'] <= mid_val, 'expect_rating'] = 0
     """
-    
+
     import numpy as np
 
     if not bool(threshold):
@@ -85,7 +89,7 @@ def _extract_runs(df, dict, run_num):
 
     Returns
     -------
-    dataframe, subset with only specific run signals. 
+    dataframe, subset with only specific run signals.
 
     """
     run_subset = df[dict[list(dict.keys())[0]][run_num-1]: dict[list(dict.keys())[1]][run_num-1]]
@@ -95,7 +99,7 @@ def _extract_runs(df, dict, run_num):
 def _identify_boundary(df, binary_col):
     """
     Function used to extract onsets of the beginning of an event ("start") and end of an event ("stop").
-    The function identifies transitions of events and saves both "start" and "stop" of an event. 
+    The function identifies transitions of events and saves both "start" and "stop" of an event.
 
     Parameters
     ----------
@@ -120,9 +124,9 @@ def _identify_boundary(df, binary_col):
 
 def _binarize_trigger_mri(df, dict_column, samplingrate, run_cutoff):
     """
-    Function used to turn `trigger_mri` channel into a boxcar. 
+    Function used to turn `trigger_mri` channel into a boxcar.
     The function identifies TRs within a (1/samplingrate * 3) second period, transforms them into a continuous signal of boxcars.
-    Using the outputs of this function, we can identify run transitions 
+    Using the outputs of this function, we can identify run transitions
 
     Parameters
     ----------
@@ -142,7 +146,7 @@ def _binarize_trigger_mri(df, dict_column, samplingrate, run_cutoff):
         logger.error("no MR trigger channel - this was the early days. re run and use the *trigger channel*")
         # logger.error(acq)
         # continue
-    # TST: files without trigger keyword in the acq files should raise exception        
+    # TST: files without trigger keyword in the acq files should raise exception
     try:
         utils.preprocess._binarize_channel(df,
                                         source_col='trigger_mri_win_3',
@@ -159,7 +163,7 @@ def _binarize_trigger_mri(df, dict_column, samplingrate, run_cutoff):
     logger.info("number of spikes within experiment: %d", len(dict_spike['start']))
     df['bin_spike'] = 0
     df.loc[dict_spike['start'], 'bin_spike'] = 5
-    
+
     # NOTE: 5. create an trigger_mri_win_3 channel for MRI RF pulse channel ________________________________________________
     try:
         df['trigger_mri_win_samprate'] = df[trigger_mri].rolling(
@@ -211,3 +215,220 @@ def _binarize_trigger_mri(df, dict_column, samplingrate, run_cutoff):
     shorter_than_threshold_length = list(itertools.compress(run_list, ~run_bool))
 
     return run_list, clean_runlist, shorter_than_threshold_length
+
+def identify_fixation_sec(df: pd.DataFrame, baseline_col: str, samplingrate: int):
+    """
+    identify how many timepointts there are for column to baseline correct
+
+    parameters
+    ----------
+    df
+    baseline_col
+    samplingrate
+    """
+    fix_bool = df[baseline_col].astype(bool).sum()
+    logger.info(
+        f"* confirming the number of fixation non-zero timepoints: {fix_bool}")
+    logger.info("\t* this amounts to %f seconds", fix_bool/samplingrate)
+
+def baseline_correct(df, raw_eda_col: str, baseline_col: str):
+    """
+    parameters
+    ----------
+    raw_eda_col: str
+        column name for raw eda signal
+    baseline_col: sttr
+        column name for reference column for baseline correction
+    TODO: fix everycolumn name t EDA_baselinecorrected (or something shorter)
+
+    # Original ___________________________________________________________________________________
+    # baseline correction method 02: use the fixation period from the entire run
+    # mask = physio_df['event_fixation'].astype(bool)
+    # baseline_method02 = physio_df['physio_eda'].loc[
+    #     mask].mean()
+    # physio_df['EDA_corrected_02fixation'] = physio_df[
+    #     'physio_eda'] - baseline_method02
+
+    # logger.info(
+    #     f"* baseline using fixation from entire run: {baseline_method02}")
+    """
+    mask = df[baseline_col].astype(bool)
+    baseline = df[raw_eda_col].loc[mask].mean()
+    df[f"{raw_eda_col}_blcorrect"] = df[raw_eda_col] - baseline
+    return df
+
+def save_dict(save_dir:str, save_fname:str, dict_onset:dict):
+    """
+    create save directory
+    save dictionary with onsets
+
+    parameter:
+    ----------
+    save_dir: str
+        path to save dictionary
+    save_fname: str
+        filename
+    dict_onset: dict
+        full dictionary with event onset times
+    """
+    # dict_savedir = join(output_savedir, 'physio01_SCL', sub, ses)
+    Path(save_dir).mkdir(parents=True, exist_ok=True)
+    # dict_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_onset.json"
+    out_file = open(save_fname, "w+")
+    json.dump(dict_onset, out_file)
+
+def extract_SCR(df, eda_col, amp_min, event_stimuli, samplingrate, epochs_start, epochs_end, baseline_correction, plt_col: list, plt_savedir):
+    """
+    parameters
+    ----------
+    df: dataframe,
+
+    eda_col:
+    -----
+    """
+    scr_signal = nk.signal_sanitize(
+        df[eda_col])
+    scr_filters = nk.signal_filter(scr_signal,
+                                    sampling_rate=samplingrate,
+                                    highcut=1,
+                                    method="butterworth",
+                                    order=2)  # ISABEL: Detrend
+    scr_detrend = nk.signal_detrend(scr_filters)
+    scr_decomposed = nk.eda_phasic(nk.standardize(scr_detrend),
+                                    sampling_rate=samplingrate)
+
+    scr_peaks, info = nk.eda_peaks(scr_decomposed["EDA_Phasic"].values,
+                                    sampling_rate=samplingrate,
+                                    method="neurokit",
+                                    amplitude_min=amp_min)
+    scr_signals = pd.DataFrame({
+        "EDA_Raw": scr_signal,
+        "EDA_Clean": scr_filters
+    })
+    scr_processed = pd.concat(
+        [scr_signals, scr_decomposed, scr_peaks], axis=1)
+    plot_SCRprocessed(df, plt_col, scr_processed, plt_savedir)
+    try:
+        scr_epochs = nk.epochs_create(scr_processed,
+                                        event_stimuli,
+                                        sampling_rate=samplingrate,
+                                        epochs_start=0,
+                                        epochs_end=5,
+                                        baseline_correction=True)  #
+    except:
+        logger.info("has NANS in the dataframe")
+        continue
+    scr_phasic = nk.eda_eventrelated(scr_epochs)
+    return scr_phasic
+    """
+    original code
+    -------------
+        amp_min = 0.01
+        scr_signal = nk.signal_sanitize(
+            physio_df['physio_eda'])
+        scr_filters = nk.signal_filter(scr_signal,
+                                    sampling_rate=samplingrate,
+                                    highcut=1,
+                                    method="butterworth",
+                                    order=2)  # ISABEL: Detrend
+        scr_detrend = nk.signal_detrend(scr_filters)
+
+        scr_decomposed = nk.eda_phasic(nk.standardize(scr_detrend),
+                                    sampling_rate=samplingrate)
+
+        scr_peaks, info = nk.eda_peaks(scr_decomposed["EDA_Phasic"].values,
+                                    sampling_rate=samplingrate,
+                                    method="neurokit",
+                                    amplitude_min=amp_min)
+        scr_signals = pd.DataFrame({
+            "EDA_Raw": scr_signal,
+            "EDA_Clean": scr_filters
+        })
+        scr_processed = pd.concat([scr_signals, scr_decomposed, scr_peaks], axis=1)
+        try:
+            scr_epochs = nk.epochs_create(scr_processed,
+                                        event_stimuli,
+                                        sampling_rate=samplingrate,
+                                        epochs_start=0,
+                                        epochs_end=5,
+                                        baseline_correction=True)  #
+        except:
+            logger.info("has NANS in the dataframe")
+            continue
+    """
+
+def extract_SCL(df: pd.DataFrame, eda_col, event_dict, samplingrate, SCL_start, SCL_end, baseline_correction_tf):
+    """
+    1) sanitize
+    2) filter
+    3) detrend
+    4) decompose
+    5) extract events
+
+    parameters:
+    ----------
+    df: pd.DataFrame
+    eda_col: str
+        eda column to sanize
+    event_dict: dict
+
+
+
+    tonic_epoch_start = -1
+    tonic_epoch_end = 8
+    tonic_length = np.abs(tonic_epoch_start-tonic_epoch_end) * samplingrate
+    scl_signal = nk.signal_sanitize(physio_df['EDA_corrected_02fixation'])
+    scl_filters = nk.signal_filter(scl_signal,
+                                sampling_rate=samplingrate,
+                                highcut=1,
+                                method="butterworth",
+                                order=2)  # ISABEL: Detrend
+    scl_detrend = nk.signal_detrend(scl_filters)
+    scl_decomposed = nk.eda_phasic(nk.standardize(scl_detrend),
+                                sampling_rate=samplingrate)
+    scl_signals = pd.DataFrame({
+        "EDA_Raw": scl_signal,
+        "EDA_Clean": scl_filters
+    })
+    scl_processed = pd.concat([scl_signals, scl_decomposed['EDA_Tonic']],
+                            axis=1)
+    try:
+        scl_epoch = nk.epochs_create(scl_processed['EDA_Tonic'],
+                                    event_stimuli,
+                                    sampling_rate=samplingrate,
+                                    epochs_start=tonic_epoch_start,
+                                    epochs_end=tonic_epoch_end,
+                                    baseline_correction=False)
+    except:
+        logger.info("has NANS in the dataframe")
+        continue
+    """
+    # tonic_epoch_start = -1
+    # tonic_epoch_end = 8
+    tonic_length = np.abs(SCL_start-SCL_end) * samplingrate
+    scl_signal = nk.signal_sanitize(df[eda_col])
+    scl_filters = nk.signal_filter(scl_signal,
+                                    sampling_rate=samplingrate,
+                                    highcut=1,
+                                    method="butterworth",
+                                    order=2)  # ISABEL: Detrend
+    scl_detrend = nk.signal_detrend(scl_filters)
+    scl_decomposed = nk.eda_phasic(nk.standardize(scl_detrend),
+                                    sampling_rate=samplingrate)
+    scl_signals = pd.DataFrame({
+        "EDA_Raw": scl_signal,
+        "EDA_Clean": scl_filters
+    })
+    scl_processed = pd.concat([scl_signals, scl_decomposed['EDA_Tonic']],
+                                axis=1)
+    try:
+        scl_epoch = nk.epochs_create(scl_processed['EDA_Tonic'],
+                                        event_dict,
+                                        sampling_rate=samplingrate,
+                                        epochs_start=SCL_start,
+                                        epochs_end=SCL_end,
+                                        baseline_correction=baseline_correction_tf)
+        return tonic_length, scl_epoch
+    except:
+        logger.info("has NANS in the dataframe")
+        continue
