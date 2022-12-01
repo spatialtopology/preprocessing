@@ -20,26 +20,22 @@ Returns
 ------------------
     physio files saved under subject and session id, also named in semi-BIDS format
 """
-# %%
-import os, sys, glob, re, shutil
-from pathlib import Path
-import traceback
 import datetime
+import glob
+# %%
+import os
+import re
+import shutil
+import sys
+import traceback
+from pathlib import Path
 
 physio_dir = sys.argv[1]
 sub_digit = sys.argv[2]
 ses_digit = sys.argv[3]
-pwd = os.getcwd()
-main_dir = Path(pwd).parents[0]
-sys.path.append(os.path.join(main_dir))
-sys.path.insert(0, os.path.join(main_dir))
-print(sys.path)
 
 from spacetop_prep.physio import utils
-from spacetop_prep.physio.utils import (
-    preprocess,
-    initialize,
-)
+from spacetop_prep.physio.utils import initialize, preprocess
 
 # %%
 __author__ = "Heejung Jung"
@@ -61,7 +57,7 @@ f = open(logger_fname, "w")
 logger = utils.initialize._logger(logger_fname)
 acq_list = glob.glob(os.path.join(physio_dir, 'physio01_raw', '**', '*.acq'), recursive = True)
 for acq in acq_list:
-    try: 
+    try:
         filename  = os.path.basename(acq)
         sub_num = utils.initialize._extract_bids_num(filename, 'sub')
         sub = f"sub-{sub_num:0{sub_digit}d}" # 'sub-0056'
