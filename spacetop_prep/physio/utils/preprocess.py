@@ -434,3 +434,118 @@ def extract_SCL(df: pd.DataFrame, eda_col, event_dict, samplingrate, SCL_start, 
     except:
         logger.info("has NANS in the dataframe")
         continue
+
+
+def combine_metadata_SCL(scl_epoch):
+    """
+    parameters
+    ----------
+    original code
+    -------------
+    metadata_tonic = pd.DataFrame(
+    index=list(range(len(scl_epoch))),
+    columns=['trial_order', 'iv_stim', 'mean_signal'])
+    try:
+        for ind in range(len(scl_epoch)):
+            metadata_tonic.iloc[
+                ind, metadata_tonic.columns.
+                get_loc('mean_signal')] = scl_epoch[ind]["Signal"].mean()
+            metadata_tonic.iloc[
+                ind, metadata_tonic.columns.
+                get_loc('trial_order')] = scl_epoch[ind]['Label'].unique()[0]
+            metadata_tonic.iloc[
+                ind, metadata_tonic.columns.
+                get_loc('iv_stim')] = scl_epoch[ind]["Condition"].unique()[0]
+    except:
+        for ind in range(len(scl_epoch)):
+            metadata_tonic.iloc[
+                ind,
+                metadata_tonic.columns.get_loc('mean_signal')] = scl_epoch[str(
+                    ind)]["Signal"].mean()
+            metadata_tonic.iloc[
+                ind,
+                metadata_tonic.columns.get_loc('trial_order')] = scl_epoch[str(
+                    ind)]['Label'].unique()[0]
+            metadata_tonic.iloc[
+                ind, metadata_tonic.columns.get_loc('iv_stim')] = scl_epoch[
+                    str(ind)]["Condition"].unique()[0]
+    ---
+    """
+    metadata_tonic = pd.DataFrame(
+    index=list(range(len(scl_epoch))),
+    columns=['trial_order', 'iv_stim', 'mean_signal'])
+    try:
+        for ind in range(len(scl_epoch)):
+            metadata_tonic.iloc[
+                ind, metadata_tonic.columns.
+                get_loc('mean_signal')] = scl_epoch[ind]["Signal"].mean()
+            metadata_tonic.iloc[
+                ind, metadata_tonic.columns.
+                get_loc('trial_order')] = scl_epoch[ind]['Label'].unique()[0]
+            metadata_tonic.iloc[
+                ind, metadata_tonic.columns.
+                get_loc('iv_stim')] = scl_epoch[ind]["Condition"].unique()[0]
+        return metadata_tonic
+    except:
+        for ind in range(len(scl_epoch)):
+            metadata_tonic.iloc[
+                ind,
+                metadata_tonic.columns.get_loc('mean_signal')] = scl_epoch[str(
+                    ind)]["Signal"].mean()
+            metadata_tonic.iloc[
+                ind,
+                metadata_tonic.columns.get_loc('trial_order')] = scl_epoch[str(
+                    ind)]['Label'].unique()[0]
+            metadata_tonic.iloc[
+                ind, metadata_tonic.columns.get_loc('iv_stim')] = scl_epoch[
+                    str(ind)]["Condition"].unique()[0]
+        return metadata_tonic
+
+
+def resample_scl2pandas(scl_epoch: dict, tonic_length, sampling_rate:int, desired_sampling_rate: int):
+    """
+    parameters:
+    -----------
+    epoch: dict
+        epoch derived from `extract_SCL`
+    tonic_length: int
+        length of full dictionary, extracted from `extract_SCL`
+    sampling_rate: int
+        original sample rate of dataframe
+    desired_sampling_rate: int
+        desired downsampled sample rate
+
+    original
+    --------
+    eda_level_timecourse = pd.DataFrame(
+        index=list(range(len(scl_epoch))),
+        columns=['time_' + str(col) for col in list(np.arange(tonic_length))])
+    try:
+        for ind in range(len(scl_epoch)):
+            resamp = nk.signal_resample(
+                scl_epoch[str(ind)]['Signal'].to_numpy(),  method='interpolation', sampling_rate=2000, desired_sampling_rate=25)
+            eda_level_timecourse.iloc[
+                ind, :] = resamp
+    except:
+        for ind in range(len(scl_epoch)):
+            resamp = nk.signal_resample(
+                scl_epoch[ind]['Signal'].to_numpy(),  method='interpolation', sampling_rate=2000, desired_sampling_rate=25)
+            eda_level_timecourse.iloc[
+                ind, :] = resamp
+    """
+    eda_level_timecourse = pd.DataFrame(
+    index=list(range(len(scl_epoch))),
+    columns=['time_' + str(col) for col in list(np.arange(tonic_length))])
+    try:
+        for ind in range(len(scl_epoch)):
+            resamp = nk.signal_resample(
+                scl_epoch[str(ind)]['Signal'].to_numpy(),  method='interpolation', sampling_rate=sampling_rate, desired_sampling_rate=desired_sampling_rate)
+            eda_level_timecourse.iloc[
+                ind, :] = resamp
+    except:
+        for ind in range(len(scl_epoch)):
+            resamp = nk.signal_resample(
+                scl_epoch[ind]['Signal'].to_numpy(),  method='interpolation', sampling_rate=sampling_rate, desired_sampling_rate=desired_sampling_rate)
+            eda_level_timecourse.iloc[
+                ind, :] = resamp
+    return eda_level_timecourse
