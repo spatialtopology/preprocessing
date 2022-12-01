@@ -486,6 +486,13 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
                     1, tonic_length
             )
     except:
+
+#        TODO: edit Traceback (most recent call last):
+# based on this error messsage, best to do all of the filtering and epoch extraction, afterwards only should I downsample.
+
+#   File "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/scripts/spacetop_prep/physio/p01_group_level_analysis_rawSCL.py", line 490, in <module>
+#     ind, :] = scl_raw[ind]['Signal'].to_numpy().reshape(
+# ValueError: cannot reshape array of size 525 into shape (1,42000)
         for ind in range(len(scl_raw)):
             eda_level_timecourse.iloc[
                 ind, :] = scl_raw[ind]['Signal'].to_numpy().reshape(
