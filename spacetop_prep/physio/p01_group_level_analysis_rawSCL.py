@@ -19,6 +19,7 @@
 # [x] allow to skip broken files
 # [x] allow to skip completed files
 """
+# %% library
 import argparse
 import datetime
 import glob
@@ -152,7 +153,7 @@ logger_fname = os.path.join(
     log_dir, f"data-physio_step-03-groupanalysis_{datetime.date.today().isoformat()}.txt")
 
 
-# set up logger _______________________________________________________________________________________
+# %% set up logger _______________________________________________________________________________________
 
 runmeta = pd.read_csv(metadata)
 # join(project_dir, "data/spacetop_task-social_run-metadata.csv"))
@@ -280,7 +281,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     logger.info(
         f"* baseline using fixation from entire run: {baseline_method02}")
 
-# NOTE: extract epochs ___________________________________________________________________________________
+# %% NOTE: extract epochs ___________________________________________________________________________________
     # dict_channel = {'event_cue': 'event_cue',
     # 'event_expectrating': 'event_expectrating',
     # 'event_stimuli': 'event_stimuli',
@@ -302,7 +303,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
                     value, len(dict_onset[value]['start']))
 
 
-# NOTE: TTL extraction ___________________________________________________________________________________
+# %% NOTE: TTL extraction ___________________________________________________________________________________
     if run_type == 'pain':
         final_df = pd.DataFrame()
         # binarize TTL channels (raise error if channel has no TTL, despite being a pain run)
@@ -361,6 +362,8 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
                                    method="butterworth",
                                    order=2)  # ISABEL: Detrend
     scr_detrend = nk.signal_detrend(scr_filters)
+    # scl_resampled = nk.signal_resample(
+        # scr_detrend,  method='interpolation', sampling_rate=2000, desired_sampling_rate=resample_rate)
 
     scr_decomposed = nk.eda_phasic(nk.standardize(scr_detrend),
                                    sampling_rate=samplingrate)
@@ -389,7 +392,8 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
 # NOTE:  TONIC ________________________________________________________________________________
     # tonic_epoch_start = -1
     # tonic_epoch_end = 8
-    tonic_length = np.abs(tonic_epoch_start-tonic_epoch_end) * samplingrate
+    resample_rate = 25
+
     scl_signal = nk.signal_sanitize(physio_df['EDA_corrected_02fixation'])
     scl_filters = nk.signal_filter(scl_signal,
                                    sampling_rate=samplingrate,
@@ -398,7 +402,9 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
                                    order=2)  # ISABEL: Detrend
     scl_detrend = nk.signal_detrend(scl_filters)
     scl_resampled = nk.signal_resample(
-        scl_detrend,  method='interpolation', sampling_rate=2000, desired_sampling_rate=25)
+        scl_detrend,  method='interpolation', sampling_rate=2000, desired_sampling_rate=resample_rate)
+    event_stimuli_copy = event_stimuli['onset']
+    event_stimuli['onset'] = event_stimuli_copy/(samplingrate/resample_rate)
     scl_decomposed = nk.eda_phasic(nk.standardize(scl_detrend),
                                    sampling_rate=samplingrate)
     scl_signals = pd.DataFrame({
@@ -410,7 +416,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     try:
         scl_raw = nk.epochs_create(scl_resampled,
                                    event_stimuli,
-                                   sampling_rate=25,
+                                   sampling_rate=resample_rate,
                                    epochs_start=tonic_epoch_start,
                                    epochs_end=tonic_epoch_end,
                                    baseline_correction=False)
@@ -475,14 +481,15 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
                 ind, metadata_tonic.columns.get_loc('iv_stim')] = scl_raw[
                     str(ind)]["Condition"].unique()[0]
     # 2. eda_level_timecourse
+    tonic_length = np.abs(tonic_epoch_start-tonic_epoch_end) * resample_rate
     eda_level_timecourse = pd.DataFrame(
         index=list(range(len(scl_raw))),
-        columns=['time_' + str(col) for col in list(np.arange(tonic_length))])
+        columns=['time_' + str(col) for col in list(np.arange(resample_rate * np.abs(tonic_epoch_end-tonic_epoch_start)))])
     try:
         for ind in range(len(scl_raw)):
             eda_level_timecourse.iloc[
-                ind, :] = scl_raw[str(ind)]['Signal'].to_numpy().reshape(
-                    1, tonic_length
+                ind, :] = scl_raw[ind]['Signal'].to_numpy().reshape(
+                    1, resample_rate * np.abs(tonic_epoch_end-tonic_epoch_start)
             )
     except:
         for ind in range(len(scl_raw)):

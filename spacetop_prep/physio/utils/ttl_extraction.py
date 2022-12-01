@@ -42,10 +42,9 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
     ttl_start: TODO: identify data type
     """
     logger = logging.getLogger("physio.ttl")
-
     final_df = pd.DataFrame()
-    # binarize TTL channels (raise error if channel has no TTL, despite being a pain run)
-    # try:
+
+    # NOTE: binarize TTL channels (raise error if channel has no TTL, despite being a pain run)
     utils.preprocess._binarize_channel(
         physio_df,
         source_col='trigger_heat',
@@ -53,21 +52,19 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
         threshold=None,
         binary_high=5,
         binary_low=0)
-    # except:
-    #     logger.error(
-    #         f"this pain run doesn't have any TTLs {sub} {ses} {run}")
 
     dict_ttl = utils.preprocess._identify_boundary(physio_df, 'ttl')
-    """
-    Because of the sampling rate (2000hz), we get a rather long signal of the TTL, which lasts for 0.1 sec
-    In order to get the correct onset time, we're going to get the mid point of this TTL square function:
-    """
+
+    # NOTE: find the midpoint of the TTL signals.
+    # In other words, get one datapoint instead of a trail of datapoints
+    # Explantion: Because of the sampling rate (2000hz), we get a rather long signal of the TTL, which lasts for 0.1 sec
+    # In order to get the correct onset time, we're going to get the mid point of this TTL square function:
     ttl_onsets = list(  np.array(dict_ttl['start']) + (np.array(dict_ttl['stop']) - np.array(dict_ttl['start'])) / 2)
     logger.info(
         f"ttl onsets: {ttl_onsets}, length of ttl onset is : {len(ttl_onsets)}"
     )
 
-    # create onset dataframe template ______________________________________________________________
+    # NOTE: create onset dataframe template ______________________________________________________________
     df_onset = pd.DataFrame({
         'beforettl_start': dict_beforettl['start'],
         'afterttl_end': dict_afterttl['stop'],
@@ -95,12 +92,12 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
             f"this is the {i}-th iteration. stim value is {start_val}, and is in between index {interval_idx}"
         )
 
-    # define empty TTL data frame
+    # NOTE: define empty TTL data frame
     df_ttl = pd.DataFrame(np.nan,
                             index=np.arange(len(df_onset)),
                             columns=['ttl_1', 'ttl_2', 'ttl_3', 'ttl_4'])
 
-    # identify which set of TTLs fall between expect and actual
+    # NOTE: identify which set of TTLs fall between expect and actual
     pad = 1  # seconds. you may increase the value to have a bigger event search interval
     df_onset['beforettl_start_interval'] = df_onset['beforettl_start'] - pad*samplingrate
     df_onset['afterttl_end_interval'] = df_onset['afterttl_end'] + pad*samplingrate
@@ -136,7 +133,7 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
             f"\t\t* this is the row where the value -- {val} -- falls. on the {interval_idx}-th row"
         )
 
-    # merge :: merge df_onset and df_ttl -> final output: final df
+    # NOTE: merge df_onset and df_ttl -> final output: final df
     final_df = pd.merge(df_onset,
                         df_ttl,
                         left_index=True,
@@ -146,15 +143,14 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
     final_df['ttl_r3'] = final_df['ttl_3'] - final_df['stim_start']
     final_df['ttl_r4'] = final_df['ttl_4'] - final_df['stim_start']
 
-    ttl_of_interest = f"ttl_r{ttl_index}"
+    ttl_of_interest = f"ttl_{ttl_index}"
     ttl = final_df[ttl_of_interest].values.tolist()
     ttl_start = np.ceil(ttl).astype(pd.Int64Dtype)
     print(type(ttl_start))
-    # TODO: before we merge the data, we have to figure out a way to remove the nans
-    # [x] identify row with nan in ttl2 column
-    # [x] for plateau remove items with that index
+
+    # NOTE: before we merge the data, remove the nans
+    # identify rows with NaNs in the ttl column of interest (e.g. ttl_r1)
     any_nans = np.argwhere(np.isnan(ttl)).tolist()
-    # if len(any_nans) != 0:
     flat_nans = [item for sublist in any_nans for item in sublist]
     for ind in flat_nans:
         ttl_start = np.delete(ttl_start, ind)
