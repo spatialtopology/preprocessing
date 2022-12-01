@@ -488,7 +488,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     try:
         for ind in range(len(scl_raw)):
             eda_level_timecourse.iloc[
-                ind, :] = scl_raw[ind]['Signal'].to_numpy().reshape(
+                ind, :] = scl_raw[str(ind)]['Signal'].to_numpy().reshape(
                     1, resample_rate * np.abs(tonic_epoch_end-tonic_epoch_start)
             )
     except:
