@@ -96,7 +96,10 @@ parser.add_argument("-t", "--task",
                     type=str, help="specify task name (e.g. task-alignvideos)")
 parser.add_argument("-sr", "--samplingrate", type=int,
                     help="sampling rate of acquisition file")
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/master
 parser.add_argument("--tonic-epochstart", type=int,
                     help="beginning of epoch")
 parser.add_argument("--tonic-epochend", type=int,

@@ -488,7 +488,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     try:
         for ind in range(len(scl_raw)):
             eda_level_timecourse.iloc[
-                ind, :] = scl_raw[ind]['Signal'].to_numpy().reshape(
+                ind, :] = scl_raw[str(ind)]['Signal'].to_numpy().reshape(
                     1, resample_rate * np.abs(tonic_epoch_end-tonic_epoch_start)
             )
     except:
@@ -504,7 +504,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     tonic_save_dir = join(output_savedir, 'physio01_SCL', sub, ses)
     Path(tonic_save_dir).mkdir(parents=True, exist_ok=True)
     tonic_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{tonic_epoch_start}_epochend-{tonic_epoch_end}_physio-scl.csv"
-    tonictime_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{tonic_epoch_start}_epochend-{tonic_epoch_end}_resample-{resample_rate}_physio-scltimecourse.csv"
+    tonictime_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{tonic_epoch_start}_epochend-{tonic_epoch_end}_resample-{resample_rate}_ttlindex-{ttl_index}_physio-scltimecourse.csv"
     tonic_df.to_csv(join(tonic_save_dir, tonic_fname))
     tonic_timecourse.to_csv(join(tonic_save_dir, tonictime_fname))
 
