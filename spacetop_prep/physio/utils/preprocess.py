@@ -2,6 +2,7 @@ import itertools
 import json
 import logging
 import os
+from pathlib import Path
 
 import neurokit2 as nk
 import numpy as np
@@ -307,7 +308,8 @@ def extract_SCR(df, eda_col, amp_min, event_stimuli, samplingrate, epochs_start,
     })
     scr_processed = pd.concat(
         [scr_signals, scr_decomposed, scr_peaks], axis=1)
-    plot_SCRprocessed(df, plt_col, scr_processed, plt_savedir)
+    # TODO: work on plot function
+    # plot_SCRprocessed(df, plt_col, scr_processed, plt_savedir)
     try:
         scr_epochs = nk.epochs_create(scr_processed,
                                         event_stimuli,
