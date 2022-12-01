@@ -143,7 +143,7 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
     final_df['ttl_r3'] = final_df['ttl_3'] - final_df['stim_start']
     final_df['ttl_r4'] = final_df['ttl_4'] - final_df['stim_start']
 
-    ttl_of_interest = f"ttl_r{ttl_index}"
+    ttl_of_interest = f"ttl_{ttl_index}"
     ttl = final_df[ttl_of_interest].values.tolist()
     ttl_start = np.ceil(ttl).astype(pd.Int64Dtype)
     print(type(ttl_start))
