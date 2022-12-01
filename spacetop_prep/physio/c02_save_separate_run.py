@@ -22,7 +22,7 @@ run_cutoff: int
     Anything shorter than that is discarded and not converted into a run
 
 """
-
+# %%
 import argparse
 import datetime
 import glob
@@ -112,25 +112,6 @@ if dict_task:
 else:
     save_dir = join(physio_dir, 'physio03_bids', task)
 log_savedir = os.path.join(physio_dir, 'log')
-# if operating == 'discovery':
-#     spacetop_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social'
-#     physio_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/physio'
-#     source_dir = join(physio_dir, 'physio02_sort')
-#     if dict_task:
-#         save_dir = join(physio_dir, 'physio03_bids', dict_task[task])
-#     else:
-#         save_dir = join(physio_dir, 'physio03_bids', task)
-
-
-# elif operating == 'local':
-#     spacetop_dir = '/Volumes/spacetop_projects_social'
-#     physio_dir = '/Volumes/spacetop_data/physio'
-#     source_dir = join(physio_dir, 'physio02_sort')
-#     if dict_task:
-#         save_dir = join(physio_dir, 'physio03_bids', dict_task[task])
-#     else:
-#         save_dir = join(physio_dir, 'physio03_bids', task)
-#     log_savedir = join(physio_dir, 'log')
 
 Path(save_dir).mkdir(parents=True,exist_ok=True )
 Path(log_savedir).mkdir(parents=True,exist_ok=True )
