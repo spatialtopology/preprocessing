@@ -2,6 +2,7 @@
 # encoding: utf-8
 # %%
 import argparse
+import glob
 import logging
 import os
 import re
@@ -9,6 +10,7 @@ from os.path import join
 from pathlib import Path
 
 import numpy as np
+import utils.initialize
 
 # from . import get_logger, set_logger_level
 
@@ -77,6 +79,21 @@ def extract_bids(filename: str, key: str) -> str:
     # 'filename.ext1.ext2'.split(os.extsep, 1)
     # bids_info_rmext = os.path.splitext(bids_info)[0]
     return bids_info_rmext[0]
+
+# def extract_bids(fname):
+#     entities = dict(
+#         match.split('-', 1) for match in fname.split('_') if '-' in match)
+#     sub_num = int(entities['sub'])
+#     ses_num = int(entities['ses'])
+#     if 'run' in entities['run'].split('-'):
+#         run_list = entities['run'].split('-')
+#         run_list.remove('run')
+#         run_num = run_list[0]
+#         run_type = run_list[-1]
+#     else:
+#         run_num = int(entities['run'].split('-')[0])
+#         run_type = entities['run'].split('-')[-1]
+#     return sub_num, ses_num, run_num, run_type
 
 def sublist(source_dir:str, remove_int:list, slurm_id:int, sub_zeropad:int, stride:int ) -> list:
     """
@@ -148,20 +165,24 @@ def assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df, save_di
         Path(run_dir).mkdir(parents=True, exist_ok=True)
         run_df.to_csv(os.path.join(run_dir, run_basename), sep = '\t', index=False)# %%
 
-def glob_corresponding_beh(file2check: str):
-    """glob specific string and return one behavioral file
-    TODO: raise error if not existt"""
-    file2check = glob.glob(
-        join(beh_dir, sub, ses,
-                f"{sub}_{ses}_task-social_{run}*_beh.csv"))
-    beh_fname = file2check[0]
-    return beh_fname
+# def glob_corresponding_beh(file2check: str):
+#     """glob specific string and return one behavioral file
+#     TODO: raise error if not existt"""
+#     file2check = glob.glob(
+#         join(beh_dir, sub, ses,
+#                 f"{sub}_{ses}_task-social_{run}*_beh.csv"))
+#     beh_fname = file2check[0]
+#     return beh_fname
 
 def check_beh_exist(file2check: str):
     try:
-        beh_fname = glob_corresponding_beh(file2check)
+        beh_glob = glob.glob(file2check)
+        beh_fname = beh_glob[0]
         return beh_fname
     except IndexError:
+        sub = utils.initialize.extract_bids(file2check, 'sub')
+        ses = utils.initialize.extract_bids(file2check, 'ses')
+        run = utils.initialize.extract_bids(file2check, 'run')
         logger.error(
             "missing behavioral file: {sub} {ses} {run} DOES NOT exist")
 
