@@ -10,7 +10,8 @@ from os.path import join
 from pathlib import Path
 
 import numpy as np
-import utils.initialize
+
+from spacetop_prep.physio import utils
 
 # from . import get_logger, set_logger_level
 
@@ -79,21 +80,6 @@ def extract_bids(filename: str, key: str) -> str:
     # 'filename.ext1.ext2'.split(os.extsep, 1)
     # bids_info_rmext = os.path.splitext(bids_info)[0]
     return bids_info_rmext[0]
-
-# def extract_bids(fname):
-#     entities = dict(
-#         match.split('-', 1) for match in fname.split('_') if '-' in match)
-#     sub_num = int(entities['sub'])
-#     ses_num = int(entities['ses'])
-#     if 'run' in entities['run'].split('-'):
-#         run_list = entities['run'].split('-')
-#         run_list.remove('run')
-#         run_num = run_list[0]
-#         run_type = run_list[-1]
-#     else:
-#         run_num = int(entities['run'].split('-')[0])
-#         run_type = entities['run'].split('-')[-1]
-#     return sub_num, ses_num, run_num, run_type
 
 def sublist(source_dir:str, remove_int:list, slurm_id:int, sub_zeropad:int, stride:int ) -> list:
     """
@@ -165,15 +151,6 @@ def assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df, save_di
         Path(run_dir).mkdir(parents=True, exist_ok=True)
         run_df.to_csv(os.path.join(run_dir, run_basename), sep = '\t', index=False)# %%
 
-# def glob_corresponding_beh(file2check: str):
-#     """glob specific string and return one behavioral file
-#     TODO: raise error if not existt"""
-#     file2check = glob.glob(
-#         join(beh_dir, sub, ses,
-#                 f"{sub}_{ses}_task-social_{run}*_beh.csv"))
-#     beh_fname = file2check[0]
-#     return beh_fname
-
 def check_beh_exist(file2check: str):
     try:
         beh_glob = glob.glob(file2check)
@@ -223,21 +200,4 @@ def argument_p01():
                         help="index of which TTL to use")
     args = parser.parse_args()
 
-    physio_dir = args.input_physiodir
-    beh_dir = args.input_behdir
-    log_dir = args.output_logdir
-    output_savedir = args.output_savedir
-    metadata = args.metadata
-    dictchannel_json = args.dictchannel
-    slurm_id = args.slurm_id  # e.g. 1, 2
-    stride = args.stride  # e.g. 5, 10, 20, 1000
-    zeropad = args.zeropad  # sub-0016 -> 4
-    task = args.task  # e.g. 'task-social' 'task-fractional' 'task-alignvideos'
-    samplingrate = args.samplingrate  # e.g. 2000
-    tonic_epoch_start = args.tonic_epochstart
-    tonic_epoch_end = args.tonic_epochend
-    ttl_index = args.ttl_index
-
-    return physio_dir,beh_dir,log_dir,output_savedir,metadata, \
-    dictchannel_json,slurm_id,stride,zeropad,task,samplingrate, \
-    tonic_epoch_start,tonic_epoch_end,ttl_index
+    return args
