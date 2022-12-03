@@ -9,3 +9,4 @@
 **/spacetop_prep/redcap/*.csv
 **/visualresource
 spacetop_prep/physio/archive
+spacetop_prep/physio/utils/tests
