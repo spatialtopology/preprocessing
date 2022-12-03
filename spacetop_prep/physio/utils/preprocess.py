@@ -275,8 +275,48 @@ def save_dict(save_dir:str, save_fname:str, dict_onset:dict):
     # dict_savedir = join(output_savedir, 'physio01_SCL', sub, ses)
     Path(save_dir).mkdir(parents=True, exist_ok=True)
     # dict_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_onset.json"
-    out_file = open(save_fname, "w+")
+    out_file = open(os.path.join(save_dir,save_fname), "w+")
     json.dump(dict_onset, out_file)
+
+
+def plot_SCRprocessed(df, list_columns, scr_processed, save_dir):
+    """
+    plot scr processed and save to QC location
+
+    parameters
+    ----------
+    df: dataframe,
+    list_columns: list,
+    scr_processed: ,
+    save_dir:
+    """
+    # TODO: create internal function
+    # Make it more flexible for selecting which columns to visualize
+    if run_type == 'pain':
+        bio_df = pd.concat([
+            physio_df[[
+                'trigger_mri', 'event_fixation', 'event_cue', 'event_expectrating', 'event_stimuli', 'event_actualrating',
+                'trigger_heat'
+            ]], scr_processed
+        ],
+            axis=1)
+    else:
+        bio_df = pd.concat([
+            physio_df[[
+                'trigger_mri', 'event_fixation', 'event_cue', 'event_expectrating', 'event_stimuli', 'event_actualrating',
+            ]], scr_processed
+        ],
+            axis=1)
+    # TODO: find a way to save neurokit plots
+    fig_save_dir = join(save_dir, 'data', 'physio', 'qc', sub, ses)
+    Path(fig_save_dir).mkdir(parents=True, exist_ok=True)
+
+    fig_savename = f"{sub}_{ses}_{run}-{run_type}_physio-scr-scl.png"
+    processed_fig = nk.events_plot(
+        event_stimuli,
+        bio_df[['administer', 'EDA_Tonic', 'EDA_Phasic', 'SCR_Peaks']])
+    # plt.show()
+    # TODO: plot save
 
 def extract_SCR(df, eda_col, amp_min, event_stimuli, samplingrate, epochs_start, epochs_end, baseline_correction, plt_col: list, plt_savedir):
     """
@@ -314,12 +354,12 @@ def extract_SCR(df, eda_col, amp_min, event_stimuli, samplingrate, epochs_start,
         scr_epochs = nk.epochs_create(scr_processed,
                                         event_stimuli,
                                         sampling_rate=samplingrate,
-                                        epochs_start=0,
-                                        epochs_end=5,
-                                        baseline_correction=True)  #
+                                        epochs_start=epochs_start,
+                                        epochs_end=epochs_end,
+                                        baseline_correction=baseline_correction)  #
     except:
         logger.info("has NANS in the dataframe")
-        continue
+
     scr_phasic = nk.eda_eventrelated(scr_epochs)
     return scr_phasic
     """
@@ -359,7 +399,7 @@ def extract_SCR(df, eda_col, amp_min, event_stimuli, samplingrate, epochs_start,
             continue
     """
 
-def extract_SCL(df: pd.DataFrame, eda_col, event_dict, samplingrate, SCL_start, SCL_end, baseline_correction_tf):
+def extract_SCL(df: pd.DataFrame, eda_col, event_dict, samplingrate, SCL_start, SCL_end, baseline_truefalse):
     """
     1) sanitize
     2) filter
@@ -429,11 +469,11 @@ def extract_SCL(df: pd.DataFrame, eda_col, event_dict, samplingrate, SCL_start, 
                                         sampling_rate=samplingrate,
                                         epochs_start=SCL_start,
                                         epochs_end=SCL_end,
-                                        baseline_correction=baseline_correction_tf)
+                                        baseline_correction=baseline_truefalse)
         return tonic_length, scl_epoch
     except:
         logger.info("has NANS in the dataframe")
-        continue
+
 
 
 def combine_metadata_SCL(scl_epoch):

@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # encoding: utf-8
-"""
 
-"""
 # %% libraries _________________________________________________________________________________________
 import argparse
 import datetime
@@ -51,9 +49,6 @@ allow for user to input which channels to use
 main channel (stimuli)
 boundary channel (cue) (rating)
 """
-
-# %% test
-
 
 
 # %% argument parser _______________________________________________________________________________________
@@ -108,11 +103,11 @@ ttl_index = args.ttl_index
 
 # %% NOTE:
 beh_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0051_ses-01_task-social_run-02-pain_beh.csv'
-physio_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0051_ses-01_task-cue_run-02-pain_recording-ppg-eda-trigger_physio.tsv'
+physio_fpath = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0051_ses-01_task-cue_run-02-pain_recording-ppg-eda-trigger_physio.tsv'
 meta_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/spacetop_task-social_run-metadata.csv'
 dictchannel_json = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/p01_channel.json'
 beh_df = pd.read_csv(beh_fname)
-physio_df = pd.read_csv(physio_fname, sep='\t')
+physio_df = pd.read_csv(physio_fpath, sep='\t')
 
 runmeta = pd.read_csv(meta_fname)
 
@@ -267,36 +262,8 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
                             # 'EDA_corrected_02fixation', 'physio_ppg', 'trigger_heat'], event_stimuli)
 
 # NOTE: save dict_onset __________________________________________________________________________________
-    def save_dict(save_dir:str, save_fname:str, dict_onset:dict):
-        """
-        create save directory
-        save dictionary with onsets
-
-        parameter:
-        ----------
-        save_dir: str
-            path to save dictionary
-        save_fname: str
-            filename
-        dict_onset: dict
-            full dictionary with event onset times
-
-        original code
-        -------------
-        dict_savedir = join(output_savedir, 'physio01_SCL', sub, ses)
-        Path(dict_savedir).mkdir(parents=True, exist_ok=True)
-        dict_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_onset.json"
-        out_file = open(dict_fname, "w+")
-        json.dump(dict_onset, out_file)
-        """
-        # dict_savedir = join(output_savedir, 'physio01_SCL', sub, ses)
-        Path(save_dir).mkdir(parents=True, exist_ok=True)
-        # dict_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_onset.json"
-        out_file = open(save_fname, "w+")
-        json.dump(dict_onset, out_file)
-
     dict_savedir = join(output_savedir, 'physio01_SCL', sub, ses)
-    dict_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_onset.json"
+    dict_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_samplingrate-{samplingrate}_onset.json"
     utils.preprocess.save_dict(dict_savedir, dict_fname, dict_onset)
 # NOTE: neurokit analysis :+: HIGHLIGHT :+: filter signal ________________________________________________
 
@@ -340,7 +307,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     tonic_save_dir = join(output_savedir, 'physio01_SCL', sub, ses)
     Path(tonic_save_dir).mkdir(parents=True, exist_ok=True)
     tonic_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{tonic_epoch_start}_epochend-{tonic_epoch_end}_physio-scl.csv"
-    tonictime_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{tonic_epoch_start}_epochend-{tonic_epoch_end}_physio-scltimecourse.csv"
+    tonictime_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{tonic_epoch_start}_epochend-{tonic_epoch_end}_samplingrate-{resample_rate}_physio-scltimecourse.csv"
     tonic_df.to_csv(join(tonic_save_dir, tonic_fname))
     tonic_timecourse.to_csv(join(tonic_save_dir, tonictime_fname))
 
