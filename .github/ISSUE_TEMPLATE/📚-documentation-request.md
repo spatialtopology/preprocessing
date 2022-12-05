@@ -2,7 +2,7 @@
 name: "\U0001F4DA Documentation request"
 about: Suggest edits for spacetop-prep's Documentation
 title: "[DOC]"
-labels: documentation
+labels: ''
 assignees: ''
 
 ---

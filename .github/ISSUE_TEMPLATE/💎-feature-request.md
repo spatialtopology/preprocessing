@@ -2,7 +2,7 @@
 name: "\U0001F48E Feature request"
 about: Suggest an idea for improving spacetop-prep
 title: "[ENH]"
-labels: enhancement
+labels: ''
 assignees: ''
 
 ---
