@@ -11,7 +11,7 @@ from pathlib import Path
 
 import numpy as np
 
-from spacetop_prep.physio import utils
+#from spacetop_prep.physio import utils
 
 # from . import get_logger, set_logger_level
 
