@@ -52,40 +52,38 @@ boundary channel (cue) (rating)
 
 
 # %% argument parser _______________________________________________________________________________________
-# parser = argparse.ArgumentParser()
-# parser.add_argument("--input-physiodir",
-#                     type=str, help="path where BIDS converted physio data lives")
-# parser.add_argument("--input-behdir",
-#                     type=str, help="path where BIDS converted behavioral data lives")
-# parser.add_argument("--output-logdir",
-#                     type=str, help="path where logs will be saved - essential for re-running failed participants")
-# parser.add_argument("--output-savedir",
-#                     type=str, help="path where transformed physio data will be saved")
-# parser.add_argument("--metadata",
-#                     type=str, help=".csv filepath to metadata file of run information (complete/runtype etc)")
-# parser.add_argument("--dictchannel",
-#                     type=str, help=".json file for changing physio data channel names | key:value == old_channel_name:new_channel_name")
-# parser.add_argument("-sid", "--slurm-id", type=int,
-#                     help="specify slurm array id")
-# parser.add_argument("--stride", type=int,
-#                     help="how many participants to batch per jobarray")
-# parser.add_argument("-z", "--zeropad",
-#                     type=int, help="how many zeros are padded for BIDS subject id")
-# parser.add_argument("-t", "--task",
-#                     type=str, help="specify task name (e.g. task-alignvideos)")
-# parser.add_argument("-sr", "--samplingrate", type=int,
-#                     help="sampling rate of acquisition file")
-# parser.add_argument("--tonic-epochstart", type=int,
-#                     help="beginning of epoch")
-# parser.add_argument("--tonic-epochend", type=int,
-#                     help="end of epoch")
-# parser.add_argument("--ttl-index", type=int,
-#                     help="index of which TTL to use")
-# args = parser.parse_args()
+parser = argparse.ArgumentParser()
+parser.add_argument("--input-physiodir",
+                    type=str, help="path where BIDS converted physio data lives")
+parser.add_argument("--input-behdir",
+                    type=str, help="path where BIDS converted behavioral data lives")
+parser.add_argument("--output-logdir",
+                    type=str, help="path where logs will be saved - essential for re-running failed participants")
+parser.add_argument("--output-savedir",
+                    type=str, help="path where transformed physio data will be saved")
+parser.add_argument("--metadata",
+                    type=str, help=".csv filepath to metadata file of run information (complete/runtype etc)")
+parser.add_argument("--dictchannel",
+                    type=str, help=".json file for changing physio data channel names | key:value == old_channel_name:new_channel_name")
+parser.add_argument("-sid", "--slurm-id", type=int,
+                    help="specify slurm array id")
+parser.add_argument("--stride", type=int,
+                    help="how many participants to batch per jobarray")
+parser.add_argument("-z", "--zeropad",
+                    type=int, help="how many zeros are padded for BIDS subject id")
+parser.add_argument("-t", "--task",
+                    type=str, help="specify task name (e.g. task-alignvideos)")
+parser.add_argument("-sr", "--samplingrate", type=int,
+                    help="sampling rate of acquisition file")
+parser.add_argument("--tonic-epochstart", type=int,
+                    help="beginning of epoch")
+parser.add_argument("--tonic-epochend", type=int,
+                    help="end of epoch")
+parser.add_argument("--ttl-index", type=int,
+                    help="index of which TTL to use")
+args = parser.parse_args()
 
 # %%
-args = utils.initialize.argument_p01()
-
 physio_dir = args.input_physiodir
 beh_dir = args.input_behdir
 log_dir = args.output_logdir
@@ -101,21 +99,17 @@ tonic_epoch_start = args.tonic_epochstart
 tonic_epoch_end = args.tonic_epochend
 ttl_index = args.ttl_index
 
-# %% NOTE:
-beh_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0051_ses-01_task-social_run-02-pain_beh.csv'
-physio_fpath = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0051_ses-01_task-cue_run-02-pain_recording-ppg-eda-trigger_physio.tsv'
-meta_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/spacetop_task-social_run-metadata.csv'
-dictchannel_json = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/p01_channel.json'
-beh_df = pd.read_csv(beh_fname)
-physio_df = pd.read_csv(physio_fpath, sep='\t')
-
-runmeta = pd.read_csv(meta_fname)
+# %% NOTE: local test
+# beh_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0051_ses-01_task-social_run-02-pain_beh.csv'
+# physio_fpath = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0051_ses-01_task-cue_run-02-pain_recording-ppg-eda-trigger_physio.tsv'
+# meta_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/spacetop_task-social_run-metadata.csv'
+# dictchannel_json = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/p01_channel.json'
+# beh_df = pd.read_csv(beh_fname)
+# physio_df = pd.read_csv(physio_fpath, sep='\t')
+# runmeta = pd.read_csv(meta_fname)
 
 
 # %%
-# physio_dir,beh_dir,log_dir,output_savedir,metadata, \
-#     dictchannel_json,slurm_id,stride,zeropad,task,samplingrate, \
-#     tonic_epoch_start,tonic_epoch_end,ttl_index = utils.initialize.argument_p01()
 dict_channel = json.load(open(dictchannel_json))
 
 plt.rcParams['figure.figsize'] = [15, 5]  # Bigger images
@@ -194,7 +188,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
         f"__________________ {sub} {ses} {run} {run_type} ____________________")
     metadata_df = beh_df[[
         'src_subject_id', 'session_id', 'param_task_name', 'param_run_num',
-        'param_cue_type', 'param_stimulus_type', 'param_cond_type'
+        'param_cue_type', 'param_stimulus_type', 'param_cond_type', 'event02_expect_RT', 'event02_expect_angle', 'event04_actual_RT', 'event04_actual_angle'
     ]]
 
 # NOTE: merge fixation columns (some files look different) handle slight changes in biopac dataframe
