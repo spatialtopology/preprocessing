@@ -51,7 +51,10 @@ Prerequisites
 
 Usage
 -----------------
-
+```
+python setup.py sdist
+pip install -e .
+```
 ### datalad
 ### fmriprep @psadil
 ### mriqc @psadil
