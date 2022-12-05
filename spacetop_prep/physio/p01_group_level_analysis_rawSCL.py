@@ -131,52 +131,22 @@ plt.rcParams['font.size'] = 14
 
 # %% set parameters
 sub_list = []
-#biopac_list = next(os.walk(physio_dir))[1]
 remove_int = [1, 2, 3, 4, 5, 6]
 sub_list = utils.initialize.sublist(
     physio_dir, remove_int, slurm_id, stride=stride, sub_zeropad=zeropad)
 ses_list = [1, 3, 4]
 run_list = [1, 2, 3, 4, 5, 6]
 sub_ses = list(itertools.product(sorted(sub_list), ses_list, run_list))
-# """
-# # NOTE: TEST ______________________________________
-# """
 
-# sub_list = ['sub-0074']; ses_list = [1]; run_list = [1,2,3,4,5,6]
-# sub_ses = list(itertools.product(sorted(sub_list), ses_list, run_list))
-# log_dir = '/Users/h/Dropbox/projects_dropbox/spacetop_biopac/sandbox'
-# physio_dir = '/Users/h/Dropbox/projects_dropbox/spacetop_biopac/sandbox'
-# """
-# # NOTE: TEST ______________________________________
-# """
+# set up logger _______________________________________________________________________________________
 logger_fname = os.path.join(
     log_dir, f"data-physio_step-03-groupanalysis_{datetime.date.today().isoformat()}.txt")
-
-
-# %% set up logger _______________________________________________________________________________________
 
 runmeta = pd.read_csv(metadata)
 # join(project_dir, "data/spacetop_task-social_run-metadata.csv"))
 # TODO: come up with scheme to update logger files
 f = open(logger_fname, "w")
 logger = utils.initialize.logger(logger_fname, "physio")
-
-
-def extract_bids(fname):
-    entities = dict(
-        match.split('-', 1) for match in fname.split('_') if '-' in match)
-    sub_num = int(entities['sub'])
-    ses_num = int(entities['ses'])
-    if 'run' in entities['run'].split('-'):
-        run_list = entities['run'].split('-')
-        run_list.remove('run')
-        run_num = run_list[0]
-        run_type = run_list[-1]
-    else:
-        run_num = int(entities['run'].split('-')[0])
-        run_type = entities['run'].split('-')[-1]
-    return sub_num, ses_num, run_num, run_type
-
 
 # %%____________________________________________________________________________________________________
 flag = []
@@ -204,10 +174,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     bids_dict['task'] = task = utils.initialize.extract_bids(
         phasic_fname, 'task')
     bids_dict['run'] = run = f"run-{run_ind:02d}"
-    #bids_dict['run'] = run = utils.initialize.extract_bids(phasic_fname, 'run')
     logger.info(bids_dict)
-    # sub_num, ses_num, run_num, run_type = _extract_bids(
-    #     os.path.basename(physio_fpath))
     logger.info(
         "__________________%s %s %s__________________", sub, ses, run)
     # save_dir = join(project_dir, 'data', 'physio', 'physio02_preproc', sub,
