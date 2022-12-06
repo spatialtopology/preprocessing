@@ -100,13 +100,13 @@ tonic_epoch_end = args.tonic_epochend
 ttl_index = args.ttl_index
 
 # %% NOTE: local test
-# beh_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0051_ses-01_task-social_run-02-pain_beh.csv'
-# physio_fpath = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0051_ses-01_task-cue_run-02-pain_recording-ppg-eda-trigger_physio.tsv'
-# meta_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/spacetop_task-social_run-metadata.csv'
-# dictchannel_json = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/p01_channel.json'
-# beh_df = pd.read_csv(beh_fname)
-# physio_df = pd.read_csv(physio_fpath, sep='\t')
-# runmeta = pd.read_csv(meta_fname)
+beh_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0051_ses-01_task-social_run-02-pain_beh.csv'
+physio_fpath = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0051_ses-01_task-cue_run-02-pain_recording-ppg-eda-trigger_physio.tsv'
+meta_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/spacetop_task-social_run-metadata.csv'
+dictchannel_json = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/p01_channel.json'
+beh_df = pd.read_csv(beh_fname)
+physio_df = pd.read_csv(physio_fpath, sep='\t')
+runmeta = pd.read_csv(meta_fname)
 
 
 # %%
@@ -182,6 +182,8 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     beh_fpath = join(beh_dir, sub, ses,
              f"{sub}_{ses}_task-social_{run}*_beh.csv")
     beh_fname = utils.initialize.check_beh_exist(beh_fpath)
+    if beh_fname is None:
+        continue
     beh_df = pd.read_csv(beh_fname)
     run_type = utils.initialize.check_run_type(beh_fname)
     print(
@@ -278,7 +280,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
 
 # NOTE:  TONIC ________________________________________________________________________________
     # TODO: follow up with Yarik
-    tonic_length, scl_epoch = utils.preprocess.extract_SCL(df=physio_df_bl,
+    tonic_length, scl_raw, scl_epoch = utils.preprocess.extract_SCL(df=physio_df_bl,
                             eda_col='physio_eda_blcorrect', event_dict=event_stimuli, samplingrate=2000,
                             SCL_start=tonic_epoch_start, SCL_end=tonic_epoch_end, baseline_truefalse=False)
 
@@ -288,11 +290,11 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
 
     # 1. append columns to the begining (trial order, trial type)
     # NOTE: eda_epochs_level -> scl_epoch
-    metadata_tonic = utils.preprocess.combine_metadata_SCL(scl_epoch)
+    metadata_tonic = utils.preprocess.combine_metadata_SCL(scl_raw)
     # 2. eda_level_timecourse ------------------------------------
     resample_rate = 25
     tonic_length = np.abs(tonic_epoch_start-tonic_epoch_end) * resample_rate
-    eda_level_timecourse = utils.preprocess.resample_scl2pandas(scl_epoch = scl_epoch, tonic_length = tonic_length, sampling_rate = samplingrate, desired_sampling_rate = resample_rate)
+    eda_level_timecourse = utils.preprocess.resample_scl2pandas(scl_epoch = scl_raw, tonic_length = tonic_length, sampling_rate = samplingrate, desired_sampling_rate = resample_rate)
     tonic_df = pd.concat([metadata_df, metadata_tonic], axis=1)
     tonic_timecourse = pd.concat(
         [metadata_df, metadata_tonic, eda_level_timecourse], axis=1)

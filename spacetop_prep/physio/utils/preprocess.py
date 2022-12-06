@@ -470,7 +470,7 @@ def extract_SCL(df: pd.DataFrame, eda_col, event_dict, samplingrate, SCL_start, 
                                         epochs_start=SCL_start,
                                         epochs_end=SCL_end,
                                         baseline_correction=baseline_truefalse)
-        return tonic_length, scl_epoch
+        return tonic_length, scl_detrend, scl_epoch
     except:
         logger.info("has NANS in the dataframe")
 
