@@ -470,7 +470,13 @@ def extract_SCL(df: pd.DataFrame, eda_col, event_dict, samplingrate, SCL_start, 
                                         epochs_start=SCL_start,
                                         epochs_end=SCL_end,
                                         baseline_correction=baseline_truefalse)
-        return tonic_length, scl_detrend, scl_epoch
+        scl_raw = nk.epochs_create(scl_detrend,
+                                event_dict,
+                                sampling_rate=samplingrate,
+                                epochs_start=SCL_start,
+                                epochs_end=SCL_end,
+                                baseline_correction=baseline_truefalse)
+        return tonic_length, scl_raw, scl_epoch
     except:
         logger.info("has NANS in the dataframe")
 
@@ -525,7 +531,7 @@ def combine_metadata_SCL(scl_epoch):
             metadata_tonic.iloc[
                 ind, metadata_tonic.columns.
                 get_loc('iv_stim')] = scl_epoch[ind]["Condition"].unique()[0]
-        return metadata_tonic
+        # return metadata_tonic
     except:
         for ind in range(len(scl_epoch)):
             metadata_tonic.iloc[
@@ -539,7 +545,7 @@ def combine_metadata_SCL(scl_epoch):
             metadata_tonic.iloc[
                 ind, metadata_tonic.columns.get_loc('iv_stim')] = scl_epoch[
                     str(ind)]["Condition"].unique()[0]
-        return metadata_tonic
+    return metadata_tonic
 
 
 def resample_scl2pandas(scl_epoch: dict, tonic_length, sampling_rate:int, desired_sampling_rate: int):
