@@ -135,7 +135,6 @@ f = open(logger_fname, "w")
 logger = utils.initialize.logger(logger_fname, "physio")
 
 
-
 # %%____________________________________________________________________________________________________
 flag = []
 for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
@@ -180,7 +179,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
 # or outtside a functiono
 
     beh_fpath = join(beh_dir, sub, ses,
-             f"{sub}_{ses}_task-social_{run}*_beh.csv")
+                     f"{sub}_{ses}_task-social_{run}*_beh.csv")
     beh_fname = utils.initialize.check_beh_exist(beh_fpath)
     if beh_fname is None:
         continue
@@ -255,7 +254,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
             'condition': beh_df['param_stimulus_type'].values.tolist()
         }
         # utils.qcplots.plot_ttl_extraction(physio_df, [
-                            # 'EDA_corrected_02fixation', 'physio_ppg', 'trigger_heat'], event_stimuli)
+        # 'EDA_corrected_02fixation', 'physio_ppg', 'trigger_heat'], event_stimuli)
 
 # NOTE: save dict_onset __________________________________________________________________________________
     dict_savedir = join(output_savedir, 'physio01_SCL', sub, ses)
@@ -269,20 +268,21 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
 
 # NOTE: PHASIC_____________________________________________________________________________
     scr_phasic = utils.preprocess.extract_SCR(df=physio_df,
-                             eda_col='physio_eda',
-                             amp_min=0.01,
-                             event_stimuli=event_stimuli, samplingrate=2000,
-                             epochs_start=0, epochs_end=5, baseline_correction=True,
-                             plt_col=['trigger_mri', 'event_fixation', 'event_cue', 'event_expectrating', 'event_stimuli', 'event_actualrating'],
-                             plt_savedir='./plt')
+                                              eda_col='physio_eda',
+                                              amp_min=0.01,
+                                              event_stimuli=event_stimuli, samplingrate=2000,
+                                              epochs_start=0, epochs_end=5, baseline_correction=True,
+                                              plt_col=['trigger_mri', 'event_fixation', 'event_cue',
+                                                       'event_expectrating', 'event_stimuli', 'event_actualrating'],
+                                              plt_savedir='./plt')
     if scr_phasic is None:
         continue
 
 # NOTE:  TONIC ________________________________________________________________________________
     # TODO: follow up with Yarik
     tonic_length, scl_raw, scl_epoch = utils.preprocess.extract_SCL(df=physio_df_bl,
-                            eda_col='physio_eda_blcorrect', event_dict=event_stimuli, samplingrate=2000,
-                            SCL_start=tonic_epoch_start, SCL_end=tonic_epoch_end, baseline_truefalse=False)
+                                                                    eda_col='physio_eda_blcorrect', event_dict=event_stimuli, samplingrate=2000,
+                                                                    SCL_start=tonic_epoch_start, SCL_end=tonic_epoch_end, baseline_truefalse=False)
 
 #  NOTE: concatenate dataframes __________________________________________________________________________
 
@@ -294,7 +294,8 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     # 2. eda_level_timecourse ------------------------------------
     resample_rate = 25
     tonic_length = np.abs(tonic_epoch_start-tonic_epoch_end) * resample_rate
-    eda_level_timecourse = utils.preprocess.resample_scl2pandas(scl_epoch = scl_raw, tonic_length = tonic_length, sampling_rate = samplingrate, desired_sampling_rate = resample_rate)
+    eda_level_timecourse = utils.preprocess.resample_scl2pandas(
+        scl_epoch=scl_raw, tonic_length=tonic_length, sampling_rate=samplingrate, desired_sampling_rate=resample_rate)
     tonic_df = pd.concat([metadata_df, metadata_tonic], axis=1)
     tonic_timecourse = pd.concat(
         [metadata_df, metadata_tonic, eda_level_timecourse], axis=1)
