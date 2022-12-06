@@ -100,13 +100,13 @@ tonic_epoch_end = args.tonic_epochend
 ttl_index = args.ttl_index
 
 # %% NOTE: local test
-beh_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0051_ses-01_task-social_run-02-pain_beh.csv'
-physio_fpath = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0051_ses-01_task-cue_run-02-pain_recording-ppg-eda-trigger_physio.tsv'
-meta_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/spacetop_task-social_run-metadata.csv'
-dictchannel_json = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/p01_channel.json'
-beh_df = pd.read_csv(beh_fname)
-physio_df = pd.read_csv(physio_fpath, sep='\t')
-runmeta = pd.read_csv(meta_fname)
+#beh_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0051_ses-01_task-social_run-02-pain_beh.csv'
+#physio_fpath = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0051_ses-01_task-cue_run-02-pain_recording-ppg-eda-trigger_physio.tsv'
+#meta_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/spacetop_task-social_run-metadata.csv'
+#dictchannel_json = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/p01_channel.json'
+#beh_df = pd.read_csv(beh_fname)
+#physio_df = pd.read_csv(physio_fpath, sep='\t')
+#runmeta = pd.read_csv(meta_fname)
 
 
 # %%
