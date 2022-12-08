@@ -129,7 +129,7 @@ ver = 1
 logger_fname = os.path.join(
     log_savedir, f"biopac_flaglist_{task}_{datetime.date.today().isoformat()}_ver-4.txt")
 f = open(logger_fname, "w")
-logger = utils.initialize._logger(logger_fname, "physio")
+logger = utils.initialize.logger(logger_fname, "physio")
 
 
 # %% NOTE: 1. glob acquisition files _________________________________________________________________________
