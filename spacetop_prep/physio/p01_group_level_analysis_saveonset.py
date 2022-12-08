@@ -103,13 +103,13 @@ ttl_index = args.ttl_index
 # sub 73
 # ses 1
 # run 5
-# beh_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0073_ses-01_task-social_run-06-pain_beh.csv'
-# physio_fpath = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0073_ses-01_task-cue_run-06-pain_recording-ppg-eda-trigger_physio.tsv'
-# meta_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/spacetop_task-social_run-metadata.csv'
-# dictchannel_json = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/p01_channel.json'
-# beh_df = pd.read_csv(beh_fname)
-# physio_df = pd.read_csv(physio_fpath, sep='\t')
-# runmeta = pd.read_csv(meta_fname)
+beh_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0081_ses-01_task-social_run-02-vicarious_beh.csv'
+physio_fpath = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0081_ses-01_task-cue_run-02-vicarious_recording-ppg-eda-trigger_physio.tsv'
+meta_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/spacetop_task-social_run-metadata.csv'
+dictchannel_json = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/p01_channel.json'
+beh_df = pd.read_csv(beh_fname)
+physio_df = pd.read_csv(physio_fpath, sep='\t')
+runmeta = pd.read_csv(meta_fname)
 
 # %%
 dict_channel = json.load(open(dictchannel_json))
