@@ -146,7 +146,7 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
     ttl_of_interest = f"ttl_{ttl_index}"
     ttl = final_df[ttl_of_interest].values.tolist()
     ttl_start = np.ceil(ttl).astype(pd.Int64Dtype)
-    print(type(ttl_start))
+    # print(type(ttl_start)) # <class 'numpy.ndarray'>
 
     # NOTE: before we merge the data, remove the nans
     # identify rows with NaNs in the ttl column of interest (e.g. ttl_r1)

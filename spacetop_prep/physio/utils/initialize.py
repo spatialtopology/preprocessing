@@ -154,13 +154,19 @@ def assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df, save_di
 def check_beh_exist(file2check: str):
     try:
         beh_glob = glob.glob(file2check)
-        beh_fname = beh_glob[0]
-        return beh_fname
-    except: # IndexError:
+        if len(beh_glob) == 1:
+            return beh_glob[0]
+        elif len(beh_glob) == 0:
+            logger.info("no file exists")
+            return None
+        elif len(beh_glob) > 1:
+            logger.ino("more than two behavioral files under the same parameters")
+            return None
+    except:
         sub = utils.initialize.extract_bids(file2check, 'sub')
         ses = utils.initialize.extract_bids(file2check, 'ses')
         run = utils.initialize.extract_bids(file2check, 'run')
-        logger.error(
+        logger.info(
             "missing behavioral file: {sub} {ses} {run} DOES NOT exist")
 
 def check_run_type(beh_fname: str):
