@@ -111,7 +111,6 @@ ttl_index = args.ttl_index
 # physio_df = pd.read_csv(physio_fpath, sep='\t')
 # runmeta = pd.read_csv(meta_fname)
 
-
 # %%
 dict_channel = json.load(open(dictchannel_json))
 

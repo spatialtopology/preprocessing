@@ -80,7 +80,7 @@ parser.add_argument("--tasknamechange",
                     required = False)
 args = parser.parse_args()
 
-operating = args.operating # 'local', 'discovery'
+#operating = args.operating # 'local', 'discovery'
 metadata_fname = args.metadata
 topdir = args.topdir
 slurm_id = args.slurm_id # e.g. 1, 2
