@@ -150,7 +150,6 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
         "__________________%s %s %s__________________", sub, ses, run)
     physio_flist = utils.checkfiles.glob_physio_bids(
         physio_dir, sub, ses, task, run)
-    print(physio_flist)
     try:
         physio_fpath = physio_flist[0]
         logger.info(physio_fpath)
@@ -295,7 +294,10 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     # 2. eda_level_timecourse ------------------------------------
     resample_rate = 25
     tonic_length = np.abs(tonic_epoch_start-tonic_epoch_end) * resample_rate
+    metadata_df = metadata_df.reset_index(drop=True)
+    metadata_tonic = metadata_tonic.reset_index(drop=True)
     eda_level_timecourse = utils.preprocess.resample_scl2pandas(scl_epoch = scl_raw, tonic_length = tonic_length, sampling_rate = samplingrate, desired_sampling_rate = resample_rate)
+    eda_level_timecourse = eda_level_timecourse.reset_index(drop=True)
     tonic_df = pd.concat([metadata_df, metadata_tonic], axis=1)
     tonic_timecourse = pd.concat(
         [metadata_df, metadata_tonic, eda_level_timecourse], axis=1)
