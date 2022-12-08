@@ -156,6 +156,6 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
         ttl_start = np.delete(ttl_start, ind)
     metadata_df.drop(flat_nans, axis=0, inplace=True)
     # metadata_df['trial_num'] = metadata_df.index + 1
-    metadata_df.loc[:, 'trail_num'] = metadata_df.index + 1
+    metadata_df['trail_num'] = metadata_df.index + 1
 
     return metadata_df, ttl_start
