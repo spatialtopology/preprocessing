@@ -60,9 +60,9 @@ sub_zeropad = 4
 parser = argparse.ArgumentParser()
 parser.add_argument("--topdir",
                     type=str, help="top directory of physio data")
-parser.add_argument("-o", "--operating",
-                    choices=['local', 'discovery'],
-                    help="specify where jobs will run: local or discovery")
+# parser.add_argument("-o", "--operating",
+#                     choices=['local', 'discovery'],
+#                     help="specify where jobs will run: local or discovery")
 parser.add_argument("-m", "--metadata",
                     type=str, help="filepath to run completion metadata")
 parser.add_argument("-sid", "--slurm_id", type=int,
@@ -88,7 +88,8 @@ stride = args.stride # e.g. 5, 10, 20, 1000
 zeropad = args.zeropad # sub-0016 -> 4
 task = args.task # e.g. 'task-social' 'task-fractional' 'task-alignvideos'
 run_cutoff = args.run_cutoff # e.g. 300
-
+dict_column = args.colnamechange
+dict_task = args.tasknamechange
 # spacetop
 dict_task = {'task-social':'task-cue'}
 dict_column = {
