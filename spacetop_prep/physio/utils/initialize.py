@@ -156,7 +156,7 @@ def check_beh_exist(file2check: str):
         beh_glob = glob.glob(file2check)
         beh_fname = beh_glob[0]
         return beh_fname
-    except IndexError:
+    except: # IndexError:
         sub = utils.initialize.extract_bids(file2check, 'sub')
         ses = utils.initialize.extract_bids(file2check, 'ses')
         run = utils.initialize.extract_bids(file2check, 'run')
