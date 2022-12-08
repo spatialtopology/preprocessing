@@ -520,6 +520,7 @@ def combine_metadata_SCL(scl_epoch):
     metadata_tonic = pd.DataFrame(
     index=list(range(len(scl_epoch))),
     columns=['trial_order', 'iv_stim', 'mean_signal'])
+
     try:
         for ind in range(len(scl_epoch)):
             metadata_tonic.iloc[
@@ -532,6 +533,7 @@ def combine_metadata_SCL(scl_epoch):
                 ind, metadata_tonic.columns.
                 get_loc('iv_stim')] = scl_epoch[ind]["Condition"].unique()[0]
         # return metadata_tonic
+
     except:
         for ind in range(len(scl_epoch)):
             metadata_tonic.iloc[
@@ -584,14 +586,16 @@ def resample_scl2pandas(scl_epoch: dict, tonic_length, sampling_rate:int, desire
     columns=['time_' + str(col) for col in list(np.arange(tonic_length))])
     try:
         for ind in range(len(scl_epoch)):
+            scl_epoch_dropNA = scl_epoch[str(ind)]['Signal'].ffill()
             resamp = nk.signal_resample(
-                scl_epoch[str(ind)]['Signal'].to_numpy(),  method='interpolation', sampling_rate=sampling_rate, desired_sampling_rate=desired_sampling_rate)
+                scl_epoch_dropNA[str(ind)]['Signal'].to_numpy(),  method='interpolation', sampling_rate=sampling_rate, desired_sampling_rate=desired_sampling_rate)
             eda_level_timecourse.iloc[
                 ind, :] = resamp
     except:
         for ind in range(len(scl_epoch)):
+            scl_epoch_dropNA = scl_epoch[str(ind)]['Signal'].ffill()
             resamp = nk.signal_resample(
-                scl_epoch[ind]['Signal'].to_numpy(),  method='interpolation', sampling_rate=sampling_rate, desired_sampling_rate=desired_sampling_rate)
+                scl_epoch_dropNA[ind]['Signal'].to_numpy(),  method='interpolation', sampling_rate=sampling_rate, desired_sampling_rate=desired_sampling_rate)
             eda_level_timecourse.iloc[
                 ind, :] = resamp
     return eda_level_timecourse
