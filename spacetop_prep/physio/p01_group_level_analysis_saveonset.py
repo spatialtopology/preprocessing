@@ -150,10 +150,11 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
         "__________________%s %s %s__________________", sub, ses, run)
     physio_flist = utils.checkfiles.glob_physio_bids(
         physio_dir, sub, ses, task, run)
-
+    print(physio_flist)
     try:
         physio_fpath = physio_flist[0]
-    except IndexError:
+        logger.info(physio_fpath)
+    except: #  IndexError:
         logger.error(
             "\t* missing physio file - %s %s %s DOES NOT exist", sub, ses, run)
         continue
@@ -164,9 +165,6 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     bids_dict['task'] = task = utils.initialize.extract_bids(
         physio_fname, 'task')
     bids_dict['run'] = run = f"run-{run_ind:02d}"
-    logger.info(bids_dict)
-    logger.info(
-        "__________________%s %s %s__________________", sub, ses, run)
 
 # NOTE: identify physio file for corresponding sub/ses/run _______________________________________________
     physio_fname = os.path.basename(physio_fpath)
@@ -180,16 +178,17 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
 # TODO: Ask Yarik
 # what's the best way to log errors? within a function?
 # or outtside a functiono
-
     beh_fpath = join(beh_dir, sub, ses,
              f"{sub}_{ses}_task-social_{run}*_beh.csv")
     beh_fname = utils.initialize.check_beh_exist(beh_fpath)
+    logger.info("beh_fpath: %s", beh_fpath)
+    logger.info("beh_fname: %s", beh_fname)
     if beh_fname is None:
         continue
     beh_df = pd.read_csv(beh_fname)
     run_type = utils.initialize.check_run_type(beh_fname)
-    print(
-        f"__________________ {sub} {ses} {run} {run_type} ____________________")
+    logger.info(
+        "__________________ %s %s %s %s ____________________", sub, ses, run, run_type)
     metadata_df = beh_df[[
         'src_subject_id', 'session_id', 'param_task_name', 'param_run_num',
         'param_cue_type', 'param_stimulus_type', 'param_cond_type', 'event02_expect_RT', 'event02_expect_angle', 'event04_actual_RT', 'event04_actual_angle'
@@ -306,8 +305,8 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     Path(tonic_save_dir).mkdir(parents=True, exist_ok=True)
     tonic_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{tonic_epoch_start}_epochend-{tonic_epoch_end}_physio-scl.csv"
     tonictime_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{tonic_epoch_start}_epochend-{tonic_epoch_end}_samplingrate-{resample_rate}_ttlindex-{ttl_index}_physio-scltimecourse.csv"
-    tonic_df.to_csv(join(tonic_save_dir, tonic_fname))
-    tonic_timecourse.to_csv(join(tonic_save_dir, tonictime_fname))
+    tonic_df.to_csv(join(tonic_save_dir, tonic_fname), index = False)
+    tonic_timecourse.to_csv(join(tonic_save_dir, tonictime_fname), index = False)
 
 # NOTE: save phasic data _________________________________________________________________________________
     phasic_save_dir = join(output_savedir, 'physio02_SCR', sub, ses)
@@ -318,7 +317,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
         [metadata_df, scr_phasic], axis=1
     )
     phasic_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-0_epochend-5_physio-scr.csv"
-    phasic_meta_df.to_csv(join(phasic_save_dir, phasic_fname))
+    phasic_meta_df.to_csv(join(phasic_save_dir, phasic_fname), index = False)
     logger.info("__________________ :+: FINISHED :+: __________________\n")
 
 # %%
