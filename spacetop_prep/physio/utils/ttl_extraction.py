@@ -154,8 +154,15 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
     flat_nans = [item for sublist in any_nans for item in sublist]
     for ind in flat_nans:
         ttl_start = np.delete(ttl_start, ind)
-    metadata_df.drop(flat_nans, axis=0, inplace=True)
+    metadata_df2 = metadata_df.copy()
+    metadata_df2.drop(flat_nans, axis=0, inplace=True)
     # metadata_df['trial_num'] = metadata_df.index + 1
+<<<<<<< HEAD
     metadata_df['trail_num'] = metadata_df.index + 1
+=======
+    index_range = metadata_df2.index
+    metadata_df3 = metadata_df2.assign(trial_num=list(np.array(index_range + 1)))
+    # metadata_df.loc[:,'trial_num'] = list(np.array(index_range + 1))
+>>>>>>> refs/remotes/origin/master
 
-    return metadata_df, ttl_start
+    return metadata_df3, ttl_start
