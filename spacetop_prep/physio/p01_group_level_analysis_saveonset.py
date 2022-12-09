@@ -103,17 +103,17 @@ ttl_index = args.ttl_index
 # sub 73
 # ses 1
 # run 5
-beh_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0132_ses-01_task-social_run-06-pain_beh.csv'
-physio_fpath = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0132_ses-01_task-cue_run-06-pain_recording-ppg-eda-trigger_physio.tsv'
-meta_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/spacetop_task-social_run-metadata.csv'
-dictchannel_json = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/p01_channel.json'
-beh_df = pd.read_csv(beh_fname)
-physio_df = pd.read_csv(physio_fpath, sep='\t')
-runmeta = pd.read_csv(meta_fname)
-samplingrate = 2000
-ttl_index = 2
-tonic_epoch_end = 20
-tonic_epoch_start = -1
+# beh_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0081_ses-01_task-social_run-02-vicarious_beh.csv'
+# physio_fpath = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0081_ses-01_task-cue_run-02-vicarious_recording-ppg-eda-trigger_physio.tsv'
+# meta_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/spacetop_task-social_run-metadata.csv'
+# dictchannel_json = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/p01_channel.json'
+# beh_df = pd.read_csv(beh_fname)
+# physio_df = pd.read_csv(physio_fpath, sep='\t')
+# runmeta = pd.read_csv(meta_fname)
+# samplingrate = 2000
+# ttl_index = 2
+# tonic_epoch_end = 20
+# tonic_epoch_start = -1
 
 # %%
 dict_channel = json.load(open(dictchannel_json))
@@ -230,7 +230,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     if run_type == 'pain':
         final_df = pd.DataFrame()
         # binarize TTL channels (raise error if channel has no TTL, despite being a pain run)
-        nan_index, metadata_df_dropNA, plateau_start = utils.ttl_extraction.ttl_extraction(
+        nan_index, metadf_dropNA, plateau_start = utils.ttl_extraction.ttl_extraction(
             physio_df=physio_df,
             dict_beforettl=dict_onset['event_expectrating'],
             dict_afterttl=dict_onset['event_actualrating'],
@@ -245,12 +245,14 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
             'onset': np.array(plateau_start).astype(pd.Int64Dtype),
             'duration': np.repeat(samplingrate * 5, len(plateau_start)),
             'label': np.array(np.arange(len(plateau_start))),
-            'condition': metadata_df_dropNA['param_stimulus_type'].values.tolist()
+            'condition': metadf_dropNA['param_stimulus_type'].values.tolist()
         }
         # utils.qcplots.plot_ttl_extraction(physio_df, [
         #                     'EDA_corrected_02fixation', 'physio_ppg', 'trigger_heat'], event_stimuli)
 
     else:
+        metadf_dropNA =  metadata_df.assign(trial_num=list(np.array(metadata_df.index + 1)))
+
         event_stimuli = {
             'onset': np.array(dict_onset['event_stimuli']['start']),
             'duration': np.repeat(samplingrate * 5, 12),
@@ -293,33 +295,37 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
 
     # 1. append columns to the begining (trial order, trial type)
     # NOTE: eda_epochs_level -> scl_epoch
-    metadata_SCL = utils.preprocess.combine_metadata_SCL(scl_raw, metadata_df_dropNA, total_trial = 12)
-    metadata_SCR = utils.preprocess.combine_metadata_SCR(scr_phasic, metadata_df_dropNA, total_trial = 12)
+    metadata_SCL = utils.preprocess.combine_metadata_SCL(scl_raw, metadf_dropNA, total_trial = 12)
+    metadata_SCR = utils.preprocess.combine_metadata_SCR(scr_phasic, metadf_dropNA, total_trial = 12)
     # 2. eda_level_timecourse ------------------------------------
     resample_rate = 25
     tonic_length = np.abs(tonic_epoch_start-tonic_epoch_end) * resample_rate
-    # metadata_df2 = metadata_df_dropNA.reset_index(drop=True)
+    # metadata_df2 = metadf_dropNA.reset_index(drop=True)
     # TODO: * * * * * * * * * * * * * *
     # using the nan values
     # if nan values are not empty
     # fill the rating columns with "nan"
     # concatenate it back to the metadataframe based on index values.
-    if len(nan_index) > 0:
-        nan_ind = nan_index[0]
-        # metadata_df.iloc[[nan_ind]]
-        # subset_meta = metadata_df.loc[[nan_ind]].copy()
-        metadata = metadata_df.copy()
-        metadata.loc[nan_ind, metadata_df.columns.str.contains('angle')] = np.nan
-        # metadata_df.loc[[nan_ind], subset_meta.columns.str.contains('angle')] = np.nan
-        metadata.loc[nan_ind, metadata_df.columns.str.contains('RT')] = np.nan
-        # df2 = pd.DataFrame(pd.concat([metadata_df_dropNA.iloc[:nan_ind], subset_meta, metadata_df_dropNA.iloc[nan_ind:]])) #.reset_index(drop=True))
+    if run_type == 'pain' and len(nan_index) > 0:
+        try:
+            metadata = utils.preprocess.substitute_beh_NA(nan_index, metadata_df, ['angle', 'RT'])
+            logger.info("preprocess.substitute_beh_NA WORKS")
+        except:
+            nan_ind = nan_index[0]
+            metadata = metadf_dropNA.copy()
+            metadata.loc[nan_ind, metadata_df.columns.str.contains('angle')] = np.nan
+            metadata.loc[nan_ind, metadata_df.columns.str.contains('RT')] = np.nan
+            logger.info("preprocess.substitute_beh_NA BUG")
+    elif run_type == 'vicarious' or run_type == 'cognitive':
+        metadata = metadf_dropNA.copy()
+        # df2 = pd.DataFrame(pd.concat([metadf_dropNA.iloc[:nan_ind], subset_meta, metadf_dropNA.iloc[nan_ind:]])) #.reset_index(drop=True))
         # insert row back in and fill te ratings with nans
-    # metadata_df2 = metadata_df_dropNA.reset_index(drop=True)
+    # metadata_df2 = metadf_dropNA.reset_index(drop=True)
     # TODO:* * * * * * * * * * * * * *
     # metadata_SCL = metadata_SCL.reset_index(drop=True)
-    eda_level_timecourse = utils.preprocess.resample_scl2pandas_ver2(scl_output = scl_raw, metadata_df =metadata_df_dropNA , total_trial = 12, tonic_length = tonic_length, sampling_rate = samplingrate, desired_sampling_rate = resample_rate)
+    eda_level_timecourse = utils.preprocess.resample_scl2pandas_ver2(scl_output = scl_raw, metadata_df =metadf_dropNA , total_trial = 12, tonic_length = tonic_length, sampling_rate = samplingrate, desired_sampling_rate = resample_rate)
     # eda_level_timecourse = eda_level_timecourse.reset_index(drop=True)
-    tonic_df = pd.concat([metadata, metadata_SCL], axis=1)
+    SCL_df = pd.concat([metadata, metadata_SCL], axis=1)
     tonic_timecourse = pd.concat(
         [metadata, metadata_SCL, eda_level_timecourse], axis=1)
 
@@ -328,7 +334,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     Path(tonic_save_dir).mkdir(parents=True, exist_ok=True)
     tonic_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{tonic_epoch_start}_epochend-{tonic_epoch_end}_physio-scl.csv"
     tonictime_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{tonic_epoch_start}_epochend-{tonic_epoch_end}_samplingrate-{resample_rate}_ttlindex-{ttl_index}_physio-scltimecourse.csv"
-    tonic_df.to_csv(join(tonic_save_dir, tonic_fname), index = False)
+    SCL_df.to_csv(join(tonic_save_dir, tonic_fname), index = False)
     tonic_timecourse.to_csv(join(tonic_save_dir, tonictime_fname), index = False)
 
 # NOTE: save phasic data _________________________________________________________________________________
@@ -336,9 +342,9 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     Path(phasic_save_dir).mkdir(parents=True, exist_ok=True)
     # metadata_df = metadata_df.reset_index(drop=True)
     # scr_phasic = scr_phasic.reset_index(drop=True)
-    phasic_meta_df = pd.concat(
+    SCR_df = pd.concat(
         [metadata, metadata_SCR], axis=1
     )
     phasic_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-0_epochend-5_physio-scr.csv"
-    phasic_meta_df.to_csv(join(phasic_save_dir, phasic_fname), index = False)
+    SCR_df.to_csv(join(phasic_save_dir, phasic_fname), index = False)
     logger.info("__________________ :+: FINISHED :+: __________________\n")
