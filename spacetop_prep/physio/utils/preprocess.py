@@ -585,16 +585,18 @@ def resample_scl2pandas(scl_epoch: dict, tonic_length, sampling_rate:int, desire
     index=list(range(len(scl_epoch))),
     columns=['time_' + str(col) for col in list(np.arange(tonic_length))])
     try:
+        scl_epoch_dropNA = scl_epoch.copy()
         for ind in range(len(scl_epoch)):
-            scl_epoch_dropNA = scl_epoch[str(ind)]['Signal'].ffill()
+            scl_epoch_dropNA[str(ind)]['Signal'] = scl_epoch[str(ind)]['Signal'].ffill()
             resamp = nk.signal_resample(
                 scl_epoch_dropNA[str(ind)]['Signal'].to_numpy(),  method='interpolation', sampling_rate=sampling_rate, desired_sampling_rate=desired_sampling_rate)
             eda_level_timecourse.iloc[
                 ind, :] = resamp
         logger.info("[ind] string")
     except:
+        scl_epoch_dropNA = scl_epoch.copy()
         for ind in range(len(scl_epoch)):
-            scl_epoch_dropNA = scl_epoch[ind]['Signal'].ffill()
+            scl_epoch_dropNA[ind]['Signal'] = scl_epoch[ind]['Signal'].ffill()
             resamp = nk.signal_resample(
                 scl_epoch_dropNA[ind]['Signal'].to_numpy(),  method='interpolation', sampling_rate=sampling_rate, desired_sampling_rate=desired_sampling_rate)
             eda_level_timecourse.iloc[
