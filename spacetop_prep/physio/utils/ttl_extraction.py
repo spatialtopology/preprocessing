@@ -4,7 +4,6 @@ import itertools
 import logging
 import os
 import re
-from os.path import join
 from pathlib import Path
 
 import numpy as np
@@ -115,13 +114,13 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
                 trim = val - samplingrate * 2
                 interval_idx = df_onset[idx.contains(trim)].index
                 iterlogger.info(
-                    f"this TTL does not belong to any event boundary")
+                    "this TTL does not belong to any event boundary trial: %d", i)
 
             interval_idx = interval_idx[0]
             iterlogger.info(f"\t\t* interval index: {interval_idx}")
         except:
             iterlogger.error(
-                f"this TTL does not belong to any event boundary")
+                "this TTL does not belong to any event boundary %d", i)
             continue
         mask = df_ttl.loc[[interval_idx]].isnull()
         empty_cols = list(
@@ -154,11 +153,14 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
     flat_nans = [item for sublist in any_nans for item in sublist]
     for ind in flat_nans:
         ttl_start = np.delete(ttl_start, ind)
+
     metadata_df2 = metadata_df.copy()
-    metadata_df2.drop(flat_nans, axis=0, inplace=True)
-    # metadata_df['trial_num'] = metadata_df.index + 1
     index_range = metadata_df2.index
     metadata_df3 = metadata_df2.assign(trial_num=list(np.array(index_range + 1)))
+    if len(flat_nans)>0:
+        metadata_df3.drop(flat_nans, axis=0, inplace=True)
+    # metadata_df['trial_num'] = metadata_df.index + 1
+    # metadata_df3 = metadata_df2.assign(trial_num=list(np.array(index_range + 1)))
     # metadata_df.loc[:,'trial_num'] = list(np.array(index_range + 1))
 
-    return metadata_df3, ttl_start
+    return flat_nans, metadata_df3, ttl_start
