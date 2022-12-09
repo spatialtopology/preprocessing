@@ -679,3 +679,15 @@ def resample_scl2pandas_ver2(scl_output: dict, metadata_df, total_trial, tonic_l
                 dropped_index, :] = resamp
         logger.info("[ind] interger")
     return eda_level_timecourse
+
+def substitute_beh_NA(nan_index, metadata_df, beh_col):
+    """
+    If there was a pain trial that wasn't triggered,
+    substitute behavioral rating and fill it with NaNs
+    """
+    nan_ind = nan_index
+    metadata = metadata_df.copy()
+    for nan_ind in nan_index:
+        for col in beh_col:
+            metadata.loc[nan_ind, metadata_df.columns.str.contains(col)] = np.nan
+    return metadata
