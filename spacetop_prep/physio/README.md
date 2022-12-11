@@ -46,8 +46,10 @@ conda env create -f biopac.yaml
 * Install the conda environment via [**physio.yaml**](https://github.com/spatialtopology/spacetop-prep/blob/0f352b6bd5a10f15f670936324108689c5a6c95c/physio/physio.yaml), included in this repo.
 * If you don't want to install an env via the yaml file, make sure to include the essential modules: [neurokit](https://github.com/neuropsychology/NeuroKit) and [bioread](https://github.com/uwmadison-chm/bioread)
 ### What does my data structure need to be like?
-[ TODO: insert image of data structure ] 
-e.g. physio > physio01_raw / physio02_sort / physio03_bids / physio04_ttl
+* You need a **`data`** directory as your top folder
+* All of your physiological data, right off the stimulus PC, should be stored in **`../data/physio01_raw`**.
+* From that, this module will create the following folders, such as **physio02_sort** and **physio03_bids**
+<img src="https://user-images.githubusercontent.com/54367954/206929176-13e9ea6d-5a64-466b-9b3a-03c107ed112e.png" width="600">
 
 Usage
 ----------------
@@ -90,30 +92,71 @@ The data can't be longer than the MRI protocol, if the criteria is based on the 
 
 Getting Help
 ------------------
+If you have issues or any suggestions, please use our Issues tab. We have sections for
+
+🐞 bug report,
+💎 feature request
+📚 documentation request
+🧠 logging in duplicate scans for datalad users.
+Based on your input, we plan to compile a generic Wiki with Q&As for future users.
+
+Contributing
+------------------
 * File and issue and notify the maintainers
 * Fork this repository, make changes, test it on your local repo.
 * Submit a pull request
 
-Contributing
-------------------
-
 License
 ------------------
+This README is distributed under the terms of MIT License. For further details, check our LICENSE.md
+
+
 
 Contributors
 ------------------
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 
+
+
+<table>
+  <tbody>
+     <tr>
+ <!-- HEEJUNG -->
+      <td align="center">
+      <a href="github.com/jungheejung"><img src="https://user-images.githubusercontent.com/54367954/206926455-5c94bd35-ab38-4a1f-bc78-d0503c52bd40.png" height="100px;" width="100px;" alt="Heejung Jung"/><br /><sub><b>Heejung Jung</b></sub></a><br />
+      <a href="#infra-jungheejung" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a>
+      <a href="https://github.com/spatialtopology/spacetop-prep/commits?author=jungheejung" title="Maintenance">🚧</a>
+      <a href="https://github.com/spatialtopology/spacetop-prep/commits?author=jungheejung" title="Project Management">📆</a>
+      <a href="https://github.com/spatialtopology/spacetop-prep/commits?author=jungheejung" title="Tests">⚠️</a>
+      <a href="https://github.com/spatialtopology/spacetop-prep/commits?author=jungheejung" title="Code">💻</a></td>
+  <!-- ISABEL -->
+      <td align="center">
+      <a href="https://github.com/isabeln23"><img src="https://user-images.githubusercontent.com/54367954/206926403-aab0c902-07fc-4190-9b8c-995563d1b80c.png" height="100px;" width="100px;" alt="Isabel Neumann"/><br /><sub><b>Isabel Neumann</b></sub></a><br />
+      <a href="#infra-isabeln23" title="Ideas">🤔</a>
+      <a href="https://github.com/spatialtopology/spacetop-prep/commits?author=isabeln23" title="Documentation">📖</a>
+      <a href="https://github.com/spatialtopology/spacetop-prep/commits?author=isabeln23" title="Research">🔬</a> 
+  <!-- YARIK -->
+      <td align="center"><a href="http://www.onerussian.com"><img src="https://avatars.githubusercontent.com/u/39889?v=4?s=100" height="100px;" width="100px;" alt="Yaroslav Halchenko"/><br /><sub><b>Yaroslav Halchenko</b></sub></a><br />
+      <a href="https://github.com/spatialtopology/spacetop-prep/commits?author=yarikoptic" title="Tests">⚠️</a>
+      <a href="https://github.com/spatialtopology/spacetop-prep/commits?author=yarikoptic" title="Code">💻</a>
+      <a href="https://github.com/spatialtopology/spacetop-prep/commits?author=yarikoptic" title="Mentoring">🧑‍🏫</a></td>
+  <!-- BETHANY -->
+      <td align="center"><a href="https://github.com)/huntb9"><img src="https://user-images.githubusercontent.com/54367954/206929426-d35a4798-3a75-47d2-b8b4-648654426cbe.png" height="100px;" width="100px;" alt="Bethany Hunt"/><br /><sub><b>Bethany Hunt</b></sub></a><br />
+      <a href="https://github.com/spatialtopology/spacetop-prep/commits?author=huntb9" title="Ideas">🤔</a> </td>
+    </tr>
+  </tbody>
+</table>
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 * Heejung Jung [@jungheejung](github.com/jungheejung)
 * Isabel Neumann (Integrating Neurokit, Identifying appropriate functions) [@isabeln23](https://github.com/isabeln23)
-* Bethany Hunt (Suggestions on Physio data structure, BIDS convention) [@huntb9]([github.com](https://github.com)/huntb9)
+* Bethany Hunt (Suggestions on BIDS convention) [@huntb9]([github.com](https://github.com)/huntb9)
 
 Acknowledgments
 ------------------
-
+Grant funding National Institute of Biomedical Imaging and Bioengineering (NIBIB) [1R01EB026549-01](https://www.nibib.nih.gov/node/133216)
