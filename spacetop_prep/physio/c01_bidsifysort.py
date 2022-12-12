@@ -66,7 +66,7 @@ def main():
             sub = f"sub-{sub_num:0{sub_zeropad}d}" # 'sub-0056'
             ses_num = utils.initialize.extract_bids_num(filename, 'ses')
             ses = f"ses-{ses_num:0{ses_zeropad}d}" # 'ses-03'
-            task = utils.initialize._extract_bids(filename, 'task')
+            task = utils.initialize.extract_bids(filename, 'task')
             logger.info("__________________%s %s %s__________________", sub, ses, task)
 
             # NOTE: create new folder -- physio02_sort -- and sort acq files correspondingly
