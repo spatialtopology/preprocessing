@@ -10,7 +10,7 @@
 #SBATCH --partition=standard
 #SBATCH --array=1-14%5
 
-conda activate biopac
+conda activate physio
 
 # CLUSTER="discovery" # local
 PROJECT_DIR="/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social"
@@ -26,10 +26,10 @@ ZEROPAD=4
 TASK="task-cue"
 SAMPLINGRATE=2000
 TTL_INDEX=2
-SCR_EPOCH_START=0
-SCR_EPOCH_END=5
+SCL_EPOCH_START=-1
+SCL_EPOCH_END=20
 
-python ${PWD}/p01_grouplevel_02SCR.py \
+python ${PWD}/p01_grouplevel_01SCL.py \
 --input-physiodir ${PHYSIO_DIR} \
 --input-behdir ${BEH_DIR} \
 --output-logdir ${OUTPUT_LOGDIR} \
@@ -42,6 +42,6 @@ python ${PWD}/p01_grouplevel_02SCR.py \
 --task ${TASK} \
 -sr ${SAMPLINGRATE} \
 --ttl-index ${TTL_INDEX} \
---scr-epochstart ${SCR_EPOCH_START} \
---scr-epochend ${SCR_EPOCH_END} \
+--scl-epochstart ${SCR_EPOCH_START} \
+--scl-epochend ${SCR_EPOCH_END} \
 --exclude_sub 1 2 3 4 5 6

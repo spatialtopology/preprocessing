@@ -68,8 +68,8 @@ def main():
     zeropad = args.zeropad  # sub-0016 -> 4
     task = args.task  # e.g. 'task-social' 'task-fractional' 'task-alignvideos'
     samplingrate = args.samplingrate  # e.g. 2000
-    SCR_epoch_start = args.scr_epochstart
-    SCR_epoch_end = args.scr_epochend
+    SCL_epoch_start = args.scl_epochstart
+    SCL_epoch_end = args.scl_epochend
     ttl_index = args.ttl_index
     remove_subject_int = args.exclude_sub
 
@@ -86,8 +86,8 @@ def main():
     # runmeta = pd.read_csv(meta_fname)
     # samplingrate = 2000
     # ttl_index = 2
-    # tonic_epoch_end = 20
-    # tonic_epoch_start = -1
+    # SCL_epoch_end = 20
+    # SCL_epoch_start = -1
 
     # %%
     dict_channel = json.load(open(dictchannel_json))
@@ -104,13 +104,17 @@ def main():
     run_list = [1, 2, 3, 4, 5, 6]
     sub_ses = list(itertools.product(sorted(sub_list), ses_list, run_list))
 
+    logger_fname = os.path.join(
+        log_dir, f"data-physio_step-03-groupanalysis_{datetime.date.today().isoformat()}.txt")
 
     # set up logger _______________________________________________________________________________________
+
     runmeta = pd.read_csv(metadata)
-    logger_fname = os.path.join(
-    log_dir, f"data-physio_step-03-groupanalysis_{datetime.date.today().isoformat()}.txt")
+    # TODO: come up with scheme to update logger files
     f = open(logger_fname, "w")
     logger = utils.initialize.logger(logger_fname, "physio")
+
+
 
     # %%____________________________________________________________________________________________________
     flag = []
@@ -132,10 +136,12 @@ def main():
                 "\t* missing physio file - %s %s %s DOES NOT exist", sub, ses, run)
             continue
         physio_fname = os.path.basename(physio_fpath)
-        sub = utils.initialize.extract_bids(physio_fname, 'sub')
-        ses = utils.initialize.extract_bids(physio_fname, 'ses')
-        task = utils.initialize.extract_bids(physio_fname, 'task')
-        run = f"run-{run_ind:02d}"
+        bids_dict = {}
+        bids_dict['sub'] = sub = utils.initialize.extract_bids(physio_fname, 'sub')
+        bids_dict['ses'] = ses = utils.initialize.extract_bids(physio_fname, 'ses')
+        bids_dict['task'] = task = utils.initialize.extract_bids(
+            physio_fname, 'task')
+        bids_dict['run'] = run = f"run-{run_ind:02d}"
 
     # NOTE: identify physio file for corresponding sub/ses/run _______________________________________________
         physio_fname = os.path.basename(physio_fpath)
@@ -145,6 +151,9 @@ def main():
 
 
     # NOTE: identify behavioral file for corresponding sub/ses/run ____________________________________
+    # TODO: Ask Yarik
+    # what's the best way to log errors? within a function?
+    # or outtside a functiono
         beh_fpath = join(beh_dir, sub, ses,
                  f"{sub}_{ses}_task-social_{run}*_beh.csv")
         beh_fname = utils.initialize.check_beh_exist(beh_fpath)
@@ -166,8 +175,9 @@ def main():
             physio_df[
                 'event_fixation'] = physio_df['fixation-01'] + physio_df['fixation-02']
 
-    # NOTE: baseline correct -- extract fixations: _________________________________________________________________________________
-        utils.preprocess.identify_fixation_sec(physio_df, 'event_fixation', samplingrate)
+    # NOTE: baseline correct _________________________________________________________________________________
+        # 1) extract fixations:
+        utils.preprocess.identify_fixation_sec(physio_df, 'event_fixation', 2000)
         physio_df_bl = utils.preprocess.baseline_correct(
             df=physio_df, raw_eda_col='physio_eda', baseline_col='event_fixation')
 
@@ -223,36 +233,65 @@ def main():
                 'label': np.array(np.arange(12), dtype='<U21'),
                 'condition': beh_df['param_stimulus_type'].values.tolist()
             }
-            # utils.qcplots.plot_ttl_extraction(physio_df, [
-                                # 'EDA_corrected_02fixation', 'physio_ppg', 'trigger_heat'], event_stimuli)
 
     # NOTE: save dict_onset __________________________________________________________________________________
-        dict_savedir = join(output_savedir, 'physio01_SCR', sub, ses)
+        dict_savedir = join(output_savedir, 'physio01_SCL', sub, ses)
         dict_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_samplingrate-{samplingrate}_onset.json"
         utils.preprocess.save_dict(dict_savedir, dict_fname, dict_onset)
 
-    # NOTE: PHASIC_____________________________________________________________________________
-        scr_phasic = utils.preprocess.extract_SCR(df=physio_df,
-                                 eda_col='physio_eda',
-                                 amp_min=0.01,
-                                 event_stimuli=event_stimuli, samplingrate=samplingrate,
-                                 epochs_start=SCR_epoch_start, epochs_end=SCR_epoch_end, baseline_correction=True,
-                                 plt_col=['trigger_mri', 'event_fixation', 'event_cue', 'event_expectrating', 'event_stimuli', 'event_actualrating'],
-                                 plt_savedir='./plt')
-        if scr_phasic is None:
-            continue
+    # NOTE:  TONIC ________________________________________________________________________________
+        # TODO: follow up with Yarik
+        tonic_length, scl_raw, scl_epoch = utils.preprocess.extract_SCL(df=physio_df_bl,
+                                eda_col='physio_eda_blcorrect', event_dict=event_stimuli, samplingrate=2000,
+                                SCL_start=SCL_epoch_start, SCL_end=SCL_epoch_end, baseline_truefalse=False)
 
     #  NOTE: concatenate dataframes __________________________________________________________________________
-        metadata_SCR = utils.preprocess.combine_metadata_SCR(scr_phasic, metadf_dropNA, total_trial = 12)
 
-    # NOTE: save phasic data _________________________________________________________________________________
-        phasic_save_dir = join(output_savedir, 'physio02_SCR', sub, ses)
-        Path(phasic_save_dir).mkdir(parents=True, exist_ok=True)
-        SCR_df = pd.concat(
-            [metadata, metadata_SCR], axis=1
-        )
-        phasic_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-0_epochend-5_physio-scr.csv"
-        SCR_df.to_csv(join(phasic_save_dir, phasic_fname), index = False)
+        # Tonic level ______________________________________________________________________________________
+
+        # 1. append columns to the begining (trial order, trial type)
+        # NOTE: eda_epochs_level -> scl_epoch
+        metadata_SCL = utils.preprocess.combine_metadata_SCL(scl_raw, metadf_dropNA, total_trial = 12)
+        # 2. eda_level_timecourse ------------------------------------
+        resample_rate = 25
+        tonic_length = np.abs(SCL_epoch_start-SCL_epoch_end) * resample_rate
+        # metadata_df2 = metadf_dropNA.reset_index(drop=True)
+        # TODO: * * * * * * * * * * * * * *
+        # using the nan values
+        # if nan values are not empty
+        # fill the rating columns with "nan"
+        # concatenate it back to the metadataframe based on index values.
+        if run_type == 'pain' and len(nan_index) > 0:
+            try:
+                metadata = utils.preprocess.substitute_beh_NA(nan_index, metadata_df, ['angle', 'RT'])
+                logger.info("preprocess.substitute_beh_NA WORKS")
+            except:
+                nan_ind = nan_index[0]
+                metadata = metadf_dropNA.copy()
+                metadata.loc[nan_ind, metadata_df.columns.str.contains('angle')] = np.nan
+                metadata.loc[nan_ind, metadata_df.columns.str.contains('RT')] = np.nan
+                logger.info("preprocess.substitute_beh_NA BUG")
+        elif run_type == 'vicarious' or run_type == 'cognitive':
+            metadata = metadf_dropNA.copy()
+            # df2 = pd.DataFrame(pd.concat([metadf_dropNA.iloc[:nan_ind], subset_meta, metadf_dropNA.iloc[nan_ind:]])) #.reset_index(drop=True))
+            # insert row back in and fill te ratings with nans
+        # metadata_df2 = metadf_dropNA.reset_index(drop=True)
+        # TODO:* * * * * * * * * * * * * *
+        # metadata_SCL = metadata_SCL.reset_index(drop=True)
+        eda_level_timecourse = utils.preprocess.resample_scl2pandas_ver2(scl_output = scl_raw, metadata_df =metadf_dropNA , total_trial = 12, tonic_length = tonic_length, sampling_rate = samplingrate, desired_sampling_rate = resample_rate)
+        # eda_level_timecourse = eda_level_timecourse.reset_index(drop=True)
+        SCL_df = pd.concat([metadata, metadata_SCL], axis=1)
+        tonic_timecourse = pd.concat(
+            [metadata, metadata_SCL, eda_level_timecourse], axis=1)
+
+    # NOTE: save tonic data __________________________________________________________________________________
+        tonic_save_dir = join(output_savedir, 'physio01_SCL', sub, ses)
+        Path(tonic_save_dir).mkdir(parents=True, exist_ok=True)
+        tonic_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{SCL_epoch_start}_epochend-{SCL_epoch_end}_physio-scl.csv"
+        tonictime_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{SCL_epoch_start}_epochend-{SCL_epoch_end}_samplingrate-{resample_rate}_ttlindex-{ttl_index}_physio-scltimecourse.csv"
+        SCL_df.to_csv(join(tonic_save_dir, tonic_fname), index = False)
+        tonic_timecourse.to_csv(join(tonic_save_dir, tonictime_fname), index = False)
+
         logger.info("__________________ :+: FINISHED :+: __________________\n")
 
 
@@ -283,9 +322,9 @@ def get_args():
                         type=str, help="specify task name (e.g. task-alignvideos)")
     parser.add_argument("-sr", "--samplingrate", type=int,
                         help="sampling rate of acquisition file")
-    parser.add_argument("--scr-epochstart", type=int,
+    parser.add_argument("--scl-epochstart", type=int,
                         help="beginning of epoch")
-    parser.add_argument("--scr-epochend", type=int,
+    parser.add_argument("--scl-epochend", type=int,
                         help="end of epoch")
     parser.add_argument("--ttl-index", type=int,
                         help="index of which TTL to use")
