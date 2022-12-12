@@ -23,13 +23,13 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
         acquisition file (run-wise)
     dict_beforettl: dict
         refers to event that happens before the ttl - a dictionary that contains "start" "stop" keys,
-        created via utils.preprocess._identify_boundary
+        created via utils.preprocess.identify_boundary
     dict_afterttl: dict
         refers to event that happens after the ttl - a dictionary that contains "start" "stop" keys,
-        created via utils.preprocess._identify_boundary
+        created via utils.preprocess.identify_boundary
     dict_stimuli: dict
         refers to event when TTL stimulus was supposed to be delivered - a dictionary that contains "start" "stop" keys,
-        created via utils.preprocess._identify_boundary
+        created via utils.preprocess.identify_boundary
     samplingrate: int
         sampling rate of the physiological signal
     metadata_df: pandas dataframe
@@ -54,7 +54,7 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
         binary_high=5,
         binary_low=0)
 
-    dict_ttl = utils.preprocess._identify_boundary(physio_df, 'ttl')
+    dict_ttl = utils.preprocess.identify_boundary(physio_df, 'ttl')
 
     # NOTE: find the midpoint of the TTL signals.
     # In other words, get one datapoint instead of a trail of datapoints

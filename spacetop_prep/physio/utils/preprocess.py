@@ -96,7 +96,7 @@ def _extract_runs(df, dict, run_num):
     run_df = run_subset.reset_index()
     return run_df
 
-def _identify_boundary(df, binary_col):
+def identify_boundary(df, binary_col):
     """
     Function used to extract onsets of the beginning of an event ("start") and end of an event ("stop").
     The function identifies transitions of events and saves both "start" and "stop" of an event.
@@ -159,7 +159,7 @@ def _binarize_trigger_mri(df, dict_column, samplingrate, run_cutoff):
         # continue
         raise
 
-    dict_spike = _identify_boundary(df, 'trigger_mri_win_3')
+    dict_spike = identify_boundary(df, 'trigger_mri_win_3')
     logger.info("number of spikes within experiment: %d", len(dict_spike['start']))
     df['bin_spike'] = 0
     df.loc[dict_spike['start'], 'bin_spike'] = 5
@@ -181,7 +181,7 @@ def _binarize_trigger_mri(df, dict_column, samplingrate, run_cutoff):
         logger.debug(logger.error)
         raise
         # continue
-    dict_runs = _identify_boundary(df, 'mr_boxcar')
+    dict_runs = identify_boundary(df, 'mr_boxcar')
     logger.info("* start_df: %s", dict_runs['start'])
     logger.info("* stop_df: %s", dict_runs['stop'])
     logger.info("* total of %d runs", len(dict_runs['start']))
@@ -198,7 +198,7 @@ def _binarize_trigger_mri(df, dict_column, samplingrate, run_cutoff):
                                        threshold=mid_val,
                                        binary_high=5,
                                        binary_low=0)
-    dict_runs_adjust = _identify_boundary(sdf, 'adjust_run')
+    dict_runs_adjust = identify_boundary(sdf, 'adjust_run')
     logger.info("* adjusted start_df: %s", dict_runs_adjust['start'])
     logger.info("* adjusted stop_df: %s", dict_runs_adjust['stop'])
 
