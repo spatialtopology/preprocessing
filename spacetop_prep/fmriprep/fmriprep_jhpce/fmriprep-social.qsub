@@ -37,4 +37,4 @@ singularity run \
   --fs-license-file /main/license.txt \
   --skip-bids-validation --anat-derivatives /out/sub-"${ROW[0]}"/ses-01/anat \
   --random-seed 1992 --skull-strip-fixed-seed \
-  --bids-database-dir /main/bids_db  
+  --bids-database-dir /main/bids_db

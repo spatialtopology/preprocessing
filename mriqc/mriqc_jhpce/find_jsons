@@ -1,2 +1,0 @@
-#!/bin/bash
-find derivatives/mriqc -name .git -prune -o -name "*sub*json" -print > jsons
