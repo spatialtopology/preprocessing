@@ -198,7 +198,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     bids_dict['run'] = run = f"run-{run_ind:02d}"
     #bids_dict['run'] = run = utils.initialize.extract_bids(phasic_fname, 'run')
     logger.info(bids_dict)
-    # sub_num, ses_num, run_num, run_type = _extract_bids(
+    # sub_num, ses_num, run_num, run_type = extract_bids(
     #     os.path.basename(physio_fpath))
     logger.info(
         "__________________%s %s %s__________________", sub, ses, run)
@@ -287,7 +287,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
                                         threshold=None,
                                         binary_high=5,
                                         binary_low=0)
-        dict_onset[value] = utils.preprocess._identify_boundary(physio_df, value)
+        dict_onset[value] = utils.preprocess.identify_boundary(physio_df, value)
         logger.info("\t* total number of %s trials: %d" ,value, len(dict_onset[value]['start']))
 
 

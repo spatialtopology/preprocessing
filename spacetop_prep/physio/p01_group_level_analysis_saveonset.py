@@ -193,7 +193,7 @@ def main():
                                                threshold=None,
                                                binary_high=5,
                                                binary_low=0)
-            dict_onset[value] = utils.preprocess._identify_boundary(
+            dict_onset[value] = utils.preprocess.identify_boundary(
                 physio_df, value)
             logger.info("\t* total number of %s trials: %d",
                         value, len(dict_onset[value]['start']))

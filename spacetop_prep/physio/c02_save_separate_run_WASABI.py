@@ -124,9 +124,9 @@ for acq in sorted(flat_acq_list):
 # NOTE: extract information from filenames _______________________________________________________________
     filename = os.path.basename(acq)
     bids_dict = {}
-    bids_dict['sub'] = sub  = utils.initialize._extract_bids(filename, 'sub')
-    bids_dict['ses'] = ses  = utils.initialize._extract_bids(filename, 'ses')
-    bids_dict['task']= task = utils.initialize._extract_bids(filename, 'task')
+    bids_dict['sub'] = sub  = utils.initialize.extract_bids(filename, 'sub')
+    bids_dict['ses'] = ses  = utils.initialize.extract_bids(filename, 'ses')
+    bids_dict['task']= task = utils.initialize.extract_bids(filename, 'task')
 
 # NOTE: open physio dataframe (check if exists) __________________________________________________________
     if os.path.exists(acq):
@@ -162,7 +162,7 @@ for acq in sorted(flat_acq_list):
         logger.exception("message")
         continue
 
-    dict_spike = utils.preprocess._identify_boundary(main_df, 'spike')
+    dict_spike = utils.preprocess.identify_boundary(main_df, 'spike')
     logger.info(f"number of TRs within experiment: {len(dict_spike['start'])}")
     main_df['bin_spike'] = 0
     main_df.loc[dict_spike['start'], 'bin_spike'] = 5
@@ -183,7 +183,7 @@ for acq in sorted(flat_acq_list):
         logger.debug(logger.error)
         continue
 
-    dict_runs = utils.preprocess._identify_boundary(main_df, 'mr_boxcar')
+    dict_runs = utils.preprocess.identify_boundary(main_df, 'mr_boxcar')
     logger.info(f"* start_df: {dict_runs['start']}")
     logger.info(f"* stop_df: {dict_runs['stop']}")
     logger.info(f"* total of {len(dict_runs['start'])} runs")
@@ -200,7 +200,7 @@ for acq in sorted(flat_acq_list):
                                        threshold=mid_val,
                                        binary_high=5,
                                        binary_low=0)
-    dict_runs_adjust = utils.preprocess._identify_boundary(sdf, 'adjust_run')
+    dict_runs_adjust = utils.preprocess.identify_boundary(sdf, 'adjust_run')
     logger.info(f"* adjusted start_df: {dict_runs_adjust['start']}")
     logger.info(f"* adjusted stop_df: {dict_runs_adjust['stop']}")
 
