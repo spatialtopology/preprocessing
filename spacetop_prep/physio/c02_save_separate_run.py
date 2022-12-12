@@ -77,6 +77,7 @@ def main():
     run_cutoff = args.run_cutoff # e.g. 300
     dict_column = args.colnamechange
     dict_task = args.tasknamechange
+    remove_sub = args.exclude_sub
 
     # %%
     physio_dir = topdir
@@ -100,7 +101,7 @@ def main():
 
     # %% NOTE: 1. glob acquisition files _________________________________________________________________________
     # filename ='../spacetop_biopac/data/sub-0026/SOCIAL_spacetop_sub-0026_ses-01_task-social_ANISO.acq'
-    remove_sub = [1, 2, 3, 4, 5, 6]
+    # remove_sub = [1, 2, 3, 4, 5, 6]
     sub_list = utils.initialize.sublist(source_dir, remove_sub, slurm_id, stride=10, sub_zeropad=4)
 
     acq_list = []
@@ -229,22 +230,25 @@ def main():
 def get_args_c02():
     parser = argparse.ArgumentParser()
     parser.add_argument("--topdir",
-                        type=str, help="top directory of physio data")
+                        type=str, help="top directory of physio data", required = True)
     parser.add_argument("-m", "--metadata",
-                        type=str, help="filepath to run completion metadata")
+                        type=str, help="filepath to run completion metadata", required = True)
     parser.add_argument("-sid", "--slurm_id", type=int,
-                        help="specify slurm array id")
+                        help="specify slurm array id", required = True)
     parser.add_argument("--stride", help="how many participants to batch per jobarray")
-    parser.add_argument("-z", "--sub-zeropad", help="how many zeros are padded for BIDS subject id")
+    parser.add_argument("-z", "--sub-zeropad", help="how many zeros are padded for BIDS subject id", required = True)
     parser.add_argument("-t", "--task",
-                        type=str, help="specify task name (e.g. task-alignvideos)")
-    parser.add_argument("-c", "--run-cutoff", type=int, help="specify cutoff threshold for distinguishing runs (in seconds)")
+                        type=str, help="specify task name (e.g. task-alignvideos)", required = True)
+    parser.add_argument("-c", "--run-cutoff", type=int,
+                        help="specify cutoff threshold for distinguishing runs (in seconds)", required = True)
     parser.add_argument("--colnamechange",
                         type=str, help="to change column name within .acq file. provide json file with key:value as old_column_name:new_column_name",
-                        required = True)
+                        required = False)
     parser.add_argument("--tasknamechange",
                         type=str, help="to change task name. provide json file with key:value as old_task_name:new_task_name",
                         required = False)
+    parser.add_argument('--exclude-sub', nargs='+',
+                        type=int, help="string of intergers, subjects to be removed from code", required=False)
     args = parser.parse_args()
     return args
 
