@@ -7,7 +7,6 @@ from pathlib import Path
 import neurokit2 as nk
 import numpy as np
 import pandas as pd
-import utils
 
 # from . import get_logger, set_logger_level
 
@@ -149,7 +148,7 @@ def _binarize_trigger_mri(df, dict_column, samplingrate, run_cutoff):
         # continue
     # TST: files without trigger keyword in the acq files should raise exception
     try:
-        utils.preprocess._binarize_channel(df,
+        _binarize_channel(df,
                                         source_col='trigger_mri_win_3',
                                         new_col='trigger_mri_win_3',
                                         threshold=40,
@@ -160,7 +159,7 @@ def _binarize_trigger_mri(df, dict_column, samplingrate, run_cutoff):
         # continue
         raise
 
-    dict_spike = utils.preprocess._identify_boundary(df, 'trigger_mri_win_3')
+    dict_spike = _identify_boundary(df, 'trigger_mri_win_3')
     logger.info("number of spikes within experiment: %d", len(dict_spike['start']))
     df['bin_spike'] = 0
     df.loc[dict_spike['start'], 'bin_spike'] = 5
@@ -171,7 +170,7 @@ def _binarize_trigger_mri(df, dict_column, samplingrate, run_cutoff):
             window=int(samplingrate-100)).mean()
         mid_val = (np.max(df['trigger_mri_win_samprate']) -
                 np.min(df['trigger_mri_win_samprate'])) / 5
-        utils.preprocess._binarize_channel(df,
+        _binarize_channel(df,
                                         source_col='trigger_mri_win_samprate',
                                         new_col='mr_boxcar',
                                         threshold=mid_val,
@@ -182,7 +181,7 @@ def _binarize_trigger_mri(df, dict_column, samplingrate, run_cutoff):
         logger.debug(logger.error)
         raise
         # continue
-    dict_runs = utils.preprocess._identify_boundary(df, 'mr_boxcar')
+    dict_runs = _identify_boundary(df, 'mr_boxcar')
     logger.info("* start_df: %s", dict_runs['start'])
     logger.info("* stop_df: %s", dict_runs['stop'])
     logger.info("* total of %d runs", len(dict_runs['start']))
@@ -193,13 +192,13 @@ def _binarize_trigger_mri(df, dict_column, samplingrate, run_cutoff):
     sdf['adjusted_boxcar'] = sdf['bin_spike'].rolling(window=int(samplingrate-100)).mean()
     mid_val = (np.max(sdf['adjusted_boxcar']) -
                np.min(sdf['adjusted_boxcar'])) / 4
-    utils.preprocess._binarize_channel(sdf,
+    _binarize_channel(sdf,
                                        source_col='adjusted_boxcar',
                                        new_col='adjust_run',
                                        threshold=mid_val,
                                        binary_high=5,
                                        binary_low=0)
-    dict_runs_adjust = utils.preprocess._identify_boundary(sdf, 'adjust_run')
+    dict_runs_adjust = _identify_boundary(sdf, 'adjust_run')
     logger.info("* adjusted start_df: %s", dict_runs_adjust['start'])
     logger.info("* adjusted stop_df: %s", dict_runs_adjust['stop'])
 
