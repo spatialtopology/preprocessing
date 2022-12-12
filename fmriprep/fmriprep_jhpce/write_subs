@@ -1,0 +1,1 @@
+lfs find /dcl01/smart/data/psadil/spacetop/inputs/2ee2bfa7-6c1b-4cf6-87e9-297e30f42517 -type d -name "sub*" -maxdepth 1 -print0 | xargs -0 -n1 basename | cut -c5-8 | sort > code/subs

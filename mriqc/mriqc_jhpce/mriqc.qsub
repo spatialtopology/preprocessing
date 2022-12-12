@@ -1,0 +1,44 @@
+#!/bin/bash
+#$ -cwd
+#$ -t 1-2880
+#$ -N mriqc
+#$ -o logs/mriqc$TASK_ID.out
+#$ -e logs/mriqc$TASK_ID.err
+#$ -pe local 2
+#$ -l mem_free=6G
+#$ -l h_vmem=6G
+#$ -l h_fsize=20G
+
+ulimit -s 12000
+module load singularity/3.6.0
+
+set -xe
+
+read -ra ROW < <(sed -n "${SGE_TASK_ID}p" code/params)
+declare -a flags
+flags=(--participant-label "${ROW[2]}")
+flags+=(--session-id "${ROW[3]}")
+flags+=(--modalities "${ROW[4]}")
+
+if [[ "${ROW[4]}" == bold ]]; then
+  flags+=(--task-id "${ROW[5]}")
+  flags+=(--run-id "${ROW[6]}")
+  flags+=(--correct-slice-timing --fd_thres 0.9)
+fi
+
+ROOT=/fastscratch/myscratch/pssadil/spacetop
+BIDS=${ROOT}/inputs/rawdata
+WORK=derivatives/work/mriqc/"${SGE_TASK_ID}"
+
+# config.yml required to acocunt for mriqc bug in restricting cpus
+# https://github.com/nipreps/mriqc/issues/931
+singularity run \
+  --cleanenv \
+  -B "${ROOT}":/main \
+  -B "${BIDS}":/bids:ro \
+  /fastscratch/myscratch/pssadil/mriqc_21.0.0rc2.sif \
+  /bids /main/derivatives/mriqc participant -w /main/"${WORK}" \
+  "${flags[@]}" --verbose-reports \
+  --no-sub --float -v \
+  --mem_gb 12 --use-plugin /main/code/config.yml \
+  --dsname spacetop --bids-database-dir /main/bids_db
