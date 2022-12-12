@@ -28,7 +28,7 @@ import pandas as pd
 
 logger = logging.getLogger("physio.preprocess")
 
-def _binarize_channel(df, source_col, new_col, threshold, binary_high, binary_low):
+def binarize_channel(df, source_col, new_col, threshold, binary_high, binary_low):
     """
     Function binarizes signals from biopac digital channels.
     If an explicit threshold value is provided, the signals are binarized based on this input.
@@ -148,7 +148,7 @@ def _binarize_trigger_mri(df, dict_column, samplingrate, run_cutoff):
         # continue
     # TST: files without trigger keyword in the acq files should raise exception
     try:
-        _binarize_channel(df,
+        binarize_channel(df,
                                         source_col='trigger_mri_win_3',
                                         new_col='trigger_mri_win_3',
                                         threshold=40,
@@ -170,7 +170,7 @@ def _binarize_trigger_mri(df, dict_column, samplingrate, run_cutoff):
             window=int(samplingrate-100)).mean()
         mid_val = (np.max(df['trigger_mri_win_samprate']) -
                 np.min(df['trigger_mri_win_samprate'])) / 5
-        _binarize_channel(df,
+        binarize_channel(df,
                                         source_col='trigger_mri_win_samprate',
                                         new_col='mr_boxcar',
                                         threshold=mid_val,
@@ -192,7 +192,7 @@ def _binarize_trigger_mri(df, dict_column, samplingrate, run_cutoff):
     sdf['adjusted_boxcar'] = sdf['bin_spike'].rolling(window=int(samplingrate-100)).mean()
     mid_val = (np.max(sdf['adjusted_boxcar']) -
                np.min(sdf['adjusted_boxcar'])) / 4
-    _binarize_channel(sdf,
+    binarize_channel(sdf,
                                        source_col='adjusted_boxcar',
                                        new_col='adjust_run',
                                        threshold=mid_val,

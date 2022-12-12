@@ -19,22 +19,29 @@
 # [x] allow to skip broken files
 # [x] allow to skip completed files
 """
+import argparse
+import datetime
+import glob
+import itertools
+import json
+import logging
+import os
+import sys
+from os.path import join
+from pathlib import Path
+from statistics import mean
 # %% libraries _________________________________________________________________________________________
 from tkinter import Variable
-import neurokit2 as nk
-import pandas as pd
-import numpy as np
+
 import matplotlib.pyplot as plt
-import os, glob, sys
-from pathlib import Path
-from os.path import join
-from statistics import mean
-import datetime, logging, argparse, itertools
-import utils.preprocess
+import neurokit2 as nk
+import numpy as np
+import pandas as pd
 import utils.checkfiles
 import utils.initialize
-import json
-from  utils import ttl_extraction
+import utils.preprocess
+from utils import ttl_extraction
+
 __author__ = "Heejung Jung, Isabel Neumann"
 __copyright__ = "Spatial Topology Project"
 __credits__ = ["Yaroslav Halchenko"]  # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
@@ -45,13 +52,13 @@ __email__ = "heejung.jung@colorado.edu"
 __status__ = "Development"
 
 """
-TODO: 
+TODO:
 minimize spaghetti
-- make two separate functions 
-1) pain process python function 
+- make two separate functions
+1) pain process python function
 2) non pain run process python function
 
-ENH: 
+ENH:
 allow for user to input which channels to use
 main channel (stimuli)
 boundary channel (cue) (rating)
@@ -79,12 +86,12 @@ parser.add_argument("--output-savedir",
                     type=str, help="path where transformed physio data will be saved")
 parser.add_argument("--metadata",
                     type=str, help=".csv filepath to metadata file of run information (complete/runtype etc)")
-parser.add_argument("--dictchannel", 
+parser.add_argument("--dictchannel",
                     type=str, help=".json file for changing physio data channel names | key:value == old_channel_name:new_channel_name")
 parser.add_argument("-sid", "--slurm-id", type=int,
                     help="specify slurm array id")
 parser.add_argument("--stride", type=int, help="how many participants to batch per jobarray")
-parser.add_argument("-z", "--zeropad", 
+parser.add_argument("-z", "--zeropad",
                     type=int, help="how many zeros are padded for BIDS subject id")
 parser.add_argument("-t", "--task",
                     type=str, help="specify task name (e.g. task-alignvideos)")
@@ -117,7 +124,7 @@ plt.rcParams['font.size'] = 14
 #     beh_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social/data/beh/d02_preproc-beh'  # '/Volumes/spacetop_projects_social/data/d02_preproc-beh'
 #     project_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social'
 #     log_dir = join(project_dir, "scripts", "logcenter")
-    
+
 # else:
 #     #physio_dir = '/Volumes/spacetop_projects_social/data/physio/physio01_raw'#'/Volumes/spacetop/biopac/dartmouth/b04_finalbids/'
 #     physio_dir = '/Volumes/spacetop/biopac/dartmouth/b04_finalbids/task-social'
@@ -172,7 +179,7 @@ flag = []
 for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
 
 # NOTE: open physio dataframe (check if exists) __________________________________________________________
-    
+
     ses = f"ses-{ses_ind:02d}"; run = f"run-{run_ind:02d}"
     logger.info(
         "__________________%s %s %s__________________", sub, ses, run)
@@ -221,7 +228,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     task = [match for match in physio_fname.split('_') if "task" in match][0]
     # DEP: physio_df, samplingrate = nk.read_acqknowledge(physio_fpath) output file is pandas
     physio_df = pd.read_csv(physio_fpath, sep = '\t')
-    
+
 
 # NOTE: identify behavioral file for corresponding sub/ses/run ____________________________________
     beh_fpath = glob.glob(
@@ -273,8 +280,8 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     dict_onset = {}
     for i, (key, value) in enumerate(dict_channel.items()):
         dict_onset[value] = {}
-        
-        utils.preprocess._binarize_channel(physio_df,
+
+        utils.preprocess.binarize_channel(physio_df,
                                         source_col=key,
                                         new_col=value,
                                         threshold=None,
@@ -289,11 +296,11 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
         final_df = pd.DataFrame()
         # binarize TTL channels (raise error if channel has no TTL, despite being a pain run)
         metadata_df, plateau_start = utils.ttl_extraction.ttl_extraction(
-            physio_df = physio_df, 
-            dict_beforettl = dict_onset['event_expectrating'], 
-            dict_afterttl = dict_onset['event_actualrating'], 
-            dict_stimuli = dict_onset['event_stimuli'], 
-            samplingrate = samplingrate, 
+            physio_df = physio_df,
+            dict_beforettl = dict_onset['event_expectrating'],
+            dict_afterttl = dict_onset['event_actualrating'],
+            dict_stimuli = dict_onset['event_stimuli'],
+            samplingrate = samplingrate,
             metadata_df = metadata_df)
 
         # create a dictionary for neurokit. this will serve as the events
@@ -425,7 +432,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     #plt.show()
     # TODO: plot save
     # Tonic level ______________________________________________________________________________________
-    
+
     # 1. append columns to the begining (trial order, trial type)
     # NOTE: eda_epochs_level -> scl_epoch
     metadata_tonic = pd.DataFrame(
@@ -464,13 +471,13 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
             eda_level_timecourse.iloc[
                 ind, :] = scl_epoch[str(ind)]['Signal'].to_numpy().reshape(
                     1, tonic_length
-                )  
+                )
     except:
         for ind in range(len(scl_epoch)):
             eda_level_timecourse.iloc[
                 ind, :] = scl_epoch[ind]['Signal'].to_numpy().reshape(
                     1, tonic_length
-                )  
+                )
 
 
     tonic_df = pd.concat([metadata_df, metadata_tonic], axis=1)
@@ -491,7 +498,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     scr_phasic = scr_phasic.reset_index(drop=True)
     phasic_meta_df = pd.concat(
         [metadata_df, scr_phasic], axis=1
-    )  
+    )
     phasic_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-0_epochend-5_physio-scr.csv"
     phasic_meta_df.to_csv(join(phasic_save_dir, phasic_fname))
     logger.info("__________________ :+: FINISHED :+: __________________")

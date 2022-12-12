@@ -60,9 +60,6 @@ sub_zeropad = 4
 parser = argparse.ArgumentParser()
 parser.add_argument("--topdir",
                     type=str, help="top directory of physio data")
-# parser.add_argument("-o", "--operating",
-#                     choices=['local', 'discovery'],
-#                     help="specify where jobs will run: local or discovery")
 parser.add_argument("-m", "--metadata",
                     type=str, help="filepath to run completion metadata")
 parser.add_argument("-sid", "--slurm_id", type=int,
@@ -80,7 +77,6 @@ parser.add_argument("--tasknamechange",
                     required = False)
 args = parser.parse_args()
 
-#operating = args.operating # 'local', 'discovery'
 metadata_fname = args.metadata
 topdir = args.topdir
 slurm_id = args.slurm_id # e.g. 1, 2
@@ -178,7 +174,7 @@ for acq in sorted(flat_acq_list):
         continue
 # TST: files without trigger keyword in the acq files should raise exception
     try:
-        utils.preprocess._binarize_channel(main_df,
+        utils.preprocess.binarize_channel(main_df,
                                         source_col='mr_aniso',
                                         new_col='spike',
                                         threshold=40,
@@ -199,7 +195,7 @@ for acq in sorted(flat_acq_list):
             window=int(samplingrate)).mean()
         mid_val = (np.max(main_df['mr_aniso_boxcar']) -
                 np.min(main_df['mr_aniso_boxcar'])) / 5
-        utils.preprocess._binarize_channel(main_df,
+        utils.preprocess.binarize_channel(main_df,
                                         source_col='mr_aniso_boxcar',
                                         new_col='mr_boxcar',
                                         threshold=mid_val,
@@ -220,7 +216,7 @@ for acq in sorted(flat_acq_list):
     sdf['adjusted_boxcar'] = sdf['bin_spike'].rolling(window=int(samplingrate)).mean()
     mid_val = (np.max(sdf['adjusted_boxcar']) -
                np.min(sdf['adjusted_boxcar'])) / 4
-    utils.preprocess._binarize_channel(sdf,
+    utils.preprocess.binarize_channel(sdf,
                                        source_col='adjusted_boxcar',
                                        new_col='adjust_run',
                                        threshold=mid_val,
@@ -253,7 +249,7 @@ for acq in sorted(flat_acq_list):
         run_basename = f"{sub}_{ses}_{task}_CLEAN_RUN-TASKTYLE_recording-ppg-eda_physio.csv"
         # main_df.rename(columns=dict_column, inplace=True)
         main_df_drop = main_df[main_df.columns.intersection(list(dict_column.values()))]
-        utils.initialize._assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df_drop, save_dir,run_basename,bids_dict)
+        utils.initialize.assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df_drop, save_dir,run_basename,bids_dict)
         logger.info("__________________ :+: FINISHED :+: __________________")
     else:
         logger.error(f"number of complete runs do not match scan notes")

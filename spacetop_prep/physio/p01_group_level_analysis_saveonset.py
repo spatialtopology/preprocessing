@@ -40,7 +40,7 @@ __maintainer__ = "Heejung Jung"
 __email__ = "heejung.jung@colorado.edu"
 __status__ = "Development"
 
-
+# %%
 def main():
     """
     TODO:
@@ -57,7 +57,6 @@ def main():
 
     args = get_args()
 
-    # %%
     physio_dir = args.input_physiodir
     beh_dir = args.input_behdir
     log_dir = args.output_logdir
@@ -188,7 +187,7 @@ def main():
         for i, (key, value) in enumerate(dict_channel.items()):
             dict_onset[value] = {}
 
-            utils.preprocess._binarize_channel(physio_df,
+            utils.preprocess.binarize_channel(physio_df,
                                                source_col=key,
                                                new_col=value,
                                                threshold=None,
@@ -325,7 +324,7 @@ def main():
 
 
 def get_args():
-    # %% argument parser _______________________________________________________________________________________
+    # argument parser _______________________________________________________________________________________
     parser = argparse.ArgumentParser()
     parser.add_argument("--input-physiodir",
                         type=str, help="path where BIDS converted physio data lives")

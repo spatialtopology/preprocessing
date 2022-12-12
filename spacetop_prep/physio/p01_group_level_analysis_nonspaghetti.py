@@ -277,7 +277,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     for i, (key, value) in enumerate(dict_channel.items()):
         dict_onset[value] = {}
 
-        utils.preprocess._binarize_channel(physio_df,
+        utils.preprocess.binarize_channel(physio_df,
                                         source_col=key,
                                         new_col=value,
                                         threshold=None,

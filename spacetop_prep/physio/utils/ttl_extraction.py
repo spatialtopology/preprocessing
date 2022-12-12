@@ -8,7 +8,9 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+
 from .. import utils
+
 # from .utils import preprocess
 
 
@@ -44,7 +46,7 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
     final_df = pd.DataFrame()
 
     # NOTE: binarize TTL channels (raise error if channel has no TTL, despite being a pain run)
-    utils.preprocess._binarize_channel(
+    utils.preprocess.binarize_channel(
         physio_df,
         source_col='trigger_heat',
         new_col='ttl',
