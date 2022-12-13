@@ -68,25 +68,26 @@ def main():
     zeropad = args.zeropad  # sub-0016 -> 4
     task = args.task  # e.g. 'task-social' 'task-fractional' 'task-alignvideos'
     samplingrate = args.samplingrate  # e.g. 2000
-    tonic_epoch_start = args.tonic_epochstart
-    tonic_epoch_end = args.tonic_epochend
+    SCL_epoch_start = args.scl_epochstart
+    SCL_epoch_end = args.scl_epochend
     ttl_index = args.ttl_index
+    remove_subject_int = args.exclude_sub
 
     # %% NOTE: local test
     # sub 73
     # ses 1
     # run 5
-    beh_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0081_ses-01_task-social_run-01-pain_beh.csv'
-    physio_fpath = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0081_ses-01_task-cue_run-01-pain_recording-ppg-eda-trigger_physio.tsv'
-    meta_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/spacetop_task-social_run-metadata.csv'
-    dictchannel_json = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/p01_channel.json'
-    beh_df = pd.read_csv(beh_fname)
-    physio_df = pd.read_csv(physio_fpath, sep='\t')
-    runmeta = pd.read_csv(meta_fname)
-    samplingrate = 2000
-    ttl_index = 2
-    tonic_epoch_end = 20
-    tonic_epoch_start = -1
+    # beh_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0081_ses-01_task-social_run-01-pain_beh.csv'
+    # physio_fpath = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0081_ses-01_task-cue_run-01-pain_recording-ppg-eda-trigger_physio.tsv'
+    # meta_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/spacetop_task-social_run-metadata.csv'
+    # dictchannel_json = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/p01_channel.json'
+    # beh_df = pd.read_csv(beh_fname)
+    # physio_df = pd.read_csv(physio_fpath, sep='\t')
+    # runmeta = pd.read_csv(meta_fname)
+    # samplingrate = 2000
+    # ttl_index = 2
+    # SCL_epoch_end = 20
+    # SCL_epoch_start = -1
 
     # %%
     dict_channel = json.load(open(dictchannel_json))
@@ -96,7 +97,7 @@ def main():
 
     # %% set parameters
     sub_list = []
-    remove_subject_int = [1, 2, 3, 4, 5, 6]
+    # remove_subject_int = [1, 2, 3, 4, 5, 6]
     sub_list = utils.initialize.sublist(
         physio_dir, remove_subject_int, slurm_id, stride=stride, sub_zeropad=zeropad)
     ses_list = [1, 3, 4]
@@ -232,35 +233,17 @@ def main():
                 'label': np.array(np.arange(12), dtype='<U21'),
                 'condition': beh_df['param_stimulus_type'].values.tolist()
             }
-            # utils.qcplots.plot_ttl_extraction(physio_df, [
-                                # 'EDA_corrected_02fixation', 'physio_ppg', 'trigger_heat'], event_stimuli)
 
     # NOTE: save dict_onset __________________________________________________________________________________
         dict_savedir = join(output_savedir, 'physio01_SCL', sub, ses)
         dict_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_samplingrate-{samplingrate}_onset.json"
         utils.preprocess.save_dict(dict_savedir, dict_fname, dict_onset)
-    # NOTE: neurokit analysis :+: HIGHLIGHT :+: filter signal ________________________________________________
-
-        # IF you want to use raw signal
-        # eda_signal = nk.signal_sanitize(run_physio["physio_eda"])
-        # eda_raw_plot = plt.plot(run_df["physio_eda"])
-
-    # NOTE: PHASIC_____________________________________________________________________________
-        scr_phasic = utils.preprocess.extract_SCR(df=physio_df,
-                                 eda_col='physio_eda',
-                                 amp_min=0.01,
-                                 event_stimuli=event_stimuli, samplingrate=2000,
-                                 epochs_start=0, epochs_end=5, baseline_correction=True,
-                                 plt_col=['trigger_mri', 'event_fixation', 'event_cue', 'event_expectrating', 'event_stimuli', 'event_actualrating'],
-                                 plt_savedir='./plt')
-        if scr_phasic is None:
-            continue
 
     # NOTE:  TONIC ________________________________________________________________________________
         # TODO: follow up with Yarik
         tonic_length, scl_raw, scl_epoch = utils.preprocess.extract_SCL(df=physio_df_bl,
                                 eda_col='physio_eda_blcorrect', event_dict=event_stimuli, samplingrate=2000,
-                                SCL_start=tonic_epoch_start, SCL_end=tonic_epoch_end, baseline_truefalse=False)
+                                SCL_start=SCL_epoch_start, SCL_end=SCL_epoch_end, baseline_truefalse=False)
 
     #  NOTE: concatenate dataframes __________________________________________________________________________
 
@@ -269,10 +252,9 @@ def main():
         # 1. append columns to the begining (trial order, trial type)
         # NOTE: eda_epochs_level -> scl_epoch
         metadata_SCL = utils.preprocess.combine_metadata_SCL(scl_raw, metadf_dropNA, total_trial = 12)
-        metadata_SCR = utils.preprocess.combine_metadata_SCR(scr_phasic, metadf_dropNA, total_trial = 12)
         # 2. eda_level_timecourse ------------------------------------
         resample_rate = 25
-        tonic_length = np.abs(tonic_epoch_start-tonic_epoch_end) * resample_rate
+        tonic_length = np.abs(SCL_epoch_start-SCL_epoch_end) * resample_rate
         # metadata_df2 = metadf_dropNA.reset_index(drop=True)
         # TODO: * * * * * * * * * * * * * *
         # using the nan values
@@ -305,21 +287,11 @@ def main():
     # NOTE: save tonic data __________________________________________________________________________________
         tonic_save_dir = join(output_savedir, 'physio01_SCL', sub, ses)
         Path(tonic_save_dir).mkdir(parents=True, exist_ok=True)
-        tonic_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{tonic_epoch_start}_epochend-{tonic_epoch_end}_physio-scl.csv"
-        tonictime_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{tonic_epoch_start}_epochend-{tonic_epoch_end}_samplingrate-{resample_rate}_ttlindex-{ttl_index}_physio-scltimecourse.csv"
+        tonic_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{SCL_epoch_start}_epochend-{SCL_epoch_end}_physio-scl.csv"
+        tonictime_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{SCL_epoch_start}_epochend-{SCL_epoch_end}_samplingrate-{resample_rate}_ttlindex-{ttl_index}_physio-scltimecourse.csv"
         SCL_df.to_csv(join(tonic_save_dir, tonic_fname), index = False)
         tonic_timecourse.to_csv(join(tonic_save_dir, tonictime_fname), index = False)
 
-    # NOTE: save phasic data _________________________________________________________________________________
-        phasic_save_dir = join(output_savedir, 'physio02_SCR', sub, ses)
-        Path(phasic_save_dir).mkdir(parents=True, exist_ok=True)
-        # metadata_df = metadata_df.reset_index(drop=True)
-        # scr_phasic = scr_phasic.reset_index(drop=True)
-        SCR_df = pd.concat(
-            [metadata, metadata_SCR], axis=1
-        )
-        phasic_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-0_epochend-5_physio-scr.csv"
-        SCR_df.to_csv(join(phasic_save_dir, phasic_fname), index = False)
         logger.info("__________________ :+: FINISHED :+: __________________\n")
 
 
@@ -350,12 +322,14 @@ def get_args():
                         type=str, help="specify task name (e.g. task-alignvideos)")
     parser.add_argument("-sr", "--samplingrate", type=int,
                         help="sampling rate of acquisition file")
-    parser.add_argument("--tonic-epochstart", type=int,
+    parser.add_argument("--scl-epochstart", type=int,
                         help="beginning of epoch")
-    parser.add_argument("--tonic-epochend", type=int,
+    parser.add_argument("--scl-epochend", type=int,
                         help="end of epoch")
     parser.add_argument("--ttl-index", type=int,
                         help="index of which TTL to use")
+    parser.add_argument('--exclude-sub', nargs='+',
+                        type=int, help="string of intergers, subjects to be removed from code", required=False)
     args = parser.parse_args()
     return args
 

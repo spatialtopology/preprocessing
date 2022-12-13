@@ -19,7 +19,6 @@
 # [x] allow to skip broken files
 # [x] allow to skip completed files
 """
-# %% library
 import argparse
 import datetime
 import glob
@@ -46,8 +45,7 @@ import utils.ttl_extraction
 
 __author__ = "Heejung Jung, Isabel Neumann"
 __copyright__ = "Spatial Topology Project"
-# people who reported bug fixes, made suggestions, etc. but did not actually write the code.
-__credits__ = ["Yaroslav Halchenko"]
+__credits__ = ["Yaroslav Halchenko"]  # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
 __license__ = "MIT"
 __version__ = "0.1"
 __maintainer__ = "Heejung Jung"
@@ -91,8 +89,7 @@ parser.add_argument("--dictchannel",
                     type=str, help=".json file for changing physio data channel names | key:value == old_channel_name:new_channel_name")
 parser.add_argument("-sid", "--slurm-id", type=int,
                     help="specify slurm array id")
-parser.add_argument("--stride", type=int,
-                    help="how many participants to batch per jobarray")
+parser.add_argument("--stride", type=int, help="how many participants to batch per jobarray")
 parser.add_argument("-z", "--zeropad",
                     type=int, help="how many zeros are padded for BIDS subject id")
 parser.add_argument("-t", "--task",
@@ -114,12 +111,12 @@ log_dir = args.output_logdir
 output_savedir = args.output_savedir
 metadata = args.metadata
 dictchannel_json = args.dictchannel
-slurm_id = args.slurm_id  # e.g. 1, 2
-stride = args.stride  # e.g. 5, 10, 20, 1000
-zeropad = args.zeropad  # sub-0016 -> 4
-task = args.task  # e.g. 'task-social' 'task-fractional' 'task-alignvideos'
+slurm_id = args.slurm_id # e.g. 1, 2
+stride = args.stride # e.g. 5, 10, 20, 1000
+zeropad = args.zeropad # sub-0016 -> 4
+task = args.task # e.g. 'task-social' 'task-fractional' 'task-alignvideos'
 # run_cutoff = args.run_cutoff # e.g. 300
-samplingrate = args.samplingrate  # e.g. 2000
+samplingrate = args.samplingrate # e.g. 2000
 tonic_epoch_start = args.tonic_epochstart
 tonic_epoch_end = args.tonic_epochend
 ttl_index = args.ttl_index
@@ -131,50 +128,74 @@ plt.rcParams['font.size'] = 14
 
 # %% set parameters
 sub_list = []
+#biopac_list = next(os.walk(physio_dir))[1]
 remove_int = [1, 2, 3, 4, 5, 6]
-sub_list = utils.initialize.sublist(
-    physio_dir, remove_int, slurm_id, stride=stride, sub_zeropad=zeropad)
+sub_list = utils.initialize.sublist(physio_dir, remove_int, slurm_id, stride=stride, sub_zeropad=zeropad)
 ses_list = [1, 3, 4]
 run_list = [1, 2, 3, 4, 5, 6]
 sub_ses = list(itertools.product(sorted(sub_list), ses_list, run_list))
+# """
+# # NOTE: TEST ______________________________________
+# """
+
+# sub_list = ['sub-0074']; ses_list = [1]; run_list = [1,2,3,4,5,6]
+# sub_ses = list(itertools.product(sorted(sub_list), ses_list, run_list))
+# log_dir = '/Users/h/Dropbox/projects_dropbox/spacetop_biopac/sandbox'
+# physio_dir = '/Users/h/Dropbox/projects_dropbox/spacetop_biopac/sandbox'
+# """
+# # NOTE: TEST ______________________________________
+# """
+logger_fname = os.path.join(log_dir, f"data-physio_step-03-groupanalysis_{datetime.date.today().isoformat()}.txt")
+
 
 # set up logger _______________________________________________________________________________________
-logger_fname = os.path.join(
-    log_dir, f"data-physio_step-03-groupanalysis_{datetime.date.today().isoformat()}.txt")
 
 runmeta = pd.read_csv(metadata)
-# join(project_dir, "data/spacetop_task-social_run-metadata.csv"))
-# TODO: come up with scheme to update logger files
+    # join(project_dir, "data/spacetop_task-social_run-metadata.csv"))
+#TODO: come up with scheme to update logger files
 f = open(logger_fname, "w")
 logger = utils.initialize.logger(logger_fname, "physio")
 
+def extract_bids(fname):
+    entities = dict(
+        match.split('-', 1) for match in fname.split('_') if '-' in match)
+    sub_num = int(entities['sub'])
+    ses_num = int(entities['ses'])
+    if 'run' in entities['run'].split('-'):
+        run_list = entities['run'].split('-')
+        run_list.remove('run')
+        run_num = run_list[0]
+        run_type = run_list[-1]
+    else:
+        run_num = int(entities['run'].split('-')[0])
+        run_type = entities['run'].split('-')[-1]
+    return sub_num, ses_num, run_num, run_type
 # %%____________________________________________________________________________________________________
 flag = []
 for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
 
-    # NOTE: open physio dataframe (check if exists) __________________________________________________________
+# NOTE: open physio dataframe (check if exists) __________________________________________________________
 
-    ses = f"ses-{ses_ind:02d}"
-    run = f"run-{run_ind:02d}"
+    ses = f"ses-{ses_ind:02d}"; run = f"run-{run_ind:02d}"
     logger.info(
         "__________________%s %s %s__________________", sub, ses, run)
-    physio_flist = utils.checkfiles.glob_physio_bids(
-        physio_dir, sub, ses, task, run)
+    physio_flist = utils.checkfiles.glob_physio_bids(physio_dir,sub,ses,task,run)
 
     try:
         physio_fpath = physio_flist[0]
     except IndexError:
-        logger.error(
-            "\t* missing physio file - %s %s %s DOES NOT exist", sub, ses, run)
+        logger.error("\t* missing physio file - %s %s %s DOES NOT exist", sub, ses, run)
         continue
     phasic_fname = os.path.basename(physio_fpath)
     bids_dict = {}
     bids_dict['sub'] = sub = utils.initialize.extract_bids(phasic_fname, 'sub')
     bids_dict['ses'] = ses = utils.initialize.extract_bids(phasic_fname, 'ses')
-    bids_dict['task'] = task = utils.initialize.extract_bids(
-        phasic_fname, 'task')
+    bids_dict['task']= task = utils.initialize.extract_bids(phasic_fname, 'task')
     bids_dict['run'] = run = f"run-{run_ind:02d}"
+    #bids_dict['run'] = run = utils.initialize.extract_bids(phasic_fname, 'run')
     logger.info(bids_dict)
+    # sub_num, ses_num, run_num, run_type = extract_bids(
+    #     os.path.basename(physio_fpath))
     logger.info(
         "__________________%s %s %s__________________", sub, ses, run)
     # save_dir = join(project_dir, 'data', 'physio', 'physio02_preproc', sub,
@@ -202,7 +223,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     logger.info({physio_fname})
     task = [match for match in physio_fname.split('_') if "task" in match][0]
     # DEP: physio_df, samplingrate = nk.read_acqknowledge(physio_fpath) output file is pandas
-    physio_df = pd.read_csv(physio_fpath, sep='\t')
+    physio_df = pd.read_csv(physio_fpath, sep = '\t')
 
 
 # NOTE: identify behavioral file for corresponding sub/ses/run ____________________________________
@@ -220,8 +241,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
         match for match in os.path.basename(beh_fname).split('_')
         if "run" in match
     ][0]).split('-')[2]
-    print(
-        f"__________________ {sub} {ses} {run} {run_type} ____________________")
+    print(f"__________________ {sub} {ses} {run} {run_type} ____________________")
     metadata_df = beh_df[[
         'src_subject_id', 'session_id', 'param_task_name', 'param_run_num',
         'param_cue_type', 'param_stimulus_type', 'param_cond_type'
@@ -245,10 +265,9 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     physio_df['EDA_corrected_02fixation'] = physio_df[
         'physio_eda'] - baseline_method02
 
-    logger.info(
-        f"* baseline using fixation from entire run: {baseline_method02}")
+    logger.info(f"* baseline using fixation from entire run: {baseline_method02}")
 
-# %% NOTE: extract epochs ___________________________________________________________________________________
+# NOTE: extract epochs ___________________________________________________________________________________
     # dict_channel = {'event_cue': 'event_cue',
     # 'event_expectrating': 'event_expectrating',
     # 'event_stimuli': 'event_stimuli',
@@ -258,30 +277,28 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     for i, (key, value) in enumerate(dict_channel.items()):
         dict_onset[value] = {}
 
-        utils.preprocess._binarize_channel(physio_df,
-                                           source_col=key,
-                                           new_col=value,
-                                           threshold=None,
-                                           binary_high=5,
-                                           binary_low=0)
-        dict_onset[value] = utils.preprocess._identify_boundary(
-            physio_df, value)
-        logger.info("\t* total number of %s trials: %d",
-                    value, len(dict_onset[value]['start']))
+        utils.preprocess.binarize_channel(physio_df,
+                                        source_col=key,
+                                        new_col=value,
+                                        threshold=None,
+                                        binary_high=5,
+                                        binary_low=0)
+        dict_onset[value] = utils.preprocess.identify_boundary(physio_df, value)
+        logger.info("\t* total number of %s trials: %d" ,value, len(dict_onset[value]['start']))
 
 
-# %% NOTE: TTL extraction ___________________________________________________________________________________
+# NOTE: TTL extraction ___________________________________________________________________________________
     if run_type == 'pain':
         final_df = pd.DataFrame()
         # binarize TTL channels (raise error if channel has no TTL, despite being a pain run)
         metadata_df, plateau_start = utils.ttl_extraction.ttl_extraction(
-            physio_df=physio_df,
-            dict_beforettl=dict_onset['event_expectrating'],
-            dict_afterttl=dict_onset['event_actualrating'],
-            dict_stimuli=dict_onset['event_stimuli'],
-            samplingrate=samplingrate,
-            metadata_df=metadata_df,
-            ttl_index=ttl_index
+            physio_df = physio_df,
+            dict_beforettl = dict_onset['event_expectrating'],
+            dict_afterttl = dict_onset['event_actualrating'],
+            dict_stimuli = dict_onset['event_stimuli'],
+            samplingrate = samplingrate,
+            metadata_df = metadata_df,
+            ttl_index = ttl_index
         )
 
         # create a dictionary for neurokit. this will serve as the events
@@ -310,7 +327,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
         run_physio = physio_df[[
             'EDA_corrected_02fixation', 'physio_ppg', 'event_stimuli'
         ]]
-        # run_physio
+        #run_physio
         stim_plot = nk.events_plot(event_stimuli, run_physio)
 
 # NOTE: neurokit analysis :+: HIGHLIGHT :+: filter signal ________________________________________________
@@ -329,8 +346,6 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
                                    method="butterworth",
                                    order=2)  # ISABEL: Detrend
     scr_detrend = nk.signal_detrend(scr_filters)
-    # scl_resampled = nk.signal_resample(
-        # scr_detrend,  method='interpolation', sampling_rate=2000, desired_sampling_rate=resample_rate)
 
     scr_decomposed = nk.eda_phasic(nk.standardize(scr_detrend),
                                    sampling_rate=samplingrate)
@@ -359,8 +374,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
 # NOTE:  TONIC ________________________________________________________________________________
     # tonic_epoch_start = -1
     # tonic_epoch_end = 8
-    resample_rate = 25
-
+    tonic_length = np.abs(tonic_epoch_start-tonic_epoch_end) * samplingrate
     scl_signal = nk.signal_sanitize(physio_df['EDA_corrected_02fixation'])
     scl_filters = nk.signal_filter(scl_signal,
                                    sampling_rate=samplingrate,
@@ -368,10 +382,6 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
                                    method="butterworth",
                                    order=2)  # ISABEL: Detrend
     scl_detrend = nk.signal_detrend(scl_filters)
-    scl_resampled = nk.signal_resample(
-        scl_detrend,  method='interpolation', sampling_rate=2000, desired_sampling_rate=resample_rate)
-    event_stimuli_copy = event_stimuli['onset']
-    event_stimuli['onset'] = event_stimuli_copy/(samplingrate/resample_rate)
     scl_decomposed = nk.eda_phasic(nk.standardize(scl_detrend),
                                    sampling_rate=samplingrate)
     scl_signals = pd.DataFrame({
@@ -381,12 +391,12 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     scl_processed = pd.concat([scl_signals, scl_decomposed['EDA_Tonic']],
                               axis=1)
     try:
-        scl_raw = nk.epochs_create(scl_resampled,
-                                   event_stimuli,
-                                   sampling_rate=resample_rate,
-                                   epochs_start=tonic_epoch_start,
-                                   epochs_end=tonic_epoch_end,
-                                   baseline_correction=False)
+        scl_epoch = nk.epochs_create(scl_processed['EDA_Tonic'],
+                                     event_stimuli,
+                                     sampling_rate=samplingrate,
+                                     epochs_start=tonic_epoch_start,
+                                     epochs_end=tonic_epoch_end,
+                                     baseline_correction=False)
     except:
         logger.info("has NANS in the dataframe")
         continue
@@ -400,14 +410,14 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
                 'trigger_heat'
             ]], scr_processed
         ],
-            axis=1)
+                        axis=1)
     else:
         bio_df = pd.concat([
             physio_df[[
                 'trigger_mri', 'event_fixation', 'event_cue', 'event_expectrating', 'event_stimuli', 'event_actualrating',
             ]], scr_processed
         ],
-            axis=1)
+                        axis=1)
     # TODO: find a way to save neurokit plots
     # fig_save_dir = join(project_dir, 'data', 'physio', 'qc', sub, ses)
     #Path(fig_save_dir).mkdir(parents=True, exist_ok=True)
@@ -415,55 +425,54 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     # processed_fig = nk.events_plot(
     #     event_stimuli,
     #     bio_df[['administer', 'EDA_Tonic', 'EDA_Phasic', 'SCR_Peaks']])
-    # plt.show()
+    #plt.show()
     # TODO: plot save
     # Tonic level ______________________________________________________________________________________
     # 1. append columns to the begining (trial order, trial type)
-    # NOTE: eda_epochs_level -> scl_raw
+    # NOTE: eda_epochs_level -> scl_epoch
     metadata_tonic = pd.DataFrame(
-        index=list(range(len(scl_raw))),
+        index=list(range(len(scl_epoch))),
         columns=['trial_order', 'iv_stim', 'mean_signal'])
     try:
-        for ind in range(len(scl_raw)):
+        for ind in range(len(scl_epoch)):
             metadata_tonic.iloc[
                 ind, metadata_tonic.columns.
-                get_loc('mean_signal')] = scl_raw[ind]["Signal"].mean()
+                get_loc('mean_signal')] = scl_epoch[ind]["Signal"].mean()
             metadata_tonic.iloc[
                 ind, metadata_tonic.columns.
-                get_loc('trial_order')] = scl_raw[ind]['Label'].unique()[0]
+                get_loc('trial_order')] = scl_epoch[ind]['Label'].unique()[0]
             metadata_tonic.iloc[
                 ind, metadata_tonic.columns.
-                get_loc('iv_stim')] = scl_raw[ind]["Condition"].unique()[0]
+                get_loc('iv_stim')] = scl_epoch[ind]["Condition"].unique()[0]
     except:
-        for ind in range(len(scl_raw)):
+        for ind in range(len(scl_epoch)):
             metadata_tonic.iloc[
                 ind,
-                metadata_tonic.columns.get_loc('mean_signal')] = scl_raw[str(
+                metadata_tonic.columns.get_loc('mean_signal')] = scl_epoch[str(
                     ind)]["Signal"].mean()
             metadata_tonic.iloc[
                 ind,
-                metadata_tonic.columns.get_loc('trial_order')] = scl_raw[str(
+                metadata_tonic.columns.get_loc('trial_order')] = scl_epoch[str(
                     ind)]['Label'].unique()[0]
             metadata_tonic.iloc[
-                ind, metadata_tonic.columns.get_loc('iv_stim')] = scl_raw[
+                ind, metadata_tonic.columns.get_loc('iv_stim')] = scl_epoch[
                     str(ind)]["Condition"].unique()[0]
     # 2. eda_level_timecourse
-    tonic_length = np.abs(tonic_epoch_start-tonic_epoch_end) * resample_rate
     eda_level_timecourse = pd.DataFrame(
-        index=list(range(len(scl_raw))),
-        columns=['time_' + str(col) for col in list(np.arange(resample_rate * np.abs(tonic_epoch_end-tonic_epoch_start)))])
+        index=list(range(len(scl_epoch))),
+        columns=['time_' + str(col) for col in list(np.arange(tonic_length))])
     try:
-        for ind in range(len(scl_raw)):
+        for ind in range(len(scl_epoch)):
             eda_level_timecourse.iloc[
-                ind, :] = scl_raw[str(ind)]['Signal'].to_numpy().reshape(
-                    1, resample_rate * np.abs(tonic_epoch_end-tonic_epoch_start)
-            )
-    except:
-        for ind in range(len(scl_raw)):
-            eda_level_timecourse.iloc[
-                ind, :] = scl_raw[ind]['Signal'].to_numpy().reshape(
+                ind, :] = scl_epoch[str(ind)]['Signal'].to_numpy().reshape(
                     1, tonic_length
-            )
+                )
+    except:
+        for ind in range(len(scl_epoch)):
+            eda_level_timecourse.iloc[
+                ind, :] = scl_epoch[ind]['Signal'].to_numpy().reshape(
+                    1, tonic_length
+                )
     tonic_df = pd.concat([metadata_df, metadata_tonic], axis=1)
     tonic_timecourse = pd.concat(
         [metadata_df, metadata_tonic, eda_level_timecourse], axis=1)
@@ -471,7 +480,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     tonic_save_dir = join(output_savedir, 'physio01_SCL', sub, ses)
     Path(tonic_save_dir).mkdir(parents=True, exist_ok=True)
     tonic_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{tonic_epoch_start}_epochend-{tonic_epoch_end}_physio-scl.csv"
-    tonictime_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{tonic_epoch_start}_epochend-{tonic_epoch_end}_resample-{resample_rate}_ttlindex-{ttl_index}_physio-scltimecourse.csv"
+    tonictime_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{tonic_epoch_start}_epochend-{tonic_epoch_end}_physio-scltimecourse.csv"
     tonic_df.to_csv(join(tonic_save_dir, tonic_fname))
     tonic_timecourse.to_csv(join(tonic_save_dir, tonictime_fname))
 

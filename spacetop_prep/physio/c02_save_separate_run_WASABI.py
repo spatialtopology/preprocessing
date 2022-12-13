@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-""" 
+"""
 save_seperate_run_WASABI.py
 adjustments for WASABI
-Separates acq into runs and saves as bids format. 
+Separates acq into runs and saves as bids format.
 This script reads the acquisition file collected straight from our biopac PC
 
 Parameters
@@ -12,28 +12,29 @@ operating: str
 task: str
     options: 'task-social', 'task-fractional' 'task-alignvideos', 'task-faces', 'task-shortvideos'
 run_cutoff: int
-    threshold for determining "kosher" runs versus not. 
-    for instance, task-social is 398 seconds long. I use the threshold of 300 as a threshold. 
+    threshold for determining "kosher" runs versus not.
+    for instance, task-social is 398 seconds long. I use the threshold of 300 as a threshold.
     Anything shorter than that is discarded and not converted into a run
 """
 
+import datetime
+import glob
+import itertools
+import json
+import logging
+import os
+import shutil
+import sys
+from itertools import compress
+from os.path import join
+from pathlib import Path
+
+import matplotlib.pyplot as plt
 # %% libraries ________________________
 import neurokit2 as nk
-import pandas as pd
 import numpy as np
+import pandas as pd
 import seaborn as sns
-import matplotlib.pyplot as plt
-import itertools
-import os
-import sys
-import shutil
-import glob
-from pathlib import Path
-import json
-from itertools import compress
-import datetime
-from os.path import join
-import logging
 
 pwd = os.getcwd()
 main_dir = Path(pwd).parents[0]
@@ -42,8 +43,7 @@ sys.path.insert(0, os.path.join(main_dir))
 print(sys.path)
 
 from . import utils
-from .utils import preprocess
-from .utils import initialize
+from .utils import initialize, preprocess
 
 __author__ = "Heejung Jung"
 __copyright__ = "Spatial Topology Project"
@@ -124,9 +124,9 @@ for acq in sorted(flat_acq_list):
 # NOTE: extract information from filenames _______________________________________________________________
     filename = os.path.basename(acq)
     bids_dict = {}
-    bids_dict['sub'] = sub  = utils.initialize._extract_bids(filename, 'sub')
-    bids_dict['ses'] = ses  = utils.initialize._extract_bids(filename, 'ses')
-    bids_dict['task']= task = utils.initialize._extract_bids(filename, 'task')
+    bids_dict['sub'] = sub  = utils.initialize.extract_bids(filename, 'sub')
+    bids_dict['ses'] = ses  = utils.initialize.extract_bids(filename, 'ses')
+    bids_dict['task']= task = utils.initialize.extract_bids(filename, 'task')
 
 # NOTE: open physio dataframe (check if exists) __________________________________________________________
     if os.path.exists(acq):
@@ -138,7 +138,7 @@ for acq in sorted(flat_acq_list):
         logger.debug(logger.error)
         logger.error(acq)
         continue
-        
+
 # NOTE create an mr_aniso channel for TTL channel _________________________________________________________________________
     try:
         main_df['mr_aniso'] = main_df[dict_column['fMRI_ttl']].rolling(
@@ -148,9 +148,9 @@ for acq in sorted(flat_acq_list):
         logger.error(f"\tno MR trigger channel - this was the early days. re run and use the *trigger channel*")
         logger.error(acq)
         continue
-        
+
     try:
-        utils.preprocess._binarize_channel(main_df,
+        utils.preprocess.binarize_channel(main_df,
                                         source_col='mr_aniso',
                                         new_col='spike',
                                         threshold=40,
@@ -162,7 +162,7 @@ for acq in sorted(flat_acq_list):
         logger.exception("message")
         continue
 
-    dict_spike = utils.preprocess._identify_boundary(main_df, 'spike')
+    dict_spike = utils.preprocess.identify_boundary(main_df, 'spike')
     logger.info(f"number of TRs within experiment: {len(dict_spike['start'])}")
     main_df['bin_spike'] = 0
     main_df.loc[dict_spike['start'], 'bin_spike'] = 5
@@ -172,7 +172,7 @@ for acq in sorted(flat_acq_list):
             window=int(samplingrate-100)).mean()
         mid_val = (np.max(main_df['mr_aniso_boxcar']) -
                 np.min(main_df['mr_aniso_boxcar'])) / 5
-        utils.preprocess._binarize_channel(main_df,
+        utils.preprocess.binarize_channel(main_df,
                                         source_col='mr_aniso_boxcar',
                                         new_col='mr_boxcar',
                                         threshold=mid_val,
@@ -183,7 +183,7 @@ for acq in sorted(flat_acq_list):
         logger.debug(logger.error)
         continue
 
-    dict_runs = utils.preprocess._identify_boundary(main_df, 'mr_boxcar')
+    dict_runs = utils.preprocess.identify_boundary(main_df, 'mr_boxcar')
     logger.info(f"* start_df: {dict_runs['start']}")
     logger.info(f"* stop_df: {dict_runs['stop']}")
     logger.info(f"* total of {len(dict_runs['start'])} runs")
@@ -194,13 +194,13 @@ for acq in sorted(flat_acq_list):
     sdf['adjusted_boxcar'] = sdf['bin_spike'].rolling(window=1900).mean()
     mid_val = (np.max(sdf['adjusted_boxcar']) -
                np.min(sdf['adjusted_boxcar'])) / 4
-    utils.preprocess._binarize_channel(sdf,
+    utils.preprocess.binarize_channel(sdf,
                                        source_col='adjusted_boxcar',
                                        new_col='adjust_run',
                                        threshold=mid_val,
                                        binary_high=5,
                                        binary_low=0)
-    dict_runs_adjust = utils.preprocess._identify_boundary(sdf, 'adjust_run')
+    dict_runs_adjust = utils.preprocess.identify_boundary(sdf, 'adjust_run')
     logger.info(f"* adjusted start_df: {dict_runs_adjust['start']}")
     logger.info(f"* adjusted stop_df: {dict_runs_adjust['stop']}")
 
@@ -225,7 +225,7 @@ for acq in sorted(flat_acq_list):
         ref_dict = scannote_reference.to_dict('list')
         run_basename = f"{sub}_{ses}_{task}_CLEAN_RUN-TASKTYLE_recording-ppg-eda_physio.acq"
         utils.initialize._assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df, save_dir,run_basename,bids_dict)
-        # for ind, r in enumerate(clean_runlist): 
+        # for ind, r in enumerate(clean_runlist):
         #     clean_run = list(ref_dict.keys())[ind]
         #     task_type = ref_dict[clean_run][0]
         #     run_df = main_df.iloc[dict_runs_adjust['start'][r]:dict_runs_adjust['stop'][r]]

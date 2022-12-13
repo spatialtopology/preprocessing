@@ -19,7 +19,7 @@ Table of contents
 * [About](#about)
 * [Prerequisites](#prerequisites)
 * [Usage](#usage)
-* [Questions](#questions)
+* [Questions](#common-questions)
 * [Getting help](#getting-help)
 * [Contributing](#contributing)
 * [License](#license)
@@ -53,21 +53,38 @@ conda env create -f biopac.yaml
 
 Usage
 ----------------
-1. Rename to BIDS-compliant format: Sort raw .acq into semi-BIDS format
+#### 1. Rename to BIDS-compliant format: Sort raw .acq into semi-BIDS format
 ```
-python c01_bidsify_discovery.py
+python ${PWD}/c01_bidsifysort.py \
+--raw-physiodir ${INPUT_DIR} \
+--sub-zeropad ${SUB_ZEROPAD} \
+--ses-zeropad ${SES_ZEROPAD} \
+--logdir ${LOG_DIR}
 ```
-2. Identify run transitions and save as csv: NOTE: need to pass in arguments
+
+#### 2. Identify run transitions and save as csv
 ```
-python c02_save_separate_run.py --operating ${CLUSTER} --slurm_id ${SLURM_ID} --task ${TASK} --run-cutoff ${CUTOFF}
->>> python c02_save_separate_run.py --operating 'discovery' --slurm_id 1 --task 'task-alignvideos' --run-cutoff 300
+python ${PWD}/c02_save_separate_run.py \
+--topdir ${TOPDIR} \
+--metadata ${METADATA} \
+--slurm_id ${SLURM_ID} \
+--stride ${STRIDE} \
+--sub-zeropad ${SUB_ZEROPAD} \
+--task ${TASK} \
+--run-cutoff ${CUTOFF} \
+--colnamechange ${CHANGECOL} \
+--tasknamechange ${CHANGETASK} \
+--exclude_sub 1 2 3 4 5 6
+
+>>> python c02_save_separate_run.py --topdir ./data/physio --metadata ./data/demo/metadata.csv --slurm_id 1 --stride 10 sub-zeropad 4 --task 'task-alignvideos' --run-cutoff 300 --colnamechange ./data/demo/colnamechange.json --exclude_sub 1 2 3 4 5 6
 ```
-3. Preprocess signals and save as csv for group level analyses<br>
+
+#### 3. Preprocess signals and save as csv for group level analyses<br>
 Check out our tutorial!
 [![Open In Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Naereen/badges)
 
 
-
+<!--
 Details Steps (TODO coding)
 ------------------
 1) [x] glob acquisitions files
@@ -79,16 +96,16 @@ Details Steps (TODO coding)
 6-1) if longer than threshold, include and save as separate run
 6-2) if less than expected, flag and keep a note in the flatlist. Pop that index using boolean mask.
 7) [x] save using bids naming convention
+-->
 
-
-Questions
+Common Questions
 ------------------
-### Q1) What if the data is shorter than expected run?
-> A: Depending on the threshold you provide, the code will identify a block of timepoints as a run or not.
+#### Q1) What if the data is shorter than expected run?
+> A: Everything depends on the `--run-cutoff` threshold that you provide. Depending on the threshold you provide, the code will identify a block of timepoints as a run or discard it.
 
-### Q2) what if data is longer than expected (e.g. forgot to start and stop run)?
+#### Q2) what if data is longer than expected (e.g. forgot to start and stop run)?
 > A: No worries, we're using the channel with the MRtriggers as our criteria.
-The data can't be longer than the MRI protocol, if the criteria is based on the MRtriggers ;) In other words, we're identifying run boundaries based on the scanner pulse, not on the experimenter's operation.
+The data can't be longer than the MRI protocol, if the criteria is based on the MRtriggers. In other words, we're identifying run boundaries based on the scanner pulse, not on the experimenter's operation.
 
 Getting Help
 ------------------

@@ -30,6 +30,7 @@ import sys
 from os.path import join
 from pathlib import Path
 from statistics import mean
+# %% libraries _________________________________________________________________________________________
 from tkinter import Variable
 
 import matplotlib.pyplot as plt
@@ -39,9 +40,7 @@ import pandas as pd
 import utils.checkfiles
 import utils.initialize
 import utils.preprocess
-import utils.ttl_extraction
-
-#from spacetop_prep.physio import utils
+from utils import ttl_extraction
 
 __author__ = "Heejung Jung, Isabel Neumann"
 __copyright__ = "Spatial Topology Project"
@@ -70,6 +69,8 @@ boundary channel (cue) (rating)
 # sys.path.insert(0, os.path.join(main_dir))
 # print(sys.path)
 
+
+
 # %%
 parser = argparse.ArgumentParser()
 # parser.add_argument("-o", "--operating",
@@ -96,12 +97,6 @@ parser.add_argument("-t", "--task",
                     type=str, help="specify task name (e.g. task-alignvideos)")
 parser.add_argument("-sr", "--samplingrate", type=int,
                     help="sampling rate of acquisition file")
-parser.add_argument("--tonic-epochstart", type=int,
-                    help="beginning of epoch")
-parser.add_argument("--tonic-epochend", type=int,
-                    help="end of epoch")
-parser.add_argument("--ttl-index", type=int,
-                    help="index of which TTL to use")
 args = parser.parse_args()
 
 # operating = args.operating # 'local', 'discovery'
@@ -117,9 +112,6 @@ zeropad = args.zeropad # sub-0016 -> 4
 task = args.task # e.g. 'task-social' 'task-fractional' 'task-alignvideos'
 # run_cutoff = args.run_cutoff # e.g. 300
 samplingrate = args.samplingrate # e.g. 2000
-tonic_epoch_start = args.tonic_epochstart
-tonic_epoch_end = args.tonic_epochend
-ttl_index = args.ttl_index
 
 dict_channel = json.load(open(dictchannel_json))
 
@@ -127,6 +119,18 @@ plt.rcParams['figure.figsize'] = [15, 5]  # Bigger images
 plt.rcParams['font.size'] = 14
 
 # %% set parameters
+# if cluster == 'discovery':
+#     physio_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social/data/physio/physio01_raw'  #'/Volumes/spacetop/biopac/dartmouth/b04_finalbids/'
+#     beh_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social/data/beh/d02_preproc-beh'  # '/Volumes/spacetop_projects_social/data/d02_preproc-beh'
+#     project_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social'
+#     log_dir = join(project_dir, "scripts", "logcenter")
+
+# else:
+#     #physio_dir = '/Volumes/spacetop_projects_social/data/physio/physio01_raw'#'/Volumes/spacetop/biopac/dartmouth/b04_finalbids/'
+#     physio_dir = '/Volumes/spacetop/biopac/dartmouth/b04_finalbids/task-social'
+#     beh_dir = '/Volumes/spacetop_projects_social/data/beh/d02_preproc-beh'  # '/Volumes/spacetop_projects_social/data/d02_preproc-beh'
+#     project_dir = '/Volumes/spacetop_projects_social'
+#     log_dir = join(project_dir, "scripts", "logcenter")
 sub_list = []
 #biopac_list = next(os.walk(physio_dir))[1]
 remove_int = [1, 2, 3, 4, 5, 6]
@@ -194,7 +198,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     bids_dict['run'] = run = f"run-{run_ind:02d}"
     #bids_dict['run'] = run = utils.initialize.extract_bids(phasic_fname, 'run')
     logger.info(bids_dict)
-    # sub_num, ses_num, run_num, run_type = _extract_bids(
+    # sub_num, ses_num, run_num, run_type = extract_bids(
     #     os.path.basename(physio_fpath))
     logger.info(
         "__________________%s %s %s__________________", sub, ses, run)
@@ -277,13 +281,13 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     for i, (key, value) in enumerate(dict_channel.items()):
         dict_onset[value] = {}
 
-        utils.preprocess._binarize_channel(physio_df,
+        utils.preprocess.binarize_channel(physio_df,
                                         source_col=key,
                                         new_col=value,
                                         threshold=None,
                                         binary_high=5,
                                         binary_low=0)
-        dict_onset[value] = utils.preprocess._identify_boundary(physio_df, value)
+        dict_onset[value] = utils.preprocess.identify_boundary(physio_df, value)
         logger.info("\t* total number of %s trials: %d" ,value, len(dict_onset[value]['start']))
 
 
@@ -297,9 +301,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
             dict_afterttl = dict_onset['event_actualrating'],
             dict_stimuli = dict_onset['event_stimuli'],
             samplingrate = samplingrate,
-            metadata_df = metadata_df,
-            ttl_index = ttl_index
-        )
+            metadata_df = metadata_df)
 
         # create a dictionary for neurokit. this will serve as the events
         event_stimuli = {
@@ -372,8 +374,8 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     scr_phasic = nk.eda_eventrelated(scr_epochs)
 
 # NOTE:  TONIC ________________________________________________________________________________
-    # tonic_epoch_start = -1
-    # tonic_epoch_end = 8
+    tonic_epoch_start = -1
+    tonic_epoch_end = 8
     tonic_length = np.abs(tonic_epoch_start-tonic_epoch_end) * samplingrate
     scl_signal = nk.signal_sanitize(physio_df['EDA_corrected_02fixation'])
     scl_filters = nk.signal_filter(scl_signal,
@@ -400,6 +402,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     except:
         logger.info("has NANS in the dataframe")
         continue
+
 #  NOTE: concatenate dataframes __________________________________________________________________________
     # TODO: create internal function
     # Make it more flexible for selecting which columns to visualize
@@ -421,6 +424,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     # TODO: find a way to save neurokit plots
     # fig_save_dir = join(project_dir, 'data', 'physio', 'qc', sub, ses)
     #Path(fig_save_dir).mkdir(parents=True, exist_ok=True)
+
     #fig_savename = f"{sub}_{ses}_{run}-{run_type}_physio-scr-scl.png"
     # processed_fig = nk.events_plot(
     #     event_stimuli,
@@ -428,6 +432,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     #plt.show()
     # TODO: plot save
     # Tonic level ______________________________________________________________________________________
+
     # 1. append columns to the begining (trial order, trial type)
     # NOTE: eda_epochs_level -> scl_epoch
     metadata_tonic = pd.DataFrame(
@@ -473,14 +478,16 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
                 ind, :] = scl_epoch[ind]['Signal'].to_numpy().reshape(
                     1, tonic_length
                 )
+
+
     tonic_df = pd.concat([metadata_df, metadata_tonic], axis=1)
     tonic_timecourse = pd.concat(
         [metadata_df, metadata_tonic, eda_level_timecourse], axis=1)
 # NOTE: save tonic data __________________________________________________________________________________
     tonic_save_dir = join(output_savedir, 'physio01_SCL', sub, ses)
     Path(tonic_save_dir).mkdir(parents=True, exist_ok=True)
-    tonic_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{tonic_epoch_start}_epochend-{tonic_epoch_end}_physio-scl.csv"
-    tonictime_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{tonic_epoch_start}_epochend-{tonic_epoch_end}_physio-scltimecourse.csv"
+    tonic_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart--1_epochend-8_physio-scl.csv"
+    tonictime_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart--1_epochend-8_physio-scltimecourse.csv"
     tonic_df.to_csv(join(tonic_save_dir, tonic_fname))
     tonic_timecourse.to_csv(join(tonic_save_dir, tonictime_fname))
 
