@@ -12,7 +12,6 @@
 
 conda activate biopac
 
-# CLUSTER="discovery" # local
 PROJECT_DIR="/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social"
 PHYSIO_DIR="${PROJECT_DIR}/data/physio/physio03_bids"
 BEH_DIR="${PROJECT_DIR}/data/beh/beh02_preproc"
