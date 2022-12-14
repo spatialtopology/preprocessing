@@ -55,7 +55,7 @@ def main():
     logger_fname = os.path.join(
         log_savedir, f"data-physio_step-01-bidsify_{datetime.date.today().isoformat()}.txt")
     f = open(logger_fname, "w")
-    logger = utils.initialize._logger(logger_fname)
+    logger = utils.initialize.logger(logger_fname, "bidsify")
 
     # NOTE: glob all acquisition files in physio_dir ___________________________________
     acq_list = glob.glob(os.path.join(physio_dir, 'physio01_raw', '**', '*.acq'), recursive = True)
