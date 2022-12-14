@@ -23,7 +23,7 @@ Table of contents
 * [Getting help](#getting-help)
 * [Contributing](#contributing)
 * [License](#license)
-* [Contributors](#Contributors)
+* [Contributors](#contributors)
 * [Acknowledgments](#acknowledgments)
 
 About
@@ -79,9 +79,29 @@ python ${PWD}/c02_save_separate_run.py \
 >>> python c02_save_separate_run.py --topdir ./data/physio --metadata ./data/demo/metadata.csv --slurm_id 1 --stride 10 sub-zeropad 4 --task 'task-alignvideos' --run-cutoff 300 --colnamechange ./data/demo/colnamechange.json --exclude_sub 1 2 3 4 5 6
 ```
 
-#### 3. Preprocess signals and save as csv for group level analyses<br>
-Check out our tutorial!
-[![Open In Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Naereen/badges)
+#### 3. Preprocess signals and save as csv for group level analyses -- Check out our tutorial!
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/spatialtopology/spacetop-prep/blob/master/spacetop_prep/physio/walkthrough_p01_grouplevel.ipynb)
+<br>
+```
+python ${PWD}/p01_grouplevel_01SCL.py \
+--input-physiodir ${PHYSIO_DIR} \
+--input-behdir ${BEH_DIR} \
+--output-logdir ${OUTPUT_LOGDIR} \
+--output-savedir ${OUTPUT_SAVEDIR} \
+--metadata ${METADATA} \
+--dictchannel ${CHANNELJSON} \
+--slurm-id ${SLURM_ID} \
+--stride ${STRIDE} \
+--zeropad ${ZEROPAD} \
+--task ${TASK} \
+-sr ${SAMPLINGRATE} \
+--ttl-index ${TTL_INDEX} \
+--scl-epochstart ${SCR_EPOCH_START} \
+--scl-epochend ${SCR_EPOCH_END} \
+--exclude_sub 1 2 3 4 5 6
+```
+
+
 
 
 <!--
@@ -171,8 +191,9 @@ Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 * Heejung Jung [@jungheejung](github.com/jungheejung)
-* Isabel Neumann (Integrating Neurokit, Identifying appropriate functions) [@isabeln23](https://github.com/isabeln23)
-* Bethany Hunt (Suggestions on BIDS convention) [@huntb9]([github.com](https://github.com)/huntb9)
+* Isabel Neumann (Expertise in Physio data processing, Integrating Neurokit, Identifying appropriate functions) [@isabeln23](https://github.com/isabeln23)
+* Yaroslav Halchenko (Mastermind behind modularizing spacetop_prep.physio) [@yarikoptic](https://github.com/yarikoptic)
+* Bethany Hunt (Initial suggestions on BIDS convention) [@huntb9]([github.com](https://github.com/huntb9)
 
 Acknowledgments
 ------------------
