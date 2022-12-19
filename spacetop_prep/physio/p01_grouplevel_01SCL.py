@@ -99,18 +99,17 @@ def main():
     sub_list = []
     # remove_subject_int = [1, 2, 3, 4, 5, 6]
     sub_list = utils.initialize.sublist(source_dir = physio_dir,
-                                        remove_int = list(remove_subject_int),
+                                        remove_int = remove_subject_int,
                                         slurm_id = slurm_id,
                                         stride=stride,
                                         sub_zeropad=zeropad)
     ses_list = [1, 3, 4]
     run_list = [1, 2, 3, 4, 5, 6]
     sub_ses = list(itertools.product(sorted(sub_list), ses_list, run_list))
-    print(datetime.date.today().isoformat())
+    Path(log_dir).mkdir(parents=True, exist_ok=True)
     logger_fname = os.path.join(log_dir, f"data-physio_step-03-groupanalysis_{datetime.date.today().isoformat()}.txt")
 
     # set up logger _______________________________________________________________________________________
-
     runmeta = pd.read_csv(metadata)
     # TODO: come up with scheme to update logger files
     f = open(logger_fname, "w")
