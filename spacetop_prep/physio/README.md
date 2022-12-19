@@ -152,6 +152,10 @@ This README is distributed under the terms of MIT License. For further details, 
 Contributors
 ------------------
 
+* Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)). 
+* This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. 
+* Contributions of any kind are welcome!
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -175,6 +179,7 @@ Contributors
       <a href="#infra-isabeln23" title="Ideas">🤔</a>
       <a href="https://github.com/spatialtopology/spacetop-prep/commits?author=isabeln23" title="Documentation">📖</a>
       <a href="https://github.com/spatialtopology/spacetop-prep/commits?author=isabeln23" title="Research">🔬</a> 
+      <a href="https://github.com/spatialtopology/spacetop-prep/commits?author=yarikoptic" title="Code">💻</a>
   <!-- YARIK -->
       <td align="center"><a href="http://www.onerussian.com"><img src="https://avatars.githubusercontent.com/u/39889?v=4?s=100" height="100px;" width="100px;" alt="Yaroslav Halchenko"/><br /><sub><b>Yaroslav Halchenko</b></sub></a><br />
       <a href="https://github.com/spatialtopology/spacetop-prep/commits?author=yarikoptic" title="Tests">⚠️</a>
