@@ -135,7 +135,7 @@ logger = utils.initialize.logger(logger_fname, "physio")
 # %% NOTE: 1. glob acquisition files _________________________________________________________________________
 # filename ='../spacetop_biopac/data/sub-0026/SOCIAL_spacetop_sub-0026_ses-01_task-social_ANISO.acq'
 remove_sub = [1, 2, 3, 4, 5, 6]
-sub_list = utils.initialize._sublist(source_dir, remove_sub, slurm_id, stride=10, sub_zeropad=4)
+sub_list = utils.initialize.sublist(source_dir, remove_sub, slurm_id, stride=10, sub_zeropad=4)
 
 acq_list = []
 logger.info(sub_list)
@@ -150,9 +150,9 @@ for acq in sorted(flat_acq_list):
 # NOTE: 2. extract information from filenames ________________________________________________________________
     filename = os.path.basename(acq)
     bids_dict = {}
-    bids_dict['sub'] = sub  = utils.initialize._extract_bids(filename, 'sub')
-    bids_dict['ses'] = ses  = utils.initialize._extract_bids(filename, 'ses')
-    bids_dict['task']= task = utils.initialize._extract_bids(filename, 'task')
+    bids_dict['sub'] = sub  = utils.initialize.extract_bids(filename, 'sub')
+    bids_dict['ses'] = ses  = utils.initialize.extract_bids(filename, 'ses')
+    bids_dict['task']= task = utils.initialize.extract_bids(filename, 'task')
     if dict_task:
         bids_dict['task'] = dict_task[task]
         task = bids_dict['task']
@@ -246,14 +246,14 @@ for acq in sorted(flat_acq_list):
         logger.info(
             "runs shorter than %d sec: %s %s %s - run number in python order",
             run_cutoff, sub, ses, shorter_than_threshold_length)
-    scannote_reference = utils.initialize._subset_meta(runmeta, sub, ses)
+    scannote_reference = utils.initialize.subset_meta(runmeta, sub, ses)
 
     if len(scannote_reference.columns) == len(clean_runlist):
         ref_dict = scannote_reference.to_dict('list')
         run_basename = f"{sub}_{ses}_{task}_CLEAN_RUN-TASKTYLE_recording-ppg-eda_physio.csv"
         # main_df.rename(columns=dict_column, inplace=True)
         main_df_drop = main_df[main_df.columns.intersection(list(dict_column.values()))]
-        utils.initialize._assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df_drop, save_dir,run_basename,bids_dict)
+        utils.initialize.assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df_drop, save_dir,run_basename,bids_dict)
         logger.info("__________________ :+: FINISHED :+: __________________")
     else:
         logger.error(f"number of complete runs do not match scan notes")

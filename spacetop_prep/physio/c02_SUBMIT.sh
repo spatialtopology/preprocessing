@@ -8,7 +8,7 @@
 #SBATCH -e ./log/physio02_%A_%a.e
 #SBATCH --account=DBIC
 #SBATCH --partition=standard
-#SBATCH --array=2-14%5
+#SBATCH --array=1-2 #2-14%5
 
 conda activate biopac
 
@@ -28,12 +28,11 @@ CHANGECOL="./c02_changecolumn.json"
 python ${PWD}/c02_save_separate_run.py \
 --topdir ${TOPDIR} \
 --metadata ${METADATA} \
-# --operating ${CLUSTER} \
 --slurm_id ${SLURM_ID} \
 --stride ${STRIDE} \
 --zeropad ${ZEROPAD} \
 --task ${TASK} \
 --run-cutoff ${CUTOFF} \
---colnamechange ${CHANGECOL} \ 
+--colnamechange ${CHANGECOL} \
 --tasknamechange ${CHANGETASK}
-
+# --operating ${CLUSTER}
