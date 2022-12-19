@@ -8,7 +8,7 @@
 #SBATCH -e ./log/physio02_%A_%a.e
 #SBATCH --account=DBIC
 #SBATCH --partition=standard
-#SBATCH --array=1-2%5
+#SBATCH --array=3-14%5
 
 conda activate biopac
 
