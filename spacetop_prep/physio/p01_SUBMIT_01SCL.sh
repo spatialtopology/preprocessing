@@ -44,4 +44,4 @@ python ${PWD}/p01_grouplevel_01SCL.py \
 --ttl-index ${TTL_INDEX} \
 --scl-epochstart ${SCL_EPOCH_START} \
 --scl-epochend ${SCL_EPOCH_END} \
---exclude_sub 1 2 3 4 5 6
+--exclude-sub 1 2 3 4 5 6
