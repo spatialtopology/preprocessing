@@ -223,8 +223,9 @@ def main():
             }
             # utils.qcplots.plot_ttl_extraction(physio_df, [
             #                     'EDA_corrected_02fixation', 'physio_ppg', 'trigger_heat'], event_stimuli)
-
-            final_df.to_csv(join(output_savedir, 'physio', 'physio04_ttl', 'task-cue', sub, ses, f"{sub}_{ses}_task-cue_{run}-pain_recording-medocttl_physio.tsv"))
+            ttl_dir = join(output_savedir, 'physio', 'physio04_ttl', 'task-cue', sub, ses)
+            Path(ttl_dir).mkdir(parents = True, exist_ok = True)
+            final_df.to_csv(join(ttl_dir, f"{sub}_{ses}_task-cue_{run}-pain_recording-medocttl_physio.tsv"))
 
         else:
             metadf_dropNA =  metadata_df.assign(trial_num=list(np.array(metadata_df.index + 1)))
