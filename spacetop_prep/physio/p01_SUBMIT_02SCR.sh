@@ -12,7 +12,7 @@
 
 conda activate biopac
 
-PROJECT_DIR="/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social"
+PROJECT_DIR="/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_cue"
 PHYSIO_DIR="${PROJECT_DIR}/data/physio/physio03_bids"
 BEH_DIR="${PROJECT_DIR}/data/beh/beh02_preproc"
 OUTPUT_LOGDIR="${PROJECT_DIR}/scripts/logcenter"
