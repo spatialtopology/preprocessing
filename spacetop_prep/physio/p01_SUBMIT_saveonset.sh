@@ -3,12 +3,13 @@
 #SBATCH --nodes=1
 #SBATCH --task=4
 #SBATCH --mem-per-cpu=8gb
-#SBATCH --time=01:30:00
+#SBATCH --time=00:30:00
 #SBATCH -o ./log/physio02_%A_%a.o
 #SBATCH -e ./log/physio02_%A_%a.e
 #SBATCH --account=DBIC
 #SBATCH --partition=standard
-#SBATCH --array=1-14%5
+#SBATCH --array=1-14
+##1-14%5
 
 conda activate biopac
 
@@ -27,7 +28,7 @@ TASK="task-cue"
 SAMPLINGRATE=2000
 TTL_INDEX=2
 TONIC_EPOCH_START=-1
-TONIC_EPOCH_END=20
+TONIC_EPOCH_END=15
 
 
 # TODO: these metadata -- cutoff, sampling rate -- could be pulled in from json sidecars
