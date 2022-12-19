@@ -204,7 +204,7 @@ def main():
         if run_type == 'pain':
             final_df = pd.DataFrame()
             # binarize TTL channels (raise error if channel has no TTL, despite being a pain run)
-            nan_index, metadf_dropNA, plateau_start = utils.ttl_extraction.ttl_extraction(
+            nan_index, metadf_dropNA, plateau_start, final_df = utils.ttl_extraction.ttl_extraction(
                 physio_df=physio_df,
                 dict_beforettl=dict_onset['event_expectrating'],
                 dict_afterttl=dict_onset['event_actualrating'],
@@ -223,6 +223,8 @@ def main():
             }
             # utils.qcplots.plot_ttl_extraction(physio_df, [
             #                     'EDA_corrected_02fixation', 'physio_ppg', 'trigger_heat'], event_stimuli)
+
+            final_df.to_csv(join(output_savedir, 'physio', 'physio04_ttl', 'task-cue', sub, ses, f"{sub}_{ses}_task-cue_{run}-pain_recording-medocttl_physio.tsv"))
 
         else:
             metadf_dropNA =  metadata_df.assign(trial_num=list(np.array(metadata_df.index + 1)))
