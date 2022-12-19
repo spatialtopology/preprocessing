@@ -8,8 +8,10 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-import utils
-from utils import preprocess
+
+from .. import utils
+
+# from .utils import preprocess
 
 
 # from . import get_logger, set_logger_level
@@ -21,13 +23,13 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
         acquisition file (run-wise)
     dict_beforettl: dict
         refers to event that happens before the ttl - a dictionary that contains "start" "stop" keys,
-        created via utils.preprocess._identify_boundary
+        created via utils.preprocess.identify_boundary
     dict_afterttl: dict
         refers to event that happens after the ttl - a dictionary that contains "start" "stop" keys,
-        created via utils.preprocess._identify_boundary
+        created via utils.preprocess.identify_boundary
     dict_stimuli: dict
         refers to event when TTL stimulus was supposed to be delivered - a dictionary that contains "start" "stop" keys,
-        created via utils.preprocess._identify_boundary
+        created via utils.preprocess.identify_boundary
     samplingrate: int
         sampling rate of the physiological signal
     metadata_df: pandas dataframe
@@ -44,7 +46,7 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
     final_df = pd.DataFrame()
 
     # NOTE: binarize TTL channels (raise error if channel has no TTL, despite being a pain run)
-    utils.preprocess._binarize_channel(
+    utils.preprocess.binarize_channel(
         physio_df,
         source_col='trigger_heat',
         new_col='ttl',
@@ -52,7 +54,7 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
         binary_high=5,
         binary_low=0)
 
-    dict_ttl = utils.preprocess._identify_boundary(physio_df, 'ttl')
+    dict_ttl = utils.preprocess.identify_boundary(physio_df, 'ttl')
 
     # NOTE: find the midpoint of the TTL signals.
     # In other words, get one datapoint instead of a trail of datapoints
@@ -163,4 +165,4 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
     # metadata_df3 = metadata_df2.assign(trial_num=list(np.array(index_range + 1)))
     # metadata_df.loc[:,'trial_num'] = list(np.array(index_range + 1))
 
-    return flat_nans, metadata_df3, ttl_start
+    return flat_nans, metadata_df3, ttl_start, final_df

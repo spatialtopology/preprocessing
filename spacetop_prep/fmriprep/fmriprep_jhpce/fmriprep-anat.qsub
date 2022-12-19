@@ -1,0 +1,38 @@
+#!/bin/bash
+#$ -cwd
+#$ -t 1-80
+#$ -N fmriprep-anat
+#$ -o logs/fmriprep-anat$TASK_ID.out
+#$ -e logs/fmriprep-anat$TASK_ID.err
+#$ -pe local 8
+#$ -l mem_free=1.5G,h_vmem=1.5G,h_fsize=20G
+
+ulimit -s 12288
+module load singularity/3.6.0
+
+set -xe
+
+read -ra ROW < <(sed -n "${SGE_TASK_ID}p" code/subs)
+declare -a flags
+flags=(--participant-label "${ROW[0]}")
+
+DCL=/dcl01/smart/data/psadil/spacetop
+BIDS=${DCL}/inputs/2ee2bfa7-6c1b-4cf6-87e9-297e30f42517
+WORK=${DCL}/derivatives/work/fmriprep
+DCS=/dcs04/smart/data/spacetop
+OUT=${DCS}/derivatives/fmriprep
+
+singularity run \
+  --cleanenv \
+  -B "${DCS}":/main \
+  -B "${BIDS}":/bids \
+  -B "${OUT}":/out \
+  -B "${WORK}":/scratch \
+  "${DCS}"/code/fmriprep_21.0.1.sif \
+  /bids /out participant -w /scratch/"${SGE_TASK_ID}" \
+  "${flags[@]}" --skip-bids-validation \
+  --notrack -vv --write-graph --cifti-output 91k  --anat-only \
+  --mem_mb 12000 --nprocs 8  --use-aroma \
+  --fs-license-file /main/license.txt \
+  --output-spaces MNI152NLin6Asym MNI152NLin2009cAsym \
+  --bids-database-dir /main/bids_db

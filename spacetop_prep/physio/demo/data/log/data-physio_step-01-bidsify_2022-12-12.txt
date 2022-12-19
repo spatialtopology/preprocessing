@@ -1,0 +1,2 @@
+INFO - main:70 - __________________sub-0010 ses-04 task-alignvideos__________________
+INFO - main:70 - __________________sub-0012 ses-02 task-faces__________________

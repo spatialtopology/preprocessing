@@ -1,0 +1,4 @@
+plugin : "MultiProc"
+plugin_args:
+ n_procs: 2
+ omp_nthreads: 2
