@@ -72,7 +72,6 @@ def main():
     SCL_epoch_end = args.scl_epochend
     ttl_index = args.ttl_index
     remove_subject_int = args.exclude_sub
-
     # %% NOTE: local test
     # sub 73
     # ses 1
@@ -97,12 +96,12 @@ def main():
 
     # %% set parameters
     sub_list = []
-    # remove_subject_int = [1, 2, 3, 4, 5, 6]
     sub_list = utils.initialize.sublist(source_dir = physio_dir,
                                         remove_int = remove_subject_int,
                                         slurm_id = slurm_id,
                                         stride=stride,
                                         sub_zeropad=zeropad)
+    print(sub_list)
     ses_list = [1, 3, 4]
     run_list = [1, 2, 3, 4, 5, 6]
     sub_ses = list(itertools.product(sorted(sub_list), ses_list, run_list))
@@ -225,7 +224,7 @@ def main():
             # utils.qcplots.plot_ttl_extraction(physio_df, [
             #                     'EDA_corrected_02fixation', 'physio_ppg', 'trigger_heat'], event_stimuli)
             physio_topdir = Path(physio_dir).parents[0] 
-            ttl_dir = join(physio_topdir, 'physio', 'physio04_ttl', 'task-cue', sub, ses)
+            ttl_dir = join(physio_topdir, 'physio04_ttl', 'task-cue', sub, ses)
             Path(ttl_dir).mkdir(parents = True, exist_ok = True)
             final_df.to_csv(join(ttl_dir, f"{sub}_{ses}_task-cue_{run}-pain_recording-medocttl_physio.tsv"))
 
