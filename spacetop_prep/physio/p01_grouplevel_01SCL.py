@@ -103,9 +103,8 @@ def main():
     ses_list = [1, 3, 4]
     run_list = [1, 2, 3, 4, 5, 6]
     sub_ses = list(itertools.product(sorted(sub_list), ses_list, run_list))
-
-    logger_fname = os.path.join(
-        log_dir, f"data-physio_step-03-groupanalysis_{datetime.date.today().isoformat()}.txt")
+    print(datetime.date.today().isoformat())
+    logger_fname = os.path.join(log_dir, f"data-physio_step-03-groupanalysis_{datetime.date.today().isoformat()}.txt")
 
     # set up logger _______________________________________________________________________________________
 
@@ -223,7 +222,8 @@ def main():
             }
             # utils.qcplots.plot_ttl_extraction(physio_df, [
             #                     'EDA_corrected_02fixation', 'physio_ppg', 'trigger_heat'], event_stimuli)
-            ttl_dir = join(output_savedir, 'physio', 'physio04_ttl', 'task-cue', sub, ses)
+            physio_topdir = Path(physio_dir).parents[0] 
+            ttl_dir = join(physio_topdir, 'physio', 'physio04_ttl', 'task-cue', sub, ses)
             Path(ttl_dir).mkdir(parents = True, exist_ok = True)
             final_df.to_csv(join(ttl_dir, f"{sub}_{ses}_task-cue_{run}-pain_recording-medocttl_physio.tsv"))
 
@@ -266,26 +266,28 @@ def main():
         # concatenate it back to the metadataframe based on index values.
         if run_type == 'pain' and len(nan_index) > 0:
             try:
-                metadata = utils.preprocess.substitute_beh_NA(nan_index, metadata_df, ['angle', 'RT'])
+                metadata_d = utils.preprocess.substitute_beh_NA(nan_index, metadata_df, ['angle', 'RT'])
                 logger.info("preprocess.substitute_beh_NA WORKS")
             except:
                 nan_ind = nan_index[0]
-                metadata = metadf_dropNA.copy()
-                metadata.loc[nan_ind, metadata_df.columns.str.contains('angle')] = np.nan
-                metadata.loc[nan_ind, metadata_df.columns.str.contains('RT')] = np.nan
+                metadata_d = metadf_dropNA.copy()
+                metadata_d.loc[nan_ind, metadata_df.columns.str.contains('angle')] = np.nan
+                metadata_d.loc[nan_ind, metadata_df.columns.str.contains('RT')] = np.nan
                 logger.info("preprocess.substitute_beh_NA BUG")
         elif run_type == 'vicarious' or run_type == 'cognitive':
-            metadata = metadf_dropNA.copy()
+            metadata_d = metadf_dropNA.copy()
             # df2 = pd.DataFrame(pd.concat([metadf_dropNA.iloc[:nan_ind], subset_meta, metadf_dropNA.iloc[nan_ind:]])) #.reset_index(drop=True))
             # insert row back in and fill te ratings with nans
+        else:
+            metadata_d = metadf_dropNA.copy()
         # metadata_df2 = metadf_dropNA.reset_index(drop=True)
         # TODO:* * * * * * * * * * * * * *
         # metadata_SCL = metadata_SCL.reset_index(drop=True)
         eda_level_timecourse = utils.preprocess.resample_scl2pandas_ver2(scl_output = scl_raw, metadata_df =metadf_dropNA , total_trial = 12, tonic_length = tonic_length, sampling_rate = samplingrate, desired_sampling_rate = resample_rate)
         # eda_level_timecourse = eda_level_timecourse.reset_index(drop=True)
-        SCL_df = pd.concat([metadata, metadata_SCL], axis=1)
+        SCL_df = pd.concat([metadata_d, metadata_SCL], axis=1)
         tonic_timecourse = pd.concat(
-            [metadata, metadata_SCL, eda_level_timecourse], axis=1)
+            [metadata_d, metadata_SCL, eda_level_timecourse], axis=1)
 
     # NOTE: save tonic data __________________________________________________________________________________
         tonic_save_dir = join(output_savedir, 'physio01_SCL', sub, ses)
