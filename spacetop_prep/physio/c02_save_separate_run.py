@@ -213,7 +213,7 @@ def main():
             logger.info(
                 "runs shorter than %d sec: %s %s %s - run number in python order",
                 run_cutoff, sub, ses, shorter_than_threshold_length)
-        scannote_reference = utils.initialize._subset_meta(runmeta, sub, ses)
+        scannote_reference = utils.initialize.subset_meta(runmeta, sub, ses)
 
         if len(scannote_reference.columns) == len(clean_runlist):
             ref_dict = scannote_reference.to_dict('list')
