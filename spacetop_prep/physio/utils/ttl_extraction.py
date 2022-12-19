@@ -165,4 +165,4 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
     # metadata_df3 = metadata_df2.assign(trial_num=list(np.array(index_range + 1)))
     # metadata_df.loc[:,'trial_num'] = list(np.array(index_range + 1))
 
-    return flat_nans, metadata_df3, ttl_start
+    return flat_nans, metadata_df3, ttl_start, final_df
