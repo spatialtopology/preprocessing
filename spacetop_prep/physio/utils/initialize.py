@@ -112,7 +112,8 @@ def sublist(source_dir:str, remove_int:list, slurm_id:int, sub_zeropad:int, stri
     TODO: allow for user to indicate how much depth to go down
     or, just do glob with matching pattern?
     """
-    biopac_list = next(os.walk(join(source_dir)))[1]
+    biopac_list = [ f.name for f in os.scandir(join(source_dir, 'task-cue')) if f.is_dir() and  'sub-' in f.name ]
+    #biopac_list = next(os.walk(join(source_dir)))[2]
     remove_list = [f"sub-{x:0{sub_zeropad}d}" for x in remove_int]
     include_int = list(np.arange(slurm_id * stride + 1, (slurm_id + 1) * stride, 1))
     include_list = [f"sub-{x:0{sub_zeropad}d}" for x in include_int]
