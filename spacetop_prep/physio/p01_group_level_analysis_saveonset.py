@@ -308,26 +308,31 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     # concatenate it back to the metadataframe based on index values.
     if run_type == 'pain' and len(nan_index) > 0:
         try:
-            metadata = utils.preprocess.substitute_beh_NA(nan_index, metadata_df, ['angle', 'RT'])
+
+            meta_d = utils.preprocess.substitute_beh_NA(nan_index, metadata_df, ['angle', 'RT'])
             logger.info("preprocess.substitute_beh_NA WORKS")
         except:
             nan_ind = nan_index[0]
-            metadata = metadf_dropNA.copy()
-            metadata.loc[nan_ind, metadata_df.columns.str.contains('angle')] = np.nan
-            metadata.loc[nan_ind, metadata_df.columns.str.contains('RT')] = np.nan
+            meta_d = metadf_dropNA.copy()
+            meta_d.loc[nan_ind, metadata_df.columns.str.contains('angle')] = np.nan
+            meta_d.loc[nan_ind, metadata_df.columns.str.contains('RT')] = np.nan
             logger.info("preprocess.substitute_beh_NA BUG")
     elif run_type == 'vicarious' or run_type == 'cognitive':
-        metadata = metadf_dropNA.copy()
+        meta_d = metadf_dropNA.copy()
         # df2 = pd.DataFrame(pd.concat([metadf_dropNA.iloc[:nan_ind], subset_meta, metadf_dropNA.iloc[nan_ind:]])) #.reset_index(drop=True))
         # insert row back in and fill te ratings with nans
+    else: 
+        meta_d = metadf_dropNA.copy()
     # metadata_df2 = metadf_dropNA.reset_index(drop=True)
     # TODO:* * * * * * * * * * * * * *
     # metadata_SCL = metadata_SCL.reset_index(drop=True)
+    logger.info(meta_d)
+
     eda_level_timecourse = utils.preprocess.resample_scl2pandas_ver2(scl_output = scl_raw, metadata_df =metadf_dropNA , total_trial = 12, tonic_length = tonic_length, sampling_rate = samplingrate, desired_sampling_rate = resample_rate)
     # eda_level_timecourse = eda_level_timecourse.reset_index(drop=True)
-    SCL_df = pd.concat([metadata, metadata_SCL], axis=1)
+    SCL_df = pd.concat([meta_d, metadata_SCL], axis=1)
     tonic_timecourse = pd.concat(
-        [metadata, metadata_SCL, eda_level_timecourse], axis=1)
+        [meta_d, metadata_SCL, eda_level_timecourse], axis=1)
 
 # NOTE: save tonic data __________________________________________________________________________________
     tonic_save_dir = join(output_savedir, 'physio01_SCL', sub, ses)
@@ -343,7 +348,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     # metadata_df = metadata_df.reset_index(drop=True)
     # scr_phasic = scr_phasic.reset_index(drop=True)
     SCR_df = pd.concat(
-        [metadata, metadata_SCR], axis=1
+        [meta_d, metadata_SCR], axis=1
     )
     phasic_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-0_epochend-5_physio-scr.csv"
     SCR_df.to_csv(join(phasic_save_dir, phasic_fname), index = False)
