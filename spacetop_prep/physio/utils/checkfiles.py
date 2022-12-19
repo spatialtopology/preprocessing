@@ -47,9 +47,9 @@ def glob_physio_bids(biopac_dir, sub, ses, task, run):
 
     physio_flist = glob.glob(
     join(
-        biopac_dir, sub, ses,
+        biopac_dir, '**', sub, ses,
         f"{sub}_{ses}_{task}_*{run}*_recording-ppg-eda*_physio.tsv"
-    ))
+    ), recursive= True)
     return physio_flist
 
 def preproc_scr(save_dir, phasic_fname):
