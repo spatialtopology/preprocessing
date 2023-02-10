@@ -14,7 +14,7 @@ completion against the full list of participants (`update_subs.R`).
 
 ## Notes
 
-Ideally, the anatomical derivatives would be resued for each of the tasks. At the moment, fMRIPrep
+Ideally, the anatomical derivatives would be reused for each of the tasks. At the moment, fMRIPrep
 does not have a mechanism for doing this, and so processing each functional task involves regenerating
 the anatomicals (although FreeSurfer does not need to be rerun). For this reason, it is recommended
 that the task derivatives be output to separate directories and then combined after the fact.
