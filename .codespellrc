@@ -1,0 +1,4 @@
+[codespell]
+skip = .git,venvs,*.ipynb,*.csv,*.acq,*.e,*.pyc,*.o,*.tsv
+# te -- check if should be fixed or not or ignored
+ignore-words-list = te
