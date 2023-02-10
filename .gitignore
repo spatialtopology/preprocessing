@@ -10,3 +10,5 @@
 **/visualresource
 spacetop_prep/physio/archive
 spacetop_prep/physio/utils/tests
+\.idea
+venvs
