@@ -244,7 +244,7 @@ def get_args_c02():
                         type=str, help="to change task name. provide json file with key:value as old_task_name:new_task_name",
                         required = False)
     parser.add_argument('--exclude-sub', nargs='+',
-                        type=int, help="string of intergers, subjects to be removed from code", required=False)
+                        type=int, help="string of integers, subjects to be removed from code", required=False)
     args = parser.parse_args()
     return args
 

@@ -41,7 +41,7 @@ def binarize_channel(df, source_col, new_col, threshold, binary_high, binary_low
     source_col: str
         column name of df that contains raw signal
     new_col: str
-        new column name for saving binarized source_col values. (prevent from overwritting original data)
+        new column name for saving binarized source_col values. (prevent from overwriting original data)
     threshold: int
         threshold for binarizing values within pandas column
     binary_high, binary_low: int
@@ -621,7 +621,7 @@ def resample_scl2pandas(scl_epoch: dict, tonic_length, sampling_rate:int, desire
                 scl_epoch_reset[ind]['Signal'].to_numpy(),  method='interpolation', sampling_rate=sampling_rate, desired_sampling_rate=desired_sampling_rate)
             eda_level_timecourse.iloc[
                 ind, :] = resamp
-        logger.info("[ind] interger")
+        logger.info("[ind] integer")
     return eda_level_timecourse
 
 def resample_scl2pandas_ver2(scl_output: dict, metadata_df, total_trial, tonic_length, sampling_rate:int, desired_sampling_rate: int):
@@ -676,7 +676,7 @@ def resample_scl2pandas_ver2(scl_output: dict, metadata_df, total_trial, tonic_l
                 scl_epoch_dropNA.to_numpy(),  method='interpolation', sampling_rate=sampling_rate, desired_sampling_rate=desired_sampling_rate)
             eda_level_timecourse.iloc[
                 dropped_index, :] = resamp
-        logger.info("[ind] interger")
+        logger.info("[ind] integer")
     return eda_level_timecourse
 
 def substitute_beh_NA(nan_index, metadata_df, beh_col):

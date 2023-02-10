@@ -4,7 +4,7 @@ Please first review the readme at `mriqc/mriqc_jhpce/README.md`. The general str
 there applies for fMRIPrep. The only difference is that, rather than processing runs and tasks
 separately, jobs are distinguished by sub, modality, and task. That is, the assumption is that a list of
 subs are generated (`write_subs`), and then this list is used for running `fmriprep-anat.qsub`. After
-a participants anatomical has been succesfully processed, all scans for the individual tasks are
+a participants anatomical has been successfully processed, all scans for the individual tasks are
 analyzed.
 
 Determining which participants have finished successfully is a bit more complicated than with
