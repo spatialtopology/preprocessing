@@ -267,7 +267,7 @@ def main():
 
         # Tonic level ______________________________________________________________________________________
 
-        # 1. append columns to the begining (trial order, trial type)
+        # 1. append columns to the beginning (trial order, trial type)
         # NOTE: eda_epochs_level -> scl_epoch
         metadata_SCL = utils.preprocess.combine_metadata_SCL(scl_raw, metadf_dropNA, total_trial = 12)
         metadata_SCR = utils.preprocess.combine_metadata_SCR(scr_phasic, metadf_dropNA, total_trial = 12)
@@ -358,7 +358,7 @@ def get_args():
     parser.add_argument("--ttl-index", type=int,
                         help="index of which TTL to use")
     parser.add_argument('--exclude-sub', nargs='+',
-                        type=int, help="string of intergers, subjects to be removed from code", required=False)
+                        type=int, help="string of integers, subjects to be removed from code", required=False)
     args = parser.parse_args()
     return args
 

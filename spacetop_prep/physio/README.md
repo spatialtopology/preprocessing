@@ -30,7 +30,7 @@ About
 ---------
 #### Spacetop's preprocessing physio code will *convert* raw physiological data (.acq) into BIDS-abiding files (.csv) It also introduces some backbone code for skin conductance analyses.
 ![Frame 6 (1)](https://user-images.githubusercontent.com/18406041/195249514-ddf01d35-3785-4ea1-a101-06507f896fe3.png)
-* We acheive this by using the RF pulses as markers for identifying run transitions.
+* We achieve this by using the RF pulses as markers for identifying run transitions.
 * From that every run is saved separately into a .csv files, now BIDS-compliant.
 * Based on these .csv files, you can treat it as a dataframe and run analyses.
 
@@ -108,7 +108,7 @@ python ${PWD}/p01_grouplevel_01SCL.py \
 Details Steps (TODO coding)
 ------------------
 1) [x] glob acquisitions files
-2) [x] extract information from filesnames
+2) [x] extract information from filenames
 3) [x] binarize signals based on MR Trigger channel (received RF pulse)
 4) [x] convert dataframe to seconds, instead of 2000 sampling rate.
 5) [x] identify transitions

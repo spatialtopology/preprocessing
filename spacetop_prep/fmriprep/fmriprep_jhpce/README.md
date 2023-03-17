@@ -4,7 +4,7 @@ Please first review the readme at `mriqc/mriqc_jhpce/README.md`. The general str
 there applies for fMRIPrep. The only difference is that, rather than processing runs and tasks
 separately, jobs are distinguished by sub, modality, and task. That is, the assumption is that a list of
 subs are generated (`write_subs`), and then this list is used for running `fmriprep-anat.qsub`. After
-a participants anatomical has been succesfully processed, all scans for the individual tasks are
+a participants anatomical has been successfully processed, all scans for the individual tasks are
 analyzed.
 
 Determining which participants have finished successfully is a bit more complicated than with
@@ -14,7 +14,7 @@ completion against the full list of participants (`update_subs.R`).
 
 ## Notes
 
-Ideally, the anatomical derivatives would be resued for each of the tasks. At the moment, fMRIPrep
+Ideally, the anatomical derivatives would be reused for each of the tasks. At the moment, fMRIPrep
 does not have a mechanism for doing this, and so processing each functional task involves regenerating
 the anatomicals (although FreeSurfer does not need to be rerun). For this reason, it is recommended
 that the task derivatives be output to separate directories and then combined after the fact.
