@@ -1,4 +1,4 @@
-name: biopac
+name: physio
 channels:
   - conda-forge
   - defaults
