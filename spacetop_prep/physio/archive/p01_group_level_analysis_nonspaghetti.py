@@ -428,7 +428,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
     #plt.show()
     # TODO: plot save
     # Tonic level ______________________________________________________________________________________
-    # 1. append columns to the begining (trial order, trial type)
+    # 1. append columns to the beginning (trial order, trial type)
     # NOTE: eda_epochs_level -> scl_epoch
     metadata_tonic = pd.DataFrame(
         index=list(range(len(scl_epoch))),

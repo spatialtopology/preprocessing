@@ -30,7 +30,7 @@ ROOT=/fastscratch/myscratch/pssadil/spacetop
 BIDS=${ROOT}/inputs/rawdata
 WORK=derivatives/work/mriqc/"${SGE_TASK_ID}"
 
-# config.yml required to acocunt for mriqc bug in restricting cpus
+# config.yml required to account for mriqc bug in restricting cpus
 # https://github.com/nipreps/mriqc/issues/931
 singularity run \
   --cleanenv \

@@ -2,7 +2,7 @@
 """
 Sorts the raw acquisitions files into semi-BIDS format
 NOTE: The output will not be quite BIDS yet,
-because we haven't splitted the physio data into runs, yet.
+because we haven't split the physio data into runs, yet.
 
 Parameters
 ------------------

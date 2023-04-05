@@ -290,7 +290,7 @@ def get_args():
     parser.add_argument("--ttl-index", type=int,
                         help="index of which TTL to use")
     parser.add_argument('--exclude-sub', nargs='+',
-                        type=int, help="string of intergers, subjects to be removed from code", required=False)
+                        type=int, help="string of integers, subjects to be removed from code", required=False)
     args = parser.parse_args()
     return args
 
