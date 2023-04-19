@@ -82,8 +82,10 @@ def main():
     # %%
     physio_dir = topdir
     source_dir = join(physio_dir, 'physio02_sort')
+    task_dict = json.loads(dict_task)
+
     if dict_task:
-        save_dir = join(physio_dir, 'physio03_bids', dict_task[task])
+        save_dir = join(physio_dir, 'physio03_bids', task_dict[task])
     else:
         save_dir = join(physio_dir, 'physio03_bids', task)
     log_savedir = os.path.join(physio_dir, 'log')
