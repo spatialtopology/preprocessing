@@ -75,17 +75,18 @@ def main():
     sub_zeropad = args.sub_zeropad # sub-0016 -> 4
     task = args.task # e.g. 'task-social' 'task-fractional' 'task-alignvideos'
     run_cutoff = args.run_cutoff # e.g. 300
-    dict_column = args.colnamechange
-    dict_task = args.tasknamechange
+    columnchangefname = args.colnamechange
+    tasknamefname = args.tasknamechange
     remove_sub = args.exclude_sub
 
     # %%
     physio_dir = topdir
     source_dir = join(physio_dir, 'physio02_sort')
-    task_dict = json.loads(dict_task)
+    dict_task = json.loads(tasknamefname)
+    dict_column = json.loads(columnchangefname)
 
     if dict_task:
-        save_dir = join(physio_dir, 'physio03_bids', task_dict[task])
+        save_dir = join(physio_dir, 'physio03_bids', dict_task[task])
     else:
         save_dir = join(physio_dir, 'physio03_bids', task)
     log_savedir = os.path.join(physio_dir, 'log')
@@ -101,7 +102,7 @@ def main():
     logger = utils.initialize.logger(logger_fname, "physio")
 
     # %% NOTE: 1. glob acquisition files _________________________________________________________________________
-    sub_list = utils.initialize.sublist(source_dir, remove_sub, slurm_id, stride=10, sub_zeropad=4)
+    sub_list = utils.initialize.sublist(source_dir, remove_sub, slurm_id, stride, sub_zeropad)
 
     acq_list = []
     logger.info(sub_list)
@@ -231,14 +232,16 @@ def get_args_c02():
                         type=str, help="top directory of physio data", required = True)
     parser.add_argument("-m", "--metadata",
                         type=str, help="filepath to run completion metadata", required = True)
-    parser.add_argument("-sid", "--slurm_id", type=int,
-                        help="specify slurm array id", required = True)
-    parser.add_argument("--stride", help="how many participants to batch per jobarray")
-    parser.add_argument("-z", "--sub-zeropad", help="how many zeros are padded for BIDS subject id", required = True)
+    parser.add_argument("-sid", "--slurm_id",
+                        type=int, help="specify slurm array id", required = True)
+    parser.add_argument("--stride",
+                        type=int, help="how many participants to batch per jobarray")
+    parser.add_argument("-z", "--sub-zeropad",
+                        type=int, help="how many zeros are padded for BIDS subject id", required = True)
     parser.add_argument("-t", "--task",
                         type=str, help="specify task name (e.g. task-alignvideos)", required = True)
-    parser.add_argument("-c", "--run-cutoff", type=int,
-                        help="specify cutoff threshold for distinguishing runs (in seconds)", required = True)
+    parser.add_argument("-c", "--run-cutoff",
+                        type=int, help="specify cutoff threshold for distinguishing runs (in seconds)", required = True)
     parser.add_argument("--colnamechange",
                         type=str, help="to change column name within .acq file. provide json file with key:value as old_column_name:new_column_name",
                         required = False)
