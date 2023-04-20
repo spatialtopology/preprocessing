@@ -47,7 +47,7 @@ def logger(logger_fname, name):
 def extract_bids_num(filename: str, key: str) -> int:
     """
     Extracts BIDS information based on input "key" prefix.
-    If filename includes an extention, code will remove it.
+    If filename includes an extension, code will remove it.
 
     Parameters
     ----------
@@ -65,7 +65,7 @@ def extract_bids_num(filename: str, key: str) -> int:
 def extract_bids(filename: str, key: str) -> str:
     """
     Extracts BIDS information based on input "key" prefix.
-    If filename includes an extention, code will remove it.
+    If filename includes an extension, code will remove it.
 
     Parameters
     ----------

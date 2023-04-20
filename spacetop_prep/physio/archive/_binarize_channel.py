@@ -11,7 +11,7 @@ def _binarize_channel(df, source_col, new_col, threshold, binary_high, binary_lo
     source_col: str
         column name of df that contains raw signal
     new_col: str
-        new column name for saving binarized source_col values. (prevent from overwritting original data)
+        new column name for saving binarized source_col values. (prevent from overwriting original data)
     threshold: int 
         threshold for binarizing values within pandas column
     binary_high, binary_low: int 

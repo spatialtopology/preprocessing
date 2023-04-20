@@ -13,7 +13,7 @@ def test_extract_bids():
 # %%
 def test_sublist():
     source_dir = os.getcwd()
-    # make directry
+    # make directory
     remove_int = [51,52,63]
     slurm_ind = 4
     stride = 10
