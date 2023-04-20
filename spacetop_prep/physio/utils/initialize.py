@@ -192,20 +192,20 @@ def argument_p01():
                         type=str, help=".csv filepath to metadata file of run information (complete/runtype etc)")
     parser.add_argument("--dictchannel",
                         type=str, help=".json file for changing physio data channel names | key:value == old_channel_name:new_channel_name")
-    parser.add_argument("-sid", "--slurm-id", type=int,
-                        help="specify slurm array id")
-    parser.add_argument("--stride", type=int,
-                        help="how many participants to batch per jobarray")
+    parser.add_argument("-sid", "--slurm-id",
+                        type=int, help="specify slurm array id")
+    parser.add_argument("--stride",
+                        type=int, help="how many participants to batch per jobarray")
     parser.add_argument("-z", "--zeropad",
                         type=int, help="how many zeros are padded for BIDS subject id")
     parser.add_argument("-t", "--task",
                         type=str, help="specify task name (e.g. task-alignvideos)")
-    parser.add_argument("-sr", "--samplingrate", type=int,
-                        help="sampling rate of acquisition file")
-    parser.add_argument("--tonic-epochstart", type=int,
-                        help="beginning of epoch")
-    parser.add_argument("--tonic-epochend", type=int,
-                        help="end of epoch")
+    parser.add_argument("-sr", "--samplingrate",
+                        type=int, help="sampling rate of acquisition file")
+    parser.add_argument("--tonic-epochstart",
+                        type=int, help="beginning of epoch")
+    parser.add_argument("--tonic-epochend",
+                        type=int, help="end of epoch")
     parser.add_argument("--ttl-index", type=int,
                         help="index of which TTL to use")
     args = parser.parse_args()
