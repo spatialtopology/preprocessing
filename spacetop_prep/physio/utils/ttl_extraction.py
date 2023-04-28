@@ -62,7 +62,7 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
 
     # NOTE: find the midpoint of the TTL signals.
     # In other words, get one datapoint instead of a trail of datapoints
-    # Explantion: Because of the sampling rate (2000hz), we get a rather long signal of the TTL, which lasts for 0.1 sec
+    # Explanation: Because of the sampling rate (2000hz), we get a rather long signal of the TTL, which lasts for 0.1 sec
     # In order to get the correct onset time, we're going to get the mid point of this TTL square function:
     ttl_onsets = list(  np.array(dict_ttl['start']) + (np.array(dict_ttl['stop']) - np.array(dict_ttl['start'])) / 2)
     logger.info(

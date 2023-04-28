@@ -23,36 +23,48 @@ Table of contents
 * [Getting help](#getting-help)
 * [Contributing](#contributing)
 * [License](#license)
-* [Contributors](#Contributors)
+* [Contributors](#contributors)
 * [Acknowledgments](#acknowledgments)
 
 About
 ---------
 #### Spacetop's preprocessing physio code will *convert* raw physiological data (.acq) into BIDS-abiding files (.csv) It also introduces some backbone code for skin conductance analyses.
 ![Frame 6 (1)](https://user-images.githubusercontent.com/18406041/195249514-ddf01d35-3785-4ea1-a101-06507f896fe3.png)
-* We acheive this by using the RF pulses as markers for identifying run transitions.
+* We achieve this by using the RF pulses as markers for identifying run transitions.
 * From that every run is saved separately into a .csv files, now BIDS-compliant.
 * Based on these .csv files, you can treat it as a dataframe and run analyses.
 
 
 Prerequisites 
 ------------------
+This is a submodule of spacetop-prep. Make sure you installed spacetop-prep (Also illustrate in our [main README](https://github.com/spatialtopology/spacetop-prep#usage))
+
+```
+python setup.py sdist
+pip install -e .
+```
+
+</div>
 
 ### Are there any installations?
 
 ```
-conda env create -f biopac.yaml
+conda env create -f physio.yaml
 ```
 * Install the conda environment via [**physio.yaml**](https://github.com/spatialtopology/spacetop-prep/blob/0f352b6bd5a10f15f670936324108689c5a6c95c/physio/physio.yaml), included in this repo.
 * If you don't want to install an env via the yaml file, make sure to include the essential modules: [neurokit](https://github.com/neuropsychology/NeuroKit) and [bioread](https://github.com/uwmadison-chm/bioread)
 ### What does my data structure need to be like?
 * You need a **`data`** directory as your top folder
-* All of your physiological data, right off the stimulus PC, should be stored in **`../data/physio01_raw`**.
+* All of your physiological data, right off the stimulus PC, MUST BE STORED in **`../data/physio01_raw`**.
+* (The reason for this is because we want similar data structures across the CANlab.)
 * From that, this module will create the following folders, such as **physio02_sort** and **physio03_bids**
 <img src="https://user-images.githubusercontent.com/54367954/206929176-13e9ea6d-5a64-466b-9b3a-03c107ed112e.png" width="600">
 
+
+
 Usage
 ----------------
+
 #### 1. Rename to BIDS-compliant format: Sort raw .acq into semi-BIDS format
 ```
 python ${PWD}/c01_bidsifysort.py \
@@ -79,16 +91,36 @@ python ${PWD}/c02_save_separate_run.py \
 >>> python c02_save_separate_run.py --topdir ./data/physio --metadata ./data/demo/metadata.csv --slurm_id 1 --stride 10 sub-zeropad 4 --task 'task-alignvideos' --run-cutoff 300 --colnamechange ./data/demo/colnamechange.json --exclude_sub 1 2 3 4 5 6
 ```
 
-#### 3. Preprocess signals and save as csv for group level analyses<br>
-Check out our tutorial!
-[![Open In Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Naereen/badges)
+#### 3. Preprocess signals and save as csv for group level analyses -- Check out our tutorial!
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/spatialtopology/spacetop-prep/blob/master/spacetop_prep/physio/walkthrough_p01_grouplevel.ipynb)
+<br>
+```
+python ${PWD}/p01_grouplevel_01SCL.py \
+--input-physiodir ${PHYSIO_DIR} \
+--input-behdir ${BEH_DIR} \
+--output-logdir ${OUTPUT_LOGDIR} \
+--output-savedir ${OUTPUT_SAVEDIR} \
+--metadata ${METADATA} \
+--dictchannel ${CHANNELJSON} \
+--slurm-id ${SLURM_ID} \
+--stride ${STRIDE} \
+--zeropad ${ZEROPAD} \
+--task ${TASK} \
+-sr ${SAMPLINGRATE} \
+--ttl-index ${TTL_INDEX} \
+--scl-epochstart ${SCR_EPOCH_START} \
+--scl-epochend ${SCR_EPOCH_END} \
+--exclude_sub 1 2 3 4 5 6
+```
+
+
 
 
 <!--
 Details Steps (TODO coding)
 ------------------
 1) [x] glob acquisitions files
-2) [x] extract information from filesnames
+2) [x] extract information from filenames
 3) [x] binarize signals based on MR Trigger channel (received RF pulse)
 4) [x] convert dataframe to seconds, instead of 2000 sampling rate.
 5) [x] identify transitions
@@ -132,6 +164,10 @@ This README is distributed under the terms of MIT License. For further details, 
 Contributors
 ------------------
 
+* Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)). 
+* This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. 
+* Contributions of any kind are welcome!
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -155,6 +191,7 @@ Contributors
       <a href="#infra-isabeln23" title="Ideas">🤔</a>
       <a href="https://github.com/spatialtopology/spacetop-prep/commits?author=isabeln23" title="Documentation">📖</a>
       <a href="https://github.com/spatialtopology/spacetop-prep/commits?author=isabeln23" title="Research">🔬</a> 
+      <a href="https://github.com/spatialtopology/spacetop-prep/commits?author=yarikoptic" title="Code">💻</a>
   <!-- YARIK -->
       <td align="center"><a href="http://www.onerussian.com"><img src="https://avatars.githubusercontent.com/u/39889?v=4?s=100" height="100px;" width="100px;" alt="Yaroslav Halchenko"/><br /><sub><b>Yaroslav Halchenko</b></sub></a><br />
       <a href="https://github.com/spatialtopology/spacetop-prep/commits?author=yarikoptic" title="Tests">⚠️</a>
@@ -171,8 +208,9 @@ Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 * Heejung Jung [@jungheejung](github.com/jungheejung)
-* Isabel Neumann (Integrating Neurokit, Identifying appropriate functions) [@isabeln23](https://github.com/isabeln23)
-* Bethany Hunt (Suggestions on BIDS convention) [@huntb9]([github.com](https://github.com)/huntb9)
+* Isabel Neumann (Expertise in Physio data processing, Integrating Neurokit, Identifying appropriate functions) [@isabeln23](https://github.com/isabeln23)
+* Yaroslav Halchenko (Mastermind behind modularizing spacetop_prep.physio) [@yarikoptic](https://github.com/yarikoptic)
+* Bethany Hunt (Initial suggestions on BIDS convention) [@huntb9]([github.com](https://github.com/huntb9)
 
 Acknowledgments
 ------------------

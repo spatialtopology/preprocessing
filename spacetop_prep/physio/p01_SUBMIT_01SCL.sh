@@ -4,17 +4,16 @@
 #SBATCH --task=4
 #SBATCH --mem-per-cpu=8gb
 #SBATCH --time=01:30:00
-#SBATCH -o ./log/physio02_%A_%a.o
-#SBATCH -e ./log/physio02_%A_%a.e
+#SBATCH -o ./log/physio03_%A_%a.o
+#SBATCH -e ./log/physio03_%A_%a.e
 #SBATCH --account=DBIC
 #SBATCH --partition=standard
 #SBATCH --array=1-14%5
 
-conda activate physio
+conda activate biopac
 
-# CLUSTER="discovery" # local
-PROJECT_DIR="/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_social"
-PHYSIO_DIR="${PROJECT_DIR}/data/physio/physio03_bids"
+PROJECT_DIR="/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_cue"
+PHYSIO_DIR="/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/physio/physio03_bids"
 BEH_DIR="${PROJECT_DIR}/data/beh/beh02_preproc"
 OUTPUT_LOGDIR="${PROJECT_DIR}/scripts/logcenter"
 OUTPUT_SAVEDIR="${PROJECT_DIR}/analysis/physio"
@@ -42,6 +41,6 @@ python ${PWD}/p01_grouplevel_01SCL.py \
 --task ${TASK} \
 -sr ${SAMPLINGRATE} \
 --ttl-index ${TTL_INDEX} \
---scl-epochstart ${SCR_EPOCH_START} \
---scl-epochend ${SCR_EPOCH_END} \
---exclude_sub 1 2 3 4 5 6
+--scl-epochstart ${SCL_EPOCH_START} \
+--scl-epochend ${SCL_EPOCH_END} \
+--exclude-sub 1 2 3 4 5 6

@@ -47,7 +47,7 @@ def logger(logger_fname, name):
 def extract_bids_num(filename: str, key: str) -> int:
     """
     Extracts BIDS information based on input "key" prefix.
-    If filename includes an extention, code will remove it.
+    If filename includes an extension, code will remove it.
 
     Parameters
     ----------
@@ -65,7 +65,7 @@ def extract_bids_num(filename: str, key: str) -> int:
 def extract_bids(filename: str, key: str) -> str:
     """
     Extracts BIDS information based on input "key" prefix.
-    If filename includes an extention, code will remove it.
+    If filename includes an extension, code will remove it.
 
     Parameters
     ----------
@@ -108,8 +108,12 @@ def sublist(source_dir:str, remove_int:list, slurm_id:int, sub_zeropad:int, stri
     -------
     sub_list: list
         a list of subject ids to operate on
+
+    TODO: allow for user to indicate how much depth to go down
+    or, just do glob with matching pattern?
     """
-    biopac_list = next(os.walk(join(source_dir)))[1]
+    biopac_list = [ f.name for f in os.scandir(join(source_dir)) if f.is_dir() and  'sub-' in f.name ]
+    #biopac_list = next(os.walk(join(source_dir)))[2]
     remove_list = [f"sub-{x:0{sub_zeropad}d}" for x in remove_int]
     include_int = list(np.arange(slurm_id * stride + 1, (slurm_id + 1) * stride, 1))
     include_list = [f"sub-{x:0{sub_zeropad}d}" for x in include_int]
@@ -188,20 +192,20 @@ def argument_p01():
                         type=str, help=".csv filepath to metadata file of run information (complete/runtype etc)")
     parser.add_argument("--dictchannel",
                         type=str, help=".json file for changing physio data channel names | key:value == old_channel_name:new_channel_name")
-    parser.add_argument("-sid", "--slurm-id", type=int,
-                        help="specify slurm array id")
-    parser.add_argument("--stride", type=int,
-                        help="how many participants to batch per jobarray")
+    parser.add_argument("-sid", "--slurm-id",
+                        type=int, help="specify slurm array id")
+    parser.add_argument("--stride",
+                        type=int, help="how many participants to batch per jobarray")
     parser.add_argument("-z", "--zeropad",
                         type=int, help="how many zeros are padded for BIDS subject id")
     parser.add_argument("-t", "--task",
                         type=str, help="specify task name (e.g. task-alignvideos)")
-    parser.add_argument("-sr", "--samplingrate", type=int,
-                        help="sampling rate of acquisition file")
-    parser.add_argument("--tonic-epochstart", type=int,
-                        help="beginning of epoch")
-    parser.add_argument("--tonic-epochend", type=int,
-                        help="end of epoch")
+    parser.add_argument("-sr", "--samplingrate",
+                        type=int, help="sampling rate of acquisition file")
+    parser.add_argument("--tonic-epochstart",
+                        type=int, help="beginning of epoch")
+    parser.add_argument("--tonic-epochend",
+                        type=int, help="end of epoch")
     parser.add_argument("--ttl-index", type=int,
                         help="index of which TTL to use")
     args = parser.parse_args()

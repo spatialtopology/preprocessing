@@ -75,13 +75,18 @@ def main():
     sub_zeropad = args.sub_zeropad # sub-0016 -> 4
     task = args.task # e.g. 'task-social' 'task-fractional' 'task-alignvideos'
     run_cutoff = args.run_cutoff # e.g. 300
-    dict_column = args.colnamechange
-    dict_task = args.tasknamechange
+    columnchangefname = args.colnamechange
+    tasknamefname = args.tasknamechange
     remove_sub = args.exclude_sub
 
     # %%
     physio_dir = topdir
     source_dir = join(physio_dir, 'physio02_sort')
+    with open(tasknamefname, "r") as read_file:
+        dict_task = json.load(read_file)
+    with open(columnchangefname, "r") as read_file:
+        dict_column = json.load(read_file)
+
     if dict_task:
         save_dir = join(physio_dir, 'physio03_bids', dict_task[task])
     else:
@@ -98,11 +103,8 @@ def main():
     f = open(logger_fname, "w")
     logger = utils.initialize.logger(logger_fname, "physio")
 
-
     # %% NOTE: 1. glob acquisition files _________________________________________________________________________
-    # filename ='../spacetop_biopac/data/sub-0026/SOCIAL_spacetop_sub-0026_ses-01_task-social_ANISO.acq'
-    # remove_sub = [1, 2, 3, 4, 5, 6]
-    sub_list = utils.initialize.sublist(source_dir, remove_sub, slurm_id, stride=10, sub_zeropad=4)
+    sub_list = utils.initialize.sublist(source_dir, remove_sub, slurm_id, stride, sub_zeropad)
 
     acq_list = []
     logger.info(sub_list)
@@ -112,7 +114,6 @@ def main():
         acq_list.append(acq)
     flat_acq_list = [item for sublist in acq_list  for item in sublist]
 
-    # %%
     for acq in sorted(flat_acq_list):
     # NOTE: 2. extract information from filenames ________________________________________________________________
         filename = os.path.basename(acq)
@@ -213,7 +214,7 @@ def main():
             logger.info(
                 "runs shorter than %d sec: %s %s %s - run number in python order",
                 run_cutoff, sub, ses, shorter_than_threshold_length)
-        scannote_reference = utils.initialize._subset_meta(runmeta, sub, ses)
+        scannote_reference = utils.initialize.subset_meta(runmeta, sub, ses)
 
         if len(scannote_reference.columns) == len(clean_runlist):
             ref_dict = scannote_reference.to_dict('list')
@@ -233,14 +234,16 @@ def get_args_c02():
                         type=str, help="top directory of physio data", required = True)
     parser.add_argument("-m", "--metadata",
                         type=str, help="filepath to run completion metadata", required = True)
-    parser.add_argument("-sid", "--slurm_id", type=int,
-                        help="specify slurm array id", required = True)
-    parser.add_argument("--stride", help="how many participants to batch per jobarray")
-    parser.add_argument("-z", "--sub-zeropad", help="how many zeros are padded for BIDS subject id", required = True)
+    parser.add_argument("-sid", "--slurm_id",
+                        type=int, help="specify slurm array id", required = True)
+    parser.add_argument("--stride",
+                        type=int, help="how many participants to batch per jobarray")
+    parser.add_argument("-z", "--sub-zeropad",
+                        type=int, help="how many zeros are padded for BIDS subject id", required = True)
     parser.add_argument("-t", "--task",
                         type=str, help="specify task name (e.g. task-alignvideos)", required = True)
-    parser.add_argument("-c", "--run-cutoff", type=int,
-                        help="specify cutoff threshold for distinguishing runs (in seconds)", required = True)
+    parser.add_argument("-c", "--run-cutoff",
+                        type=int, help="specify cutoff threshold for distinguishing runs (in seconds)", required = True)
     parser.add_argument("--colnamechange",
                         type=str, help="to change column name within .acq file. provide json file with key:value as old_column_name:new_column_name",
                         required = False)
@@ -248,7 +251,7 @@ def get_args_c02():
                         type=str, help="to change task name. provide json file with key:value as old_task_name:new_task_name",
                         required = False)
     parser.add_argument('--exclude-sub', nargs='+',
-                        type=int, help="string of intergers, subjects to be removed from code", required=False)
+                        type=int, help="string of integers, subjects to be removed from code", required=False)
     args = parser.parse_args()
     return args
 

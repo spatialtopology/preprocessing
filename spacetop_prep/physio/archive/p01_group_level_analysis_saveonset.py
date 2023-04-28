@@ -71,22 +71,23 @@ def main():
     tonic_epoch_start = args.tonic_epochstart
     tonic_epoch_end = args.tonic_epochend
     ttl_index = args.ttl_index
+    remove_subject_int = args.exclude_sub
 
     # %% NOTE: local test
     # sub 73
     # ses 1
     # run 5
-    beh_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0081_ses-01_task-social_run-01-pain_beh.csv'
-    physio_fpath = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0081_ses-01_task-cue_run-01-pain_recording-ppg-eda-trigger_physio.tsv'
-    meta_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/spacetop_task-social_run-metadata.csv'
-    dictchannel_json = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/p01_channel.json'
-    beh_df = pd.read_csv(beh_fname)
-    physio_df = pd.read_csv(physio_fpath, sep='\t')
-    runmeta = pd.read_csv(meta_fname)
-    samplingrate = 2000
-    ttl_index = 2
-    tonic_epoch_end = 20
-    tonic_epoch_start = -1
+    # beh_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0081_ses-01_task-social_run-01-pain_beh.csv'
+    # physio_fpath = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0081_ses-01_task-cue_run-01-pain_recording-ppg-eda-trigger_physio.tsv'
+    # meta_fname = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/utils/tests/spacetop_task-social_run-metadata.csv'
+    # dictchannel_json = '/Users/h/Dropbox/projects_dropbox/spacetop-prep/spacetop_prep/physio/p01_channel.json'
+    # beh_df = pd.read_csv(beh_fname)
+    # physio_df = pd.read_csv(physio_fpath, sep='\t')
+    # runmeta = pd.read_csv(meta_fname)
+    # samplingrate = 2000
+    # ttl_index = 2
+    # tonic_epoch_end = 20
+    # tonic_epoch_start = -1
 
     # %%
     dict_channel = json.load(open(dictchannel_json))
@@ -96,7 +97,7 @@ def main():
 
     # %% set parameters
     sub_list = []
-    remove_subject_int = [1, 2, 3, 4, 5, 6]
+    # remove_subject_int = [1, 2, 3, 4, 5, 6]
     sub_list = utils.initialize.sublist(
         physio_dir, remove_subject_int, slurm_id, stride=stride, sub_zeropad=zeropad)
     ses_list = [1, 3, 4]
@@ -266,7 +267,7 @@ def main():
 
         # Tonic level ______________________________________________________________________________________
 
-        # 1. append columns to the begining (trial order, trial type)
+        # 1. append columns to the beginning (trial order, trial type)
         # NOTE: eda_epochs_level -> scl_epoch
         metadata_SCL = utils.preprocess.combine_metadata_SCL(scl_raw, metadf_dropNA, total_trial = 12)
         metadata_SCR = utils.preprocess.combine_metadata_SCR(scr_phasic, metadf_dropNA, total_trial = 12)
@@ -356,6 +357,8 @@ def get_args():
                         help="end of epoch")
     parser.add_argument("--ttl-index", type=int,
                         help="index of which TTL to use")
+    parser.add_argument('--exclude-sub', nargs='+',
+                        type=int, help="string of integers, subjects to be removed from code", required=False)
     args = parser.parse_args()
     return args
 

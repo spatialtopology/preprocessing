@@ -7,7 +7,7 @@
 #SBATCH -o ./log/FMRIPREP_%A_%a.o
 #SBATCH -e ./log/FMRIPREP_%A_%a.e
 #SBATCH --account=DBIC
-#SBATCH --partition=preemptable
+#SBATCH --partition=preemptible
 #SBATCH --array=7
 ## --array=1-17%5
 

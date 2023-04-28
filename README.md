@@ -47,7 +47,7 @@ About
 
 Prerequisites
 -----------------
-For the physiological data preprocesing, please install the following conda environment, [phyio.yaml](https://github.com/spatialtopology/spacetop-prep/blob/master/spacetop_prep/physio/physio.yaml)
+For the physiological data preprocessing, please install the following conda environment, [physio.yaml](https://github.com/spatialtopology/spacetop-prep/blob/master/spacetop_prep/physio/physio.yaml)
 
 Usage
 -----------------

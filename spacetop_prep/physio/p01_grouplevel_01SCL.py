@@ -72,7 +72,6 @@ def main():
     SCL_epoch_end = args.scl_epochend
     ttl_index = args.ttl_index
     remove_subject_int = args.exclude_sub
-
     # %% NOTE: local test
     # sub 73
     # ses 1
@@ -97,18 +96,19 @@ def main():
 
     # %% set parameters
     sub_list = []
-    # remove_subject_int = [1, 2, 3, 4, 5, 6]
-    sub_list = utils.initialize.sublist(
-        physio_dir, remove_subject_int, slurm_id, stride=stride, sub_zeropad=zeropad)
+    sub_list = utils.initialize.sublist(source_dir = physio_dir,
+                                        remove_int = remove_subject_int,
+                                        slurm_id = slurm_id,
+                                        stride=stride,
+                                        sub_zeropad=zeropad)
+    print(sub_list)
     ses_list = [1, 3, 4]
     run_list = [1, 2, 3, 4, 5, 6]
     sub_ses = list(itertools.product(sorted(sub_list), ses_list, run_list))
-
-    logger_fname = os.path.join(
-        log_dir, f"data-physio_step-03-groupanalysis_{datetime.date.today().isoformat()}.txt")
+    Path(log_dir).mkdir(parents=True, exist_ok=True)
+    logger_fname = os.path.join(log_dir, f"data-physio_step-03-groupanalysis_{datetime.date.today().isoformat()}.txt")
 
     # set up logger _______________________________________________________________________________________
-
     runmeta = pd.read_csv(metadata)
     # TODO: come up with scheme to update logger files
     f = open(logger_fname, "w")
@@ -204,7 +204,7 @@ def main():
         if run_type == 'pain':
             final_df = pd.DataFrame()
             # binarize TTL channels (raise error if channel has no TTL, despite being a pain run)
-            nan_index, metadf_dropNA, plateau_start = utils.ttl_extraction.ttl_extraction(
+            nan_index, metadf_dropNA, plateau_start, final_df = utils.ttl_extraction.ttl_extraction(
                 physio_df=physio_df,
                 dict_beforettl=dict_onset['event_expectrating'],
                 dict_afterttl=dict_onset['event_actualrating'],
@@ -223,6 +223,10 @@ def main():
             }
             # utils.qcplots.plot_ttl_extraction(physio_df, [
             #                     'EDA_corrected_02fixation', 'physio_ppg', 'trigger_heat'], event_stimuli)
+            physio_topdir = Path(physio_dir).parents[0] 
+            ttl_dir = join(physio_topdir, 'physio04_ttl', 'task-cue', sub, ses)
+            Path(ttl_dir).mkdir(parents = True, exist_ok = True)
+            final_df.to_csv(join(ttl_dir, f"{sub}_{ses}_task-cue_{run}-pain_recording-medocttl_physio.tsv"))
 
         else:
             metadf_dropNA =  metadata_df.assign(trial_num=list(np.array(metadata_df.index + 1)))
@@ -249,7 +253,7 @@ def main():
 
         # Tonic level ______________________________________________________________________________________
 
-        # 1. append columns to the begining (trial order, trial type)
+        # 1. append columns to the beginning (trial order, trial type)
         # NOTE: eda_epochs_level -> scl_epoch
         metadata_SCL = utils.preprocess.combine_metadata_SCL(scl_raw, metadf_dropNA, total_trial = 12)
         # 2. eda_level_timecourse ------------------------------------
@@ -263,26 +267,28 @@ def main():
         # concatenate it back to the metadataframe based on index values.
         if run_type == 'pain' and len(nan_index) > 0:
             try:
-                metadata = utils.preprocess.substitute_beh_NA(nan_index, metadata_df, ['angle', 'RT'])
+                metadata_d = utils.preprocess.substitute_beh_NA(nan_index, metadata_df, ['angle', 'RT'])
                 logger.info("preprocess.substitute_beh_NA WORKS")
             except:
                 nan_ind = nan_index[0]
-                metadata = metadf_dropNA.copy()
-                metadata.loc[nan_ind, metadata_df.columns.str.contains('angle')] = np.nan
-                metadata.loc[nan_ind, metadata_df.columns.str.contains('RT')] = np.nan
+                metadata_d = metadf_dropNA.copy()
+                metadata_d.loc[nan_ind, metadata_df.columns.str.contains('angle')] = np.nan
+                metadata_d.loc[nan_ind, metadata_df.columns.str.contains('RT')] = np.nan
                 logger.info("preprocess.substitute_beh_NA BUG")
         elif run_type == 'vicarious' or run_type == 'cognitive':
-            metadata = metadf_dropNA.copy()
+            metadata_d = metadf_dropNA.copy()
             # df2 = pd.DataFrame(pd.concat([metadf_dropNA.iloc[:nan_ind], subset_meta, metadf_dropNA.iloc[nan_ind:]])) #.reset_index(drop=True))
             # insert row back in and fill te ratings with nans
+        else:
+            metadata_d = metadf_dropNA.copy()
         # metadata_df2 = metadf_dropNA.reset_index(drop=True)
         # TODO:* * * * * * * * * * * * * *
         # metadata_SCL = metadata_SCL.reset_index(drop=True)
         eda_level_timecourse = utils.preprocess.resample_scl2pandas_ver2(scl_output = scl_raw, metadata_df =metadf_dropNA , total_trial = 12, tonic_length = tonic_length, sampling_rate = samplingrate, desired_sampling_rate = resample_rate)
         # eda_level_timecourse = eda_level_timecourse.reset_index(drop=True)
-        SCL_df = pd.concat([metadata, metadata_SCL], axis=1)
+        SCL_df = pd.concat([metadata_d, metadata_SCL], axis=1)
         tonic_timecourse = pd.concat(
-            [metadata, metadata_SCL, eda_level_timecourse], axis=1)
+            [metadata_d, metadata_SCL, eda_level_timecourse], axis=1)
 
     # NOTE: save tonic data __________________________________________________________________________________
         tonic_save_dir = join(output_savedir, 'physio01_SCL', sub, ses)
@@ -329,7 +335,7 @@ def get_args():
     parser.add_argument("--ttl-index", type=int,
                         help="index of which TTL to use")
     parser.add_argument('--exclude-sub', nargs='+',
-                        type=int, help="string of intergers, subjects to be removed from code", required=False)
+                        type=int, help="string of integers, subjects to be removed from code", required=False)
     args = parser.parse_args()
     return args
 
