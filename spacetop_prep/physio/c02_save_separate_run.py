@@ -83,9 +83,9 @@ def main():
     physio_dir = topdir
     source_dir = join(physio_dir, 'physio02_sort')
     with open(tasknamefname, "r") as read_file:
-        dict_task = json.loads(read_file)
+        dict_task = json.load(read_file)
     with open(columnchangefname, "r") as read_file:
-        dict_column = json.loads(read_file)
+        dict_column = json.load(read_file)
 
     if dict_task:
         save_dir = join(physio_dir, 'physio03_bids', dict_task[task])
