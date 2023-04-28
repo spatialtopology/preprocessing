@@ -19,7 +19,7 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
     """
     Parameters
     ----------
-    physio_df: pandas dataframe
+    physio_df: pd.Dataframe
         acquisition file (run-wise)
     dict_beforettl: dict
         refers to event that happens before the ttl - a dictionary that contains "start" "stop" keys,
@@ -32,7 +32,7 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
         created via utils.preprocess.identify_boundary
     samplingrate: int
         sampling rate of the physiological signal
-    metadata_df: pandas dataframe
+    metadata_df: pd.Dataframe
         subset of behavioral data with the parameters necessary for sub/ses/run/condition information
     ttl_index: int
         which TTL to use (1st, 2nd, 3rd, 4th)
@@ -41,6 +41,10 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
     metadata_df: pandas dataframe
         excludes trials where the 2nd TTL was not delivered (i.e. where trials did not reach intended temperature)
     ttl_start: TODO: identify data type
+    final_df: pd.Dataframe
+        dataframe with TTL indices
+
+
     """
     logger = logging.getLogger("physio.ttl")
     final_df = pd.DataFrame()
@@ -165,4 +169,4 @@ def ttl_extraction(physio_df, dict_beforettl, dict_afterttl, dict_stimuli, sampl
     # metadata_df3 = metadata_df2.assign(trial_num=list(np.array(index_range + 1)))
     # metadata_df.loc[:,'trial_num'] = list(np.array(index_range + 1))
 
-    return flat_nans, metadata_df3, ttl_start
+    return flat_nans, metadata_df3, ttl_start, final_df
