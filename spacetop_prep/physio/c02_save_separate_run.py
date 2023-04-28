@@ -104,7 +104,7 @@ def main():
     logger = utils.initialize.logger(logger_fname, "physio")
 
     # %% NOTE: 1. glob acquisition files _________________________________________________________________________
-    sub_list = utils.initialize.sublist(source_dir, remove_sub, slurm_id, stride, sub_zeropad)
+    sub_list = utils.initialize.sublist(source_dir, remove_int=remove_sub, slurm_id=slurm_id, sub_zeropad=sub_zeropad, stride=stride)
 
     acq_list = []
     logger.info(sub_list)
