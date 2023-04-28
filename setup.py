@@ -35,7 +35,7 @@ opts = dict(name=NAME,
             install_requires=REQUIRES,
             python_requires=PYTHON_REQUIRES,
             setup_requires=SETUP_REQUIRES,
-            extras_require={
+            extras_requires={
               'physio': ['matplotlib', 'neurokit2', 'bioread']
             },
             requires=REQUIRES)
