@@ -197,6 +197,7 @@ def main():
         dict_runs_adjust = utils.preprocess.identify_boundary(sdf, 'adjust_run')
         logger.info("* adjusted start_df: %s", dict_runs_adjust['start'])
         logger.info("* adjusted stop_df: %s", dict_runs_adjust['stop'])
+        logger.info("* total of %d runs", len(dict_runs_adjust['start']))
 
     # NOTE: 7. identify run transitions ___________________________________________________________________________
         run_list = list(range(len(dict_runs_adjust['start'])))
@@ -215,10 +216,11 @@ def main():
                 "runs shorter than %d sec: %s %s %s - run number in python order",
                 run_cutoff, sub, ses, shorter_than_threshold_length)
         scannote_reference = utils.initialize.subset_meta(runmeta, sub, ses)
-
-        if len(scannote_reference.columns) == len(clean_runlist):
+        meta_runlist = [col for col in scannote_reference if col.startswith('run')]
+        print(f"meta_runlist: {meta_runlist}")
+        if len(meta_runlist) == len(clean_runlist):
             ref_dict = scannote_reference.to_dict('list')
-            run_basename = f"{sub}_{ses}_{task}_CLEAN_RUN-TASKTYLE_recording-ppg-eda_physio.csv"
+            run_basename = f"{sub}_{ses}_{task}_CLEAN_RUN-TASKTYPE_recording-ppg-eda_physio.csv"
             # main_df.rename(columns=dict_column, inplace=True)
             main_df_drop = main_df[main_df.columns.intersection(list(dict_column.values()))]
             utils.initialize.assign_runnumber(ref_dict, clean_runlist, dict_runs_adjust, main_df_drop, save_dir,run_basename,bids_dict)
