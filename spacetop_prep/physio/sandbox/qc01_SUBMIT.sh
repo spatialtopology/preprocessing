@@ -17,7 +17,7 @@ TOPDIR="/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/physio"
 SLURM_ID=${SLURM_ARRAY_TASK_ID}
 STRIDE=10
 SUB_ZEROPAD=4
-SAVEDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_cue/figure/physio/qc'
+SAVEDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_cue/analysis/physio/qc'
 
 python ${PWD}/qc01_outlierdetection.py \
 --topdir ${TOPDIR} \
@@ -25,4 +25,4 @@ python ${PWD}/qc01_outlierdetection.py \
 --stride ${STRIDE} \
 --savedir ${SAVEDIR} \
 --sub-zeropad ${SUB_ZEROPAD} \
---exclude_sub 1 2 3 4 5 6
+--exclude_sub 199

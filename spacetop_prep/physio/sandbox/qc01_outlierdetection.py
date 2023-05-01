@@ -171,7 +171,7 @@ sub_zeropad = args.sub_zeropad # sub-0016 -> 4
 remove_sub = args.exclude_sub
 physio_dir = topdir
 
-source_dir = os.path.joinjoin(physio_dir, 'physio03_bids', 'task-cue')
+source_dir = os.path.join(physio_dir, 'physio03_bids', 'task-cue')
 
 # %% NOTE: 1. glob acquisition files _________________________________________________________________________
 sub_list = utils.initialize.sublist(source_dir, remove_sub, slurm_id, stride, sub_zeropad)
