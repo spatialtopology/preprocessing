@@ -37,6 +37,14 @@ About
 
 Prerequisites 
 ------------------
+This is a submodule of spacetop-prep. Make sure you installed spacetop-prep (Also illustrate in our [main README](https://github.com/spatialtopology/spacetop-prep#usage))
+
+```
+python setup.py sdist
+pip install -e .
+```
+
+</div>
 
 ### Are there any installations?
 
@@ -47,12 +55,16 @@ conda env create -f physio.yaml
 * If you don't want to install an env via the yaml file, make sure to include the essential modules: [neurokit](https://github.com/neuropsychology/NeuroKit) and [bioread](https://github.com/uwmadison-chm/bioread)
 ### What does my data structure need to be like?
 * You need a **`data`** directory as your top folder
-* All of your physiological data, right off the stimulus PC, should be stored in **`../data/physio01_raw`**.
+* All of your physiological data, right off the stimulus PC, MUST BE STORED in **`../data/physio01_raw`**.
+* (The reason for this is because we want similar data structures across the CANlab.)
 * From that, this module will create the following folders, such as **physio02_sort** and **physio03_bids**
 <img src="https://user-images.githubusercontent.com/54367954/206929176-13e9ea6d-5a64-466b-9b3a-03c107ed112e.png" width="600">
 
+
+
 Usage
 ----------------
+
 #### 1. Rename to BIDS-compliant format: Sort raw .acq into semi-BIDS format
 ```
 python ${PWD}/c01_bidsifysort.py \

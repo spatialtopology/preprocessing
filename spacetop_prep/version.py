@@ -75,5 +75,5 @@ MINOR = _version_minor
 MICRO = _version_micro
 VERSION = __version__
 PACKAGE_DATA = {'spacetop_prep': [pjoin('data', '*')]}
-REQUIRES = ["numpy"]
+REQUIRES = ["numpy", "neurokit2", "bioread", "matplotlib"]
 PYTHON_REQUIRES = ">= 3.7"
