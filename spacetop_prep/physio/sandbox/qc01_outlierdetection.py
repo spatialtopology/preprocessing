@@ -178,14 +178,14 @@ source_dir = os.path.join(physio_dir, 'physio03_bids', 'task-cue')
 # %%
 ####################
 # local use
-topdir = '/Volumes/spacetop_data/physio'
-slurm_id = 1
-stride = 10
-save_dir = '/Volumes/spacetop_projects_cue/figure/physio/qc'
-sub_zeropad = 4
-remove_sub = [1]
-physio_dir = topdir
-source_dir = os.path.join(physio_dir, 'physio03_bids', 'task-cue')
+# topdir = '/Volumes/spacetop_data/physio'
+# slurm_id = 1
+# stride = 10
+# save_dir = '/Volumes/spacetop_projects_cue/figure/physio/qc'
+# sub_zeropad = 4
+# remove_sub = [1]
+# physio_dir = topdir
+# source_dir = os.path.join(physio_dir, 'physio03_bids', 'task-cue')
 ####################
 # %% NOTE: 1. glob acquisition files _________________________________________________________________________
 sub_list = utils.initialize.sublist(source_dir, remove_sub, slurm_id, sub_zeropad, stride)
@@ -218,42 +218,42 @@ for tsv in sorted(halflist):
         fig, outlier_index, outlier_index_fd = seasonal_outlier(filtered_df, key = 'raw', period = 80, zcutoff = 3, threshold = .7)
         overlay_plot = plot_data_deriv(filtered_physio = filtered_df, samplingrate = 2000, imagesize = 872, TR = .46, outlier_index=outlier_index )
         overlay_plot.suptitle(f"{sub} {ses} {run} {task}")
-        with open(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier.json"), "w") as f:
+        with open(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier-seasondecomp.json"), "w") as f:
             json.dump({'outliers': outlier_index_fd[0].tolist()}, f)
         # json.dump({'outliers': outlier_index}, os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier.json"))
-        fig.savefig(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_seasondecomp.png"))
-        overlay_plot.savefig(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_raw+outlier.png"))
+        fig.savefig(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier-seasondecomp.png"))
+        overlay_plot.savefig(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier-seasondecomp-raw.png"))
 
 # %% ##################################################################################
 # ANOMALY METHOD 2
-for tsv in sorted(halflist):
-    if os.path.exists(tsv):
-        filename = os.path.basename(tsv)
-        bids_dict = {}
-        bids_dict['sub'] = sub  = utils.initialize.extract_bids(filename, 'sub')
-        bids_dict['ses'] = ses  = utils.initialize.extract_bids(filename, 'ses')
-        bids_dict['run'] = run  = utils.initialize.extract_bids(filename, 'run')
-        bids_dict['task']= task = utils.initialize.extract_bids(filename, 'task')
+# for tsv in sorted(halflist):
+#     if os.path.exists(tsv):
+#         filename = os.path.basename(tsv)
+#         bids_dict = {}
+#         bids_dict['sub'] = sub  = utils.initialize.extract_bids(filename, 'sub')
+#         bids_dict['ses'] = ses  = utils.initialize.extract_bids(filename, 'ses')
+#         bids_dict['run'] = run  = utils.initialize.extract_bids(filename, 'run')
+#         bids_dict['task']= task = utils.initialize.extract_bids(filename, 'task')
 
-        main_df = pd.read_csv(tsv, sep ='\t')
-        filtered_df = filter_physio(main_df)
-        from sklearn.ensemble import IsolationForest
-        from sklearn.preprocessing import StandardScaler
-        outliers_fraction = float(.01)
-        scaler = StandardScaler()
-        np_scaled = scaler.fit_transform(filtered_df.values.reshape(-1, 1))
-        data = pd.DataFrame(np_scaled)
-        # train isolation forest
-        model =  IsolationForest(contamination=outliers_fraction)
-        model.fit(data)
-        filtered_df['anomaly'] = model.predict(data)
-        # visualization
-        fig, ax = plt.subplots(figsize=(10,6))
-        a = filtered_df.loc[filtered_df['anomaly'] == -1, ['eda_preproc']] #anomaly
-        ax.plot(filtered_df.index, filtered_df['eda_preproc'], color='black', label = 'Normal')
-        ax.scatter(a.index,a['eda_preproc'], color='red', label = 'Anomaly')
-        plt.legend()
-        plt.show();
+#         main_df = pd.read_csv(tsv, sep ='\t')
+#         filtered_df = filter_physio(main_df)
+#         from sklearn.ensemble import IsolationForest
+#         from sklearn.preprocessing import StandardScaler
+#         outliers_fraction = float(.01)
+#         scaler = StandardScaler()
+#         np_scaled = scaler.fit_transform(filtered_df.values.reshape(-1, 1))
+#         data = pd.DataFrame(np_scaled)
+#         # train isolation forest
+#         model =  IsolationForest(contamination=outliers_fraction)
+#         model.fit(data)
+#         filtered_df['anomaly'] = model.predict(data)
+#         # visualization
+#         fig, ax = plt.subplots(figsize=(10,6))
+#         a = filtered_df.loc[filtered_df['anomaly'] == -1, ['eda_preproc']] #anomaly
+#         ax.plot(filtered_df.index, filtered_df['eda_preproc'], color='black', label = 'Normal')
+#         ax.scatter(a.index,a['eda_preproc'], color='red', label = 'Anomaly')
+#         plt.legend()
+#         plt.show();
 # %% ##################################################################################
 # ANOMALY METHOD 3: prophet
 import prophet
@@ -299,14 +299,16 @@ for tsv in sorted(halflist):
         t['y'] = filtered_df['eda_preproc']
         t['ds'] = pd.to_datetime(filtered_df.index)
 
-        forecast = fit_predict_model(t, .99, .7)
+        forecast = fit_predict_model(t, .99, .9)
         forecasted = detect_anomalies(forecast)
 
         outlier_prophet = forecasted[forecasted['anomaly'] != 0]
+        plt.figure(figsize=(5, 3))
         plt.plot(forecasted['fact'])
         plt.plot(outlier_prophet.index.tolist(), outlier_prophet['fact'], 'ro')
         plt.title(f"{sub} {ses} {run} {task}")
-        plt.show()
-        plt.close()
-        # plt.plot(np.where(outlier_type2)[0], X_outliers_type2, 'g^')
-        # plt.plot(filtered_prophet)
+        # plt.show()
+        # plt.close()
+        plt.savefig(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier-prophet.png"))
+        with open(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier-prophet.json"), "w") as f:
+            json.dump({'outliers': outlier_prophet.index.tolist()}, f)
