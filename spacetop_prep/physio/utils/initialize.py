@@ -115,7 +115,7 @@ def sublist(source_dir:str, remove_int:list, slurm_id:int, sub_zeropad:int, stri
     biopac_list = [ f.name for f in os.scandir(join(source_dir)) if f.is_dir() and  'sub-' in f.name ]
     #biopac_list = next(os.walk(join(source_dir)))[2]
     remove_list = [f"sub-{x:0{sub_zeropad}d}" for x in remove_int]
-    include_int = list(np.arange(slurm_id * stride + 1, (slurm_id + 1) * stride, 1))
+    include_int = list(np.arange(slurm_id * stride, (slurm_id + 1) * stride, 1))
     include_list = [f"sub-{x:0{sub_zeropad}d}" for x in include_int]
     sub_list = [x for x in biopac_list if x not in remove_list]
     sub_list = [x for x in sub_list if x in include_list]
