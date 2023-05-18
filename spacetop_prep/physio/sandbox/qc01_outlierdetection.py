@@ -63,8 +63,6 @@ def get_args_c02():
                         type=int, help="string of integers, subjects to be removed from code", required=False)
     parser.add_argument("--stride",
                         type=int, help="how many participants to batch per jobarray")
-    parser.add_argument("-z", "--sub-zeropad",
-                        type=int, help="how many zeros are padded for BIDS subject id", required = True)
     args = parser.parse_args()
     return args
 
