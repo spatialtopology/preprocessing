@@ -178,14 +178,14 @@ source_dir = os.path.join(physio_dir, 'physio03_bids', 'task-cue')
 # %%
 ####################
 # local use
-topdir = '/Volumes/spacetop_data/physio'
-slurm_id = 1
-stride = 10
-save_dir = '/Volumes/spacetop_projects_cue/figure/physio/qc'
-sub_zeropad = 4
-remove_sub = [1]
-physio_dir = topdir
-source_dir = os.path.join(physio_dir, 'physio03_bids', 'task-cue')
+#topdir = '/Volumes/spacetop_data/physio'
+#slurm_id = 1
+#stride = 10
+#save_dir = '/Volumes/spacetop_projects_cue/figure/physio/qc'
+#sub_zeropad = 4
+#remove_sub = [1]
+#physio_dir = topdir
+#source_dir = os.path.join(physio_dir, 'physio03_bids', 'task-cue')
 ####################
 # %% NOTE: 1. glob acquisition files _________________________________________________________________________
 sub_list = utils.initialize.sublist(source_dir, remove_sub, slurm_id, sub_zeropad, stride)
