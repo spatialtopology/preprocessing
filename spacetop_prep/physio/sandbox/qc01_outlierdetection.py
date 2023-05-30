@@ -27,20 +27,20 @@ __version__ = "0.0.1"
 __maintainer__ = "Heejung Jung"
 __email__ = "heejung.jung@colorado.edu"
 __status__ = "Development"
-
+# %%
 import argparse
 import glob
 import json
 import os
 from pathlib import Path
 
-import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import neurokit2 as nk
 import numpy as np
-# %%
 import pandas as pd
 import scipy
+# import matplotlib.dates as mdates
+from importlib_resources import read_text
 from scipy import signal
 from statsmodels.tsa.seasonal import STL, seasonal_decompose
 
@@ -63,6 +63,10 @@ def get_args_c02():
                         type=str, help="directory where outlier and figures will be saved", required = True)
     parser.add_argument('--exclude-sub', nargs='+',
                         type=int, help="string of integers, subjects to be removed from code", required=False)
+    parser.add_argument("--stride",
+                        type=int, help="how many participants to batch per jobarray")
+    parser.add_argument("-z", "--sub-zeropad",
+                        type=int, help="how many zeros are padded for BIDS subject id", required = True)
     args = parser.parse_args()
     return args
 
@@ -97,7 +101,7 @@ def filter_physio(physio, samplingrate = 2000, imagesize = 872, TR = .46 ):
         'eda_preproc': resampled_data})
     return new_df
 
-def seasonal_outlier(filtered_physio, key, period=10, zcutoff = 1.96):
+def seasonal_outlier(filtered_physio, key, period=10, zcutoff = 1.96, threshold = .25):
     """AI is creating summary for seasonal_outlier
 
     Args:
@@ -114,19 +118,22 @@ def seasonal_outlier(filtered_physio, key, period=10, zcutoff = 1.96):
     first_d = np.gradient(filtered_physio['eda_preproc'], edge_order = 1)
     second_d = np.diff(filtered_physio['eda_preproc'], 2)
     if key == 'first_d':
-        result = seasonal_decompose(first_d, model='additive', extrapolate_trend=2,two_sidedbool = False,  period = period)
+        result = seasonal_decompose(first_d, model='additive', extrapolate_trend=2,two_sided = False,  period = period)
     elif key == 'second_d':
-        result = seasonal_decompose(second_d, model='additive', extrapolate_trend=2,two_sidedbool = False,  period = period)
+        result = seasonal_decompose(second_d, model='additive', extrapolate_trend=2,two_sided = False,  period = period)
     elif key == 'raw':
         result = seasonal_decompose(filtered_physio['eda_preproc'], model='additive', extrapolate_trend=2, two_sided = False, period = period)
     fig = result.plot()
     # greaterthan75 = result.resid > np.quantile(result.resid, percentile*.01)
     # smallerthan25 = result.resid < np.quantile(result.resid, 1-(percentile*.01))
     outlier = abs(scipy.stats.zscore(result.resid)) > zcutoff
+    outlier_type2  = abs(result.resid) > threshold
     X_outliers = filtered_physio['eda_preproc'][outlier]
+    X_outliers_type2 = filtered_physio['eda_preproc'][outlier_type2]
     plt.plot(filtered_physio['eda_preproc'])
-    plt.plot(np.where(outlier)[0],X_outliers,  'ro')
-    return fig, np.where(outlier)
+    plt.plot(np.where(outlier)[0], X_outliers, 'ro')
+    plt.plot(np.where(outlier_type2)[0], X_outliers_type2, 'g^')
+    return fig, np.where(outlier), np.where(outlier_type2)
 
 def plot_data_deriv(filtered_physio, imagesize = 872, **outlier_index):
     """AI is creating summary for plot_data_deriv
@@ -157,7 +164,7 @@ def plot_data_deriv(filtered_physio, imagesize = 872, **outlier_index):
     plt.legend()
     plt.xlabel(f'time ({imagesize} TRs)',fontsize = 15)
     plt.ylabel('EDA amplitude', fontsize = 15)
-    plt.title('EDA data layered with derivative and outliers', fontsize = 20)
+    plt.suptitle('EDA data layered with derivative and outliers', fontsize = 20)
 
     return fig
 
@@ -174,7 +181,18 @@ remove_sub = args.exclude_sub
 physio_dir = topdir
 
 source_dir = os.path.join(physio_dir, 'physio03_bids', 'task-cue')
-
+# %%
+####################
+# local use
+# topdir = '/Volumes/spacetop_data/physio'
+# slurm_id = 1
+# stride = 10
+# save_dir = '/Volumes/spacetop_projects_cue/figure/physio/qc'
+# sub_zeropad = 4
+# remove_sub = [1]
+# physio_dir = topdir
+# source_dir = os.path.join(physio_dir, 'physio03_bids', 'task-cue')
+####################
 # %% NOTE: 1. glob acquisition files _________________________________________________________________________
 sub_list = utils.initialize.sublist(source_dir, remove_sub, slurm_id, sub_zeropad, stride)
 print(sub_list)
@@ -191,8 +209,8 @@ flat_tsv_list = [item for sublist in tsv_list  for item in sublist]
 # %%
 # NOTE: reference
 # https://app.neptune.ai/theaayushbajaj/Anomaly-Detection/n/49ba1752-fc3a-4abb-b35f-0e2ea4fd4afa/48dc19d8-3c75-4989-a2c0-67839393a093
-
-for tsv in sorted(flat_tsv_list):
+halflist = flat_tsv_list[5:10]
+for tsv in sorted(halflist):
     if os.path.exists(tsv):
         filename = os.path.basename(tsv)
         bids_dict = {}
@@ -203,8 +221,9 @@ for tsv in sorted(flat_tsv_list):
 
         main_df = pd.read_csv(tsv, sep ='\t')
         filtered_df = filter_physio(main_df)
-        fig, outlier_index = seasonal_outlier(filtered_df, key = 'raw', period = 80, zcutoff = 1.96)
+        fig, outlier_index, outlier_index_fd = seasonal_outlier(filtered_df, key = 'raw', period = 80, zcutoff = 3, threshold = .7)
         overlay_plot = plot_data_deriv(filtered_physio = filtered_df, samplingrate = 2000, imagesize = 872, TR = .46, outlier_index=outlier_index )
+<<<<<<< HEAD
         print(outlier_index[0].tolist())
         save_jsonfname = os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier.json")
         with open(save_jsonfname, "w") as outfile:
@@ -214,3 +233,100 @@ for tsv in sorted(flat_tsv_list):
             # os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier.json"))
         fig.savefig(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_seasondecomp.png"))
         overlay_plot.savefig(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_raw+outlier.png"))
+=======
+        overlay_plot.suptitle(f"{sub} {ses} {run} {task}")
+        with open(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier-seasondecomp.json"), "w") as f:
+            json.dump({'outliers': outlier_index_fd[0].tolist()}, f)
+        # json.dump({'outliers': outlier_index}, os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier.json"))
+        fig.savefig(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier-seasondecomp.png"))
+        overlay_plot.savefig(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier-seasondecomp-raw.png"))
+
+# %% ##################################################################################
+# ANOMALY METHOD 2
+# for tsv in sorted(halflist):
+#     if os.path.exists(tsv):
+#         filename = os.path.basename(tsv)
+#         bids_dict = {}
+#         bids_dict['sub'] = sub  = utils.initialize.extract_bids(filename, 'sub')
+#         bids_dict['ses'] = ses  = utils.initialize.extract_bids(filename, 'ses')
+#         bids_dict['run'] = run  = utils.initialize.extract_bids(filename, 'run')
+#         bids_dict['task']= task = utils.initialize.extract_bids(filename, 'task')
+
+#         main_df = pd.read_csv(tsv, sep ='\t')
+#         filtered_df = filter_physio(main_df)
+#         from sklearn.ensemble import IsolationForest
+#         from sklearn.preprocessing import StandardScaler
+#         outliers_fraction = float(.01)
+#         scaler = StandardScaler()
+#         np_scaled = scaler.fit_transform(filtered_df.values.reshape(-1, 1))
+#         data = pd.DataFrame(np_scaled)
+#         # train isolation forest
+#         model =  IsolationForest(contamination=outliers_fraction)
+#         model.fit(data)
+#         filtered_df['anomaly'] = model.predict(data)
+#         # visualization
+#         fig, ax = plt.subplots(figsize=(10,6))
+#         a = filtered_df.loc[filtered_df['anomaly'] == -1, ['eda_preproc']] #anomaly
+#         ax.plot(filtered_df.index, filtered_df['eda_preproc'], color='black', label = 'Normal')
+#         ax.scatter(a.index,a['eda_preproc'], color='red', label = 'Anomaly')
+#         plt.legend()
+#         plt.show();
+# %% ##################################################################################
+# ANOMALY METHOD 3: prophet
+import prophet
+from prophet import Prophet
+from prophet.plot import add_changepoints_to_plot
+
+
+def fit_predict_model(dataframe, interval_width = 0.99, changepoint_range = 0.8):
+    m = Prophet(daily_seasonality = False, yearly_seasonality = False, weekly_seasonality = False,
+                seasonality_mode = 'additive',
+                interval_width = interval_width,
+                changepoint_range = changepoint_range,
+                changepoint_prior_scale = 0.05)
+    m = m.fit(dataframe)
+    forecast = m.predict(dataframe)
+    forecast['fact'] = dataframe['y'].reset_index(drop = True)
+    return forecast
+def detect_anomalies(forecast):
+    forecasted = forecast[['ds','trend', 'yhat', 'yhat_lower', 'yhat_upper', 'fact']].copy()
+    forecasted['anomaly'] = 0
+    forecasted.loc[forecasted['fact'] > forecasted['yhat_upper'], 'anomaly'] = 1
+    forecasted.loc[forecasted['fact'] < forecasted['yhat_lower'], 'anomaly'] = -1
+    #anomaly importances
+    forecasted['importance'] = 0
+    forecasted.loc[forecasted['anomaly'] ==1, 'importance'] =(forecasted['fact'] - forecasted['yhat_upper'])/forecast['fact']
+    forecasted.loc[forecasted['anomaly'] ==-1, 'importance'] = (forecasted['yhat_lower'] - forecasted['fact'])/forecast['fact']
+    return forecasted
+
+
+for tsv in sorted(halflist):
+    if os.path.exists(tsv):
+        filename = os.path.basename(tsv)
+        bids_dict = {}
+        bids_dict['sub'] = sub  = utils.initialize.extract_bids(filename, 'sub')
+        bids_dict['ses'] = ses  = utils.initialize.extract_bids(filename, 'ses')
+        bids_dict['run'] = run  = utils.initialize.extract_bids(filename, 'run')
+        bids_dict['task']= task = utils.initialize.extract_bids(filename, 'task')
+
+        main_df = pd.read_csv(tsv, sep ='\t')
+        filtered_df = filter_physio(main_df)
+
+        t = pd.DataFrame()
+        t['y'] = filtered_df['eda_preproc']
+        t['ds'] = pd.to_datetime(filtered_df.index)
+
+        forecast = fit_predict_model(t, .99, .9)
+        forecasted = detect_anomalies(forecast)
+
+        outlier_prophet = forecasted[forecasted['anomaly'] != 0]
+        plt.figure(figsize=(5, 3))
+        plt.plot(forecasted['fact'])
+        plt.plot(outlier_prophet.index.tolist(), outlier_prophet['fact'], 'ro')
+        plt.title(f"{sub} {ses} {run} {task}")
+        # plt.show()
+        # plt.close()
+        plt.savefig(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier-prophet.png"))
+        with open(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier-prophet.json"), "w") as f:
+            json.dump({'outliers': outlier_prophet.index.tolist()}, f)
+>>>>>>> refs/remotes/origin/master
