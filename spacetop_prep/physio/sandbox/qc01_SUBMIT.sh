@@ -14,10 +14,12 @@ conda activate physio
 
 # NOTE: User, change parameter
 TOPDIR="/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/physio"
+TOPDIR="/Volumes/spacetop_data/physio"
 SLURM_ID=${SLURM_ARRAY_TASK_ID}
 STRIDE=10
 SUB_ZEROPAD=4
 SAVEDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_cue/analysis/physio/qc'
+SAVEDIR='/Volumes/spacetop_projects_cue/analysis/physio/qc'
 
 python ${PWD}/qc01_outlierdetection.py \
 --topdir ${TOPDIR} \
@@ -25,4 +27,4 @@ python ${PWD}/qc01_outlierdetection.py \
 --stride ${STRIDE} \
 --savedir ${SAVEDIR} \
 --sub-zeropad ${SUB_ZEROPAD} \
---exclude_sub 199
+--exclude-sub 199

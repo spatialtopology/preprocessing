@@ -55,6 +55,8 @@ def get_args_c02():
                         type=str, help="top directory of physio data", required = True)
     parser.add_argument("-sid", "--slurm_id",
                         type=int, help="specify slurm array id", required = True)
+    parser.add_argument("-s", "--stride",
+                        type=int, help="how many batches to process at once?", required = True)
     parser.add_argument("-z", "--sub-zeropad",
                         type=int, help="how many zeros are padded for BIDS subject id", required = True)
     parser.add_argument("--savedir",
@@ -174,7 +176,7 @@ physio_dir = topdir
 source_dir = os.path.join(physio_dir, 'physio03_bids', 'task-cue')
 
 # %% NOTE: 1. glob acquisition files _________________________________________________________________________
-sub_list = utils.initialize.sublist(source_dir, remove_sub, slurm_id, stride, sub_zeropad)
+sub_list = utils.initialize.sublist(source_dir, remove_sub, slurm_id, sub_zeropad, stride)
 print(sub_list)
 
 tsv_list = []
@@ -203,7 +205,12 @@ for tsv in sorted(flat_tsv_list):
         filtered_df = filter_physio(main_df)
         fig, outlier_index = seasonal_outlier(filtered_df, key = 'raw', period = 80, zcutoff = 1.96)
         overlay_plot = plot_data_deriv(filtered_physio = filtered_df, samplingrate = 2000, imagesize = 872, TR = .46, outlier_index=outlier_index )
-
-        j = json.dumps({'outliers': outlier_index}, save_name = os.path.name(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier.json"))
-        fig.savefig(os.path.name(save_dir, sub, f"{sub}_{ses}_{run}_{task}_seasondecomp.png"))
-        overlay_plot.savefig(os.path.name(save_dir, sub, f"{sub}_{ses}_{run}_{task}_raw+outlier.png"))
+        print(outlier_index[0].tolist())
+        save_jsonfname = os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier.json")
+        with open(save_jsonfname, "w") as outfile:
+            json.dumps({'outliers': outlier_index[0].tolist()})
+        # j = json.dumps(
+            # {'outliers': outlier_index}, 
+            # os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier.json"))
+        fig.savefig(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_seasondecomp.png"))
+        overlay_plot.savefig(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_raw+outlier.png"))
