@@ -44,16 +44,23 @@ for i, (sub, ses, run) in enumerate(total_list):
     print( sub, ses, run, i)
 # for ax in axes.flatten():
     # axes.flat[i]
-    filename = f"{sub}_ses-{ses:02d}_task-social_acq-mb8_run-{run}_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz"
-    fullpath = Path(os.path.join(fmriprep_dir, sub, f"ses-{ses:02d}", "func", filename))
-    if fullpath.is_file():
-        brain = image.load_img(fullpath)
-        meanimg = image.mean_img(brain)
+    anatname = f"{sub}_ses-{ses:02d}_task-social_acq-mb8_run-{run}_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz"
+    funcname = f"{sub}_ses-{ses:02d}_task-social_acq-mb8_run-{run}_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz"
+    anatpath = Path(os.path.join(fmriprep_dir, sub, f"ses-{ses:02d}", "anat", anatname))
+    funcpath = Path(os.path.join(fmriprep_dir, sub, f"ses-{ses:02d}", "func", funcname))
+    if funcpath.is_file():
+        func = image.load_img(funcpath)
+        anat = image.load_img(anatpath)
+
+        meanimg = image.mean_img(func)
         # display = plotting.plot_anat(meanimg, axes=axes.flat[i], vmax = 300)
         # display = plotting.plot_stat_map(meanimg, axes=axes.flat[i], vmax = 300)
+        display = plotting.plot_anat(anat)
         display = plotting.plot_stat_map(meanimg, 
                                         #  figure = fig, axes=axes.flat[i], 
-                                         title = f"Sub: {sub}, Ses: {ses}, Run: {run}", vmax=300)
+                                        bg_img=anat,
+                                         title = f"Sub: {sub}, Ses: {ses}, Run: {run}", vmax=300, alpha = 0.5)
+
         # display.add_contours(meanimg, filled=False, alpha=0.7, colors='r')
-        display.savefig(os.path.join(save_dir, f"meanimg_{sub}_ses-{ses:02d}_run-{run:02d}.png"))
+        plotting.savefig(os.path.join(save_dir, f"meanimg_{sub}_ses-{ses:02d}_run-{run:02d}.png"))
         print("plot")
