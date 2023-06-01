@@ -26,7 +26,7 @@ slurm_id = args.slurm_id
 # fmriprep_dir = '/Volumes/spacetop_data/derivatives/fmriprep/results/fmriprep'
 
 sub_list = next(os.walk(fmriprep_dir))[1]
-sub_list = sub_list[slurm_id]
+sub_list = list(sub_list[slurm_id])
 print(sub_list)
 # sub_list = next(os.walk(csv_dir))[1]
 ses_list = [1,3,4] #,3,4]
