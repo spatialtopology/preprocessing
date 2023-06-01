@@ -22,12 +22,18 @@ def generate_html_with_images(directory, output_file):
             
             with open(svg_file, 'r') as f:
                 svg_content = f.read()
-                svg_html += f'<div>{svg_content}</div>\n'
+                svg_html = f'<div>{svg_content}</div>\n'
+
+                # Write the header and image tag for each file
+                html_file.write('<h2>{}</h2>\n'.format(filename))
+                html_file.write('{}'.format(svg_html))
+
+i#                svg_html += f'<div>{svg_content}</div>\n'
 
             # Write the header and image tag for each file
-            html_file.write('<h2>{}</h2>\n'.format(filename))
+            #html_file.write('<h2>{}</h2>\n'.format(filename))
             # html_file.write('<object data="{}" type="image/svg+xml"></object>\n'.format(svg_file))
-            html_file.write('{}'.format(svg_html))
+            #html_file.write('{}'.format(svg_html))
             
         # Write the HTML footer
         html_file.write('</body></html>\n')
