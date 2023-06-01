@@ -28,7 +28,7 @@ def generate_html_with_images(directory, output_file):
                 html_file.write('<h2>{}</h2>\n'.format(filename))
                 html_file.write('{}'.format(svg_html))
 
-i#                svg_html += f'<div>{svg_content}</div>\n'
+#                svg_html += f'<div>{svg_content}</div>\n'
 
             # Write the header and image tag for each file
             #html_file.write('<h2>{}</h2>\n'.format(filename))
