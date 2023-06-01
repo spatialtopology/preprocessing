@@ -18,11 +18,12 @@ fmriprep_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/derivativ
 
 # load image filename
 # calculate mean image
-slurm_id = sys.argv[1]
+slurm_id = int(sys.argv[1])
 # fmriprep_dir = '/Volumes/spacetop_data/derivatives/fmriprep/results/fmriprep'
 
 sub_list = next(os.walk(fmriprep_dir))[1]
-sub_list = list(sub_list[slurm_id])
+sub_list = sub_list[slurm_id]
+print(sub_list)
 # sub_list = next(os.walk(csv_dir))[1]
 ses_list = [1,3,4] #,3,4]
 run_list = [1,2,3,4,5,6]
