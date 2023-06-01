@@ -23,15 +23,17 @@ parser.add_argument("--slurm-id",
                     type=int, help="slurm id in numbers")
 args = parser.parse_args()
 slurm_id = args.slurm_id
+print(slurm_id)
 # fmriprep_dir = '/Volumes/spacetop_data/derivatives/fmriprep/results/fmriprep'
 
 sub_list = next(os.walk(fmriprep_dir))[1]
-sub_list = list(sub_list[slurm_id])
-print(sub_list)
+sub_ind = sub_list[slurm_id]
+print(sub_ind)
 # sub_list = next(os.walk(csv_dir))[1]
 ses_list = [1,3,4] #,3,4]
 run_list = [1,2,3,4,5,6]
-total_list = list(itertools.product(sub_list, ses_list, run_list))
+total_list = list(itertools.product([sub_ind], ses_list, run_list))
+print(total_list)
 # cuts = np.arange(i,j,k)
 # create a figure with multiple axes to plot each anatomical image
 # %%
