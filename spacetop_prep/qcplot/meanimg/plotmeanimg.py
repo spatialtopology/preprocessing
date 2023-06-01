@@ -7,7 +7,7 @@ from nilearn import image
 import matplotlib.pyplot as plt
 from pathlib import Path
 import itertools
-import sys
+import sys, argparse
 # help -----
 # https://stackoverflow.com/questions/64331987/removing-hiding-empty-subplots-in-matplotlib-when-plotting-a-flexible-grid
 # https://neurostars.org/t/multi-subjects-figures-with-nilearn-plotting/6042
@@ -18,7 +18,11 @@ fmriprep_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/derivativ
 
 # load image filename
 # calculate mean image
-slurm_id = int(sys.argv[1])
+parser = argparse.ArgumentParser()
+parser.add_argument("--slurm-id", 
+                    type=int, help="slurm id in numbers")
+args = parser.parse_args()
+slurm_id = args.slurm_id
 # fmriprep_dir = '/Volumes/spacetop_data/derivatives/fmriprep/results/fmriprep'
 
 sub_list = next(os.walk(fmriprep_dir))[1]
@@ -54,7 +58,3 @@ for i, (sub, ses, run) in enumerate(total_list):
         # display.add_contours(meanimg, filled=False, alpha=0.7, colors='r')
         display.savefig(os.path.join(save_dir, f"meanimg_{sub}_ses-{ses:02d}_run-{run:02d}.png"))
         print("plot")
-# plt.tight_layout()
-# plt.show()
-
-
