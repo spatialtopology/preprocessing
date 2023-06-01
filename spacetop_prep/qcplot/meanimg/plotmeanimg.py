@@ -46,7 +46,7 @@ for i, (sub, ses, run) in enumerate(total_list):
     # axes.flat[i]
     anatname = f"{sub}_ses-{ses:02d}_task-social_acq-mb8_run-{run}_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz"
     funcname = f"{sub}_ses-{ses:02d}_task-social_acq-mb8_run-{run}_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz"
-    anatpath = Path(os.path.join(fmriprep_dir, sub, f"ses-{ses:02d}", "anat", anatname))
+    anatpath = Path(os.path.join(fmriprep_dir, sub, f"ses-01", "anat", anatname))
     funcpath = Path(os.path.join(fmriprep_dir, sub, f"ses-{ses:02d}", "func", funcname))
     if funcpath.is_file():
         func = image.load_img(funcpath)
