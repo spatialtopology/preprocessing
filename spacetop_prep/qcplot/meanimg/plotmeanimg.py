@@ -53,13 +53,7 @@ for i, (sub, ses, run) in enumerate(total_list):
         # display.add_contours(meanimg, filled=False, alpha=0.7, colors='r')
         display.savefig(os.path.join(save_dir, f"meanimg_{sub}_ses-{ses:02d}_run-{run:02d}.png"))
         print("plot")
-    # else:
-    #     continue
 # plt.tight_layout()
 # plt.show()
 
-# for ax in axes.flatten():
-#     display = plotting.plot_anat(haxby_dataset.anat[0], axes=ax)
 
-# %% save the output figure with all the anatomical images
-display.savefig("task-social_desc-mean-img-per-run.png")
