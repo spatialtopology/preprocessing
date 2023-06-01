@@ -15,4 +15,4 @@ conda activate spacetop_env
 echo "SLURMSARRAY: " ${SLURM_ARRAY_TASK_ID}
 ID=$((SLURM_ARRAY_TASK_ID-1))
 MAINDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_cue'
-python ${MAINDIR}/scripts/plotmeanimg.py --slurm_id ${ID}
+python ${MAINDIR}/scripts/plotmeanimg.py --slurm-id ${ID}
