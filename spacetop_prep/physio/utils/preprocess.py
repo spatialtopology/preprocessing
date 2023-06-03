@@ -480,6 +480,108 @@ def extract_SCL(df: pd.DataFrame, eda_col, event_dict, samplingrate, SCL_start, 
         logger.info("has NANS in the dataframe")
 
 
+def extract_SCL_custom(df: pd.DataFrame, eda_col, event_dict, samplingrate, SCL_start, SCL_end, baseline_truefalse, highcut_filter, detrend):
+    """AI is creating summary for extract_SCL_custom
+    TODO: update docstring 06/03/2023
+
+    Args:
+        df (pd.DataFrame): [description]
+        eda_col (str): [description]
+        event_dict ([type]): [description]
+        samplingrate ([type]): [description]
+        SCL_start ([type]): [description]
+        SCL_end ([type]): [description]
+        baseline_truefalse ([type]): [description]
+        highcut_filter ([type]): [description]
+        detrend ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
+
+
+    """
+    1) sanitize
+    2) filter
+    3) detrend
+    4) decompose
+    5) extract events
+
+    parameters:
+    ----------
+    df: pd.DataFrame
+    eda_col: str
+        eda column to sanize
+    event_dict: dict
+
+
+
+    tonic_epoch_start = -1
+    tonic_epoch_end = 8
+    tonic_length = np.abs(tonic_epoch_start-tonic_epoch_end) * samplingrate
+    scl_signal = nk.signal_sanitize(physio_df['EDA_corrected_02fixation'])
+    scl_filters = nk.signal_filter(scl_signal,
+                                sampling_rate=samplingrate,
+                                highcut=1,
+                                method="butterworth",
+                                order=2)  # ISABEL: Detrend
+    scl_detrend = nk.signal_detrend(scl_filters)
+    scl_decomposed = nk.eda_phasic(nk.standardize(scl_detrend),
+                                sampling_rate=samplingrate)
+    scl_signals = pd.DataFrame({
+        "EDA_Raw": scl_signal,
+        "EDA_Clean": scl_filters
+    })
+    scl_processed = pd.concat([scl_signals, scl_decomposed['EDA_Tonic']],
+                            axis=1)
+    try:
+        scl_epoch = nk.epochs_create(scl_processed['EDA_Tonic'],
+                                    event_stimuli,
+                                    sampling_rate=samplingrate,
+                                    epochs_start=tonic_epoch_start,
+                                    epochs_end=tonic_epoch_end,
+                                    baseline_correction=False)
+    except:
+        logger.info("has NANS in the dataframe")
+        continue
+    """
+    # tonic_epoch_start = -1
+    # tonic_epoch_end = 8
+    tonic_length = np.abs(SCL_start-SCL_end) * samplingrate
+    scl_signal = nk.signal_sanitize(df[eda_col])
+    scl_filters = nk.signal_filter(scl_signal,
+                                    sampling_rate=samplingrate,
+                                    highcut=highcut_filter,
+                                    method="butterworth",
+                                    order=2)  # ISABEL: Detrend
+    if detrend == True:
+        scl_filters = nk.signal_detrend(scl_filters)
+    scl_decomposed = nk.eda_phasic(nk.standardize(scl_filters),
+                                    sampling_rate=samplingrate)
+    scl_signals = pd.DataFrame({
+        "EDA_Raw": scl_signal,
+        "EDA_Clean": scl_filters
+    })
+    scl_processed = pd.concat([scl_signals, scl_decomposed['EDA_Tonic']],
+                                axis=1)
+    try:
+        scl_epoch = nk.epochs_create(scl_processed['EDA_Tonic'],
+                                        event_dict,
+                                        sampling_rate=samplingrate,
+                                        epochs_start=SCL_start,
+                                        epochs_end=SCL_end,
+                                        baseline_correction=baseline_truefalse)
+        scl_raw = nk.epochs_create(scl_filters,
+                                event_dict,
+                                sampling_rate=samplingrate,
+                                epochs_start=SCL_start,
+                                epochs_end=SCL_end,
+                                baseline_correction=baseline_truefalse)
+        return tonic_length, scl_raw, scl_epoch
+    except:
+        logger.info("has NANS in the dataframe")
+
 
 def combine_metadata_SCL(scl_epoch, metadata_df, total_trial = 12):
     """
