@@ -53,8 +53,10 @@ def get_args_c02():
     parser = argparse.ArgumentParser()
     parser.add_argument("--topdir",
                         type=str, help="top directory of physio data", required = True)
-    parser.add_argument("-sid", "--slurm_id",
+    parser.add_argument("-sid", "--slurm-id",
                         type=int, help="specify slurm array id", required = True)
+    parser.add_argument("-s", "--stride",
+                        type=int, help="how many batches to process at once?", required = True)
     parser.add_argument("-z", "--sub-zeropad",
                         type=int, help="how many zeros are padded for BIDS subject id", required = True)
     parser.add_argument("--savedir",
@@ -63,8 +65,6 @@ def get_args_c02():
                         type=int, help="string of integers, subjects to be removed from code", required=False)
     parser.add_argument("--stride",
                         type=int, help="how many participants to batch per jobarray")
-    parser.add_argument("-z", "--sub-zeropad",
-                        type=int, help="how many zeros are padded for BIDS subject id", required = True)
     args = parser.parse_args()
     return args
 
@@ -207,8 +207,7 @@ flat_tsv_list = [item for sublist in tsv_list  for item in sublist]
 # %%
 # NOTE: reference
 # https://app.neptune.ai/theaayushbajaj/Anomaly-Detection/n/49ba1752-fc3a-4abb-b35f-0e2ea4fd4afa/48dc19d8-3c75-4989-a2c0-67839393a093
-halflist = flat_tsv_list[5:10]
-for tsv in sorted(halflist):
+for tsv in sorted(flat_tsv_list):
     if os.path.exists(tsv):
         filename = os.path.basename(tsv)
         bids_dict = {}
@@ -221,6 +220,17 @@ for tsv in sorted(halflist):
         filtered_df = filter_physio(main_df)
         fig, outlier_index, outlier_index_fd = seasonal_outlier(filtered_df, key = 'raw', period = 80, zcutoff = 3, threshold = .7)
         overlay_plot = plot_data_deriv(filtered_physio = filtered_df, samplingrate = 2000, imagesize = 872, TR = .46, outlier_index=outlier_index )
+<<<<<<< HEAD
+        print(outlier_index[0].tolist())
+        save_jsonfname = os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier.json")
+        with open(save_jsonfname, "w") as outfile:
+            json.dumps({'outliers': outlier_index[0].tolist()})
+        # j = json.dumps(
+            # {'outliers': outlier_index}, 
+            # os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier.json"))
+        fig.savefig(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_seasondecomp.png"))
+        overlay_plot.savefig(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_raw+outlier.png"))
+=======
         overlay_plot.suptitle(f"{sub} {ses} {run} {task}")
         with open(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier-seasondecomp.json"), "w") as f:
             json.dump({'outliers': outlier_index_fd[0].tolist()}, f)
@@ -230,7 +240,7 @@ for tsv in sorted(halflist):
 
 # %% ##################################################################################
 # ANOMALY METHOD 2
-# for tsv in sorted(halflist):
+# for tsv in sorted(flat_tsv_list):
 #     if os.path.exists(tsv):
 #         filename = os.path.basename(tsv)
 #         bids_dict = {}
@@ -287,7 +297,7 @@ def detect_anomalies(forecast):
     return forecasted
 
 
-for tsv in sorted(halflist):
+for tsv in sorted(flat_tsv_list):
     if os.path.exists(tsv):
         filename = os.path.basename(tsv)
         bids_dict = {}
@@ -316,3 +326,4 @@ for tsv in sorted(halflist):
         plt.savefig(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier-prophet.png"))
         with open(os.path.join(save_dir, sub, f"{sub}_{ses}_{run}_{task}_outlier-prophet.json"), "w") as f:
             json.dump({'outliers': outlier_prophet.index.tolist()}, f)
+>>>>>>> refs/remotes/origin/master
