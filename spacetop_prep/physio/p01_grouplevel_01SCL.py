@@ -21,7 +21,8 @@ import neurokit2 as nk
 import numpy as np
 import pandas as pd
 
-# import spacetop_prep.physio.utils.checkfiles
+
+import spacetop_prep.physio.utils.checkfiles
 # import spacetop_prep.physio.utils.initialize
 # import spacetop_prep.physio.utils.preprocess
 # import spacetop_prep.physio.utils.ttl_extraction
@@ -29,7 +30,7 @@ from spacetop_prep.physio import utils
 
 print(utils.checkfiles)
 print(utils.checkfiles.glob_physio_bids)
-
+print(utils.initialize.sublist)
 __author__ = "Heejung Jung, Yaroslav Halchenko, Isabel Neumann"
 __copyright__ = "Spatial Topology Project"
 # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
@@ -96,12 +97,12 @@ def main():
 
     # %% set parameters
     sub_list = []
+    print(f"remove list: {remove_subject_int}")
     sub_list = utils.initialize.sublist(source_dir = physio_dir,
                                         remove_int = remove_subject_int,
-                                        slurm_id = slurm_id,
-                                        stride=stride,
-                                        sub_zeropad=zeropad)
-    print(sub_list)
+                                        slurm_id = slurm_id,sub_zeropad=zeropad,
+                                        stride=stride)
+    print(f"sub list: {sub_list}")
     ses_list = [1, 3, 4]
     run_list = [1, 2, 3, 4, 5, 6]
     sub_ses = list(itertools.product(sorted(sub_list), ses_list, run_list))
