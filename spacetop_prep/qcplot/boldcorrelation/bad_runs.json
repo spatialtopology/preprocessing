@@ -1,0 +1,15 @@
+{
+    "sub-0002": ["ses-03_run-4", "ses-04_run-3", "ses-04_run-4"],
+    "sub-0015": ["ses-01_run-6"],
+    "sub-0018": ["ses-01_run-1", "ses-01_run-2", "ses-01_run-3", "ses-01_run-4", "ses-01_run-5", "ses-01_run-6"],
+    "sub-0019": ["ses-01_run-1", "ses-01_run-2", "ses-01_run-3", "ses-01_run-4", "ses-01_run-5", "ses-01_run-6"],
+    "sub-0020": ["ses-01_run-3", "ses-01_run-4", "ses-01_run-5", "ses-01_run-6"],
+    "sub-0021": ["ses-01_run-1", "ses-01_run-2", "ses-01_run-3", "ses-01_run-4", "ses-01_run-5"],
+    "sub-0023": ["ses-01_run-1", "ses-01_run-2", "ses-01_run-3", "ses-01_run-4", "ses-01_run-5", "ses-01_run-6"],
+    "sub-0024": ["ses-01_run-1", "ses-01_run-2", "ses-01_run-3", "ses-01_run-5", "ses-01_run-6"],
+    "sub-0052": ["ses-01_run-2", "ses-01_run-3"],
+    "sub-0083": ["ses-01_run-1", "ses-01_run-2", "ses-01_run-3", "ses-01_run-4", "ses-01_run-5", "ses-01_run-6"],
+    "sub-0087": ["ses-01_run-1", "ses-01_run-5", "ses-04_run-4"],
+    "sub-0091": ["ses-01_run-3", "ses-04_run-6"],
+    "sub-0112": ["ses-04_run-2", "ses-04_run-3"]
+}

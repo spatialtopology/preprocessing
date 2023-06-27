@@ -246,10 +246,14 @@ def main():
 
     # NOTE:  TONIC ________________________________________________________________________________
         # TODO: follow up with Yarik
-        tonic_length, scl_raw, scl_epoch = utils.preprocess.extract_SCL(df=physio_df_bl,
-                                eda_col='physio_eda_blcorrect', event_dict=event_stimuli, samplingrate=2000,
-                                SCL_start=SCL_epoch_start, SCL_end=SCL_epoch_end, baseline_truefalse=False)
+        # tonic_length, scl_raw, scl_epoch = utils.preprocess.extract_SCL(df=physio_df_bl,
+        #                         eda_col='physio_eda_blcorrect', event_dict=event_stimuli, samplingrate=2000,
+        #                         SCL_start=SCL_epoch_start, SCL_end=SCL_epoch_end, baseline_truefalse=False)
 
+        
+        tonic_length, scl_raw, scl_epoch = utils.preprocess.extract_SCL_custom(df=physio_df_bl,
+                        eda_col='physio_eda_blcorrect', event_dict=event_stimuli, samplingrate=2000,
+                        SCL_start=SCL_epoch_start, SCL_end=SCL_epoch_end, baseline_truefalse=False, highcut_filter=1, detrend=False)
     #  NOTE: concatenate dataframes __________________________________________________________________________
 
         # Tonic level ______________________________________________________________________________________

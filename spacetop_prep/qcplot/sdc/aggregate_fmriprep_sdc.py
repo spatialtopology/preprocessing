@@ -4,10 +4,10 @@ import glob
 
 # This script helps generate a report of all distortion correction images from fmriprep output
 __author__ = "Michael Sun"
+__credits__ = ["Heejung Jung"] # people who reported bug fixes, made suggestions, et
 
 def generate_html_with_images(directory, save_dir):
     # Find all .svg files recursively in the directory
-    
     sub_list = next(os.walk(directory))[1]
     print(sub_list)
     for sub in sub_list:
@@ -37,12 +37,6 @@ def generate_html_with_images(directory, save_dir):
             html_file.write('</body></html>\n')
 
     print('HTML file generated successfully.')
-#%%
-# Example usage:
-
-# Windows:
-# fmriprep_directory = r'\\dartfs-hpc\rc\lab\C\CANlab\labdata\data\WASABI\derivatives\fmriprep'  # Specify the directory path here
-# output_file = r'\\dartfs-hpc\rc\lab\C\CANlab\labdata\data\WASABI\scripts\fmriprepDSC_output.html'  # Specify the output HTML file path here
 
 # Unix:
 fmriprep_directory = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/derivatives/fmriprep/results/fmriprep'  # Specify the directory path here
@@ -50,13 +44,3 @@ save_dir = os.path.join( '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data
 output_file = os.path.join(save_dir, 'fmriprepDSC_output.html')# Specify the output HTML file path here
 
 generate_html_with_images(fmriprep_directory, save_dir)
-
-# %%
-# Look at a specific SVG file.
-# from IPython.display import SVG
-
-# # Load the SVG image file
-# svg_file = 'path/to/your/image.svg'
-
-# # Display the SVG image
-# SVG(filename=svg_file)
