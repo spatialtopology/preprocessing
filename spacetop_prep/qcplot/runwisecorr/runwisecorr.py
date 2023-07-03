@@ -188,19 +188,34 @@ for a, b in itertools.combinations(npy_flist, 2):
 # NOTE: REFERENCE: https://neurostars.org/t/how-to-overlay-a-mask-image-on-another-mri-image-using-nilearn-plotting/5185/6
 # Overlay the second image on top
 
-    coords = (-5, -6, -15)
+    # coords = (-5, -6, -15)
+    # fig, ax = plt.subplots()
+    # display = plotting.plot_img(image.mean_img(masked_X), cmap='Blues', alpha=0.9, colorbar=False, cut_coords=coords, title=f"{sub} {a_subses} and {b_subses}", axes=ax)
+    # display.add_overlay(image.mean_img(masked_Y), cmap="Reds", alpha = .5, axes=ax)
+    # # display.add_contours(image.mean_img(masked_Y),
+    # #                      linewidths=1, levels=[.5],
+    # #                      colors="cyan")
+    # plotting.plot_anat(image.mean_img(masked_X), cmap='Reds', alpha=1, colorbar=False, cut_coords=coords, display_mode='ortho', title=f"{a_subses}")
+    # plotting.plot_anat(image.mean_img(masked_Y), cmap='Reds', alpha=1, colorbar=False, cut_coords=coords, display_mode='ortho', title=f"{b_subses}")
+    # # plt.show()
 
-    display = plotting.plot_img(image.mean_img(masked_X), cmap='Blues', alpha=0.9, colorbar=False, cut_coords=coords, title=f"{sub} {a_subses} and {b_subses}")
+
+    coords = (-5, -6, -15)
+    fig, axes = plt.subplots(3, 1, figsize=(5, 5))
+    display = plotting.plot_anat(image.mean_img(masked_X), cmap='Blues', alpha=0.9, 
+                                colorbar=False, black_bg=False, dim=False, title=f"Overlay: {sub} {a_subses} and {b_subses}", 
+                                figure = fig, cut_coords=coords, axes=axes[0], draw_cross=False)
     display.add_overlay(image.mean_img(masked_Y), cmap="Reds", alpha = .5)
     # display.add_contours(image.mean_img(masked_Y),
     #                      linewidths=1, levels=[.5],
-    #                      colors="cyan")
-    plotting.plot_anat(image.mean_img(masked_X), cmap='Reds', alpha=1, colorbar=False, cut_coords=coords, display_mode='ortho', title=f"{a_subses}")
-    plotting.plot_anat(image.mean_img(masked_Y), cmap='Reds', alpha=1, colorbar=False, cut_coords=coords, display_mode='ortho', title=f"{b_subses}")
-    # plt.show()
-    plt.savefig(join(scratch_dir, sub, f"corr_x-{a_subses}_y-{b_subses}.png"))
-    plt.close()
+    #                      colors="cyan"
+    plotting.plot_anat(image.mean_img(masked_X), cmap='Reds', alpha=1, colorbar=False, cut_coords=coords, 
+                    display_mode='ortho',title=f"{a_subses}", figure = fig,axes=axes[1], black_bg=False, dim=False, draw_cross=False)
+    plotting.plot_anat(image.mean_img(masked_Y), cmap='Reds', alpha=1, colorbar=False, cut_coords=coords, 
+                    display_mode='ortho', title=f"{a_subses}", figure = fig,axes=axes[2], black_bg=False, dim=False, draw_cross=False)
 
+    plt.savefig(join(scratch_dir, sub, f"corr_{sub}_x-{a_subses}_y-{b_subses}.png"))
+    plt.close(fig)
 # 8. get top 3 bad correlation
 
 # save df
