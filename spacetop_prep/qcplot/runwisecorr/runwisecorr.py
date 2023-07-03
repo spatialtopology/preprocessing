@@ -212,7 +212,7 @@ for a, b in itertools.combinations(npy_flist, 2):
     plotting.plot_anat(image.mean_img(masked_X), cmap='Reds', alpha=1, colorbar=False, cut_coords=coords, 
                     display_mode='ortho',title=f"{a_subses}", figure = fig,axes=axes[1], black_bg=False, dim=False, draw_cross=False)
     plotting.plot_anat(image.mean_img(masked_Y), cmap='Reds', alpha=1, colorbar=False, cut_coords=coords, 
-                    display_mode='ortho', title=f"{a_subses}", figure = fig,axes=axes[2], black_bg=False, dim=False, draw_cross=False)
+                    display_mode='ortho', title=f"{b_subses}", figure = fig,axes=axes[2], black_bg=False, dim=False, draw_cross=False)
 
     plt.savefig(join(scratch_dir, sub, f"corr_{sub}_x-{a_subses}_y-{b_subses}.png"))
     plt.close(fig)
@@ -223,4 +223,4 @@ corrdf.index = [x[1] for x in index_list]
 corrdf.columns = [x[1] for x in index_list]
 corrdf.to_csv(join(scratch_dir, sub, f"{sub}_runwisecorrelation.csv"))
 
-shutil.copytree(join(scratch_dir, sub), join(save_dir, sub))#, dirs_exist_ok=True)
+shutil.copytree(join(scratch_dir, sub), save_dir) #join(save_dir, sub))#, dirs_exist_ok=True)
