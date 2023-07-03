@@ -51,7 +51,7 @@ print(f" ________ {sub} ________")
 # save_dir = join(qc_dir, 'runwisecorr')
 
 pathlib.Path(join(scratch_dir, sub)).mkdir( parents=True, exist_ok=True )
-pathlib.Path(join(save_dir, sub)).mkdir( parents=True, exist_ok=True )
+#pathlib.Path(join(save_dir, sub)).mkdir( parents=True, exist_ok=True )
 npy_flist = sorted(glob.glob(join(npy_dir, sub, '*.npy'), recursive=True))
 
 
@@ -208,4 +208,4 @@ corrdf.index = [x[1] for x in index_list]
 corrdf.columns = [x[1] for x in index_list]
 corrdf.to_csv(join(scratch_dir, sub, f"{sub}_runwisecorrelation.csv"))
 
-shutil.copytree(join(scratch_dir, sub), join(save_dir, sub), dirs_exist_ok=True)
+shutil.copytree(join(scratch_dir, sub), join(save_dir, sub))#, dirs_exist_ok=True)
