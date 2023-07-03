@@ -8,7 +8,8 @@
 #SBATCH -e ./logcorr/np_%A_%a.e
 #SBATCH --account=DBIC
 #SBATCH --partition=standard
-#SBATCH --array=1-13%10
+#SBATCH --array=1
+##-3%10
 
 conda activate spacetop_env
 echo "SLURMSARRAY: " ${SLURM_ARRAY_TASK_ID}

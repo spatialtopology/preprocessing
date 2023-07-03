@@ -36,7 +36,7 @@ fmriprep_dir = args.fmriprepdir
 save_dir = args.savedir
 scratch_dir = args.scratchdir
 canlab_dir = args.canlabdir
-
+print(f"{slurm_id} {qc_dir} {fmriprep_dir} {save_dir} {scratch_dir}")
 # qc_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/spacetop_data/derivatives/fmriprep_qc'
 npy_dir = join(qc_dir, 'numpy_bold')
 # fmriprep_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/derivatives/fmriprep/results/fmriprep'
@@ -51,23 +51,23 @@ print(f" ________ {sub} ________")
 # save_dir = join(qc_dir, 'runwisecorr')
 
 pathlib.Path(join(scratch_dir, sub)).mkdir( parents=True, exist_ok=True )
-pathlib.Path(join(save_dir, sub)).mkdir( parents=True, exist_ok=True )
+#pathlib.Path(join(save_dir, sub)).mkdir( parents=True, exist_ok=True )
 npy_flist = sorted(glob.glob(join(npy_dir, sub, '*.npy'), recursive=True))
 
 
-# DEP _________________
-data = []
-pattern = re.compile(r'sub-(\d+)_ses-(\d+)_.*run-(\d+)')
-for filename in sorted(npy_flist):
-    file = os.path.basename(filename)
-    matches = pattern.search(file)
-    sub = matches.group(1)
-    ses = matches.group(2)
-    run = matches.group(3)
-    data.append({'sub': sub, 'ses': ses, 'run': run})
-
+## DEP _________________
+#data = []
+#pattern = re.compile(r'sub-(\d+)_ses-(\d+)_.*run-(\d+)')
+#for filename in sorted(npy_flist):
+#    file = os.path.basename(filename)
+#    matches = pattern.search(file)
+#    sub = matches.group(1)
+#    ses = matches.group(2)
+#    run = matches.group(3)
+#    data.append({'sub': sub, 'ses': ses, 'run': run})
+#
 # Create DataFrame
-df = pd.DataFrame(data)
+# df = pd.DataFrame(data)
 # DEP _________________
 # run_X_num = (1,1)
 # run_Y_num = (3,4)
@@ -223,4 +223,4 @@ corrdf.index = [x[1] for x in index_list]
 corrdf.columns = [x[1] for x in index_list]
 corrdf.to_csv(join(scratch_dir, sub, f"{sub}_runwisecorrelation.csv"))
 
-shutil.copytree(join(scratch_dir, sub), join(save_dir, sub))
+shutil.copytree(join(scratch_dir, sub), join(save_dir, sub))#, dirs_exist_ok=True)
