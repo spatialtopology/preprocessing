@@ -114,9 +114,9 @@ for a, b in itertools.combinations(npy_flist, 2):
     mask_fname = join(canlab_dir, 'CanlabCore/canlab_canonical_brains/Canonical_brains_surfaces/brainmask_canlab.nii')
     mask_fname_gz = mask_fname + '.gz'
 
-    with open(mask_fname, 'rb') as f_in:
-        with gzip.open(mask_fname_gz, 'wb') as f_out:
-            shutil.copyfileobj(f_in, f_out)
+#    with open(mask_fname, 'rb') as f_in:
+#        with gzip.open(mask_fname_gz, 'wb') as f_out:
+#            shutil.copyfileobj(f_in, f_out)
             
     brain_mask = image.load_img(mask_fname_gz)
 
@@ -201,7 +201,7 @@ for a, b in itertools.combinations(npy_flist, 2):
 
 
     coords = (-5, -6, -15)
-    fig, axes = plt.subplots(3, 1, figsize=(5, 5))
+    fig, axes = plt.subplots(3, 1, figsize=(10, 10))
     display = plotting.plot_anat(image.mean_img(masked_X), cmap='Blues', alpha=0.9, 
                                 colorbar=False, black_bg=False, dim=False, title=f"Overlay: {sub} {a_subses} and {b_subses}", 
                                 figure = fig, cut_coords=coords, axes=axes[0], draw_cross=False)
