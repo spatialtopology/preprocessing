@@ -1,0 +1,2 @@
+scp -r f0042x1@discovery7.dartmouth.edu:/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/derivatives/fmriprep/results/fmriprep/sub-0002/\*/func/\*task-social\*preproc_bold.nii.gz /Users/h/Documents/projects_local/sandbox/fmriprep_bold
+scp -r heejung@rolando.cns.dartmouth.edu:/inbox/BIDS/Wager/Wager/1076_spacetop/sub-0002/\*/func/\*_task-social_acq-mb8_\*_sbref.nii.gz  /Users/h/Documents/projects_local/sandbox/fmriprep_bold/sbref
