@@ -29,8 +29,8 @@ def resolve_symlinks_in_html(url, save_path):
 url = 'http://example.com/index.html'
 save_path = '/path/to/save/index.html'
 
-url = 'http://0.0.0.0:8081/results/fmriprep/group/consolidated_sdc_001.html'
-save_path=  '/Users/h/Downloads/consolidated_sdc_001.html'
+url = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/derivatives/fmriprep/results/fmriprep/group/consolidated_sdc_001.html'
+save_path=  '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/derivatives/fmriprep_qc/groupfmriprep/consolidated_sdc_001.html'
 
 resolve_symlinks_in_html(url, save_path)
 
