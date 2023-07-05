@@ -1,0 +1,86 @@
+{
+    "task-alignvideo": {
+        "sub-0004": [
+            "ses-04_run-01"
+        ],
+        "sub-0017": [
+            "ses-02_run-02",
+            "ses-02_run-03",
+            "ses-02_run-04"
+        ],
+        "sub-0131": [
+            "ses-03_run-02"
+        ]
+    },
+    "task-faces": {
+        "sub-0004": [
+            "ses-02_run-01"
+        ],
+        "sub-0102": [
+            "ses-02_run-01",
+            "ses-02_run-02",
+            "ses-02_run-03"
+        ]
+    },
+    "task-fractional": {
+        "sub-0005": [
+            "ses-04_run-01"
+        ]
+    },
+    "task-narratives": {
+        "sub-0001": [
+            "ses-02_run-02"
+        ],
+        "sub-0014": [
+            "ses-02_run-01"
+        ],
+        "sub-0102": [
+            "ses-02_run-04"
+        ]
+    },
+    "task-shortvideo": {
+        "sub-0075": [
+            "ses-03_run-01"
+        ]
+    },
+    "task-social": {
+        "sub-0004": [
+            "ses-03_run-03"
+        ],
+        "sub-0007": [
+            "ses-03_run-03"
+        ],
+        "sub-0016": [
+            "ses-01_run-04",
+            "ses-01_run-05",
+            "ses-01_run-06"
+        ],
+        "sub-0024": [
+            "ses-03_run-05"
+        ],
+        "sub-0025": [
+            "ses-04_run-04",
+            "ses-04_run-05",
+            "ses-04_run-06"
+        ],
+        "sub-0066": [
+            "ses-03_run-03",
+            "ses-03_run-04",
+            "ses-03_run-06"
+        ],
+        "sub-0069": [
+            "ses-01_run-03"
+        ],
+        "sub-0070": [
+            "ses-04_run-06"
+        ],
+        "sub-0122": [
+            "ses-03_run-01",
+            "ses-03_run-02",
+            "ses-03_run-03",
+            "ses-03_run-04",
+            "ses-03_run-05",
+            "ses-03_run-06"
+        ]
+    }
+}
