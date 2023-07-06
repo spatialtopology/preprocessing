@@ -28,6 +28,18 @@ TTL_INDEX=2
 SCL_EPOCH_START=-1
 SCL_EPOCH_END=20
 
+# Define the YAML configuration file
+config_file="config.yaml"
+
+# Read the YAML configuration file
+eval "$(yq eval-all 'select(fileIndex == 0)' $config_file)"
+
+# Iterate over the variables and pass them as command-line arguments
+for variable in param1 param2 param3 param4 param5 param6 param7 param8 param9 param10 param11 param12 param13 param14 param15 param16 param17 param18 param19 param20; do
+    value="${!variable}"
+    python ${PWD}/p01_grouplevel_01SCL.py --"$variable" "$value"
+done
+
 python ${PWD}/p01_grouplevel_01SCL.py \
 --input-physiodir ${PHYSIO_DIR} \
 --input-behdir ${BEH_DIR} \
@@ -36,9 +48,9 @@ python ${PWD}/p01_grouplevel_01SCL.py \
 --metadata ${METADATA} \
 --dictchannel ${CHANNELJSON} \
 --slurm-id ${SLURM_ID} \
---stride ${STRIDE} \
---zeropad ${ZEROPAD} \
---task ${TASK} \
+--slurm-stride ${STRIDE} \
+--bids-zeropad ${ZEROPAD} \
+--bids-task ${TASK} \
 -sr ${SAMPLINGRATE} \
 --ttl-index ${TTL_INDEX} \
 --scl-epochstart ${SCL_EPOCH_START} \
