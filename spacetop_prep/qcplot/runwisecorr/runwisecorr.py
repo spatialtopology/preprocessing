@@ -107,9 +107,11 @@ for a, b in itertools.combinations(npy_flist, 2):
     for index, subses in index_list:
         if subses == a_subses:
             a_index = index
+            break
+    for index, subses in index_list:
         if subses == b_subses:
             b_index = index
-
+            break
 # 2. mask run 1 and run 2 _____________________________________________________
     mask_fname = join(canlab_dir, 'CanlabCore/canlab_canonical_brains/Canonical_brains_surfaces/brainmask_canlab.nii')
     mask_fname_gz = mask_fname + '.gz'
