@@ -12,7 +12,7 @@ import pandas as pd
 import itertools
 import pathlib
 import argparse
-# %% 1. grab numpy array
+
 # %% -------------------------------------------------------------------
 #                               parameters 
 # ----------------------------------------------------------------------
@@ -37,44 +37,19 @@ save_dir = args.savedir
 scratch_dir = args.scratchdir
 canlab_dir = args.canlabdir
 print(f"{slurm_id} {qc_dir} {fmriprep_dir} {save_dir} {scratch_dir}")
-# qc_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/spacetop_data/derivatives/fmriprep_qc'
+
 npy_dir = join(qc_dir, 'numpy_bold')
-# fmriprep_dir = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/derivatives/fmriprep/results/fmriprep'
-# canlab_dir = '/dartfs-hpc/rc/lab/C/CANlab/modules/CanlabCore'
-sub = 'sub-0002'
 sub_folders = next(os.walk(npy_dir))[1]
-# print(sub_folders)
 sub_list = [i for i in sorted(sub_folders) if i.startswith('sub-')]
 sub = sub_list[slurm_id]#f'sub-{sub_list[slurm_id]:04d}'
 print(f" ________ {sub} ________")
-# scratch_dir = '/dartfs-hpc/scratch/f0042x1'
-# save_dir = join(qc_dir, 'runwisecorr')
 
 pathlib.Path(join(scratch_dir, sub)).mkdir( parents=True, exist_ok=True )
-#pathlib.Path(join(save_dir, sub)).mkdir( parents=True, exist_ok=True )
 npy_flist = sorted(glob.glob(join(npy_dir, sub, '*.npy'), recursive=True))
 
-
-## DEP _________________
-#data = []
-#pattern = re.compile(r'sub-(\d+)_ses-(\d+)_.*run-(\d+)')
-#for filename in sorted(npy_flist):
-#    file = os.path.basename(filename)
-#    matches = pattern.search(file)
-#    sub = matches.group(1)
-#    ses = matches.group(2)
-#    run = matches.group(3)
-#    data.append({'sub': sub, 'ses': ses, 'run': run})
-#
-# Create DataFrame
-# df = pd.DataFrame(data)
-# DEP _________________
-# run_X_num = (1,1)
-# run_Y_num = (3,4)
-# run_X = join(npy_dir, sub, f"{sub}_ses-{run_X_num[0]:02d}_task-social_acq-mb8_run-{run_X_num[1]:01d}_space-MNI152NLin2009cAsym_desc-preproc_bold.npy")
-# run_Y = join(npy_dir, sub, f"{sub}_ses-{run_Y_num[0]:02d}_task-social_acq-mb8_run-{run_Y_num[1]:01d}_space-MNI152NLin2009cAsym_desc-preproc_bold.npy")
-
-# Assign a value to the corresponding indices in the DataFrame
+# %% -------------------------------------------------------------------
+#                               main code 
+# ----------------------------------------------------------------------
 
 # construct an index list _____________________________________________________
 index_list = []
@@ -115,20 +90,15 @@ for a, b in itertools.combinations(npy_flist, 2):
 # 2. mask run 1 and run 2 _____________________________________________________
     mask_fname = join(canlab_dir, 'CanlabCore/canlab_canonical_brains/Canonical_brains_surfaces/brainmask_canlab.nii')
     mask_fname_gz = mask_fname + '.gz'
-
-#    with open(mask_fname, 'rb') as f_in:
-#        with gzip.open(mask_fname_gz, 'wb') as f_out:
-#            shutil.copyfileobj(f_in, f_out)
-            
     brain_mask = image.load_img(mask_fname_gz)
 
     # imgfname = glob.glob(join(nifti_dir, sub, f'{sub}_{ses}_*_runtype-vicarious_event-{fmri_event}_*_cuetype-low_stimintensity-low.nii.gz'))
-    ref_img_fname = '/Users/h/Documents/projects_local/sandbox/sub-0061_ses-04_task-social_acq-mb8_run-6_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz'
-    ref_img_fname = '/Users/h/Documents/projects_local/sandbox/fmriprep_bold/sub-0002_ses-01_task-social_acq-mb8_run-1_space-MNI152NLin2009cAsym_desc-preproc_bold.nii'
-    # ref_img_fname = join(fmriprep_dir, sub, f"ses-{a_ses:02d}", 'func', f"{sub}_ses-{a_ses:02d}_task-social_acq-mb8_run-{a_run:01d}_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz")
+    # ref_img_fname = '/Users/h/Documents/projects_local/sandbox/sub-0061_ses-04_task-social_acq-mb8_run-6_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz'
+    # ref_img_fname = '/Users/h/Documents/projects_local/sandbox/fmriprep_bold/sub-0002_ses-01_task-social_acq-mb8_run-1_space-MNI152NLin2009cAsym_desc-preproc_bold.nii'
+    ref_img_fname = join(fmriprep_dir, sub, f"ses-{a_ses:02d}", 'func', f"{sub}_ses-{a_ses:02d}_task-social_acq-mb8_run-{a_run:01d}_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz")
     ref_img = image.index_img(image.load_img(ref_img_fname),8) #image.load_img(ref_img_fname)
     threshold = 0.5
-    #image.load_img(join(fmriprep_dir, sub, 'ses-01', 'func', 'sub-0002_ses-01_task-social_acq-mb8_run-1_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz'))
+    
     nifti_masker = nilearn.maskers.NiftiMasker(mask_img= masking.compute_epi_mask(image.load_img(mask_fname_gz), lower_cutoff=threshold, upper_cutoff=1.0),
                                 target_affine = ref_img.affine, target_shape = ref_img.shape, 
                         memory="nilearn_cache", memory_level=1)
@@ -150,67 +120,15 @@ for a, b in itertools.combinations(npy_flist, 2):
     plt.close()
 
 # 4. calculated correlation between run 1 and run 2 _____________________________________________________
-    correlation = np.corrcoef(singlemasked[0], singlemasked[1])[0, 1]
-
-# 5. save it in a table _____________________________________________________
-    # * create table (18 x 18)
-    # * extract ses and filename from each file
-    # * compare index
-    # * add correlation value using iloc
-    # correlation_coefficients = []
-    # for i in range(singlemasked[0].shape[0]):
-    #     corr = np.corrcoef(singlemasked[0][i], singlemasked[1][i])[0, 1]
-    #     correlation_coefficients.append(corr)
-
-    # print(correlation_coefficients)
     singlemasked_X = np.mean(singlemasked[0], axis=0)
     singlemasked_Y = np.mean(singlemasked[1], axis=0)
     corr = np.corrcoef(singlemasked_X,singlemasked_Y)[0, 1]
     corrdf.at[a_index, b_index] = corr#np.mean(correlation_coefficients)#correlation
 
-# 6. in a plot, outline the bad runs _____________________________________________________
-    
-    # import seaborn as sns
-    # import matplotlib.pyplot as plt
-    # import numpy as np
 
-    # # Plot the heatmap
-    # ax = sns.heatmap(df, cmap='coolwarm', annot=True, fmt=".2f")
-
-    # # Find the index of ses-03_run-01
-    # highlight_index = index_list.index((6, 'ses-03_run-01'))
-
-    # # Highlight the row and column
-    # ax.add_patch(plt.Rectangle((highlight_index, highlight_index), 1, 1, fill=False, edgecolor='red', lw=2))
-    # plt.axhline(y=highlight_index + 0.5, color='red', lw=2)
-    # plt.axvline(x=highlight_index + 0.5, color='red', lw=2)
-
-    # plt.title("Heatmap of DataFrame")
-    # plt.xlabel("b index")
-    # plt.ylabel("a index")
-    # plt.show()
-
-
-# 7. plot runs by overlaying each other
+# 5. plot runs by overlaying each other _____________________________________________________
     masked_X = nifti_masker.inverse_transform(singlemasked[0])
     masked_Y = nifti_masker.inverse_transform(singlemasked[1])
-
-    # Plot the first image as the background
-# plotting.plot_stat_map(image.mean_img(masked_X), cmap='gray', alpha=0.5, colorbar=False)
-# NOTE: REFERENCE: https://neurostars.org/t/how-to-overlay-a-mask-image-on-another-mri-image-using-nilearn-plotting/5185/6
-# Overlay the second image on top
-
-    # coords = (-5, -6, -15)
-    # fig, ax = plt.subplots()
-    # display = plotting.plot_img(image.mean_img(masked_X), cmap='Blues', alpha=0.9, colorbar=False, cut_coords=coords, title=f"{sub} {a_subses} and {b_subses}", axes=ax)
-    # display.add_overlay(image.mean_img(masked_Y), cmap="Reds", alpha = .5, axes=ax)
-    # # display.add_contours(image.mean_img(masked_Y),
-    # #                      linewidths=1, levels=[.5],
-    # #                      colors="cyan")
-    # plotting.plot_anat(image.mean_img(masked_X), cmap='Reds', alpha=1, colorbar=False, cut_coords=coords, display_mode='ortho', title=f"{a_subses}")
-    # plotting.plot_anat(image.mean_img(masked_Y), cmap='Reds', alpha=1, colorbar=False, cut_coords=coords, display_mode='ortho', title=f"{b_subses}")
-    # # plt.show()
-
 
     coords = (-5, -6, -15)
     fig, axes = plt.subplots(3, 1, figsize=(10, 10))
@@ -218,9 +136,7 @@ for a, b in itertools.combinations(npy_flist, 2):
                                 colorbar=False, black_bg=False, dim=False, title=f"Overlay: {sub} {a_subses} and {b_subses}", 
                                 figure = fig, cut_coords=coords, axes=axes[0], draw_cross=False)
     display.add_overlay(image.mean_img(masked_Y), cmap="Reds", alpha = .5)
-    # display.add_contours(image.mean_img(masked_Y),
-    #                      linewidths=1, levels=[.5],
-    #                      colors="cyan"
+
     plotting.plot_anat(image.mean_img(masked_X), cmap='Reds', alpha=1, colorbar=False, cut_coords=coords, 
                     display_mode='ortho',title=f"{a_subses}", figure = fig,axes=axes[1], black_bg=False, dim=False, draw_cross=False)
     plotting.plot_anat(image.mean_img(masked_Y), cmap='Reds', alpha=1, colorbar=False, cut_coords=coords, 
@@ -228,7 +144,6 @@ for a, b in itertools.combinations(npy_flist, 2):
 
     plt.savefig(join(scratch_dir, sub, f"corr_{sub}_x-{a_subses}_y-{b_subses}.png"))
     plt.close(fig)
-# 8. get top 3 bad correlation
 
 # save df
 corrdf.index = [x[1] for x in index_list]
