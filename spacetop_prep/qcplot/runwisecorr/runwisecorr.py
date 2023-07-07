@@ -123,9 +123,9 @@ for a, b in itertools.combinations(npy_flist, 2):
     brain_mask = image.load_img(mask_fname_gz)
 
     # imgfname = glob.glob(join(nifti_dir, sub, f'{sub}_{ses}_*_runtype-vicarious_event-{fmri_event}_*_cuetype-low_stimintensity-low.nii.gz'))
-    ref_img_fname = '/Users/h/Documents/projects_local/sandbox/sub-0061_ses-04_task-social_acq-mb8_run-6_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz'
-    ref_img_fname = '/Users/h/Documents/projects_local/sandbox/fmriprep_bold/sub-0002_ses-01_task-social_acq-mb8_run-1_space-MNI152NLin2009cAsym_desc-preproc_bold.nii'
-    # ref_img_fname = join(fmriprep_dir, sub, f"ses-{a_ses:02d}", 'func', f"{sub}_ses-{a_ses:02d}_task-social_acq-mb8_run-{a_run:01d}_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz")
+    #ref_img_fname = '/Users/h/Documents/projects_local/sandbox/sub-0061_ses-04_task-social_acq-mb8_run-6_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz'
+    #ref_img_fname = '/Users/h/Documents/projects_local/sandbox/fmriprep_bold/sub-0002_ses-01_task-social_acq-mb8_run-1_space-MNI152NLin2009cAsym_desc-preproc_bold.nii'
+    ref_img_fname = join(fmriprep_dir, sub, f"ses-{a_ses:02d}", 'func', f"{sub}_ses-{a_ses:02d}_task-social_acq-mb8_run-{a_run:01d}_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz")
     ref_img = image.index_img(image.load_img(ref_img_fname),8) #image.load_img(ref_img_fname)
     threshold = 0.5
     #image.load_img(join(fmriprep_dir, sub, 'ses-01', 'func', 'sub-0002_ses-01_task-social_acq-mb8_run-1_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz'))
@@ -150,7 +150,7 @@ for a, b in itertools.combinations(npy_flist, 2):
     plt.close()
 
 # 4. calculated correlation between run 1 and run 2 _____________________________________________________
-    correlation = np.corrcoef(singlemasked[0], singlemasked[1])[0, 1]
+    #correlation = np.corrcoef(singlemasked[0], singlemasked[1])[0, 1]
 
 # 5. save it in a table _____________________________________________________
     # * create table (18 x 18)
