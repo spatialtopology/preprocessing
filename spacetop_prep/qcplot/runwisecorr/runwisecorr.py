@@ -20,11 +20,11 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--slurm-id", 
                     type=int, help="slurm id in numbers")
 parser.add_argument("--qcdir", 
-                    type=str, help="the top directory of fmriprep preprocessed files")
+                    type=str, help="the directory where all the QC derivatives are saved")
 parser.add_argument("--fmriprepdir", 
                     type=str, help="the top directory of fmriprep preprocessed files")
 parser.add_argument("--savedir", 
-                    type=str, help="the directory where you want to save your files")
+                    type=str, help="where the runwise corr will be saved")
 parser.add_argument("--scratchdir", 
                     type=str, help="the directory where you want to save your files")
 parser.add_argument("--canlabdir", 
