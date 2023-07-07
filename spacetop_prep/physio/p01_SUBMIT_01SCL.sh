@@ -13,7 +13,7 @@
 conda activate biopac
 
 PROJECT_DIR="/dartfs-hpc/rc/lab/C/CANlab/labdata/projects/spacetop_projects_cue"
-PHYSIO_DIR="/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/physio/physio03_bids"
+PHYSIO_DIR="/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/physio/physio03_bids/task-cue"
 BEH_DIR="${PROJECT_DIR}/data/beh/beh02_preproc"
 OUTPUT_LOGDIR="${PROJECT_DIR}/scripts/logcenter"
 OUTPUT_SAVEDIR="${PROJECT_DIR}/analysis/physio"
@@ -24,8 +24,8 @@ STRIDE=10
 ZEROPAD=4
 TASK="task-cue"
 SAMPLINGRATE=2000
-TTL_INDEX=2
-SCL_EPOCH_START=-1
+TTL_INDEX=1
+SCL_EPOCH_START=-3
 SCL_EPOCH_END=20
 
 python ${PWD}/p01_grouplevel_01SCL.py \
