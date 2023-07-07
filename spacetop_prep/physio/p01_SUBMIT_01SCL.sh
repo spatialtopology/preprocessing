@@ -36,9 +36,9 @@ python ${PWD}/p01_grouplevel_01SCL.py \
 --metadata ${METADATA} \
 --dictchannel ${CHANNELJSON} \
 --slurm-id ${SLURM_ID} \
---stride ${STRIDE} \
---zeropad ${ZEROPAD} \
---task ${TASK} \
+--slurm-stride ${STRIDE} \
+--bids-zeropad ${ZEROPAD} \
+--bids-task ${TASK} \
 -sr ${SAMPLINGRATE} \
 --ttl-index ${TTL_INDEX} \
 --scl-epochstart ${SCL_EPOCH_START} \

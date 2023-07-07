@@ -86,12 +86,15 @@ for a, b in itertools.combinations(npy_flist, 2):
     for index, subses in index_list:
         if subses == b_subses:
             b_index = index
-            break
+
 # 2. mask run 1 and run 2 _____________________________________________________
     mask_fname = join(canlab_dir, 'CanlabCore/canlab_canonical_brains/Canonical_brains_surfaces/brainmask_canlab.nii')
     mask_fname_gz = mask_fname + '.gz'
     brain_mask = image.load_img(mask_fname_gz)
 
+    # imgfname = glob.glob(join(nifti_dir, sub, f'{sub}_{ses}_*_runtype-vicarious_event-{fmri_event}_*_cuetype-low_stimintensity-low.nii.gz'))
+    # ref_img_fname = '/Users/h/Documents/projects_local/sandbox/sub-0061_ses-04_task-social_acq-mb8_run-6_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz'
+    # ref_img_fname = '/Users/h/Documents/projects_local/sandbox/fmriprep_bold/sub-0002_ses-01_task-social_acq-mb8_run-1_space-MNI152NLin2009cAsym_desc-preproc_bold.nii'
     ref_img_fname = join(fmriprep_dir, sub, f"ses-{a_ses:02d}", 'func', f"{sub}_ses-{a_ses:02d}_task-social_acq-mb8_run-{a_run:01d}_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz")
     ref_img = image.index_img(image.load_img(ref_img_fname),8) #image.load_img(ref_img_fname)
     threshold = 0.5
@@ -112,39 +115,8 @@ for a, b in itertools.combinations(npy_flist, 2):
     # convert back to 3d brain DEP
     masked_X = nifti_masker.inverse_transform(singlemasked[0])
     masked_img_X = image.new_img_like(ref_img, masked_X.get_fdata()[..., 0])
-    plotting.plot_stat_map(masked_img_X, title = f"masked img: {sub} ses-{a_ses:02d} run-{a_run:02d}")
+    plotting.plot_stat_map(masked_img_X, 
+                           coords=(0,0,0),
+                           title=f"masked img: {sub} ses-{a_ses:02d} run-{a_run:02d}")
     plt.savefig(join(scratch_dir, sub, f"maskedimage_{sub}_{a_subses}.png"))
     plt.close()
-
-# 4. calculated correlation between run 1 and run 2 _____________________________________________________
-    singlemasked_X = np.mean(singlemasked[0], axis=0)
-    singlemasked_Y = np.mean(singlemasked[1], axis=0)
-    corr = np.corrcoef(singlemasked_X,singlemasked_Y)[0, 1]
-    corrdf.at[a_index, b_index] = corr#np.mean(correlation_coefficients)#correlation
-
-
-# 5. plot runs by overlaying each other _____________________________________________________
-    masked_X = nifti_masker.inverse_transform(singlemasked[0])
-    masked_Y = nifti_masker.inverse_transform(singlemasked[1])
-
-    coords = (-5, -6, -15)
-    fig, axes = plt.subplots(3, 1, figsize=(10, 10))
-    display = plotting.plot_anat(image.mean_img(masked_X), cmap='Blues', alpha=0.9, 
-                                colorbar=False, black_bg=False, dim=False, title=f"Overlay: {sub} {a_subses} and {b_subses}", 
-                                figure = fig, cut_coords=coords, axes=axes[0], draw_cross=False)
-    display.add_overlay(image.mean_img(masked_Y), cmap="Reds", alpha = .5)
-
-    plotting.plot_anat(image.mean_img(masked_X), cmap='Reds', alpha=1, colorbar=False, cut_coords=coords, 
-                    display_mode='ortho',title=f"{a_subses}", figure = fig,axes=axes[1], black_bg=False, dim=False, draw_cross=False)
-    plotting.plot_anat(image.mean_img(masked_Y), cmap='Reds', alpha=1, colorbar=False, cut_coords=coords, 
-                    display_mode='ortho', title=f"{b_subses}", figure = fig,axes=axes[2], black_bg=False, dim=False, draw_cross=False)
-
-    plt.savefig(join(scratch_dir, sub, f"corr_{sub}_x-{a_subses}_y-{b_subses}.png"))
-    plt.close(fig)
-
-# save df
-corrdf.index = [x[1] for x in index_list]
-corrdf.columns = [x[1] for x in index_list]
-corrdf.to_csv(join(scratch_dir, sub, f"{sub}_runwisecorrelation.csv"))
-
-shutil.copytree(join(scratch_dir, sub), save_dir) #join(save_dir, sub))#, dirs_exist_ok=True)
