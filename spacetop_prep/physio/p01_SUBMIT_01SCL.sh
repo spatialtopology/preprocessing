@@ -39,8 +39,13 @@ python ${PWD}/p01_grouplevel_01SCL.py \
 --slurm-stride ${STRIDE} \
 --bids-zeropad ${ZEROPAD} \
 --bids-task ${TASK} \
--sr ${SAMPLINGRATE} \
---ttl-index ${TTL_INDEX} \
+--event-name "event_stimuli" \
+--prior-event "event_expectrating" \
+--later-event "event_actualrating" \
+--source-samplingrate 2000 \
+--dest-samplingrate 25 \
 --scl-epochstart ${SCL_EPOCH_START} \
 --scl-epochend ${SCL_EPOCH_END} \
+--ttl-index ${TTL_INDEX} \
+--baselinecorrect True \
 --exclude-sub 1 2 3 4 5 6
