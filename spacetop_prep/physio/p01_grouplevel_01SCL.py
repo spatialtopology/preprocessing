@@ -280,29 +280,29 @@ def main():
 
 
     # ======= NOTE: 8. baseline correct ===============================================================
-    if baselinecorrect == True:
-        baseline_length = source_samplingrate* np.abs(SCL_epoch_start)
-        physio_df['physio_eda_blcorrect'] = physio_df['physio_eda']
-        for i in range(len(dict_onset[event_name]['start'])):
-            baseline_average = []
-            baseline_start_ind = dict_onset[event_name]['start'][i] - baseline_length
-            baseline_stop_ind = dict_onset[event_name]['start'][i]
-            baseline_average = physio_df.loc[baseline_start_ind:baseline_stop_ind]['physio_eda'].mean()
-            print(baseline_average)
+        if baselinecorrect == True:
+            baseline_length = source_samplingrate* np.abs(SCL_epoch_start)
+            physio_df['physio_eda_blcorrect'] = physio_df['physio_eda']
+            for i in range(len(dict_onset[event_name]['start'])):
+                baseline_average = []
+                baseline_start_ind = dict_onset[event_name]['start'][i] - baseline_length
+                baseline_stop_ind = dict_onset[event_name]['start'][i]
+                baseline_average = physio_df.loc[baseline_start_ind:baseline_stop_ind]['physio_eda'].mean()
+                print(baseline_average)
 
-            start_index = dict_onset[event_name]['start'][i]
-            stop_index = dict_onset[event_name]['stop'][i]
-            print(start_index, stop_index)
+                start_index = dict_onset[event_name]['start'][i]
+                stop_index = dict_onset[event_name]['stop'][i]
+                print(start_index, stop_index)
 
-            physio_df.loc[start_index:stop_index,'physio_eda_blcorrect'] = physio_df.loc[start_index:stop_index]['physio_eda'] - baseline_average
+                physio_df.loc[start_index:stop_index,'physio_eda_blcorrect'] = physio_df.loc[start_index:stop_index]['physio_eda'] - baseline_average
 
 
     # ======= NOTE: 9. extract TONIC signal  ======================================================================
 
-        # tonic_length, scl_raw, scl_epoch = utils.preprocess.extract_SCL(df=physio_df_bl,
-        #                         eda_col='physio_eda_blcorrect', event_dict=event_stimuli, samplingrate=2000,
-        #                         SCL_start=SCL_epoch_start, SCL_end=SCL_epoch_end, baseline_truefalse=False)
-    # NOTE: filter, detrend, etc depending on customization
+            # tonic_length, scl_raw, scl_epoch = utils.preprocess.extract_SCL(df=physio_df_bl,
+            #                         eda_col='physio_eda_blcorrect', event_dict=event_stimuli, samplingrate=2000,
+            #                         SCL_start=SCL_epoch_start, SCL_end=SCL_epoch_end, baseline_truefalse=False)
+        # NOTE: filter, detrend, etc depending on customization
         if baselinecorrect == True:
             tonic_length, scl_raw, scl_epoch = utils.preprocess.extract_SCL_custom(
                             df=physio_df,
@@ -324,7 +324,7 @@ def main():
                 detrend=False)
             
 
-    #  ======= NOTE: 10. concatenate dataframes ===============================================================
+#  ======= NOTE: 10. concatenate dataframes ===============================================================
 
         # Tonic level ______________________________________________________________________________________
 
@@ -356,11 +356,11 @@ def main():
             metadata_d = metadf_dropNA.copy()
     
         eda_level_timecourse = utils.preprocess.resample_scl2pandas_ver2(scl_output=scl_raw, 
-                                                                         metadata_df=metadf_dropNA , 
-                                                                         total_trial=event_num, 
-                                                                         tonic_length=tonic_length,
-                                                                         sampling_rate=source_samplingrate, 
-                                                                         desired_sampling_rate=dest_samplingrate)
+                                                                        metadata_df=metadf_dropNA , 
+                                                                        total_trial=event_num, 
+                                                                        tonic_length=tonic_length,
+                                                                        sampling_rate=source_samplingrate, 
+                                                                        desired_sampling_rate=dest_samplingrate)
         SCL_df = pd.concat([metadata_d, metadata_SCL], axis=1)
         tonic_timecourse = pd.concat(
             [metadata_d, metadata_SCL, eda_level_timecourse], axis=1)
