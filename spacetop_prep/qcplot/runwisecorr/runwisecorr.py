@@ -115,7 +115,9 @@ for a, b in itertools.combinations(npy_flist, 2):
     # convert back to 3d brain DEP
     masked_X = nifti_masker.inverse_transform(singlemasked[0])
     masked_img_X = image.new_img_like(ref_img, masked_X.get_fdata()[..., 0])
-    plotting.plot_stat_map(masked_img_X, title = f"masked img: {sub} ses-{a_ses:02d} run-{a_run:02d}")
+    plotting.plot_stat_map(masked_img_X, 
+                           coords=(0,0,0),
+                           title=f"masked img: {sub} ses-{a_ses:02d} run-{a_run:02d}")
     plt.savefig(join(scratch_dir, sub, f"maskedimage_{sub}_{a_subses}.png"))
     plt.close()
 
