@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-# %% libraries _________________________________________________________________________________________
+# ----------------------------------------------------------------------
+#                               libraries
+# ----------------------------------------------------------------------
 import argparse
 import datetime
 import glob
@@ -21,11 +23,7 @@ import neurokit2 as nk
 import numpy as np
 import pandas as pd
 
-
 import spacetop_prep.physio.utils.checkfiles
-# import spacetop_prep.physio.utils.initialize
-# import spacetop_prep.physio.utils.preprocess
-# import spacetop_prep.physio.utils.ttl_extraction
 from spacetop_prep.physio import utils
 
 print(utils.checkfiles)
@@ -33,8 +31,7 @@ print(utils.checkfiles.glob_physio_bids)
 print(utils.initialize.sublist)
 __author__ = "Heejung Jung, Yaroslav Halchenko, Isabel Neumann"
 __copyright__ = "Spatial Topology Project"
-# people who reported bug fixes, made suggestions, etc. but did not actually write the code.
-__credits__ = ["Yaroslav Halchenko"]
+__credits__ = ["Yaroslav Halchenko"] # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
 __license__ = "MIT"
 __version__ = "0.1"
 __maintainer__ = "Heejung Jung"
@@ -43,21 +40,9 @@ __status__ = "Development"
 
 # %%
 def main():
-    """
-    TODO:
-    minimize spaghetti
-    - make two separate functions
-    1) pain process python function
-    2) non pain run process python function
 
-    ENH:
-    allow for user to input which channels to use
-    main channel (stimuli)
-    boundary channel (cue) (rating)
-    """
-
-# %% -------------------------------------------------------------------
-#                 parameters
+# ----------------------------------------------------------------------
+#                               parameters
 # ----------------------------------------------------------------------
     args = get_args()
 
@@ -91,6 +76,8 @@ def main():
     zeropad = args.bids_zeropad  # sub-0016 -> 4
     task = args.bids_task  # e.g. 'task-social' 'task-fractional' 'task-alignvideos'
     event_name = args.event_name
+    prior_event = args.prior_event
+    later_event = args.later_event
     source_samplingrate = args.source_samplingrate  # e.g. 2000
     dest_samplingrate = args.dest_samplingrate
     SCL_epoch_start = args.scl_epochstart
@@ -105,26 +92,26 @@ def main():
     # sub 73
     # ses 1
     # run 5
-    beh_fname = '/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0081_ses-01_task-social_run-01-pain_beh.csv'
-    physio_fpath = '/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0081_ses-01_task-cue_run-01-pain_recording-ppg-eda-trigger_physio.tsv'
-    meta_fname = '/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/physio/utils/tests/spacetop_task-social_run-metadata.csv'
-    dictchannel_json = '/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/physio/p01_channel.json'
-    beh_df = pd.read_csv(beh_fname)
-    physio_df = pd.read_csv(physio_fpath, sep='\t')
-    runmeta = pd.read_csv(meta_fname)
-    physio_flist = '/Users/h/Documents/projects_local/sandbox/physiodata/sub-0081/ses-01/sub-0081_ses-01_task-cue_run-01-pain_recording-ppg-eda-trigger_physio.tsv'
-    source_samplingrate = 2000
-    ttl_index = 2
-    SCL_epoch_end = 20
-    SCL_epoch_start = -3
-    sub_list = ['sub-0081']
-    sub = 'sub-0081'
-    ses = 'ses-01'
-    run_type = 'pain'
-    run ='run-01'
-    log_dir = '/Users/h/Desktop'
-    output_savedir = '/Users/h/Documents/projects_local/sandbox/physioresults'
-    physio_dir = '/Users/h/Documents/projects_local/sandbox/physiodata'
+    # beh_fname = '/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0081_ses-01_task-social_run-01-pain_beh.csv'
+    # physio_fpath = '/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0081_ses-01_task-cue_run-01-pain_recording-ppg-eda-trigger_physio.tsv'
+    # meta_fname = '/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/physio/utils/tests/spacetop_task-social_run-metadata.csv'
+    # dictchannel_json = '/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/physio/p01_channel.json'
+    # beh_df = pd.read_csv(beh_fname)
+    # physio_df = pd.read_csv(physio_fpath, sep='\t')
+    # runmeta = pd.read_csv(meta_fname)
+    # physio_flist = '/Users/h/Documents/projects_local/sandbox/physiodata/sub-0081/ses-01/sub-0081_ses-01_task-cue_run-01-pain_recording-ppg-eda-trigger_physio.tsv'
+    # source_samplingrate = 2000
+    # ttl_index = 2
+    # SCL_epoch_end = 20
+    # SCL_epoch_start = -3
+    # sub_list = ['sub-0081']
+    # sub = 'sub-0081'
+    # ses = 'ses-01'
+    # run_type = 'pain'
+    # run ='run-01'
+    # log_dir = '/Users/h/Desktop'
+    # output_savedir = '/Users/h/Documents/projects_local/sandbox/physioresults'
+    # physio_dir = '/Users/h/Documents/projects_local/sandbox/physiodata'
 # %% -------------------------------------------------------------------
 #                 extract parameters and metadata
 # ----------------------------------------------------------------------
@@ -134,7 +121,7 @@ def main():
     plt.rcParams['figure.figsize'] = [15, 5]  # Bigger images
     plt.rcParams['font.size'] = 14
 
-    # %% set parameters
+    # identify subjects _________________________________________________
     sub_list = []
     print(f"remove list: {remove_subject_int}")
     sub_list = utils.initialize.sublist(source_dir=physio_dir,
@@ -148,7 +135,7 @@ def main():
     Path(log_dir).mkdir(parents=True, exist_ok=True)
     logger_fname = os.path.join(log_dir, f"data-physio_step-03-groupanalysis_{datetime.date.today().isoformat()}.txt")
 
-    # set up logger __________________________________________________________________
+    # set up logger ______________________________________________________
     runmeta = pd.read_csv(metadata)
     # TODO: come up with scheme to update logger files
     f = open(logger_fname, "w")
@@ -183,6 +170,7 @@ def main():
             physio_fname, 'task')
         bids_dict['run'] = run = f"run-{run_ind:02d}"
 
+
     # ======= NOTE: 2. identify physio file for corresponding sub/ses/run =======================
         physio_fname = os.path.basename(physio_fpath)
         logger.info({physio_fname})
@@ -207,6 +195,7 @@ def main():
             'param_cue_type', 'param_stimulus_type', 'param_cond_type', 'event02_expect_RT', 'event02_expect_angle', 'event04_actual_RT', 'event04_actual_angle'
         ]]
 
+
     # ======= NOTE: 4. merge fixation columns (some files look different) handle slight changes in biopac dataframe
         """This was necessary for old spacetop files. I can deprecate this, 
         since we no longer use fixation columns in our analysis
@@ -220,6 +209,7 @@ def main():
     #     utils.preprocess.identify_fixation_sec(physio_df, 'event_fixation', 2000)
     #     physio_df_bl = utils.preprocess.baseline_correct(
     #         df=physio_df, raw_eda_col='physio_eda', baseline_col='event_fixation')
+
 
     # ======= NOTE: 5. extract epochs based on event transitions ===================================
         dict_onset = {}
@@ -249,8 +239,8 @@ def main():
             # binarize TTL channels (raise error if channel has no TTL, despite being a pain run)
             nan_index, metadf_dropNA, plateau_start, final_df = utils.ttl_extraction.ttl_extraction(
                 physio_df=physio_df,
-                dict_beforettl=dict_onset['event_expectrating'],
-                dict_afterttl=dict_onset['event_actualrating'],
+                dict_beforettl=dict_onset[prior_event],
+                dict_afterttl=dict_onset[later_event],
                 dict_stimuli=dict_onset[event_name],
                 samplingrate=source_samplingrate,
                 metadata_df=metadata_df,
@@ -282,10 +272,12 @@ def main():
                 'condition': beh_df['param_stimulus_type'].values.tolist()
             }
 
+
     # ======= NOTE: 7. save dict_onset ===============================================================
         dict_savedir = join(output_savedir, 'physio01_SCL', sub, ses)
         dict_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_samplingrate-{source_samplingrate}_onset.json"
         utils.preprocess.save_dict(dict_savedir, dict_fname, dict_onset)
+
 
     # ======= NOTE: 8. baseline correct ===============================================================
     if baselinecorrect == True:
@@ -303,6 +295,7 @@ def main():
             print(start_index, stop_index)
 
             physio_df.loc[start_index:stop_index,'physio_eda_blcorrect'] = physio_df.loc[start_index:stop_index]['physio_eda'] - baseline_average
+
 
     # ======= NOTE: 9. extract TONIC signal  ======================================================================
 
@@ -330,6 +323,7 @@ def main():
                 highcut_filter=1, 
                 detrend=False)
             
+
     #  ======= NOTE: 10. concatenate dataframes ===============================================================
 
         # Tonic level ______________________________________________________________________________________
@@ -358,7 +352,6 @@ def main():
                 logger.info("preprocess.substitute_beh_NA BUG")
         elif run_type == 'vicarious' or run_type == 'cognitive':
             metadata_d = metadf_dropNA.copy()
-            # insert row back in and fill te ratings with nans
         else:
             metadata_d = metadf_dropNA.copy()
     
@@ -372,6 +365,7 @@ def main():
         tonic_timecourse = pd.concat(
             [metadata_d, metadata_SCL, eda_level_timecourse], axis=1)
 
+
     # ======= NOTE: 11. save tonic data ====================================================================================
         tonic_save_dir = join(output_savedir, 'physio01_SCL', sub, ses)
         Path(tonic_save_dir).mkdir(parents=True, exist_ok=True)
@@ -379,6 +373,7 @@ def main():
         tonictime_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{SCL_epoch_start}_epochend-{SCL_epoch_end}_baselinecorrect-{baselinecorrect}_samplingrate-{dest_samplingrate}_ttlindex-{ttl_index}_physio-scltimecourse.csv"
         SCL_df.to_csv(join(tonic_save_dir, tonic_fname), index = False)
         tonic_timecourse.to_csv(join(tonic_save_dir, tonictime_fname), index = False)
+
 
     # ======= NOTE: 12. save metadata ===============================================================
         analysis = {"sub":sub, "ses":ses, "run":run, "run_type":run_type, 
@@ -393,6 +388,9 @@ def main():
                     }
         logger.info("__________________ :+: FINISHED :+: __________________\n")
 
+# %% -------------------------------------------------------------------
+#                        argparse parameters
+# ----------------------------------------------------------------------
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -419,7 +417,11 @@ def get_args():
     parser.add_argument("--bids-task",
                         type=str, help="specify task name (e.g. task-alignvideos)")
     parser.add_argument("--event-name",
-                        type=str, help="specify task name (e.g. task-alignvideos)")
+                        type=str, help="specify task name (e.g. event_stimuli)")
+    parser.add_argument("--prior-event",
+                        type=str, help="specify channel prior to the event name of interest. Purpose: identify boundary conditions")
+    parser.add_argument("--later-event",
+                        type=str, help="specify channel that comes after the event of interest. Purpose: identify boundary conditions")
     parser.add_argument("--source-samplingrate", type=int,
                         help="sampling rate of acquisition file")
     parser.add_argument("--dest-samplingrate", type=int,
