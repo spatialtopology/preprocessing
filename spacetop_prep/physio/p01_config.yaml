@@ -9,6 +9,8 @@ slurm-stride: 10
 bids-zeropad: 4
 bids-task: "task-cue"
 event-name: "event_stimuli"
+prior-event: "event_expectrating"
+later-event: "event_actualrating"
 source-samplingrate: 2000
 dest-samplingrate: 25
 ttl-index: 1
