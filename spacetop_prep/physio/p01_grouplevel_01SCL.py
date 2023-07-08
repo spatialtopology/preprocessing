@@ -304,7 +304,7 @@ def main():
                 physio_df['physio_eda_blcorrect'].to_numpy(),  method='interpolation', sampling_rate=source_samplingrate, desired_sampling_rate=dest_samplingrate)
             edabl_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{SCL_epoch_start}_epochend-{SCL_epoch_end}_baselinecorrect-{baselinecorrect}_samplingrate-{dest_samplingrate}_physio-eda"
             #physio_df.to_tsv(join(output_savedir, 'physio01_SCL', sub, ses, edabl_fname + '.tsv'), sep='\t')
-            numpy.savetxt(join(output_savedir, 'physio01_SCL', sub, ses, edabl_fname + ".txt"), resamp, delimiter=",")
+            np.savetxt(join(output_savedir, 'physio01_SCL', sub, ses, edabl_fname + ".txt"), resamp, delimiter=",")
             # Plot the selected columns against the index
             plt.plot(physio_df.index, physio_df['physio_eda_blcorrect'], label='Baseline corrected')
             plt.plot(physio_df.index, physio_df['physio_eda'], label='EDA')
