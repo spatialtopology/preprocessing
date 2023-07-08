@@ -102,8 +102,8 @@ parser.add_argument("--task",
 args = parser.parse_args()
 slurm_id = args.slurm_id
 img_dir = args.img_dir
-bad_run = args.bad_run
-nointendfor = args.no_intend
+badrun_fname = args.bad_run
+nointendfor_fname = args.no_intend
 task = args.task
 
 # img_dir = '/Volumes/derivatives/fmriprep_qc/runwisecorr/' # TODO: SLURM
@@ -123,7 +123,7 @@ corr_df = pd.read_csv(join(img_dir, sub, f'{sub}_runwisecorrelation.csv'))
 
 
 # ======= NOTE load bad metadata
-with open("/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/qcplot/boldcorrelation/bad_runs.json", "r") as json_file:
+with open(badrun_fname, "r") as json_file:
     bad_dict = json.load(json_file)
 bad_runs = []
 if bad_dict.get(sub, 'empty') != 'empty':
@@ -147,7 +147,7 @@ for badrun in bad_runs:
 # ======= NOTE load fieldmapless metadata
 task = 'task-social'
 print("load missing fieldmap data metadata")
-with open("/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/qcplot/not_in_intendedFor.json", "r") as json_file:
+with open(nointendfor_fname, "r") as json_file:
     missfieldmap_dict = json.load(json_file)
 nofieldmap_runs = []
 if missfieldmap_dict[task].get(sub, 'empty') != 'empty':
