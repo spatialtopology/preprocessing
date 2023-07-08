@@ -298,13 +298,13 @@ def main():
             
             
             edabl_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{SCL_epoch_start}_epochend-{SCL_epoch_end}_baselinecorrect-{baselinecorrect}_physio-eda"
-            physio_df.to_tsv(join(output_savedir, 'physio01_SCL', sub, ses, edabl_fname + '.tsv'), sep='\t')
+            physio_df.to_csv(join(output_savedir, 'physio01_SCL', sub, ses, edabl_fname + '.tsv'), sep='\t')
                         # TODO: plot 
             # Plot the selected columns against the index
             plt.plot(physio_df.index, physio_df['physio_eda_blcorrect'], label='Baseline corrected')
             plt.plot(physio_df.index, physio_df['physio_eda'], label='EDA')
             plt.xlabel('time');            plt.ylabel('EDA signal');            plt.legend()
-            plt.savefig(physio_df.to_tsv(join(output_savedir, 'physio01_SCL', sub, ses, edabl_fname + '.png')))
+            plt.savefig(join(output_savedir, 'physio01_SCL', sub, ses, edabl_fname + '.png'))
 
 
     # ======= NOTE: 9. extract TONIC signal  ======================================================================
