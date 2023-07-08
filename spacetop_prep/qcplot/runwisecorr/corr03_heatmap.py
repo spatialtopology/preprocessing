@@ -84,17 +84,43 @@ def create_html_with_plots(plots, html_fname):
     # Write the HTML content to a file
     with open(html_fname, "w") as file:
         file.write(html_content)
+# %% -------------------------------------------------------------------
+#                               argparse 
+# ----------------------------------------------------------------------
 
-img_dir = '/Volumes/derivatives/fmriprep_qc/runwisecorr/'
+parser = argparse.ArgumentParser()
+parser.add_argument("--slurm-id", 
+                    type=int, help="slurm id in numbers")
+parser.add_argument("--img-dir", 
+                    type=str, help="the directory where all the QC derivatives are saved")
+parser.add_argument("--bad-run", 
+                    type=str, help="the top directory of fmriprep preprocessed files")
+parser.add_argument("--no-intend", 
+                    type=str, help="where the runwise corr will be saved")
+parser.add_argument("--task", 
+                    type=str, help="the directory where you want to save your files")
+args = parser.parse_args()
+slurm_id = args.slurm_id
+img_dir = args.img_dir
+bad_run = args.bad_run
+nointendfor = args.no_intend
+task = args.task
+
+# img_dir = '/Volumes/derivatives/fmriprep_qc/runwisecorr/' # TODO: SLURM
+# bad_run = # TODO: SLURM
+# task = # TODO: SLURM
+# nointendedfor # TODO: SLURM
 sub_folders = next(os.walk(img_dir))[1]
 sub_list = [i for i in sorted(sub_folders) if i.startswith('sub-')]
 plot_dir = img_dir
+sub = sub_list[slurm_id] # TODO: SLURM
+
+
 # %% -------------------------------------------------------------------
 #                               maincode 
 # ----------------------------------------------------------------------
-# for sub in sub_list:
+corr_df = pd.read_csv(join(img_dir, sub, f'{sub}_runwisecorrelation.csv'))
 
-corr_df = pd.read_csv(f'/Volumes/derivatives/fmriprep_qc/runwisecorr/{sub}/{sub}_runwisecorrelation.csv')
 
 # ======= NOTE load bad metadata
 with open("/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/qcplot/boldcorrelation/bad_runs.json", "r") as json_file:
@@ -141,8 +167,6 @@ for nofieldmap in nofieldmap_runs:
 
 
 # %% ======= NOTE corerlation plot
-
-
 # get top, bottom correlation first _____________________________________________________________
 clean_corrdf = corr_df.iloc[:, 1:]
 top_three_indices = clean_corrdf.stack().nlargest(3).index
@@ -153,10 +177,12 @@ num_rows, num_cols = clean_corrdf.shape
 for i in range(num_rows):
     j = i   # Calculate the column index based on the row index
     clean_corrdf.iloc[i, j] = 1
+
 # plot heatmap __________________________________________________________________________________
 fig, (ax_heatmap) = plt.subplots(1, 1, figsize=(12, 8), gridspec_kw={'width_ratios': [10]})
 heatmap = sns.heatmap(clean_corrdf.values, cmap='viridis', annot=False, fmt='.2f', square=True, ax=ax_heatmap)
 heatmap.collections[0].colorbar.remove()
+
 # tweak colorbar position _______________________________________________________________________
 cbar_ax = fig.add_axes([0.92, 0.15, 0.03, 0.7])  # Adjust the position and size of the colorbar
 heatmap = ax_heatmap.collections[0]
@@ -178,7 +204,6 @@ for i in range(num_rows):
         ax_heatmap.add_patch(rect)
 
 # outline a cell for lowest correlation _________________________________________
-# bottom_three_indices = corr_df.iloc[:, 1:].stack().nsmallest(3).index
 for index in bottom_three_indices:
     cell_to_outline = (index[0], clean_corrdf.columns.get_loc(index[1]))#corr_df.columns.get_loc(index[1]) - 1)  # Adjust column index by subtracting 1
     cell_x = cell_to_outline[1] + 0.5  # Calculate the coordinates of the cell
@@ -187,13 +212,13 @@ for index in bottom_three_indices:
     ax_heatmap.add_patch(rect)
 
 # Get the top three highest correlations _________________________________________
-# top_three_indices = corr_df.iloc[:, 1:].stack().nlargest(3).index
 for index in top_three_indices:
     cell_to_outline = (index[0], clean_corrdf.columns.get_loc(index[1]))#corr_df.columns.get_loc(index[1]) - 1)  # Adjust column index by subtracting 1
     cell_x = cell_to_outline[1] + 0.5  # Calculate the coordinates of the cell
     cell_y = cell_to_outline[0] + 0.5
     rect = plt.Rectangle((cell_x - 0.5, cell_y - 0.5), 1, 1, edgecolor='#FFFF00', linewidth=3, fill=False)
     ax_heatmap.add_patch(rect)
+
 # bad runs based on fmriprep image parameters _________________________________________
 if badrun_indices:
     for i in np.arange(len(badrun_indices)):
@@ -218,22 +243,20 @@ legend_patches = [
     patches.Patch(facecolor='#FFFF00', edgecolor='gray', label='Top 3 Correlation')
 ]
 fig.legend(handles=legend_patches, loc='lower right', bbox_to_anchor=(1.2, 0.0))
-# fig.legend(handles=legend_patches, loc='lower right')  # Place the legend beneath the colorbar
-
-# plt.show()
 ax_heatmap.set_title(f"{sub} heatmap of runwise correlation coefficients")
 plt.savefig(join(plot_dir, sub, f"heatmap-runwisecorr_{sub}.png"),  bbox_inches='tight')
+
 
 # %% ----------------------------------------------------------------------
 #                   plot top bottom 3 correlation pairs 
 # ----------------------------------------------------------------------
-plot_corr_pair(plot_dir='/Volumes/derivatives/fmriprep_qc/runwisecorr', 
+plot_corr_pair(plot_dir=plot_dir, 
                 sub=sub,
                 corr_df=corr_df, 
                 index_list=top_three_indices,
                 title="top correlation")
  
-plot_corr_pair(plot_dir='/Volumes/derivatives/fmriprep_qc/runwisecorr', 
+plot_corr_pair(plot_dir=plot_dir, 
                 sub=sub,
                 corr_df=corr_df, 
                 index_list=bottom_three_indices,
@@ -256,7 +279,7 @@ plot_corr_pair(plot_dir='/Volumes/derivatives/fmriprep_qc/runwisecorr',
 # display(HTML(f'<img src="data:image/gif;base64,{b64}" />'))
 
 # plot in one html
-save_path = join(plot_dir, sub, f"corr-top_correlation_{sub}.png")
+# save_path = join(plot_dir, sub, f"corr-top_correlation_{sub}.png")
 
 # %%----------------------------------------------------------------------
 #                             plot image in html
