@@ -101,7 +101,7 @@ for a, b in itertools.combinations(npy_flist, 2):
     
     nifti_masker = nilearn.maskers.NiftiMasker(mask_img= masking.compute_epi_mask(image.load_img(mask_fname_gz), lower_cutoff=threshold, upper_cutoff=1.0),
                                 target_affine = ref_img.affine, target_shape = ref_img.shape, 
-                        memory="nilearn_cache", memory_level=1)
+                         memory_level=1) #memory="nilearn_cache",
     
 # 3. check if they plot correctly back into a brain map (nii) _____________________________________________________
     # convert back to 3d brain
@@ -120,3 +120,29 @@ for a, b in itertools.combinations(npy_flist, 2):
                            title=f"masked img: {sub} ses-{a_ses:02d} run-{a_run:02d}")
     plt.savefig(join(scratch_dir, sub, f"maskedimage_{sub}_{a_subses}.png"))
     plt.close()
+# %%
+
+import base64
+from IPython.display import HTML
+plot_dir = img_dir
+# List of GIF file paths
+gif_files = [
+    join(plot_dir, sub, f"animation-masked_{sub}.gif"),
+    join("/Volumes/derivatives/fmriprep_qc/sbref/", f"animation-sbref_{sub}.gif")
+]
+
+# Generate HTML content for each GIF image
+html_content = ""
+for gif_file in gif_files:
+    with open(gif_file, "rb") as file:
+        gif_data = file.read()
+    gif_base64 = base64.b64encode(gif_data).decode("ascii")
+    html_content += f'<img src="data:image/gif;base64,{gif_base64}" /><br>'
+
+# Save the HTML content to a file
+output_html_file = join(plot_dir, sub, "multiple_gifs.html")
+with open(output_html_file, "w") as file:
+    file.write(html_content)
+
+# Display the HTML content
+display(HTML(html_content))

@@ -98,7 +98,7 @@ for a, b in itertools.combinations(npy_flist, 2):
     
     nifti_masker = nilearn.maskers.NiftiMasker(mask_img= masking.compute_epi_mask(image.load_img(mask_fname_gz), lower_cutoff=threshold, upper_cutoff=1.0),
                                 target_affine = ref_img.affine, target_shape = ref_img.shape, 
-                        memory="nilearn_cache", memory_level=1)
+                        memory_level=1) # memory="nilearn_cache",
     
 # 3. check if they plot correctly back into a brain map (nii) _____________________________________________________
     # convert back to 3d brain
