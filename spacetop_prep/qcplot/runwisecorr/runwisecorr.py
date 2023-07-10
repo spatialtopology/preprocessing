@@ -29,6 +29,10 @@ parser.add_argument("--scratchdir",
                     type=str, help="the directory where you want to save your files")
 parser.add_argument("--canlabdir", 
                     type=str, help="the directory where you want to save your files")
+parser.add_argument("--task", 
+                    type=str, help="the directory where you want to save your files")
+# TODO: task paramter
+# --task
 args = parser.parse_args()
 slurm_id = args.slurm_id
 qc_dir = args.qcdir
@@ -36,6 +40,7 @@ fmriprep_dir = args.fmriprepdir
 save_dir = args.savedir
 scratch_dir = args.scratchdir
 canlab_dir = args.canlabdir
+task = args.task
 print(f"{slurm_id} {qc_dir} {fmriprep_dir} {save_dir} {scratch_dir}")
 
 npy_dir = join(qc_dir, 'numpy_bold')
@@ -95,7 +100,7 @@ for a, b in itertools.combinations(npy_flist, 2):
     # imgfname = glob.glob(join(nifti_dir, sub, f'{sub}_{ses}_*_runtype-vicarious_event-{fmri_event}_*_cuetype-low_stimintensity-low.nii.gz'))
     # ref_img_fname = '/Users/h/Documents/projects_local/sandbox/sub-0061_ses-04_task-social_acq-mb8_run-6_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz'
     # ref_img_fname = '/Users/h/Documents/projects_local/sandbox/fmriprep_bold/sub-0002_ses-01_task-social_acq-mb8_run-1_space-MNI152NLin2009cAsym_desc-preproc_bold.nii'
-    ref_img_fname = join(fmriprep_dir, sub, f"ses-{a_ses:02d}", 'func', f"{sub}_ses-{a_ses:02d}_task-social_acq-mb8_run-{a_run:01d}_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz")
+    ref_img_fname = join(fmriprep_dir, sub, f"ses-{a_ses:02d}", 'func', f"{sub}_ses-{a_ses:02d}_{task}_acq-mb8_run-{a_run:01d}_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz")
     ref_img = image.index_img(image.load_img(ref_img_fname),8) #image.load_img(ref_img_fname)
     threshold = 0.5
     
@@ -127,8 +132,57 @@ for a, b in itertools.combinations(npy_flist, 2):
     corr = np.corrcoef(singlemasked_X,singlemasked_Y)[0, 1]
     corrdf.at[a_index, b_index] = corr#np.mean(correlation_coefficients)#correlation
 
+# %%    4-2. 2sd pairs
+    # ======= NOTE: calculate highest 2sd voxels
+    thres_2sd_X = np.mean(singlemasked_X) + 2 * np.std(singlemasked_X)
+    thres_2sd_Y = np.mean(singlemasked_Y) + 2 * np.std(singlemasked_Y)
+    sdmask = np.logical_and(singlemasked_X > thres_2sd_X, singlemasked_Y > thres_2sd_Y)
 
-# 5. plot runs by overlaying each other _____________________________________________________
+    # Create a mask for pairs greater than the threshold    
+    sdmask_arrX = singlemasked_X * sdmask
+    sdmask_arrY = singlemasked_Y * sdmask
+    sdmask_X = nifti_masker.inverse_transform(sdmask_arrX)
+    sdmask_Y = nifti_masker.inverse_transform(sdmask_arrY)
+    coords = (-5, -6, -15) # sdmask_X
+    
+    fig, axes = plt.subplots(1, 1, figsize=(10, 5))
+    display = plotting.plot_stat_map(sdmask_X, cmap='Blues',
+                            title=f"Voxels greater than 2 sd: {sub} {a_subses} and {b_subses}", threshold=thres_2sd_X,
+                            display_mode='mosaic', 
+                            figure = fig, axes=axes, cut_coords=5, draw_cross=False)
+    plt.tight_layout()
+    display.savefig(join(scratch_dir, sub, f"sd-top2_{sub}_x-{a_subses}_y-{b_subses}.png"))
+    plt.close(fig)
+    # ======= NOTE: lowest 2sd voxels
+    thres_neg2sd_X = np.mean(singlemasked_X) - 2 * np.std(singlemasked_X)
+    thres_neg2sd_Y = np.mean(singlemasked_Y) - 2 * np.std(singlemasked_Y)
+    sdmask_neg = np.logical_and(singlemasked_X < thres_neg2sd_X, singlemasked_Y < thres_neg2sd_Y)
+    # plt.scatter(singlemasked_X, singlemasked_Y)
+    plt.scatter(singlemasked_X, singlemasked_Y, c='gray', label='All Data', alpha=0.5 )
+    plt.scatter(singlemasked_X[sdmask], singlemasked_Y[sdmask], c='darkgreen', label='2sd < voxel', alpha=0.5)
+    plt.scatter(singlemasked_X[sdmask_neg], singlemasked_Y[sdmask_neg], c='darkred', label='voxel < -2sd', alpha=0.5)
+    plt.xlabel(f"{a_subses}")
+    plt.ylabel(f"{b_subses}")
+    plt.title(f"Scatter plot for voxels in {sub}_x-{a_subses}_y-{b_subses} ")
+    plt.legend()
+    plt.savefig(join(scratch_dir, sub, f"scatter_{sub}_x-{a_subses}_y-{b_subses}.png"))
+    plt.close()
+
+    # Create a mask for pairs greater than the threshold
+    sdmaskneg_arrX = singlemasked_X * sdmask_neg
+    sdmaskneg_arrY = singlemasked_Y * sdmask_neg
+    sdmaskneg_X = nifti_masker.inverse_transform(sdmaskneg_arrX)
+    sdmaskneg_Y = nifti_masker.inverse_transform(sdmaskneg_arrY)
+    coords = (-5, -6, -15) # sdmask_X
+    bottomsdfig, axes = plt.subplots(1, 1, figsize=(10, 5))
+    display = plotting.plot_stat_map(sdmaskneg_X, cmap='Blues',
+                            title=f"Voxels less than 2 sd: {sub} {a_subses} and {b_subses}", threshold=2,
+                            display_mode='mosaic', figure = bottomsdfig, axes=axes, cut_coords=5, draw_cross=False)
+    plt.tight_layout()
+    display.savefig(join(scratch_dir, sub, f"sd-bottom2_{sub}_x-{a_subses}_y-{b_subses}.png"))
+    plt.close()
+
+# %%5. plot runs by overlaying each other _____________________________________________________
     masked_X = nifti_masker.inverse_transform(singlemasked[0])
     masked_Y = nifti_masker.inverse_transform(singlemasked[1])
 
@@ -141,10 +195,10 @@ for a, b in itertools.combinations(npy_flist, 2):
 
     plotting.plot_anat(image.mean_img(masked_X), cmap='Reds', alpha=1, colorbar=False, cut_coords=coords, 
                     display_mode='ortho',title=f"{a_subses}", figure = fig,axes=axes[1], black_bg=False, dim=False, draw_cross=False)
-    plotting.plot_anat(image.mean_img(masked_Y), cmap='Reds', alpha=1, colorbar=False, cut_coords=coords, 
+    plotting.plot_anat(image.mean_img(masked_Y), cmap='Blues', alpha=1, colorbar=False, cut_coords=coords, 
                     display_mode='ortho', title=f"{b_subses}", figure = fig,axes=axes[2], black_bg=False, dim=False, draw_cross=False)
 
-    plt.savefig(join(scratch_dir, sub, f"corr_{sub}_x-{a_subses}_y-{b_subses}.png"))
+    display.savefig(join(scratch_dir, sub, f"corr_{sub}_x-{a_subses}_y-{b_subses}.png"))
     plt.close(fig)
 
 # save df
