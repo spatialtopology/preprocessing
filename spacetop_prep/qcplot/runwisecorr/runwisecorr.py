@@ -161,6 +161,7 @@ for a, b in itertools.combinations(npy_flist, 2):
     plt.scatter(singlemasked_X, singlemasked_Y, c='gray', label='All Data', alpha=0.5 )
     plt.scatter(singlemasked_X[sdmask], singlemasked_Y[sdmask], c='darkgreen', label='2sd < voxel', alpha=0.5)
     plt.scatter(singlemasked_X[sdmask_neg], singlemasked_Y[sdmask_neg], c='darkred', label='voxel < -2sd', alpha=0.5)
+    plt.plot([min(singlemasked_X), max(singlemasked_X)], [min(singlemasked_Y), max(singlemasked_Y)], color='black', linestyle='--')
     plt.xlabel(f"{a_subses}")
     plt.ylabel(f"{b_subses}")
     plt.title(f"Scatter plot for voxels in {sub}_x-{a_subses}_y-{b_subses} ")
