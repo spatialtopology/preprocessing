@@ -1,0 +1,285 @@
+subjectkey,src_subject_id,birth_Y_m_d,sex,race,ethnic_group,phenotype,phenotype_description,twins_study,sibling_study,family_study,session_id,interview_date,interview_age
+NDARKZ175WZM,sub-0002,7/16/96,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,1/27/21,295
+NDARKZ175WZM,sub-0002,7/16/96,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,3/11/21,296
+NDARKZ175WZM,sub-0002,7/16/96,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,3/23/21,296
+NDARKZ175WZM,sub-0002,7/16/96,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,3/25/21,296
+NDARTP859GEG,sub-0004,6/15/92,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,1/28/21,344
+NDARTP859GEG,sub-0004,6/15/92,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,2/3/21,344
+NDARTP859GEG,sub-0004,6/15/92,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,2/10/21,344
+NDARTP859GEG,sub-0004,6/15/92,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,2/17/21,344
+NDARCM933NLX,sub-0005,9/4/94,M,Unknown or Prefer not to answer,Unknown or prefer not to answer,Not Applicable,Not Applicable,No,No,No,ses-01,3/3/21,318
+NDARCM933NLX,sub-0005,9/4/94,M,Unknown or Prefer not to answer,Unknown or prefer not to answer,Not Applicable,Not Applicable,No,No,No,ses-02,2/4/21,317
+NDARCM933NLX,sub-0005,9/4/94,M,Unknown or Prefer not to answer,Unknown or prefer not to answer,Not Applicable,Not Applicable,No,No,No,ses-03,2/11/21,317
+NDARCM933NLX,sub-0005,9/4/94,M,Unknown or Prefer not to answer,Unknown or prefer not to answer,Not Applicable,Not Applicable,No,No,No,ses-04,2/18/21,318
+NDARPJ281XLZ,sub-0006,11/24/93,M,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,3/3/21,327
+NDARPJ281XLZ,sub-0006,11/24/93,M,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,3/10/21,328
+NDARPJ281XLZ,sub-0006,11/24/93,M,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,3/17/21,328
+NDARPJ281XLZ,sub-0006,11/24/93,M,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,3/24/21,328
+NDARUN243WZQ,sub-0007,3/8/96,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,3/4/21,300
+NDARUN243WZQ,sub-0007,3/8/96,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,3/11/21,300
+NDARUN243WZQ,sub-0007,3/8/96,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,3/18/21,301
+NDARUN243WZQ,sub-0007,3/8/96,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,3/25/21,301
+NDARKL144UV6,sub-0013,9/16/88,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,4/7/21,391
+NDARKL144UV6,sub-0013,9/16/88,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,4/14/21,391
+NDARKL144UV6,sub-0013,9/16/88,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,4/21/21,391
+NDARKL144UV6,sub-0013,9/16/88,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,4/28/21,392
+NDARGC704RR5,sub-0014,6/19/01,M,More than one race,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,4/8/21,238
+NDARGC704RR5,sub-0014,6/19/01,M,More than one race,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,4/23/21,238
+NDARGC704RR5,sub-0014,6/19/01,M,More than one race,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,4/29/21,238
+NDARGC704RR5,sub-0014,6/19/01,M,More than one race,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,5/13/21,239
+NDARKW811VWT,sub-0016,3/9/94,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,4/5/21,325
+NDARKW811VWT,sub-0016,3/9/94,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,4/12/21,325
+NDARKW811VWT,sub-0016,3/9/94,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,4/19/21,326
+NDARKW811VWT,sub-0016,3/9/94,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,4/26/21,326
+NDARXZ305MJW,sub-0017,10/19/01,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,4/8/21,234
+NDARXZ305MJW,sub-0017,10/19/01,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,4/15/21,234
+NDARXZ305MJW,sub-0017,10/19/01,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,4/22/21,234
+NDARXZ305MJW,sub-0017,10/19/01,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,4/29/21,234
+NDARTG503VUX,sub-0018,7/7/92,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,5/6/21,346
+NDARTG503VUX,sub-0018,7/7/92,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,5/13/21,346
+NDARTG503VUX,sub-0018,7/7/92,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,5/20/21,347
+NDARTG503VUX,sub-0018,7/7/92,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,5/27/21,347
+NDARRW711HTY,sub-0020,3/3/02,F,Native Hawaiian or Other Pacific Islander,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,4/22/21,230
+NDARRW711HTY,sub-0020,3/3/02,F,Native Hawaiian or Other Pacific Islander,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,4/28/21,230
+NDARRW711HTY,sub-0020,3/3/02,F,Native Hawaiian or Other Pacific Islander,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,5/6/21,230
+NDARRW711HTY,sub-0020,3/3/02,F,Native Hawaiian or Other Pacific Islander,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,5/13/21,230
+NDARGR361NF6,sub-0021,7/1/02,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,5/6/21,226
+NDARGR361NF6,sub-0021,7/1/02,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,5/13/21,227
+NDARGR361NF6,sub-0021,7/1/02,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,5/20/21,227
+NDARGR361NF6,sub-0021,7/1/02,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,5/24/21,227
+NDARNG854PV4,sub-0025,9/19/01,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,5/14/21,236
+NDARNG854PV4,sub-0025,9/19/01,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,5/17/21,236
+NDARNG854PV4,sub-0025,9/19/01,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,5/20/21,236
+NDARNG854PV4,sub-0025,9/19/01,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,5/27/21,236
+NDARLJ587MJG,sub-0026,4/30/93,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,6/22/21,338
+NDARLJ587MJG,sub-0026,4/30/93,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,6/24/21,338
+NDARLJ587MJG,sub-0026,4/30/93,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,6/29/21,338
+NDARLJ587MJG,sub-0026,4/30/93,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,7/1/21,338
+NDARXL396TKD,sub-0028,11/16/88,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,6/24/21,391
+NDARXL396TKD,sub-0028,11/16/88,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,,
+NDARXL396TKD,sub-0028,11/16/88,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,,
+NDARXL396TKD,sub-0028,11/16/88,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,,
+NDARFN741JJ8,sub-0029,5/1/90,F,More than one race,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,6/22/21,374
+NDARFN741JJ8,sub-0029,5/1/90,F,More than one race,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,6/24/21,374
+NDARFN741JJ8,sub-0029,5/1/90,F,More than one race,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,6/29/21,374
+NDARFN741JJ8,sub-0029,5/1/90,F,More than one race,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,7/1/21,374
+NDARLT236BXT,sub-0030,2/5/96,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,8/4/21,306
+NDARLT236BXT,sub-0030,2/5/96,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,,
+NDARLT236BXT,sub-0030,2/5/96,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,,
+NDARLT236BXT,sub-0030,2/5/96,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,,
+NDARVJ802CVE,sub-0032,2/20/98,F,American Indian/Alaska Native,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,7/6/21,281
+NDARVJ802CVE,sub-0032,2/20/98,F,American Indian/Alaska Native,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,7/14/21,281
+NDARVJ802CVE,sub-0032,2/20/98,F,American Indian/Alaska Native,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,7/22/21,281
+NDARVJ802CVE,sub-0032,2/20/98,F,American Indian/Alaska Native,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,7/29/21,281
+NDARTU808KTW,sub-0037,2/10/99,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,7/8/21,269
+NDARTU808KTW,sub-0037,2/10/99,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,7/12/21,269
+NDARTU808KTW,sub-0037,2/10/99,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,7/20/21,269
+NDARTU808KTW,sub-0037,2/10/99,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,7/27/21,270
+NDARGE057HX6,sub-0038,5/31/95,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,7/8/21,313
+NDARGE057HX6,sub-0038,5/31/95,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,7/14/21,314
+NDARGE057HX6,sub-0038,5/31/95,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,7/20/21,314
+NDARGE057HX6,sub-0038,5/31/95,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,7/29/21,314
+NDARAT970AJX,sub-0041,2/24/97,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,7/8/21,293
+NDARAT970AJX,sub-0041,2/24/97,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,7/14/21,293
+NDARAT970AJX,sub-0041,2/24/97,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,7/19/21,293
+NDARAT970AJX,sub-0041,2/24/97,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,8/9/21,294
+NDARUB918VF3,sub-0042,4/25/95,F,More than one race,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,,
+NDARUB918VF3,sub-0042,4/25/95,F,More than one race,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,,
+NDARUB918VF3,sub-0042,4/25/95,F,More than one race,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,,
+NDARUB918VF3,sub-0042,4/25/95,F,More than one race,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,,
+NDARMY669CC2,sub-0044,3/6/98,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,7/12/21,280
+NDARMY669CC2,sub-0044,3/6/98,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,7/16/21,281
+NDARMY669CC2,sub-0044,3/6/98,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,7/22/21,281
+NDARMY669CC2,sub-0044,3/6/98,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,7/29/21,281
+NDARFD066VKK,sub-0046,3/26/01,M,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,8/2/21,244
+NDARFD066VKK,sub-0046,3/26/01,M,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,8/9/21,245
+NDARFD066VKK,sub-0046,3/26/01,M,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,8/11/21,245
+NDARFD066VKK,sub-0046,3/26/01,M,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,8/12/21,245
+NDARWY084PHW,sub-0047,8/11/01,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,8/2/21,240
+NDARWY084PHW,sub-0047,8/11/01,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,,
+NDARWY084PHW,sub-0047,8/11/01,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,,
+NDARWY084PHW,sub-0047,8/11/01,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,,
+NDARMY027FTW,sub-0050,2/12/96,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,8/4/21,306
+NDARMY027FTW,sub-0050,2/12/96,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,8/11/21,306
+NDARMY027FTW,sub-0050,2/12/96,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,8/19/21,306
+NDARMY027FTW,sub-0050,2/12/96,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,8/23/21,307
+NDARPM750XAZ,sub-0051,7/14/00,M,More than one race,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,8/5/21,253
+NDARPM750XAZ,sub-0051,7/14/00,M,More than one race,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,8/12/21,253
+NDARPM750XAZ,sub-0051,7/14/00,M,More than one race,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,8/18/21,253
+NDARPM750XAZ,sub-0051,7/14/00,M,More than one race,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,8/26/21,254
+NDARHK409FUB,sub-0052,3/6/01,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,8/5/21,245
+NDARHK409FUB,sub-0052,3/6/01,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,8/12/21,245
+NDARHK409FUB,sub-0052,3/6/01,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,8/16/21,246
+NDARHK409FUB,sub-0052,3/6/01,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,8/26/21,246
+NDARTX932CUW,sub-0056,5/26/97,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,8/4/21,290
+NDARTX932CUW,sub-0056,5/26/97,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,8/12/21,291
+NDARTX932CUW,sub-0056,5/26/97,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,8/18/21,291
+NDARTX932CUW,sub-0056,5/26/97,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,8/25/21,291
+NDARNB616XBB,sub-0057,11/26/94,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,8/19/21,321
+NDARNB616XBB,sub-0057,11/26/94,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,8/26/21,321
+NDARNB616XBB,sub-0057,11/26/94,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,8/30/21,321
+NDARNB616XBB,sub-0057,11/26/94,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,9/8/21,322
+NDARFZ846UXN,sub-0058,8/22/98,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,8/16/21,276
+NDARFZ846UXN,sub-0058,8/22/98,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,8/18/21,276
+NDARFZ846UXN,sub-0058,8/22/98,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,8/19/21,276
+NDARFZ846UXN,sub-0058,8/22/98,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,8/25/21,276
+NDARWU070BPL,sub-0060,3/17/98,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,8/18/21,281
+NDARWU070BPL,sub-0060,3/17/98,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,9/1/21,282
+NDARWU070BPL,sub-0060,3/17/98,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,9/2/21,282
+NDARWU070BPL,sub-0060,3/17/98,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,10/14/21,283
+NDARKP017NWM,sub-0061,3/8/94,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,8/11/21,329
+NDARKP017NWM,sub-0061,3/8/94,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,8/23/21,330
+NDARKP017NWM,sub-0061,3/8/94,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,8/30/21,330
+NDARKP017NWM,sub-0061,3/8/94,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,9/8/21,330
+NDARZW755EC4,sub-0062,8/16/98,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,8/18/21,276
+NDARZW755EC4,sub-0062,8/16/98,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,8/23/21,276
+NDARZW755EC4,sub-0062,8/16/98,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,8/25/21,276
+NDARZW755EC4,sub-0062,8/16/98,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,8/26/21,277
+NDARDL630DED,sub-0063,10/23/97,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,8/16/21,286
+NDARDL630DED,sub-0063,10/23/97,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,,
+NDARDL630DED,sub-0063,10/23/97,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,,
+NDARDL630DED,sub-0063,10/23/97,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,,
+NDARKL230FFL,sub-0066,10/24/94,M,More than one race,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,9/1/21,322
+NDARKL230FFL,sub-0066,10/24/94,M,More than one race,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,9/8/21,323
+NDARKL230FFL,sub-0066,10/24/94,M,More than one race,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,9/16/21,323
+NDARKL230FFL,sub-0066,10/24/94,M,More than one race,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,9/22/21,323
+NDARVM357AD4,sub-0067,9/11/95,F,More than one race,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,,
+NDARVM357AD4,sub-0067,9/11/95,F,More than one race,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,,
+NDARVM357AD4,sub-0067,9/11/95,F,More than one race,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,,
+NDARVM357AD4,sub-0067,9/11/95,F,More than one race,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,,
+NDARXT258TH6,sub-0069,6/15/95,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,9/2/21,315
+NDARXT258TH6,sub-0069,6/15/95,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,9/9/21,315
+NDARXT258TH6,sub-0069,6/15/95,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,9/15/21,315
+NDARXT258TH6,sub-0069,6/15/95,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,9/16/21,315
+NDARNE284PVL,sub-0075,5/3/78,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,9/13/21,521
+NDARNE284PVL,sub-0075,5/3/78,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,9/15/21,521
+NDARNE284PVL,sub-0075,5/3/78,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,9/22/21,521
+NDARNE284PVL,sub-0075,5/3/78,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,9/29/21,521
+NDARPM584BN1,sub-0078,4/6/98,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,9/27/21,282
+NDARPM584BN1,sub-0078,4/6/98,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,9/29/21,282
+NDARPM584BN1,sub-0078,4/6/98,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,10/6/21,282
+NDARPM584BN1,sub-0078,4/6/98,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,10/7/21,282
+NDARBM347KDJ,sub-0080,4/19/01,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,9/23/21,245
+NDARBM347KDJ,sub-0080,4/19/01,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,9/29/21,246
+NDARBM347KDJ,sub-0080,4/19/01,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,10/7/21,246
+NDARBM347KDJ,sub-0080,4/19/01,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,1/17/22,249
+NDARCD593NMT,sub-0081,3/1/95,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,9/30/21,319
+NDARCD593NMT,sub-0081,3/1/95,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,10/13/21,320
+NDARCD593NMT,sub-0081,3/1/95,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,10/14/21,320
+NDARCD593NMT,sub-0081,3/1/95,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,11/4/21,320
+NDARBG827RLB,sub-0083,6/24/95,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,9/30/21,315
+NDARBG827RLB,sub-0083,6/24/95,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,10/6/21,316
+NDARBG827RLB,sub-0083,6/24/95,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,10/14/21,316
+NDARBG827RLB,sub-0083,6/24/95,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,10/20/21,316
+NDARKM718ZT5,sub-0086,2/26/03,F,Unknown or Prefer not to answer,Unknown or prefer not to answer,Not Applicable,Not Applicable,No,No,No,ses-01,10/14/21,224
+NDARKM718ZT5,sub-0086,2/26/03,F,Unknown or Prefer not to answer,Unknown or prefer not to answer,Not Applicable,Not Applicable,No,No,No,ses-02,10/21/21,224
+NDARKM718ZT5,sub-0086,2/26/03,F,Unknown or Prefer not to answer,Unknown or prefer not to answer,Not Applicable,Not Applicable,No,No,No,ses-03,11/2/21,224
+NDARKM718ZT5,sub-0086,2/26/03,F,Unknown or Prefer not to answer,Unknown or prefer not to answer,Not Applicable,Not Applicable,No,No,No,ses-04,11/11/21,225
+NDARPB598FGC,sub-0087,4/5/94,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,10/13/21,331
+NDARPB598FGC,sub-0087,4/5/94,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,10/21/21,331
+NDARPB598FGC,sub-0087,4/5/94,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,10/27/21,331
+NDARPB598FGC,sub-0087,4/5/94,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,11/2/21,331
+NDARMF607WVD,sub-0088,3/20/98,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,10/13/21,283
+NDARMF607WVD,sub-0088,3/20/98,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,10/20/21,283
+NDARMF607WVD,sub-0088,3/20/98,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,10/21/21,283
+NDARMF607WVD,sub-0088,3/20/98,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,10/27/21,283
+NDARPK890KCC,sub-0091,8/14/03,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,11/1/21,219
+NDARPK890KCC,sub-0091,8/14/03,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,11/5/21,219
+NDARPK890KCC,sub-0091,8/14/03,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,11/7/21,219
+NDARPK890KCC,sub-0091,8/14/03,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,1/31/22,222
+NDARLA580XF1,sub-0092,4/12/03,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,10/27/21,223
+NDARLA580XF1,sub-0092,4/12/03,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,11/7/21,223
+NDARLA580XF1,sub-0092,4/12/03,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,11/10/21,223
+NDARLA580XF1,sub-0092,4/12/03,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,11/11/21,223
+NDARAP093MCJ,sub-0093,11/13/89,F,More than one race,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,11/4/21,384
+NDARAP093MCJ,sub-0093,11/13/89,F,More than one race,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,11/7/21,384
+NDARAP093MCJ,sub-0093,11/13/89,F,More than one race,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,1/13/22,386
+NDARAP093MCJ,sub-0093,11/13/89,F,More than one race,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,1/24/22,387
+NDARRV295AHM,sub-0094,3/16/99,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,11/8/21,272
+NDARRV295AHM,sub-0094,3/16/99,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,12/16/21,273
+NDARRV295AHM,sub-0094,3/16/99,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,4/11/22,277
+NDARRV295AHM,sub-0094,3/16/99,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,4/18/22,277
+NDARPJ295YE1,sub-0095,11/17/99,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,10/27/21,264
+NDARPJ295YE1,sub-0095,11/17/99,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,12/16/21,265
+NDARPJ295YE1,sub-0095,11/17/99,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,1/13/22,266
+NDARPJ295YE1,sub-0095,11/17/99,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,1/18/22,266
+NDARCA081BMY,sub-0097,11/13/96,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,12/14/21,301
+NDARCA081BMY,sub-0097,11/13/96,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,,
+NDARCA081BMY,sub-0097,11/13/96,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,,
+NDARCA081BMY,sub-0097,11/13/96,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,,
+NDAREE858CZG,sub-0098,6/16/99,M,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,12/13/21,270
+NDAREE858CZG,sub-0098,6/16/99,M,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,12/16/21,270
+NDAREE858CZG,sub-0098,6/16/99,M,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,1/13/22,271
+NDAREE858CZG,sub-0098,6/16/99,M,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,1/17/22,271
+NDAREP817WXG,sub-0099,4/26/81,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,1/12/22,489
+NDAREP817WXG,sub-0099,4/26/81,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,1/13/22,489
+NDAREP817WXG,sub-0099,4/26/81,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,1/19/22,489
+NDAREP817WXG,sub-0099,4/26/81,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,1/24/22,489
+NDARUH838RDV,sub-0100,2/9/78,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,1/11/22,527
+NDARUH838RDV,sub-0100,2/9/78,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,1/12/22,527
+NDARUH838RDV,sub-0100,2/9/78,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,1/19/22,528
+NDARUH838RDV,sub-0100,2/9/78,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,1/24/22,528
+NDARUW342GEG,sub-0102,8/24/99,M,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,1/17/22,269
+NDARUW342GEG,sub-0102,8/24/99,M,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,1/26/22,269
+NDARUW342GEG,sub-0102,8/24/99,M,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,1/31/22,269
+NDARUW342GEG,sub-0102,8/24/99,M,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,2/2/22,270
+NDARAN728XKG,sub-0103,9/10/03,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,1/24/22,221
+NDARAN728XKG,sub-0103,9/10/03,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,1/31/22,221
+NDARAN728XKG,sub-0103,9/10/03,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,3/6/22,222
+NDARAN728XKG,sub-0103,9/10/03,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,3/10/22,222
+NDARXY967TRJ,sub-0107,7/28/01,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,3/3/22,247
+NDARXY967TRJ,sub-0107,7/28/01,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,3/6/22,247
+NDARXY967TRJ,sub-0107,7/28/01,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,3/7/22,247
+NDARXY967TRJ,sub-0107,7/28/01,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,5/17/22,250
+NDARCF340RZT,sub-0108,4/28/02,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,,
+NDARCF340RZT,sub-0108,4/28/02,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,,
+NDARCF340RZT,sub-0108,4/28/02,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,,
+NDARCF340RZT,sub-0108,4/28/02,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,,
+NDARYW671RUX,sub-0109,7/10/02,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,2/21/22,236
+NDARYW671RUX,sub-0109,7/10/02,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,2/28/22,236
+NDARYW671RUX,sub-0109,7/10/02,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,3/6/22,236
+NDARYW671RUX,sub-0109,7/10/02,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,3/10/22,236
+NDARHK140RBT,sub-0112,11/3/02,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,2/23/22,232
+NDARHK140RBT,sub-0112,11/3/02,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,3/9/22,232
+NDARHK140RBT,sub-0112,11/3/02,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,4/6/22,233
+NDARHK140RBT,sub-0112,11/3/02,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,5/12/22,234
+NDARMA760EY9,sub-0113,6/28/01,F,White,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,,
+NDARMA760EY9,sub-0113,6/28/01,F,White,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,,
+NDARMA760EY9,sub-0113,6/28/01,F,White,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,,
+NDARMA760EY9,sub-0113,6/28/01,F,White,Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,,
+NDARDC406NTF,sub-0114,1/15/02,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,3/9/22,242
+NDARDC406NTF,sub-0114,1/15/02,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,4/7/22,243
+NDARDC406NTF,sub-0114,1/15/02,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,,
+NDARDC406NTF,sub-0114,1/15/02,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,,
+NDARCF548UK1,sub-0116,8/10/02,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,3/9/22,235
+NDARCF548UK1,sub-0116,8/10/02,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,4/6/22,236
+NDARCF548UK1,sub-0116,8/10/02,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,4/13/22,236
+NDARCF548UK1,sub-0116,8/10/02,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,4/18/22,236
+NDAREX925EN4,sub-0118,5/15/00,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,3/9/22,262
+NDAREX925EN4,sub-0118,5/15/00,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,4/25/22,264
+NDAREX925EN4,sub-0118,5/15/00,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,,
+NDAREX925EN4,sub-0118,5/15/00,F,Asian,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,,
+NDARYM479KZG,sub-0119,1/16/00,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,3/7/22,266
+NDARYM479KZG,sub-0119,1/16/00,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,,
+NDARYM479KZG,sub-0119,1/16/00,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,,
+NDARYM479KZG,sub-0119,1/16/00,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,,
+NDARMP001PWX,sub-0124,12/2/01,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,5/9/22,245
+NDARMP001PWX,sub-0124,12/2/01,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,5/12/22,245
+NDARMP001PWX,sub-0124,12/2/01,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,5/17/22,246
+NDARMP001PWX,sub-0124,12/2/01,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,5/26/22,246
+NDARWL190PFH,sub-0126,10/19/03,F,Black or African American,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,5/23/22,223
+NDARWL190PFH,sub-0126,10/19/03,F,Black or African American,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,5/18/22,223
+NDARWL190PFH,sub-0126,10/19/03,F,Black or African American,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,5/30/22,223
+NDARWL190PFH,sub-0126,10/19/03,F,Black or African American,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,5/31/22,224
+NDARWB802VJG,sub-0129,4/2/00,M,Black or African American,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,5/19/22,266
+NDARWB802VJG,sub-0129,4/2/00,M,Black or African American,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,5/25/22,266
+NDARWB802VJG,sub-0129,4/2/00,M,Black or African American,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,6/1/22,266
+NDARWB802VJG,sub-0129,4/2/00,M,Black or African American,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,6/6/22,266
+NDARHH598LZ5,sub-0130,1/9/03,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,5/23/22,233
+NDARHH598LZ5,sub-0130,1/9/03,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,5/29/22,233
+NDARHH598LZ5,sub-0130,1/9/03,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,6/2/22,233
+NDARHH598LZ5,sub-0130,1/9/03,F,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,,
+NDARRH162ZMA,sub-0133,4/3/02,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-01,7/5/22,243
+NDARRH162ZMA,sub-0133,4/3/02,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-02,7/6/22,243
+NDARRH162ZMA,sub-0133,4/3/02,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-03,7/7/22,243
+NDARRH162ZMA,sub-0133,4/3/02,M,White,Not Hispanic or Latino,Not Applicable,Not Applicable,No,No,No,ses-04,7/8/22,243
