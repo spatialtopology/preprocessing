@@ -310,7 +310,7 @@ def main():
             plt.plot(physio_df.index, physio_df['physio_eda'], label='EDA')
             plt.xlabel('time');            plt.ylabel('EDA signal');            plt.legend()
             plt.savefig(join(output_savedir, 'physio01_SCL', sub, ses, edabl_fname + '.png'))
-
+            plt.close()
 
     # ======= NOTE: 9. extract TONIC signal  ======================================================================
 
