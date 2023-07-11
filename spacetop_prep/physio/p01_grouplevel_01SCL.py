@@ -283,6 +283,7 @@ def main():
         if baselinecorrect == True:
             baseline_length = source_samplingrate* np.abs(SCL_epoch_start)
             physio_df['physio_eda_blcorrect'] = physio_df['physio_eda']
+            #TODO: turn into a shorter function
             for i in range(len(dict_onset[event_name]['start'])):
                 if i == 0:
                     baseline_average = []
