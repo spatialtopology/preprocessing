@@ -284,18 +284,36 @@ def main():
             baseline_length = source_samplingrate* np.abs(SCL_epoch_start)
             physio_df['physio_eda_blcorrect'] = physio_df['physio_eda']
             for i in range(len(dict_onset[event_name]['start'])):
-                baseline_average = []
-                baseline_start_ind = dict_onset[event_name]['start'][i] - baseline_length
-                baseline_stop_ind = dict_onset[event_name]['start'][i]
-                baseline_average = physio_df.loc[baseline_start_ind:baseline_stop_ind]['physio_eda'].mean()
-                print(baseline_average)
-
-                start_index = dict_onset[event_name]['start'][i]
-                stop_index = dict_onset[event_name]['stop'][i]
-                print(start_index, stop_index)
-
-                physio_df.loc[start_index:stop_index,'physio_eda_blcorrect'] = physio_df.loc[start_index:stop_index]['physio_eda'] - baseline_average
-            
+                if i == 0:
+                    baseline_average = []
+                    baseline_start_ind = dict_onset[event_name]['start'][i] - baseline_length
+                    baseline_stop_ind = dict_onset[event_name]['start'][i]
+                    baseline_average = physio_df.loc[baseline_start_ind:baseline_stop_ind]['physio_eda'].mean()
+                    # print(baseline_average)
+                    start_index = physio_df.index[0]
+                    stop_index = dict_onset[event_name]['start'][i+1] - baseline_length
+                    # print(start_index, stop_index)
+                    physio_df.loc[start_index:stop_index,'physio_eda_blcorrect'] = physio_df.loc[start_index:stop_index]['physio_eda'] - baseline_average
+                elif i < len(dict_onset[event_name]['start'])-1:
+                    baseline_average = []
+                    baseline_start_ind = dict_onset[event_name]['start'][i] - baseline_length
+                    baseline_stop_ind = dict_onset[event_name]['start'][i]
+                    baseline_average = physio_df.loc[baseline_start_ind:baseline_stop_ind]['physio_eda'].mean()
+                    # print(baseline_average)
+                    start_index = dict_onset[event_name]['start'][i] - baseline_length
+                    stop_index = dict_onset[event_name]['start'][i+1] - baseline_length
+                    # print(start_index, stop_index)
+                    physio_df.loc[start_index:stop_index,'physio_eda_blcorrect'] = physio_df.loc[start_index:stop_index]['physio_eda'] - baseline_average
+                elif i == len(dict_onset[event_name]['start'])-1:
+                    baseline_average = []
+                    baseline_start_ind = dict_onset[event_name]['start'][i] - baseline_length
+                    baseline_stop_ind = dict_onset[event_name]['start'][i]
+                    baseline_average = physio_df.loc[baseline_start_ind:baseline_stop_ind]['physio_eda'].mean()
+                    # print(baseline_average)
+                    start_index = dict_onset[event_name]['start'][i]  - baseline_length
+                    stop_index = physio_df.index[-1]
+                    # print(start_index, stop_index)
+                    physio_df.loc[start_index:stop_index,'physio_eda_blcorrect'] = physio_df.loc[start_index:stop_index]['physio_eda'] - baseline_average
             # TODO: downsample before saving
             resamp = nk.signal_resample(
                 physio_df['physio_eda_blcorrect'].to_numpy(),  method='interpolation', sampling_rate=source_samplingrate, desired_sampling_rate=dest_samplingrate)
