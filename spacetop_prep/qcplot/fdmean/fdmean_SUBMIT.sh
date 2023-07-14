@@ -4,11 +4,11 @@
 #SBATCH --ntasks-per-node=4
 #SBATCH --mem-per-cpu=20G
 #SBATCH --time=02:00:00
-#SBATCH -o ./logplot/GLM_%A_%a.o
-#SBATCH -e ./logplot/GLM_%A_%a.e
+#SBATCH -o ./logfd/fdmean_%A_%a.o
+#SBATCH -e ./logfd/fdmean_%A_%a.e
 #SBATCH --account=DBIC
 #SBATCH --partition=standard
-#SBATCH --array=4%10
+#SBATCH --array=1-100%30
 
 conda activate spacetop_env
 echo "SLURMSARRAY: " ${SLURM_ARRAY_TASK_ID}
