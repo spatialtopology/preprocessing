@@ -61,5 +61,5 @@ for ind, fpath in enumerate(sorted(flist)):
     meandf.loc[ind,'ses'] = f"ses-{match_ses}"
     meandf.loc[ind,'run'] = f"run-{int(match_run):02d}"
     
-save_fname = join(save_dir, f"fdmean_{sub}.tsv")
+save_fname = join(save_dir, 'fdmean', f"fdmean_{sub}.tsv")
 meandf.to_csv(save_fname, sep='\t', index=False, header=True)
