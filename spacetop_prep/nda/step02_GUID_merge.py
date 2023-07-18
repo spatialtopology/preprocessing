@@ -23,11 +23,11 @@ __status__ = "Development"
 current_dir = os.getcwd()
 main_dir = Path(current_dir).parents[0]
 # load spacetop_GUID_BIDS.csv: this is the one that was submitted to NDA GUID. It houses the subject ids.
-study_id = pd.read_csv(os.path.join(main_dir, 'redcap/spacetop_GUID_BIDS.csv'))
+study_id = pd.read_csv(os.path.join(main_dir, 'nda', 'PRIVATE_spacetop_GUID_BIDS.csv'))
 # load GUID csv: generated from NDA
-guid = pd.read_csv(os.path.join(main_dir, 'redcap/spacetop_GUID--results-20230517T194253830Z.csv'))
+guid = pd.read_csv(os.path.join(main_dir, 'nda', 'spacetop_GUID--results-20230517T194253830Z.csv'))
 # load the spacetop data from REDcap. This one houses the race and ethnicity information.
-race_eth = pd.read_csv(os.path.join(main_dir, 'redcap/IndividualizedSpatia-NDA_DATA_LABELS_2023-05-17_1435.csv'))
+race_eth = pd.read_csv(os.path.join(main_dir, 'nda', 'PRIVATE_spacetop_raceth.csv'))
 
 merged_df = pd.merge(guid, study_id, left_on='RECORD_ID', right_on='ID')
 df = pd.merge(merged_df, race_eth, on = 'Record ID')
@@ -49,7 +49,7 @@ df_subset = df_rename[['subjectkey', 'src_subject_id', 'birth_Y_m_d',
                 'twins_study', 'sibling_study', 'family_study']]
 
 # %% 03 layer in interview date information _________________________________________________
-interview = pd.read_csv(join(main_dir, 'nda', 'IndividualizedSpatia-DOB_DATA_LABELS_2023-05-24_1626 - IndividualizedSpatia-DOB_DATA_LABELS_2023-05-24_1626.csv'))
+interview = pd.read_csv(join(main_dir, 'nda', 'PRIVATE_spacetop_interviewdate.csv'))
 
 df_subsetlong = df_subset.loc[df_subset.index.repeat(4)] # 1) repeat each row 4 times
 df_subsetlong['session_id']  = np.tile(['ses-01', 'ses-02', 'ses-03', 'ses-04'], len(df_subset)) # 2) create session_id column and repeat session sequence

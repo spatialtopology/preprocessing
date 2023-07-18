@@ -3,12 +3,12 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=12
 #SBATCH --mem-per-cpu=40G
-#SBATCH --time=01:00:00
+#SBATCH --time=05:00:00
 #SBATCH -o ./logcorr/np_%A_%a.o
 #SBATCH -e ./logcorr/np_%A_%a.e
 #SBATCH --account=DBIC
 #SBATCH --partition=standard
-#SBATCH --array=1
+#SBATCH --array=1-3%10
 ##-3%10
 
 conda activate spacetop_env
@@ -27,4 +27,5 @@ python ${MAINDIR}/runwisecorr/runwisecorr.py \
 --fmriprepdir ${FMRIPREPDIR} \
 --savedir ${SAVEDIR} \
 --scratchdir ${SCRATCHDIR} \
---canlabdir ${CANLABDIR}
+--canlabdir ${CANLABDIR} \
+--task 'task-social'

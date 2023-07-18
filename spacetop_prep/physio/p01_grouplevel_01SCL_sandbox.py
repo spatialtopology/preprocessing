@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-# ----------------------------------------------------------------------
+# %%----------------------------------------------------------------------
 #                               libraries
 # ----------------------------------------------------------------------
 import argparse
@@ -92,26 +92,27 @@ def main():
     # sub 73
     # ses 1
     # run 5
-    # beh_fname = '/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0081_ses-01_task-social_run-01-pain_beh.csv'
-    # physio_fpath = '/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0081_ses-01_task-cue_run-01-pain_recording-ppg-eda-trigger_physio.tsv'
-    # meta_fname = '/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/physio/utils/tests/spacetop_task-social_run-metadata.csv'
-    # dictchannel_json = '/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/physio/p01_channel.json'
-    # beh_df = pd.read_csv(beh_fname)
-    # physio_df = pd.read_csv(physio_fpath, sep='\t')
-    # runmeta = pd.read_csv(meta_fname)
-    # physio_flist = '/Users/h/Documents/projects_local/sandbox/physiodata/sub-0081/ses-01/sub-0081_ses-01_task-cue_run-01-pain_recording-ppg-eda-trigger_physio.tsv'
-    # source_samplingrate = 2000
-    # ttl_index = 2
-    # SCL_epoch_end = 20
-    # SCL_epoch_start = -3
-    # sub_list = ['sub-0081']
-    # sub = 'sub-0081'
-    # ses = 'ses-01'
-    # run_type = 'pain'
-    # run ='run-01'
-    # log_dir = '/Users/h/Desktop'
-    # output_savedir = '/Users/h/Documents/projects_local/sandbox/physioresults'
-    # physio_dir = '/Users/h/Documents/projects_local/sandbox/physiodata'
+    beh_fname = '/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0081_ses-01_task-social_run-01-pain_beh.csv'
+    physio_fpath = '/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/physio/utils/tests/sub-0081_ses-01_task-cue_run-01-pain_recording-ppg-eda-trigger_physio.tsv'
+    meta_fname = '/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/physio/utils/tests/spacetop_task-social_run-metadata.csv'
+    dictchannel_json = '/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/physio/p01_channel.json'
+    beh_df = pd.read_csv(beh_fname)
+    physio_df = pd.read_csv(physio_fpath, sep='\t')
+    runmeta = pd.read_csv(meta_fname)
+    physio_flist = '/Users/h/Documents/projects_local/sandbox/physiodata/sub-0081/ses-01/sub-0081_ses-01_task-cue_run-01-pain_recording-ppg-eda-trigger_physio.tsv'
+    source_samplingrate = 2000
+    ttl_index = 2
+    SCL_epoch_end = 20
+    SCL_epoch_start = -3
+    sub_list = ['sub-0081']
+    sub = 'sub-0081'
+    ses = 'ses-01'
+    run_type = 'pain'
+    run ='run-01'
+    log_dir = '/Users/h/Desktop'
+    output_savedir = '/Users/h/Documents/projects_local/sandbox/physioresults'
+    physio_dir = '/Users/h/Documents/projects_local/sandbox/physiodata'
+    event_name = 'event_stimuli'
 # %% -------------------------------------------------------------------
 #                 extract parameters and metadata
 # ----------------------------------------------------------------------
@@ -136,7 +137,7 @@ def main():
     logger_fname = os.path.join(log_dir, f"data-physio_step-03-groupanalysis_{datetime.date.today().isoformat()}.txt")
 
     # set up logger ______________________________________________________
-    runmeta = pd.read_csv(metadata)
+    # runmeta = pd.read_csv(metadata)
     # TODO: come up with scheme to update logger files
     f = open(logger_fname, "w")
     logger = utils.initialize.logger(logger_fname, "physio")
@@ -283,50 +284,20 @@ def main():
         if baselinecorrect == True:
             baseline_length = source_samplingrate* np.abs(SCL_epoch_start)
             physio_df['physio_eda_blcorrect'] = physio_df['physio_eda']
-            #TODO: turn into a shorter function
-            for i in range(len(dict_onset[event_name]['start'])):
-                if i == 0:
-                    baseline_average = []
-                    baseline_start_ind = dict_onset[event_name]['start'][i] - baseline_length
-                    baseline_stop_ind = dict_onset[event_name]['start'][i]
-                    baseline_average = physio_df.loc[baseline_start_ind:baseline_stop_ind]['physio_eda'].mean()
-                    # print(baseline_average)
-                    start_index = physio_df.index[0]
-                    stop_index = dict_onset[event_name]['start'][i+1] - baseline_length
-                    # print(start_index, stop_index)
-                    physio_df.loc[start_index:stop_index,'physio_eda_blcorrect'] = physio_df.loc[start_index:stop_index]['physio_eda'] - baseline_average
-                elif i < len(dict_onset[event_name]['start'])-1:
-                    baseline_average = []
-                    baseline_start_ind = dict_onset[event_name]['start'][i] - baseline_length
-                    baseline_stop_ind = dict_onset[event_name]['start'][i]
-                    baseline_average = physio_df.loc[baseline_start_ind:baseline_stop_ind]['physio_eda'].mean()
-                    # print(baseline_average)
-                    start_index = dict_onset[event_name]['start'][i] - baseline_length
-                    stop_index = dict_onset[event_name]['start'][i+1] - baseline_length
-                    # print(start_index, stop_index)
-                    physio_df.loc[start_index:stop_index,'physio_eda_blcorrect'] = physio_df.loc[start_index:stop_index]['physio_eda'] - baseline_average
-                elif i == len(dict_onset[event_name]['start'])-1:
-                    baseline_average = []
-                    baseline_start_ind = dict_onset[event_name]['start'][i] - baseline_length
-                    baseline_stop_ind = dict_onset[event_name]['start'][i]
-                    baseline_average = physio_df.loc[baseline_start_ind:baseline_stop_ind]['physio_eda'].mean()
-                    # print(baseline_average)
-                    start_index = dict_onset[event_name]['start'][i]  - baseline_length
-                    stop_index = physio_df.index[-1]
-                    # print(start_index, stop_index)
-                    physio_df.loc[start_index:stop_index,'physio_eda_blcorrect'] = physio_df.loc[start_index:stop_index]['physio_eda'] - baseline_average
+            baseline_correct_per_trial(event_name, physio_df, dict_onset, baseline_length)
+            # also baseline correct the timepoints prior to the first event of interest
             # TODO: downsample before saving
             resamp = nk.signal_resample(
                 physio_df['physio_eda_blcorrect'].to_numpy(),  method='interpolation', sampling_rate=source_samplingrate, desired_sampling_rate=dest_samplingrate)
             edabl_fname = f"{sub}_{ses}_{run}_runtype-{run_type}_epochstart-{SCL_epoch_start}_epochend-{SCL_epoch_end}_baselinecorrect-{baselinecorrect}_samplingrate-{dest_samplingrate}_physio-eda"
-            #physio_df.to_tsv(join(output_savedir, 'physio01_SCL', sub, ses, edabl_fname + '.tsv'), sep='\t')
-            np.savetxt(join(output_savedir, 'physio01_SCL', sub, ses, edabl_fname + ".txt"), resamp, delimiter=",")
+            physio_df.to_tsv(join(output_savedir, 'physio01_SCL', sub, ses, edabl_fname + '.tsv'), sep='\t')
+
             # Plot the selected columns against the index
             plt.plot(physio_df.index, physio_df['physio_eda_blcorrect'], label='Baseline corrected')
             plt.plot(physio_df.index, physio_df['physio_eda'], label='EDA')
             plt.xlabel('time');            plt.ylabel('EDA signal');            plt.legend()
-            plt.savefig(join(output_savedir, 'physio01_SCL', sub, ses, edabl_fname + '.png'))
-            plt.close()
+            plt.savefig(physio_df.to_tsv(join(output_savedir, 'physio01_SCL', sub, ses, edabl_fname + '.png')))
+
 
     # ======= NOTE: 9. extract TONIC signal  ======================================================================
 
@@ -418,6 +389,39 @@ def main():
                     "baselinecorrect_interval":baseline_length,
                     }
         logger.info("__________________ :+: FINISHED :+: __________________\n")
+
+def baseline_correct_per_trial(event_name, physio_df, dict_onset, baseline_length):
+    for i in range(len(dict_onset[event_name]['start'])):
+        if i == 0:
+            baseline_average = []
+            baseline_start_ind = dict_onset[event_name]['start'][i] - baseline_length
+            baseline_stop_ind = dict_onset[event_name]['start'][i]
+            baseline_average = physio_df.loc[baseline_start_ind:baseline_stop_ind]['physio_eda'].mean()
+                    # print(baseline_average)
+            start_index = physio_df.index[0]
+            stop_index = dict_onset[event_name]['start'][i+1] - baseline_length
+                    # print(start_index, stop_index)
+            physio_df.loc[start_index:stop_index,'physio_eda_blcorrect'] = physio_df.loc[start_index:stop_index]['physio_eda'] - baseline_average
+        elif i < len(dict_onset[event_name]['start'])-1:
+            baseline_average = []
+            baseline_start_ind = dict_onset[event_name]['start'][i] - baseline_length
+            baseline_stop_ind = dict_onset[event_name]['start'][i]
+            baseline_average = physio_df.loc[baseline_start_ind:baseline_stop_ind]['physio_eda'].mean()
+                    # print(baseline_average)
+            start_index = dict_onset[event_name]['start'][i] - baseline_length
+            stop_index = dict_onset[event_name]['start'][i+1] - baseline_length
+                    # print(start_index, stop_index)
+            physio_df.loc[start_index:stop_index,'physio_eda_blcorrect'] = physio_df.loc[start_index:stop_index]['physio_eda'] - baseline_average
+        elif i == len(dict_onset[event_name]['start'])-1:
+            baseline_average = []
+            baseline_start_ind = dict_onset[event_name]['start'][i] - baseline_length
+            baseline_stop_ind = dict_onset[event_name]['start'][i]
+            baseline_average = physio_df.loc[baseline_start_ind:baseline_stop_ind]['physio_eda'].mean()
+                    # print(baseline_average)
+            start_index = dict_onset[event_name]['start'][i]  - baseline_length
+            stop_index = physio_df.index[-1]
+                    # print(start_index, stop_index)
+            physio_df.loc[start_index:stop_index,'physio_eda_blcorrect'] = physio_df.loc[start_index:stop_index]['physio_eda'] - baseline_average
 
 # %% -------------------------------------------------------------------
 #                        argparse parameters
