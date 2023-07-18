@@ -1,0 +1,201 @@
+INFO - main:111 - ['sub-00004', 'sub-00005', 'sub-00006', 'sub-00007']
+INFO - main:134 - __________________sub-00004 ses-02 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00004/ses-02/sub-00004_ses-02_task-bodymapST1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00004 ses-03 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00004/ses-03/sub-00004_ses-03_task-bodymapST2-hyperalignment_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00004 ses-04 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00004/ses-04/sub-00004_ses-04_task-bodymapST1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00004 ses-05 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00004/ses-05/sub-00004_ses-05_task-bodymapST2_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00004 ses-06 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00004/ses-06/sub-00004_ses-06_task-bodymapST1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00004 ses-07 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00004/ses-07/sub-00004_ses-07_task-bodymapST2_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00004 ses-08 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00004/ses-08/sub-00004_ses-08_task-bodymapST1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00004 ses-09 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00004/ses-09/sub-00004_ses-09_task-bodymapST2_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00004 ses-10 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00004/ses-10/sub-00004_ses-10_task-bodymapST1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00004 ses-11 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00004/ses-11/sub-00004_ses-11_task-bodymapST2_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00004 ses-14 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00004/ses-14/sub-00004_ses-14_task-bodymapST1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00004 ses-15 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00004/ses-15/sub-00004_ses-15_task-bodymapST2+pinel+taskT1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00004 ses-17 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00004/ses-17/sub-00004_ses-17_task-bodymapST2_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00004 ses-18 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00004/ses-18/sub-00004_ses-18_task-bodymapST1 (1)_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00005 ses-01 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00005/ses-01/sub-00005_ses-01_task-bodymapST1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00005 ses-02 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00005/ses-02/sub-00005_ses-02_task-bodymapST2_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00005 ses-04 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00005/ses-04/sub-00005_ses-04_task-bodymapST1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00005 ses-05 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00005/ses-05/sub-00005_ses-05_task-bodymapST2_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00005 ses-07 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00005/ses-07/sub-00005_ses-07_task-bodymapST1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00005 ses-08 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00005/ses-08/sub-00005_ses-08_task-bodymapST2_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00005 ses-09 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00005/ses-09/sub-00005_ses-09_task-bodymapST1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00005 ses-11 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00005/ses-11/sub-00005_ses-11_task-bodymapST2+pinel+taskT1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00005 ses-12 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00005/ses-12/sub-00005_ses-12_task-bodymapST1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00005 ses-13 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00005/ses-13/sub-00005_ses-13_task-bodymapST2+pinel+taskT1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00005 ses-16 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00005/ses-16/sub-00005_ses-16_task-bodymapST1+pinel+taskT1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00005 ses-17 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00005/ses-17/sub-00005_ses-17_task-bodymapST2_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00005 ses-18 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00005/ses-18/sub-00005_ses-18_task-bodymapST1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00005 ses-19 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00005/ses-19/sub-00005_ses-19_task-bodymapST2_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00006 ses-01 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00006/ses-01/sub-00006_ses-01_task-bodymapST1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00006 ses-02 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00006/ses-02/sub-00006_ses-02_task-bodymapST2_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00006 ses-03 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00006/ses-03/sub-00006_ses-03_task-bodymapST2_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00006 ses-05 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00006/ses-05/sub-00006_ses-05_task-bodymapST1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00006 ses-08 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00006/ses-08/sub-00006_ses-08_task-bodymapST2_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00006 ses-09 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00006/ses-09/sub-00006_ses-09_task-bodymapST1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00006 ses-10 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00006/ses-10/sub-00006_ses-10_task-bodymapST2+pinel and task T1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00006 ses-11 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00006/ses-11/sub-00006_ses-11_task-bodymapST1+pinel+T1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00006 ses-12 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00006/ses-12/sub-00006_ses-12_task-bodymapST2_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00006 ses-14 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00006/ses-14/sub-00006_ses-14_task-bodymapST2_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00006 ses-15 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00006/ses-15/sub-00006_ses-15_task-bodymapST1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00007 ses-04 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00007/ses-04/sub-00007_ses-04_task-bodymapST1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00007 ses-05 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00007/ses-05/sub-00007_ses-05_task-bodymapST2withpinelandtaskT1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00007 ses-06 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00007/ses-06/sub-00007_ses-06_task-bodymapST1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00007 ses-07 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00007/ses-07/sub-00007_ses-07_task-bodymapST2_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00007 ses-08 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00007/ses-08/sub-00007_ses-08_task-bodymapST1+pinel+T1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00007 ses-10 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00007/ses-10/sub-00007_ses-10_task-bodymapST2_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00007 ses-11 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00007/ses-11/sub-00007_ses-11_task-bodymapST1 pinel TaskT1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00007 ses-12 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00007/ses-12/sub-00007_ses-12_task-bodymapST2_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00007 ses-13 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00007/ses-13/sub-00007_ses-13_task-bodymapST1_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00007 ses-14 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00007/ses-14/sub-00007_ses-14_task-bodymapST2_recording-ppg-eda_physio.acq
+INFO - main:134 - __________________sub-00007 ses-16 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+ERROR - main:146 - no MR trigger channel - this was the early days. re run and use the *trigger channel*
+ERROR - main:147 - /dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/biopac/1080_wasabi/acq/physio02_sort/sub-00007/ses-16/sub-00007_ses-16_task-bodymapST2_recording-ppg-eda_physio.acq

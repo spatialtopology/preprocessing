@@ -1,0 +1,21 @@
+no change     /dartfs-hpc/rc/home/j/f003z4j/miniconda3/condabin/conda
+no change     /dartfs-hpc/rc/home/j/f003z4j/miniconda3/bin/conda
+no change     /dartfs-hpc/rc/home/j/f003z4j/miniconda3/bin/conda-env
+no change     /dartfs-hpc/rc/home/j/f003z4j/miniconda3/bin/activate
+no change     /dartfs-hpc/rc/home/j/f003z4j/miniconda3/bin/deactivate
+no change     /dartfs-hpc/rc/home/j/f003z4j/miniconda3/etc/profile.d/conda.sh
+no change     /dartfs-hpc/rc/home/j/f003z4j/miniconda3/etc/fish/conf.d/conda.fish
+no change     /dartfs-hpc/rc/home/j/f003z4j/miniconda3/shell/condabin/Conda.psm1
+no change     /dartfs-hpc/rc/home/j/f003z4j/miniconda3/shell/condabin/conda-hook.ps1
+no change     /dartfs-hpc/rc/home/j/f003z4j/miniconda3/lib/python3.9/site-packages/xontrib/conda.xsh
+no change     /dartfs-hpc/rc/home/j/f003z4j/miniconda3/etc/profile.d/conda.csh
+no change     /dartfs-hpc/rc/home/j/f003z4j/.bashrc
+No action taken.
+['sub-00001']
+['ses-08']
+['task-movemap']
+meta_runlist: ['run-1', 'run-2', 'run-3', 'run-4']
+['sub-00001']
+['ses-43']
+['task-movemap+pinel+hyperalignment+T1(no task)']
+meta_runlist: ['run-1', 'run-2', 'run-3', 'run-4', 'run-5', 'run-6', 'run-7']

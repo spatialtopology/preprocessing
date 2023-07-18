@@ -1,0 +1,7 @@
+{
+    "MRI TR":"trigger_mri",
+    "Medoc TSA2 TTL Out":"trigger_heat",
+    "Skin Conductance (EDA) - EDA100C-MRI":"physio_eda",
+    "PPG":"physio_ppg",
+    "C0 - Expression":"event_number"
+}

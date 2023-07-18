@@ -1,0 +1,92 @@
+INFO - main:111 - ['sub-01002']
+INFO - main:134 - __________________sub-01002 ses-01 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 5344
+INFO - main:183 - * start_df: [1493540, 1507980, 1541708, 1556148, 1813608, 3334708, 4984591, 6659604, 8394150]
+INFO - main:184 - * stop_df: [1495538, 1509978, 1543707, 1558147, 2881882, 4402981, 6052864, 7727878, 9039226]
+INFO - main:185 - * total of 9 runs
+INFO - main:200 - * adjusted start_df: [1814528, 3335628, 4985511, 6660524, 8395070]
+INFO - main:201 - * adjusted stop_df: [2881883, 4402983, 6052866, 7727879, 9039227]
+INFO - main:202 - * total of 5 runs
+INFO - main:229 - __________________ :+: FINISHED :+: __________________
+INFO - main:134 - __________________sub-01002 ses-02 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 5410
+INFO - main:183 - * start_df: [1400904, 1415344, 1448842, 1463282, 1751133, 2283256, 3703608, 5123368, 6492809, 8229036]
+INFO - main:184 - * stop_df: [1402902, 1417342, 1450840, 1465280, 1812931, 3351529, 4771881, 6191641, 7561081, 8874111]
+INFO - main:185 - * total of 10 runs
+INFO - main:200 - * adjusted start_df: [1752053, 2284176, 3704528, 5124288, 6493729, 8229956]
+INFO - main:201 - * adjusted stop_df: [1812932, 3351530, 4771882, 6191642, 7561083, 8874113]
+INFO - main:202 - * total of 6 runs
+INFO - main:217 - runs shorter than 300 sec: sub-01002 ses-02 [0] - run number in python order
+INFO - main:229 - __________________ :+: FINISHED :+: __________________
+INFO - main:134 - __________________sub-01002 ses-03 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 3584
+INFO - main:183 - * start_df: [3918968, 3933408, 3967298, 3981738, 4322394, 5365604, 6403453, 7860496]
+INFO - main:184 - * stop_df: [3920967, 3935407, 3969296, 3983736, 5206669, 6249878, 7287727, 8505572]
+INFO - main:185 - * total of 8 runs
+INFO - main:200 - * adjusted start_df: [4323314, 5366524, 6404373, 7861416]
+INFO - main:201 - * adjusted stop_df: [5206670, 6249879, 7287728, 8505573]
+INFO - main:202 - * total of 4 runs
+INFO - main:229 - __________________ :+: FINISHED :+: __________________
+INFO - main:134 - __________________sub-01002 ses-04 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 4644
+INFO - main:183 - * start_df: [1364154, 1378594, 1412422, 1426862, 1667656, 3190995, 4654193, 6138687]
+INFO - main:184 - * stop_df: [1366152, 1380592, 1414421, 1428861, 2735929, 4259268, 5722466, 7206960]
+INFO - main:185 - * total of 8 runs
+INFO - main:200 - * adjusted start_df: [1668576, 3191915, 4655113, 6139607]
+INFO - main:201 - * adjusted stop_df: [2735930, 4259269, 5722467, 7206961]
+INFO - main:202 - * total of 4 runs
+INFO - main:229 - __________________ :+: FINISHED :+: __________________
+INFO - main:134 - __________________sub-01002 ses-05 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 5948
+INFO - main:183 - * start_df: [1404039, 1418479, 1452212, 1466652, 3741742, 5425137, 7082551, 8797388]
+INFO - main:184 - * stop_df: [1406038, 1420477, 1454210, 1468650, 5109934, 6793329, 8450743, 10165579]
+INFO - main:185 - * total of 8 runs
+INFO - main:200 - * adjusted start_df: [3742662, 5426057, 7083471, 8798308]
+INFO - main:201 - * adjusted stop_df: [5109935, 6793330, 8450745, 10165581]
+INFO - main:202 - * total of 4 runs
+INFO - main:229 - __________________ :+: FINISHED :+: __________________
+INFO - main:134 - __________________sub-01002 ses-06 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 6648
+INFO - main:183 - * start_df: [851808, 866248, 899893, 914333, 2131761, 3854135, 5637789, 7368904, 9207978]
+INFO - main:184 - * stop_df: [853807, 868247, 901892, 916331, 3499954, 5222327, 7005982, 8737096, 9853053]
+INFO - main:185 - * total of 9 runs
+INFO - main:200 - * adjusted start_df: [2132681, 3855055, 5638709, 7369824, 9208898]
+INFO - main:201 - * adjusted stop_df: [3499955, 5222329, 7005983, 8737097, 9853054]
+INFO - main:202 - * total of 5 runs
+INFO - main:229 - __________________ :+: FINISHED :+: __________________
+INFO - main:134 - __________________sub-01002 ses-07 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 6600
+INFO - main:183 - * start_df: [3273143, 3287583, 3321148, 3335588, 3846474, 7782403, 8723117, 9928383]
+INFO - main:184 - * stop_df: [3275141, 3289581, 3323146, 3337586, 7615861, 8611479, 9552193, 10573459]
+INFO - main:185 - * total of 8 runs
+INFO - main:200 - * adjusted start_df: [3847394, 7783323, 8724037, 9929303]
+INFO - main:201 - * adjusted stop_df: [7615862, 8611480, 9552194, 10573460]
+INFO - main:202 - * total of 4 runs
+INFO - main:229 - __________________ :+: FINISHED :+: __________________
+INFO - main:134 - __________________sub-01002 ses-08 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 3485
+INFO - main:183 - * start_df: [2742569, 2757009, 2790729, 2805169, 5083554, 6795005, 8488269]
+INFO - main:184 - * stop_df: [2744568, 2759008, 2792728, 2807168, 5913548, 7982878, 9676142]
+INFO - main:185 - * total of 7 runs
+INFO - main:200 - * adjusted start_df: [5084474, 6795925, 8489189]
+INFO - main:201 - * adjusted stop_df: [5913550, 7982879, 9676143]
+INFO - main:202 - * total of 3 runs
+INFO - main:229 - __________________ :+: FINISHED :+: __________________
+INFO - main:134 - __________________sub-01002 ses-09 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 5164
+INFO - main:183 - * start_df: [1222035, 1236475, 1270126, 1284566, 1556668, 3135018, 4818323, 6249165]
+INFO - main:184 - * stop_df: [1224033, 1238473, 1272125, 1286565, 2744541, 4322891, 6006196, 7437038]
+INFO - main:185 - * total of 8 runs
+INFO - main:200 - * adjusted start_df: [1557588, 3135938, 4819243, 6250085]
+INFO - main:201 - * adjusted stop_df: [2744543, 4322893, 6006197, 7437039]
+INFO - main:202 - * total of 4 runs
+INFO - main:229 - __________________ :+: FINISHED :+: __________________

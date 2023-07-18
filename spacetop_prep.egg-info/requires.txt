@@ -1,0 +1,6 @@
+numpy
+
+[physio]
+matplotlib
+neurokit2
+bioread

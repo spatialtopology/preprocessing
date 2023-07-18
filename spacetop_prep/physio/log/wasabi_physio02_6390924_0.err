@@ -1,0 +1,2 @@
+INFO - main:110 - ['sub-00001', 'sub-00002', 'sub-00003']
+slurmstepd: error: *** JOB 6390925 ON m06 CANCELLED AT 2023-05-17T15:22:33 ***

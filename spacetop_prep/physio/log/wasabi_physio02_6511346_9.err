@@ -1,0 +1,12 @@
+INFO - main:111 - ['sub-00009']
+INFO - main:134 - __________________sub-00009 ses-09 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 2884
+INFO - main:183 - * start_df: [1483391, 1497831, 1531795, 1546235, 1730826, 2697394, 3629874]
+INFO - main:184 - * stop_df: [1485392, 1499832, 1533796, 1548236, 2615112, 3581679, 4514158]
+INFO - main:185 - * total of 7 runs
+INFO - main:200 - * adjusted start_df: [1483392, 1497832, 1531796, 1546236, 1730827, 2697395, 3629875]
+INFO - main:201 - * adjusted stop_df: [1485392, 1499832, 1533796, 1548236, 2615112, 3581679, 4514159]
+INFO - main:202 - * total of 7 runs
+INFO - main:217 - runs shorter than 300 sec: sub-00009 ses-09 [0, 1, 2, 3] - run number in python order
+INFO - main:229 - __________________ :+: FINISHED :+: __________________

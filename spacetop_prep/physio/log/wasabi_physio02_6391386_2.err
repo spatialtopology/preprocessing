@@ -1,0 +1,252 @@
+INFO - main:111 - ['sub-00008', 'sub-00009', 'sub-00010']
+INFO - main:134 - __________________sub-00008 ses-01 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 5344
+INFO - main:183 - * start_df: [4239758, 4254198, 4287791, 4302231, 4607170, 6212324, 7841216, 9336833, 12024606]
+INFO - main:184 - * stop_df: [4241756, 4256196, 4289790, 4304229, 5675444, 7280597, 8909490, 10405106, 12669681]
+INFO - main:185 - * total of 9 runs
+INFO - main:200 - * adjusted start_df: [4608090, 6213244, 7842136, 9337753, 12025526]
+INFO - main:201 - * adjusted stop_df: [5675445, 7280599, 8909491, 10405108, 12669682]
+INFO - main:202 - * total of 5 runs
+ERROR - main:231 - number of complete runs do not match scan notes
+ERROR - main:232 - clean_runlist: [0, 1, 2, 3, 4], scannote_reference.columns: Index(['run-1', 'run-2', 'run-3', 'run-4', 'run-5', 'run-6'], dtype='object')
+INFO - main:134 - __________________sub-00008 ses-04 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 4644
+INFO - main:183 - * start_df: [1000391, 1014831, 1048483, 1062923, 1365748, 2967736, 4448938, 5865107]
+INFO - main:184 - * stop_df: [1002390, 1016830, 1050482, 1064922, 2434021, 4036009, 5517211, 6933380]
+INFO - main:185 - * total of 8 runs
+INFO - main:200 - * adjusted start_df: [1366668, 2968656, 4449858, 5866027]
+INFO - main:201 - * adjusted stop_df: [2434023, 4036011, 5517212, 6933382]
+INFO - main:202 - * total of 4 runs
+INFO - main:229 - __________________ :+: FINISHED :+: __________________
+INFO - main:134 - __________________sub-00008 ses-05 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 5344
+INFO - main:183 - * start_df: [2365416, 2379856, 2413575, 2428015, 2706137, 4558293, 6073309, 8035593, 9624325]
+INFO - main:184 - * stop_df: [2367415, 2381855, 2415573, 2430013, 3774412, 5626567, 7141582, 9103867, 10269400]
+INFO - main:185 - * total of 9 runs
+INFO - main:200 - * adjusted start_df: [2707057, 4559213, 6074229, 8036513, 9625245]
+INFO - main:201 - * adjusted stop_df: [3774413, 5626569, 7141584, 9103868, 10269402]
+INFO - main:202 - * total of 5 runs
+ERROR - main:231 - number of complete runs do not match scan notes
+ERROR - main:232 - clean_runlist: [0, 1, 2, 3, 4], scannote_reference.columns: Index(['run-1', 'run-2', 'run-3', 'run-4'], dtype='object')
+INFO - main:134 - __________________sub-00008 ses-06 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 4644
+INFO - main:183 - * start_df: [5225023, 5239463, 5273041, 5287481, 5542665, 7294994, 8783869, 10082062]
+INFO - main:184 - * stop_df: [5227022, 5241462, 5275039, 5289479, 6610939, 8363268, 9852143, 11150336]
+INFO - main:185 - * total of 8 runs
+INFO - main:200 - * adjusted start_df: [5543585, 7295914, 8784789, 10082982]
+INFO - main:201 - * adjusted stop_df: [6610940, 8363269, 9852144, 11150337]
+INFO - main:202 - * total of 4 runs
+INFO - main:229 - __________________ :+: FINISHED :+: __________________
+INFO - main:134 - __________________sub-00008 ses-07 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 5344
+INFO - main:183 - * start_df: [2472345, 2486785, 2520451, 2534891, 2815892, 4280495, 5752501, 7340313, 9310385]
+INFO - main:184 - * stop_df: [2474344, 2488784, 2522449, 2536889, 3884166, 5348769, 6820775, 8408587, 9955460]
+INFO - main:185 - * total of 9 runs
+INFO - main:200 - * adjusted start_df: [2816812, 4281415, 5753421, 7341233, 9311305]
+INFO - main:201 - * adjusted stop_df: [3884168, 5348770, 6820776, 8408588, 9955462]
+INFO - main:202 - * total of 5 runs
+ERROR - main:231 - number of complete runs do not match scan notes
+ERROR - main:232 - clean_runlist: [0, 1, 2, 3, 4], scannote_reference.columns: Index(['run-1', 'run-2', 'run-3', 'run-4'], dtype='object')
+INFO - main:134 - __________________sub-00008 ses-08 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 4644
+INFO - main:183 - * start_df: [1262923, 1277362, 1310985, 1325425, 1623288, 3003077, 4383664, 5816024]
+INFO - main:184 - * stop_df: [1264921, 1279361, 1312984, 1327424, 2691561, 4071350, 5451937, 6884297]
+INFO - main:185 - * total of 8 runs
+INFO - main:200 - * adjusted start_df: [1277363, 1624208, 3003997, 4384584, 5816944]
+INFO - main:201 - * adjusted stop_df: [1279363, 2691562, 4071351, 5451938, 6884298]
+INFO - main:202 - * total of 5 runs
+INFO - main:217 - runs shorter than 300 sec: sub-00008 ses-08 [0] - run number in python order
+INFO - main:229 - __________________ :+: FINISHED :+: __________________
+INFO - main:134 - __________________sub-00008 ses-09 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 5424
+INFO - main:183 - * start_df: [1678243, 1692683, 1726340, 1740780, 1973457, 3437238, 4956821, 7030936, 7702493, 9694983]
+INFO - main:184 - * stop_df: [1680242, 1694682, 1728338, 1742778, 3041731, 4505512, 6025094, 7105615, 8770767, 10340058]
+INFO - main:185 - * total of 10 runs
+INFO - main:200 - * adjusted start_df: [1974377, 3438158, 4957741, 7031856, 7703413, 9695903]
+INFO - main:201 - * adjusted stop_df: [3041732, 4505513, 6025096, 7105616, 8770768, 10340060]
+INFO - main:202 - * total of 6 runs
+INFO - main:217 - runs shorter than 300 sec: sub-00008 ses-09 [3] - run number in python order
+ERROR - main:231 - number of complete runs do not match scan notes
+ERROR - main:232 - clean_runlist: [0, 1, 2, 4, 5], scannote_reference.columns: Index(['run-1', 'run-2', 'run-3', 'run-4'], dtype='object')
+INFO - main:134 - __________________sub-00008 ses-09 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 5276
+INFO - main:183 - * start_df: [800791, 815231, 848920, 863360, 1029406, 2491711, 3894147, 5197483, 6501807]
+INFO - main:184 - * stop_df: [802790, 817230, 850919, 865359, 1611922, 3559984, 4962420, 6265756, 7570080]
+INFO - main:185 - * total of 9 runs
+INFO - main:200 - * adjusted start_df: [1030326, 2492631, 3895067, 5198403, 6502727]
+INFO - main:201 - * adjusted stop_df: [1611923, 3559985, 4962421, 6265757, 7570082]
+INFO - main:202 - * total of 5 runs
+INFO - main:217 - runs shorter than 300 sec: sub-00008 ses-09 [0] - run number in python order
+INFO - main:229 - __________________ :+: FINISHED :+: __________________
+INFO - main:134 - __________________sub-00008 ses-10 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 4644
+INFO - main:183 - * start_df: [2132558, 2146998, 2180742, 2195182, 2661958, 4324859, 5960399, 7409407]
+INFO - main:184 - * stop_df: [2134557, 2148997, 2182741, 2197181, 3730232, 5393133, 7028673, 8477680]
+INFO - main:185 - * total of 8 runs
+INFO - main:200 - * adjusted start_df: [2662878, 4325779, 5961319, 7410327]
+INFO - main:201 - * adjusted stop_df: [3730234, 5393134, 7028674, 8477682]
+INFO - main:202 - * total of 4 runs
+INFO - main:229 - __________________ :+: FINISHED :+: __________________
+INFO - main:134 - __________________sub-00008 ses-11 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 5344
+INFO - main:183 - * start_df: [1106734, 1121174, 1154826, 1169266, 1430365, 2859222, 4421378, 5794020, 7193881]
+INFO - main:184 - * stop_df: [1108732, 1123172, 1156825, 1171265, 2498639, 3927495, 5489651, 6862293, 7838956]
+INFO - main:185 - * total of 9 runs
+INFO - main:200 - * adjusted start_df: [1431285, 2860142, 4422298, 5794940, 7194801]
+INFO - main:201 - * adjusted stop_df: [2498640, 3927496, 5489653, 6862294, 7838958]
+INFO - main:202 - * total of 5 runs
+ERROR - main:231 - number of complete runs do not match scan notes
+ERROR - main:232 - clean_runlist: [0, 1, 2, 3, 4], scannote_reference.columns: Index(['run-1', 'run-2', 'run-3', 'run-4'], dtype='object')
+INFO - main:134 - __________________sub-00008 ses-12 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 4644
+INFO - main:183 - * start_df: [567878, 582318, 616156, 630596, 713878, 2087123, 3398518, 4746248]
+INFO - main:184 - * stop_df: [569877, 584317, 618154, 632594, 1782151, 3155396, 4466791, 5814521]
+INFO - main:185 - * total of 8 runs
+INFO - main:200 - * adjusted start_df: [714798, 2088043, 3399438, 4747168]
+INFO - main:201 - * adjusted stop_df: [1782153, 3155398, 4466792, 5814523]
+INFO - main:202 - * total of 4 runs
+INFO - main:229 - __________________ :+: FINISHED :+: __________________
+INFO - main:134 - __________________sub-00009 ses-01 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 5344
+INFO - main:183 - * start_df: [827699, 842139, 875808, 890248, 1649238, 4898026, 6327915, 7764999, 9151021]
+INFO - main:184 - * stop_df: [829700, 844140, 877809, 892249, 2717524, 5966311, 7396201, 8833286, 9796105]
+INFO - main:185 - * total of 9 runs
+INFO - main:200 - * adjusted start_df: [827700, 842140, 875809, 890249, 1649239, 4898027, 6327916, 7765000, 9151022]
+INFO - main:201 - * adjusted stop_df: [829700, 844140, 877809, 892249, 2717524, 5966311, 7396201, 8833286, 9796106]
+INFO - main:202 - * total of 9 runs
+INFO - main:217 - runs shorter than 300 sec: sub-00009 ses-01 [0, 1, 2, 3] - run number in python order
+ERROR - main:231 - number of complete runs do not match scan notes
+ERROR - main:232 - clean_runlist: [4, 5, 6, 7, 8], scannote_reference.columns: Index(['run-1', 'run-2', 'run-3'], dtype='object')
+INFO - main:134 - __________________sub-00009 ses-02 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 5344
+INFO - main:183 - * start_df: [893170, 907610, 941195, 955635, 1761939, 3226060, 4656603, 6254771, 7698917]
+INFO - main:184 - * stop_df: [895171, 909611, 943196, 957636, 2830219, 4294342, 5724886, 7323056, 8344000]
+INFO - main:185 - * total of 9 runs
+INFO - main:200 - * adjusted start_df: [893171, 907611, 941196, 955636, 1761940, 3226061, 4656604, 6254772, 7698918]
+INFO - main:201 - * adjusted stop_df: [895171, 909611, 943196, 957636, 2830219, 4294342, 5724886, 7323056, 8344000]
+INFO - main:202 - * total of 9 runs
+INFO - main:217 - runs shorter than 300 sec: sub-00009 ses-02 [0, 1, 2, 3] - run number in python order
+ERROR - main:231 - number of complete runs do not match scan notes
+ERROR - main:232 - clean_runlist: [4, 5, 6, 7, 8], scannote_reference.columns: Index(['run-1', 'run-2', 'run-3', 'run-4'], dtype='object')
+INFO - main:134 - __________________sub-00009 ses-03 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 5344
+INFO - main:183 - * start_df: [1791206, 1805646, 1839373, 1853813, 2879765, 4404779, 6064064, 7785306, 9362807]
+INFO - main:184 - * stop_df: [1793207, 1807647, 1841374, 1855814, 3948050, 5473065, 7132350, 8853593, 10007892]
+INFO - main:185 - * total of 9 runs
+INFO - main:200 - * adjusted start_df: [1791207, 1805647, 1839374, 1853814, 2879766, 4404780, 6064065, 7785307, 9362808]
+INFO - main:201 - * adjusted stop_df: [1793207, 1807647, 1841374, 1855814, 3948050, 5473065, 7132350, 8853594, 10007892]
+INFO - main:202 - * total of 9 runs
+INFO - main:217 - runs shorter than 300 sec: sub-00009 ses-03 [0, 1, 2, 3] - run number in python order
+ERROR - main:231 - number of complete runs do not match scan notes
+ERROR - main:232 - clean_runlist: [4, 5, 6, 7, 8], scannote_reference.columns: Index(['run-1', 'run-2', 'run-3', 'run-4'], dtype='object')
+INFO - main:134 - __________________sub-00009 ses-04 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 5344
+INFO - main:183 - * start_df: [1436804, 1451244, 1484961, 1499401, 2306325, 3605676, 5199099, 6749222, 8340229]
+INFO - main:184 - * stop_df: [1438805, 1453245, 1486962, 1501402, 3374608, 4673958, 6267383, 7817506, 8985312]
+INFO - main:185 - * total of 9 runs
+INFO - main:200 - * adjusted start_df: [1436805, 1451245, 1484962, 1499402, 2306326, 3606596, 5200019, 6750142, 8341149]
+INFO - main:201 - * adjusted stop_df: [1438805, 1453245, 1486962, 1501402, 3374608, 4673959, 6267384, 7817507, 8985313]
+INFO - main:202 - * total of 9 runs
+INFO - main:217 - runs shorter than 300 sec: sub-00009 ses-04 [0, 1, 2, 3] - run number in python order
+ERROR - main:231 - number of complete runs do not match scan notes
+ERROR - main:232 - clean_runlist: [4, 5, 6, 7, 8], scannote_reference.columns: Index(['run-1', 'run-2', 'run-3', 'run-4'], dtype='object')
+INFO - main:134 - __________________sub-00009 ses-05 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 5804
+INFO - main:183 - * start_df: [1124045, 1138485, 1172090, 1186531, 1668688, 3062353, 4734074, 7217337, 8599876]
+INFO - main:184 - * stop_df: [1126045, 1140486, 1174091, 1188531, 2736973, 4130639, 5802361, 8285624, 9668163]
+INFO - main:185 - * total of 9 runs
+INFO - main:200 - * adjusted start_df: [1124046, 1138486, 1172091, 1186532, 1668689, 3062354, 4734075, 7217338, 8599877]
+INFO - main:201 - * adjusted stop_df: [1126046, 1140486, 1174091, 1188532, 2736974, 4130639, 5802361, 8285624, 9668163]
+INFO - main:202 - * total of 9 runs
+INFO - main:217 - runs shorter than 300 sec: sub-00009 ses-05 [0, 1, 2, 3] - run number in python order
+ERROR - main:231 - number of complete runs do not match scan notes
+ERROR - main:232 - clean_runlist: [4, 5, 6, 7, 8], scannote_reference.columns: Index(['run-1', 'run-2', 'run-3', 'run-4'], dtype='object')
+INFO - main:134 - __________________sub-00009 ses-06 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 1336
+INFO - main:183 - * start_df: [1679823, 1694263, 1728128, 1742568, 2652184, 4058216, 6206763]
+INFO - main:184 - * stop_df: [1681824, 1696264, 1730129, 1744569, 3720468, 4130137, 6295245]
+INFO - main:185 - * total of 7 runs
+INFO - main:200 - * adjusted start_df: [1679824, 1694264, 1728129, 1742569, 2652185, 4058217, 6206764]
+INFO - main:201 - * adjusted stop_df: [1681824, 1696264, 1730129, 1744569, 3720468, 4130137, 6295245]
+INFO - main:202 - * total of 7 runs
+INFO - main:217 - runs shorter than 300 sec: sub-00009 ses-06 [0, 1, 2, 3, 5, 6] - run number in python order
+INFO - main:229 - __________________ :+: FINISHED :+: __________________
+INFO - main:134 - __________________sub-00009 ses-07 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 5804
+INFO - main:183 - * start_df: [1223228, 1237668, 1271390, 1285830, 1890358, 3209404, 5727425, 7344908, 9348111]
+INFO - main:184 - * stop_df: [1225229, 1239669, 1273391, 1287831, 2958639, 4277687, 6795709, 8413192, 10416395]
+INFO - main:185 - * total of 9 runs
+INFO - main:200 - * adjusted start_df: [1223229, 1237669, 1271391, 1285831, 1890359, 3209405, 5727426, 7344909, 9348112]
+INFO - main:201 - * adjusted stop_df: [1225229, 1239669, 1273391, 1287831, 2958639, 4277687, 6795709, 8413193, 10416395]
+INFO - main:202 - * total of 9 runs
+INFO - main:217 - runs shorter than 300 sec: sub-00009 ses-07 [0, 1, 2, 3] - run number in python order
+ERROR - main:231 - number of complete runs do not match scan notes
+ERROR - main:232 - clean_runlist: [4, 5, 6, 7, 8], scannote_reference.columns: Index(['run-1', 'run-2', 'run-3', 'run-4'], dtype='object')
+INFO - main:134 - __________________sub-00009 ses-08 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 6090
+INFO - main:183 - * start_df: [930626, 945066, 978739, 993179, 1468233, 2355803, 3773819, 5207254, 6536526, 7946840]
+INFO - main:184 - * stop_df: [932627, 947067, 980740, 995180, 2155638, 3424090, 4842106, 6275541, 7604813, 8591925]
+INFO - main:185 - * total of 10 runs
+INFO - main:200 - * adjusted start_df: [930627, 945067, 978740, 993180, 1468234, 2355804, 3773820, 5207255, 6536527, 7946841]
+INFO - main:201 - * adjusted stop_df: [932627, 947067, 980740, 995180, 2155638, 3424090, 4842106, 6275541, 7604813, 8591925]
+INFO - main:202 - * total of 10 runs
+INFO - main:217 - runs shorter than 300 sec: sub-00009 ses-08 [0, 1, 2, 3] - run number in python order
+ERROR - main:231 - number of complete runs do not match scan notes
+ERROR - main:232 - clean_runlist: [4, 5, 6, 7, 8, 9], scannote_reference.columns: Index(['run-1', 'run-2', 'run-3', 'run-4'], dtype='object')
+INFO - main:134 - __________________sub-00009 ses-09 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 5494
+INFO - main:183 - * start_df: [1069930, 1084370, 1118214, 1132654, 1538892, 2406119, 2822168, 4203758, 5620210, 7978108, 7992548, 8026425, 8040865, 8140170, 9469852]
+INFO - main:184 - * stop_df: [1071931, 1086371, 1120215, 1134655, 1606213, 2475280, 3890453, 5272045, 6688496, 7980109, 7994549, 8028426, 8042866, 9208456, 10114936]
+INFO - main:185 - * total of 15 runs
+INFO - main:200 - * adjusted start_df: [1069931, 1084371, 1118215, 1132655, 1538893, 2406120, 2822169, 4203759, 5620211, 7978109, 7992549, 8026426, 8040866, 8140171, 9469853]
+INFO - main:201 - * adjusted stop_df: [1071931, 1086371, 1120215, 1134655, 1606213, 2475280, 3890453, 5272045, 6688496, 7980109, 7994549, 8028426, 8042866, 9208456, 10114936]
+INFO - main:202 - * total of 15 runs
+INFO - main:217 - runs shorter than 300 sec: sub-00009 ses-09 [0, 1, 2, 3, 4, 5, 9, 10, 11, 12] - run number in python order
+ERROR - main:231 - number of complete runs do not match scan notes
+ERROR - main:232 - clean_runlist: [6, 7, 8, 13, 14], scannote_reference.columns: Index(['run-1', 'run-2', 'run-3', 'run-4', 'run-5', 'run-6', 'run-7'], dtype='object')
+INFO - main:134 - __________________sub-00009 ses-10 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 5344
+INFO - main:183 - * start_df: [1569104, 1583544, 1617181, 1631621, 2347104, 3719804, 5143899, 6527475, 8002796]
+INFO - main:184 - * stop_df: [1571105, 1585545, 1619182, 1633622, 3415387, 4788088, 6212185, 7595760, 8647880]
+INFO - main:185 - * total of 9 runs
+INFO - main:200 - * adjusted start_df: [1569105, 1583545, 1617182, 1631622, 2347105, 3719805, 5143900, 6527476, 8002797]
+INFO - main:201 - * adjusted stop_df: [1571105, 1585545, 1619182, 1633622, 3415387, 4788088, 6212185, 7595760, 8647880]
+INFO - main:202 - * total of 9 runs
+INFO - main:217 - runs shorter than 300 sec: sub-00009 ses-10 [0, 1, 2, 3] - run number in python order
+ERROR - main:231 - number of complete runs do not match scan notes
+ERROR - main:232 - clean_runlist: [4, 5, 6, 7, 8], scannote_reference.columns: Index(['run-1', 'run-2', 'run-3', 'run-4'], dtype='object')
+INFO - main:134 - __________________sub-00009 ses-11 __________________
+INFO - main:135 - file exists! -- starting transformation: 
+INFO - main:162 - number of spikes within experiment: 15880
+INFO - main:183 - * start_df: [700024, 714464, 748214, 762654, 1220373, 2596338, 4192260, 5576580, 6942870, 7905565, 11919256, 12874710, 15199378, 16473789, 17845852, 19134766]
+INFO - main:184 - * stop_df: [702025, 716465, 750215, 764655, 2288653, 3664620, 5260542, 6644863, 7587952, 11674975, 12748339, 13703794, 16267663, 17542073, 18914136, 20203051]
+INFO - main:185 - * total of 16 runs
+INFO - main:200 - * adjusted start_df: [700025, 714465, 748215, 762655, 1220374, 2596339, 4192261, 5576581, 6942871, 7905566, 11919257, 12874711, 15199379, 16473790, 17845853, 19134767]
+INFO - main:201 - * adjusted stop_df: [702025, 716465, 750215, 764655, 2288653, 3664620, 5260542, 6644863, 7587952, 11674975, 12748339, 13703794, 16267663, 17542073, 18914136, 20203051]
+INFO - main:202 - * total of 16 runs
+INFO - main:217 - runs shorter than 300 sec: sub-00009 ses-11 [0, 1, 2, 3] - run number in python order
+ERROR - main:231 - number of complete runs do not match scan notes
+ERROR - main:232 - clean_runlist: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], scannote_reference.columns: Index(['run-1', 'run-2', 'run-3', 'run-4', 'run-5', 'run-6', 'run-7', 'run-8',
+       'run-9', 'run-10', 'Unnamed: 12'],
+      dtype='object')
