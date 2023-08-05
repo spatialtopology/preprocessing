@@ -8,7 +8,7 @@
 #SBATCH -e ./logfd/fdmean_%A_%a.e
 #SBATCH --account=DBIC
 #SBATCH --partition=standard
-#SBATCH --array=1-100%30
+#SBATCH --array=1-12
 
 mkdir -p ./logfd
 
@@ -28,7 +28,7 @@ MAINDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/scripts/biopac/wasabi-p
 FMRIPREPDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep/'
 SAVEDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep_qc'
 
-python ${MAINDIR}/fdmean/fdmean_painruns.py \
+python ${MAINDIR}/fdmean/fdmean_painruns_WASABI.py \
 --slurm-id ${ID} \
 --fmriprepdir ${FMRIPREPDIR} \
 --savedir ${SAVEDIR}

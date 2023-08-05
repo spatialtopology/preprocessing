@@ -138,22 +138,23 @@ def main():
 
     # NOTE: 4. create an mr_aniso channel for MRI RF pulse channel ________________________________________________
         try:
-            main_df['mr_aniso'] = main_df['trigger_mri'].rolling(
-            window=3).mean()
-
-            ########################
-            # FIX:
-            # Check if c0-Expression is there, then find a beginning event trigger 
-            # If not, Add up event triggers from channels C10-C14 and use those as event triggers 
-            main_df['mr_aniso']=main_df['C0-Expression']  # C0-Expression
-            
-            main_df[] 
-            #########################
-
+            main_df['mr_aniso'] = main_df['trigger_mri'].rolling(window=3).mean()
             
         except:
             logger.error("no MR trigger channel - this was the early days. re run and use the *trigger channel*")
             logger.error(acq)
+            
+            # Here, use event channels instead.
+            # if 'C0-Expression' exists, use it as 'mr_aniso'
+            if 'C0-Expression' in main_df.columns:
+                main_df['mr_aniso'] = main_df['C0-Expression']  # C0-Expression
+            else:
+                # if 'C0-Expression' does not exist, sum event triggers from channels 'C9' through 'C16'
+                channels = ['C9', 'C10', 'C11', 'C12', 'C13', 'C14', 'C15', 'C16']
+                # ensure these columns exist in the DataFrame
+                channels = [channel for channel in channels if channel in main_df.columns]
+                main_df['mr_aniso'] = main_df[channels].sum(axis=1)
+            
             continue
     # TST: files without trigger keyword in the acq files should raise exception
         try:

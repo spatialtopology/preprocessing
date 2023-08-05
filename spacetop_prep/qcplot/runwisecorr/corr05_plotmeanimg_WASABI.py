@@ -138,6 +138,7 @@ for a, b in itertools.combinations(npy_flist, 2):
 
 import base64
 from IPython.display import HTML
+img_dir = '//dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep_qc/runwisecorr/'
 plot_dir = img_dir
 # List of GIF file paths
 gif_files = [
