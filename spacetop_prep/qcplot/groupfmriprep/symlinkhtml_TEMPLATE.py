@@ -29,24 +29,13 @@ def resolve_symlinks_in_html(url, save_path):
 # url = 'http://example.com/index.html'
 # save_path = '/path/to/save/index.html'
 
-# url = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/derivatives/fmriprep/results/fmriprep/group/consolidated_sdc_001.html'
-# save_path=  '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/derivatives/fmriprep_qc/groupfmriprep/consolidated_sdc_001.html'
-
-# MAINDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/scripts/biopac/wasabi-prep/spacetop_prep/qcplot'
-# QCDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep_qc'
-# FMRIPREPDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep/'
-# SAVEDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep_qc/runwisecorr'
-# SCRATCHDIR='/dartfs-hpc/scratch/$USER'
-# CANLABDIR='/dartfs-hpc/rc/lab/C/CANlab/modules/CanlabCore'
-# PYBIDSDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/1080_wasabi/1080_wasabi_BIDSLayout'
-
-url = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep/results/fmriprep/group/consolidated_sdc_001.html'
-save_path= '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep_qc/groupfmriprep/consolidated_sdc_001.html'
+url = '../derivatives/fmriprep/results/fmriprep/group/consolidated_sdc_001.html'
+save_path= '../derivatives/fmriprep_qc/groupfmriprep/consolidated_sdc_001.html'
 
 resolve_symlinks_in_html(url, save_path)
 
 # %%
-/Volumes/derivatives/fmriprep/results/fmriprep/group/consolidated_sdc_000.html
+../derivatives/fmriprep/results/fmriprep/group/consolidated_sdc_000.html
         output_file = os.path.join(save_dir, f'{sub}_fmriprepSDC_output.html')
         svg_files = glob.glob(os.path.join(directory, sub, 'figures/*sdc_bold.svg'), recursive=True)
         # Create the HTML file
