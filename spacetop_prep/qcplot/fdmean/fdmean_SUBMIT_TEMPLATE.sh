@@ -8,7 +8,7 @@
 #SBATCH -e ./log/fd/fdmean_%A_%a.e
 #SBATCH --account=DBIC
 #SBATCH --partition=standard
-#SBATCH --array=1-12
+#SBATCH --array=1-NSUBJECTS%10
 
 mkdir -p ./log/fd
 
@@ -22,13 +22,14 @@ if [ -z "$SLURM_ARRAY_TASK_ID" ]; then
     SLURM_ARRAY_TASK_ID=1
 fi
 
+# Replace all directories below with your own
 echo "SLURMSARRAY: " ${SLURM_ARRAY_TASK_ID}
 ID=$((SLURM_ARRAY_TASK_ID-1))
-MAINDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/scripts/biopac/wasabi-prep/spacetop_prep/qcplot'
-FMRIPREPDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep/'
-SAVEDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep_qc'
+MAINDIR='MAIN_STUDY_DIRECTORY/spacetop_prep/qcplot'
+FMRIPREPDIR='../derivatives/fmriprep'
+SAVEDIR='../derivatives/fmriprep_qc'
 
-python ${MAINDIR}/fdmean/fdmean_painruns_WASABI.py \
+python ${MAINDIR}/fdmean/fdmean_painruns.py \
 --slurm-id ${ID} \
 --fmriprepdir ${FMRIPREPDIR} \
 --savedir ${SAVEDIR}

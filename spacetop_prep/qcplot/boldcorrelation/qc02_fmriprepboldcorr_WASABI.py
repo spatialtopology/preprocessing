@@ -25,6 +25,8 @@ import json
 import argparse
 from pathlib import Path
 import psutil
+
+import gc
 # %% -------------------------------------------------------------------
 #                               parameters 
 # ----------------------------------------------------------------------
@@ -35,21 +37,25 @@ parser.add_argument("--inputdir",
                     type=str, help="the top directory of fmriprep preprocessed files")
 parser.add_argument("--outputdir", 
                     type=str, help="the directory where you want to save your files")
+parser.add_argument("--task", 
+                    type=str, help="the BIDS task key-value pair of interest. Set to task-* for all tasks.")
+
 args = parser.parse_args()
 slurm_id = args.slurm_id
 npydir = args.inputdir
 output_dir = args.outputdir
+taskname = args.task
 
 # %% TEST PARAMETERS
-# slurm_id=1
-# qc_dir='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep_qc'
-# # input_dir='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep/'
-# npydir='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep_qc/numpy_bold'
-# output_dir='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep_qc/runwisecorr'
-# scratch_dir='/scratch/f003z4j'
-# canlab_dir = '/dartfs-hpc/rc/lab/C/CANlab/modules/CanlabCore'
-# task = 'task-'
-# pybids_db = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/1080_wasabi/1080_wasabi_BIDSLayout'
+slurm_id=1
+qc_dir='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep_qc'
+# input_dir='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep/'
+npydir='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep_qc/numpy_bold'
+output_dir='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep_qc/runwisecorr'
+scratch_dir='/scratch/f003z4j'
+canlab_dir = '/dartfs-hpc/rc/lab/C/CANlab/modules/CanlabCore'
+taskname = 'task-'
+pybids_db = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/1080_wasabi/1080_wasabi_BIDSLayout'
 
 # %%
 Path(output_dir).mkdir( parents=True, exist_ok=True )
@@ -58,24 +64,49 @@ print(sub_folders)
 sub_list = [i for i in sorted(sub_folders) if i.startswith('sub-')]
 sub = sub_list[slurm_id]#f'sub-{sub_list[slurm_id]:04d}'
 print(f" ________ {sub} ________")
-taskname = 'task-'
+# taskname = 'task-'
 flist = glob.glob(os.path.join(npydir, sub, f"{sub}*{taskname}*MNI152NLin2009cAsym_desc-preproc_bold.npy"), recursive = True)
 # %% -------------------------------------------------------------------
 #                 get images and reshape, stack
 # ----------------------------------------------------------------------
 # %% NOTE: get shape of nifti --> later used for plot lines. reshape to 2d numpy array
+# nii_shape = []
+# niistack = []
+# for f in flist:
+#     brain_vol = np.load(f, allow_pickle=True).astype(np.float32)
+#     x, y, z, n = brain_vol.shape
+#     nii_shape.append(n)
+#     nii_reshape = brain_vol.reshape((x * y * z, n))
+#     niistack.append(nii_reshape.T.astype(np.float32))
+# print(nii_reshape)
+# run_transition = [sum(nii_shape[:i]) + nii_shape[i] for i in range(len(nii_shape))]
+# middle_indices = [sum(nii_shape[:i]) + nii_shape[i] // 2 for i in range(len(nii_shape))]
+# reshaped_arr = np.vstack(niistack).astype(np.float32)
+
+#%%
 nii_shape = []
 niistack = []
+
 for f in flist:
     brain_vol = np.load(f, allow_pickle=True).astype(np.float32)
     x, y, z, n = brain_vol.shape
     nii_shape.append(n)
-    nii_reshape = brain_vol.reshape((x * y * z, n))
-    niistack.append(nii_reshape.T.astype(np.float32))
+    
+    # Reshape and append directly, avoids temporary variable
+    niistack.append(brain_vol.reshape((x * y * z, n)).T)
+
+    # Delete the loaded volume to free memory
+    del brain_vol
+    
+    # Force garbage collection
+    gc.collect()
+
 print(nii_reshape)
 run_transition = [sum(nii_shape[:i]) + nii_shape[i] for i in range(len(nii_shape))]
 middle_indices = [sum(nii_shape[:i]) + nii_shape[i] // 2 for i in range(len(nii_shape))]
-reshaped_arr = np.vstack(niistack).astype(np.float32)
+
+# No need to cast to float32 again, since we've already done that during loading
+reshaped_arr = np.vstack(niistack)
 # %% -------------------------------------------------------------------
 #                 get run ses information
 # ----------------------------------------------------------------------
