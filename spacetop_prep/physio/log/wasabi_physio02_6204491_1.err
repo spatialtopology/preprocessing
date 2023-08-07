@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/scripts/biopac/wasabi-prep/spacetop_prep/physio/c02_save_separate_run.py", line 259, in <module>
-    main()
-  File "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/scripts/biopac/wasabi-prep/spacetop_prep/physio/c02_save_separate_run.py", line 107, in main
-    sub_list = utils.initialize.sublist(source_dir, remove_sub, slurm_id, stride, sub_zeropad)
-  File "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/scripts/biopac/wasabi-prep/spacetop_prep/physio/utils/initialize.py", line 117, in sublist
-    remove_list = [f"sub-{x:0{sub_zeropad}d}" for x in remove_int]
-TypeError: 'NoneType' object is not iterable

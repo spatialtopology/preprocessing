@@ -1,4 +1,0 @@
-usage: c02_save_separate_run.py [-h] --topdir TOPDIR -m METADATA -sid SLURM_ID [--stride STRIDE] -z SUB_ZEROPAD -t
-                                TASK -c RUN_CUTOFF [--colnamechange COLNAMECHANGE] [--tasknamechange TASKNAMECHANGE]
-                                [--exclude-sub EXCLUDE_SUB [EXCLUDE_SUB ...]]
-c02_save_separate_run.py: error: unrecognized arguments: --exclude_sub 199

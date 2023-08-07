@@ -1,1 +1,0 @@
-slurmstepd: error: *** JOB 41781 ON q08 CANCELLED AT 2021-06-24T10:11:53 DUE TO TIME LIMIT ***

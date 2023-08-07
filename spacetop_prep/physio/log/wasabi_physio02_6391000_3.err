@@ -1,6 +1,0 @@
-Traceback (most recent call last):
-  File "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/scripts/biopac/wasabi-prep/spacetop_prep/physio/c02_save_separate_run.py", line 262, in <module>
-    main()
-  File "/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/scripts/biopac/wasabi-prep/spacetop_prep/physio/c02_save_separate_run.py", line 91, in main
-    save_dir = join(physio_dir, 'physio03_bids', dict_task[task])
-KeyError: 'task-bodymapST'
