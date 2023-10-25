@@ -264,7 +264,7 @@ def main():
 
         else:
             metadf_dropNA =  metadata_df.assign(trial_num=list(np.array(metadata_df.index + 1)))
-
+            event_length = 5
             event_stimuli = {
                 'onset': np.array(dict_onset[event_name]['start']),
                 'duration': np.repeat(source_samplingrate * 5, event_num), # TODO: refactor 5. event_length, refactor 12 [x]: event trial number
