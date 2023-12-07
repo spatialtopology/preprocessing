@@ -8,7 +8,7 @@
 #SBATCH -e ./logplot/GLM_%A_%a.e
 #SBATCH --account=DBIC
 #SBATCH --partition=standard
-#SBATCH --array=4%10
+#SBATCH --array=1-6
 
 conda activate spacetop_env
 echo "SLURMSARRAY: " ${SLURM_ARRAY_TASK_ID}
@@ -18,8 +18,8 @@ FMRIPREPDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/derivatives/
 OUTPUTDIR='/dartfs-hpc/scratch/f0042x1/tsnr'
 #"/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/derivatives/fmriprep_qc/iqm"
 
-python ${MAINDIR}\spacetop_prep/qcplot/iqmvalues/tsnr_spacetop.py \
+python ${MAINDIR}/qcplot/iqmvalues/tsnr_spacetop.py \
 --slurm-id ${ID} \
 --fmriprepdir ${FMRIPREPDIR} \
 --savedir ${OUTPUTDIR} \
---task "narratives"
+--task ${SLURM_ARRAY_TASK_ID}

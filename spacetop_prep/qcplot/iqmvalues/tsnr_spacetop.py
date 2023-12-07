@@ -17,12 +17,10 @@ __status__ = "Development"
 # ----------------------------------------------------------------------
 import numpy as np
 import pandas as pd
-import os
-import glob
+import os, glob, re, argparse, subprocess
 from os.path import join
 from pathlib import Path
-import re
-import argparse
+
 # -------------------------------------------------------------------
 #                               parameters 
 # ----------------------------------------------------------------------
@@ -34,16 +32,18 @@ parser.add_argument("--fmriprepdir",
 parser.add_argument("--savedir", 
                     type=str, help="the directory where you want to save your files")
 parser.add_argument("--task",
-                    type=str, help="task name from spacetop")
+                    type=int, help="task name from spacetop")
 args = parser.parse_args()
 slurm_id = args.slurm_id
 fmriprep_dir = args.fmriprepdir
 save_dir = args.savedir
-task = args.task
+task_num = args.task
 sub_folders = next(os.walk(fmriprep_dir))[1]
 print(sub_folders)
 sub_list = [i for i in sorted(sub_folders) if i.startswith('sub-')]
 sub = sub_list[slurm_id]
+task_list = ['narratives', 'faces', 'social', 'alignvideo', 'shortvideo', 'fractional' ]
+task = task_list[task_num]
 # ----------------------------------------------------------------------
 #                               main code
 # ----------------------------------------------------------------------
@@ -53,29 +53,20 @@ sub = sub_list[slurm_id]
 # {sub}_*_task-{task}_acq-mb8_run-*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz
 bold_flist = sorted(glob.glob(join(fmriprep_dir, sub, '**', 'func', f'{sub}_*_task-{task}_acq-mb8_run-*_space-MNI152NLin2009cAsym_desc-preproc_bold.nii.gz'), recursive=True))
 for ind, fpath in enumerate(sorted(bold_flist)):
+
+    path, filename = os.path.split(fpath)
+    base_filename = os.path.splitext(os.path.splitext(filename)[0])[0]
+
     match_sub = re.search(r"sub-(\d+)", fpath).group(1)
     match_ses = re.search(r"ses-(\d+)", fpath).group(1) 
     match_run = re.search(r"run-(\d+)", fpath).group(1) 
+
     mean_fname = os.path.basename(
-        join(fmriprep_dir, sub, '**', 'func', f"{match_sub}_{match_ses}_task-{task}_acq-mb8_{match_run}_space-MNI152NLin2009cAsym_boldref.nii.gz"))
+        join(fmriprep_dir, sub, '**', 'func', f"sub-{match_sub}_ses-{match_ses}_task-{task}_acq-mb8_run-{match_run}_space-MNI152NLin2009cAsym_boldref.nii.gz"))
     
-    # std_savename
-    file_name, file_extension = os.path.splitext(fpath)
-    std_savename = f'{file_name}_std{file_extension}'
-
-    file_name, file_extension = os.path.splitext(os.path.basename(fpath))
-    tsnr_savename = join(save_dir, f'{file_name}_tsnr{file_extension}')
-
-    # fslmaths ${fpath} -Tstd ${std_savename}
-    # fslmaths ${mean_fname} -div ${std_savename} ${tsnr_savename}
-
-    import subprocess
-
-    # Define the input file paths and output file names
-    # fpath = 'input_file.nii.gz'
-    # mean_fname = 'mean_image.nii.gz'
-    # std_savename = 'std_image.nii.gz'
-    # tsnr_savename = 'tsnr_image.nii.gz'
+    std_savename = join(save_dir, f"sub-{match_sub}", f'{base_filename}_std.nii.gz')
+    tsnr_savename = join(save_dir, f"sub-{match_sub}",f'{base_filename}_tsnr.nii.gz')
+    Path(save_dir).mkdir(exist_ok=True, parents=True)
 
     # Run the first command
     command1 = ['fslmaths', fpath, '-Tstd', std_savename]
