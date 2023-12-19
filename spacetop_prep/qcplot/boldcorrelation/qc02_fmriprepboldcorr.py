@@ -40,14 +40,25 @@ slurm_id = args.slurm_id
 npydir = args.inputdir
 output_dir = args.outputdir
 
+# %% TEST PARAMETERS
+# slurm_id=1
+# qc_dir='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep_qc'
+# # input_dir='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep/'
+# npydir='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep_qc/numpy_bold'
+# output_dir='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep_qc/runwisecorr'
+# scratch_dir='/scratch/f003z4j'
+# canlab_dir = '/dartfs-hpc/rc/lab/C/CANlab/modules/CanlabCore'
+# task = 'task-'
+# pybids_db = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/1080_wasabi/1080_wasabi_BIDSLayout'
 
+# %%
 Path(output_dir).mkdir( parents=True, exist_ok=True )
 sub_folders = next(os.walk(npydir))[1]
 print(sub_folders)
 sub_list = [i for i in sorted(sub_folders) if i.startswith('sub-')]
 sub = sub_list[slurm_id]#f'sub-{sub_list[slurm_id]:04d}'
 print(f" ________ {sub} ________")
-taskname = 'task-social'
+taskname = 'task-'
 flist = glob.glob(os.path.join(npydir, sub, f"{sub}*{taskname}*MNI152NLin2009cAsym_desc-preproc_bold.npy"), recursive = True)
 # %% -------------------------------------------------------------------
 #                 get images and reshape, stack
@@ -127,30 +138,30 @@ ax_heatmap.set_yticklabels(names)
 # add a strip of red for bad runs ___________________________________________________________
 from matplotlib.patches import Rectangle
 # Convert indices to grid coordinates
-N = len(labels_list)
-if bad_runs != []:
-    for bad_runs_label in bad_runs:
-        badrun_index = labels_list.index(bad_runs_label)
-        if badrun_index != 0:
-            x = run_transition[badrun_index-1] #* (ax_heatmap.get_xlim()[1] - ax_heatmap.get_xlim()[0]) / corr_matrix.shape[1]
-            y = run_transition[badrun_index-1] #* (ax_heatmap.get_ylim()[1] - ax_heatmap.get_ylim()[0]) / corr_matrix.shape[0]
-            w = nii_shape[badrun_index]# * (ax_heatmap.get_xlim()[1] - ax_heatmap.get_xlim()[0]) / corr_matrix.shape[1]
-            h = nii_shape[badrun_index]# * (ax_heatmap.get_ylim()[1] - ax_heatmap.get_ylim()[0]) / corr_matrix.shape[0]
+# N = len(labels_list)
+# if bad_runs != []:
+#     for bad_runs_label in bad_runs:
+#         badrun_index = labels_list.index(bad_runs_label)
+#         if badrun_index != 0:
+#             x = run_transition[badrun_index-1] #* (ax_heatmap.get_xlim()[1] - ax_heatmap.get_xlim()[0]) / corr_matrix.shape[1]
+#             y = run_transition[badrun_index-1] #* (ax_heatmap.get_ylim()[1] - ax_heatmap.get_ylim()[0]) / corr_matrix.shape[0]
+#             w = nii_shape[badrun_index]# * (ax_heatmap.get_xlim()[1] - ax_heatmap.get_xlim()[0]) / corr_matrix.shape[1]
+#             h = nii_shape[badrun_index]# * (ax_heatmap.get_ylim()[1] - ax_heatmap.get_ylim()[0]) / corr_matrix.shape[0]
 
-            for _ in range(2):
-                ax_heatmap.add_patch(Rectangle((x, y), w, h, fill=False, edgecolor='crimson', lw=4, clip_on=False))
-                x, y = y, x  # exchange the roles of x and y
-                w, h = h, w  # exchange the roles of w and h
-        elif badrun_index == 0:
-            x = 0#* (ax_heatmap.get_xlim()[1] - ax_heatmap.get_xlim()[0]) / corr_matrix.shape[1]
-            y = 0 #* (ax_heatmap.get_ylim()[1] - ax_heatmap.get_ylim()[0]) / corr_matrix.shape[0]
-            w = nii_shape[badrun_index]# * (ax_heatmap.get_xlim()[1] - ax_heatmap.get_xlim()[0]) / corr_matrix.shape[1]
-            h = nii_shape[badrun_index]# * (ax_heatmap.get_ylim()[1] - ax_heatmap.get_ylim()[0]) / corr_matrix.shape[0]
+#             for _ in range(2):
+#                 ax_heatmap.add_patch(Rectangle((x, y), w, h, fill=False, edgecolor='crimson', lw=4, clip_on=False))
+#                 x, y = y, x  # exchange the roles of x and y
+#                 w, h = h, w  # exchange the roles of w and h
+#         elif badrun_index == 0:
+#             x = 0#* (ax_heatmap.get_xlim()[1] - ax_heatmap.get_xlim()[0]) / corr_matrix.shape[1]
+#             y = 0 #* (ax_heatmap.get_ylim()[1] - ax_heatmap.get_ylim()[0]) / corr_matrix.shape[0]
+#             w = nii_shape[badrun_index]# * (ax_heatmap.get_xlim()[1] - ax_heatmap.get_xlim()[0]) / corr_matrix.shape[1]
+#             h = nii_shape[badrun_index]# * (ax_heatmap.get_ylim()[1] - ax_heatmap.get_ylim()[0]) / corr_matrix.shape[0]
 
-            for _ in range(2):
-                ax_heatmap.add_patch(Rectangle((x, y), w, h, fill=False, edgecolor='crimson', lw=4, clip_on=False))
-                x, y = y, x  # exchange the roles of x and y
-                w, h = h, w  # exchange the roles of w and h
+#             for _ in range(2):
+#                 ax_heatmap.add_patch(Rectangle((x, y), w, h, fill=False, edgecolor='crimson', lw=4, clip_on=False))
+#                 x, y = y, x  # exchange the roles of x and y
+#                 w, h = h, w  # exchange the roles of w and h
 ax_heatmap.tick_params(length=0)
 ax_heatmap.set_title(f'{sub} \ncorrelation across niftis')
 

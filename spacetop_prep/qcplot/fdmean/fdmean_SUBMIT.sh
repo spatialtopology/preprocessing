@@ -10,14 +10,25 @@
 #SBATCH --partition=standard
 #SBATCH --array=1-100%30
 
-conda activate spacetop_env
+mkdir -p ./logfd
+
+conda init bash
+
+conda activate biopac
+
+# Check if SLURM_ARRAY_TASK_ID is not set or is empty
+if [ -z "$SLURM_ARRAY_TASK_ID" ]; then
+    # Set SLURM_ARRAY_TASK_ID to a default value, e.g., 1
+    SLURM_ARRAY_TASK_ID=1
+fi
+
 echo "SLURMSARRAY: " ${SLURM_ARRAY_TASK_ID}
 ID=$((SLURM_ARRAY_TASK_ID-1))
-MAINDIR="/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/scripts/spacetop_prep"
-FMRIPREPDIR="/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/derivatives/fmriprep/results/fmriprep"
-SAVEDIR="/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/derivatives/fmriprep_qc"
+MAINDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/scripts/biopac/wasabi-prep/spacetop_prep/qcplot'
+FMRIPREPDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep/'
+SAVEDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep_qc'
 
-python ${MAINDIR}/qcplot/fdmean/fdmean_painruns.py \
+python ${MAINDIR}/fdmean/fdmean_painruns.py \
 --slurm-id ${ID} \
 --fmriprepdir ${FMRIPREPDIR} \
 --savedir ${SAVEDIR}

@@ -26,11 +26,22 @@ def resolve_symlinks_in_html(url, save_path):
         modified_html_file.write(str(soup))
 
 # Example usage
-url = 'http://example.com/index.html'
-save_path = '/path/to/save/index.html'
+# url = 'http://example.com/index.html'
+# save_path = '/path/to/save/index.html'
 
-url = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/derivatives/fmriprep/results/fmriprep/group/consolidated_sdc_001.html'
-save_path=  '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/derivatives/fmriprep_qc/groupfmriprep/consolidated_sdc_001.html'
+# url = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/derivatives/fmriprep/results/fmriprep/group/consolidated_sdc_001.html'
+# save_path=  '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/spacetop_data/derivatives/fmriprep_qc/groupfmriprep/consolidated_sdc_001.html'
+
+# MAINDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/scripts/biopac/wasabi-prep/spacetop_prep/qcplot'
+# QCDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep_qc'
+# FMRIPREPDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep/'
+# SAVEDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep_qc/runwisecorr'
+# SCRATCHDIR='/dartfs-hpc/scratch/$USER'
+# CANLABDIR='/dartfs-hpc/rc/lab/C/CANlab/modules/CanlabCore'
+# PYBIDSDIR='/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/1080_wasabi/1080_wasabi_BIDSLayout'
+
+url = '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep/results/fmriprep/group/consolidated_sdc_001.html'
+save_path= '/dartfs-hpc/rc/lab/C/CANlab/labdata/data/WASABI/derivatives/fmriprep_qc/groupfmriprep/consolidated_sdc_001.html'
 
 resolve_symlinks_in_html(url, save_path)
 

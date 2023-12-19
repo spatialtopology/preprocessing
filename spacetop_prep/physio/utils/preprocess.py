@@ -120,6 +120,20 @@ def identify_boundary(df, binary_col):
     stop = df[df[binary_col] < df[binary_col].shift(1)].index.values.tolist()
     dict = {'start': start,
             'stop': stop}
+    
+    ## ADDITIONS BY MICHAEL SUN:
+    # Check if the first data point is part of an event
+    if df[binary_col].iloc[0] > 0:
+        # The recording started during an ongoing event.
+        # Add the first index (0) to the start list
+        start = [0] + start
+    
+    # Check if the last data point is part of an event
+    if df[binary_col].iloc[-1] > 0:
+        # The recording ended during an ongoing event.
+        # Add the last index to the stop list
+        stop = stop + [len(df) - 1]
+    
     return dict
 
 def _binarize_trigger_mri(df, dict_column, samplingrate, run_cutoff):
