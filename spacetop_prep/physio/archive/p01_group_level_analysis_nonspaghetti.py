@@ -322,7 +322,7 @@ for i, (sub, ses_ind, run_ind) in enumerate(sub_ses):
             'label': np.array(np.arange(12), dtype='<U21'),
             'condition': beh_df['param_stimulus_type'].values.tolist()
         }
-        # TODO: plot the ttl and visulize the alignment
+        # TODO: plot the ttl and visualize the alignment
         # interim plot to check if TTL matches with signals
         run_physio = physio_df[[
             'EDA_corrected_02fixation', 'physio_ppg', 'event_stimuli'
