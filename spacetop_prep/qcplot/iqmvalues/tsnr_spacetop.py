@@ -56,7 +56,12 @@ for ind, fpath in enumerate(sorted(bold_flist)):
 
     path, filename = os.path.split(fpath)
     base_filename = os.path.splitext(os.path.splitext(filename)[0])[0]
-
+    nii_file = os.path.join(path, base_filename + '.nii')
+    if os.path.exists(nii_file):
+        # If it exists, delete the file
+        os.remove(nii_file)
+        print(f"Deleted file: {nii_file}")
+        
     match_sub = re.search(r"sub-(\d+)", fpath).group(1)
     match_ses = re.search(r"ses-(\d+)", fpath).group(1) 
     match_run = re.search(r"run-(\d+)", fpath).group(1) 
