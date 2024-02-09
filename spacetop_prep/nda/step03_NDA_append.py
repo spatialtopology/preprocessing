@@ -59,7 +59,7 @@ for beh_fname in flattened_list:
     beh_bids_df = beh_bids_df.drop('src_subject_id', axis=1)
     # sub_id = beh_fname[beh_fname.find('sub-'):beh_fname.find('/', beh_fname.find('sub-'))]
 
-    # ====== NOTE: grab corresonding subject's GUID data and merge
+    # ====== NOTE: grab corresponding subject's GUID data and merge
     sub_guid = guid_df.loc[(guid_df['src_subject_id'] == sub_id) & (guid_df['session_id'] == session_id), :]
     sub_guid = sub_guid.drop(['index','Unnamed: 0', 'birth_Y_m_d', 'session_id'], axis=1)
     repeated_df = pd.concat([sub_guid] * len(beh_bids_df), ignore_index=True)# drop columns
