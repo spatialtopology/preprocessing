@@ -67,7 +67,16 @@ for DUPJSON in "${dup_files[@]}"; do
             if [[ "$BOLDJSON_TR" -eq "$EXPECTED_TR" && "$DUPJSON_TR" -lt "$BOLDJSON_TR" ]]; then
                 echo "Conditions met for $DUPJSON. Removing file."
                 # Uncomment the next line to perform file removal
-                git rm "$DUPJSON"
+                
+                # generic_filename=$(echo "$DUPJSON" | sed -E 's/(run-[0-9]+_).+(__dup-.+)/\1*\2/')
+            generic_filename=$(echo "$DUPJSON" | sed -E 's/(run-[0-9]+_).+(__dup-[0-9]+).*/\1*\2.*/')
+            read -a files_to_remove <<< "$generic_filename"
+
+            # Loop through the array and remove each file
+            for rm_file in "${files_to_remove[@]}"; do
+                git rm "$rm_file"
+            done
+
             else
                 # Handle errors
                 if [[ "$DUPJSON_TR" -ge "$BOLDJSON_TR" ]]; then
