@@ -61,46 +61,47 @@ dup = ['old-sub-0055','old-sub-0103','old-sub-0118','old-sub-0128','old-sub-0130
 'IE-9 (2)','IE-10 (2)','IE-23 (2)','IE-23 (3)','IE-43 (2)','IE-43 (3)',
 'IE-63 (2)','C-NA-36 (1)','IE-7','IE-8', 'IE-19', 'N-NA-279', 'N-NR-217']
 withdraw = [
-'sub-0030',
-'sub-0067',
-'sub-0113',
-'sub-0114',
-'sub-0117',
 'sub-0012',
-'sub-0015',
+# 'sub-0015',
 'sub-0022',
 'sub-0027',
-'sub-0028',
+# 'sub-0028',
+# 'sub-0030',
 'sub-0042',
 'sub-0045',
-'sub-0047',
+# 'sub-0047',
 'sub-0048',
 'sub-0049',
 'sub-0054',
-'sub-0063',
-'sub-0068',
-'sub-0071',
+# 'sub-0063',
+'sub-0067',
+# 'sub-0068',
+# 'sub-0071',
 'sub-0072',
-'sub-0082',
-'sub-0085',
+# 'sub-0082',
+# 'sub-0085',
 'sub-0096',
-'sub-0097',
+# 'sub-0097',
 'sub-0108',
 'sub-0110',
-'sub-0118',
-'sub-0119',
-'sub-0120',
+'sub-0113',
+'sub-0114',
+# 'sub-0117',
+# 'sub-0118',
+# 'sub-0119',
+# 'sub-0120',
 'sub-0121',
-'sub-0123',
+# 'sub-0123',
 'sub-0125']
 #sub = df[~df['Record ID'].str.contains('|'.join(dup))]
 sub = df[df['Record ID'].str.contains('sub-0')]
 filter_sub = sub[sub['Record ID'].str.contains('|'.join(dup))==False]
+filter_sub = filter_sub[filter_sub['Record ID'].str.contains('|'.join(withdraw))==False]
 #df = df[df['Record ID'].str.contains('|'.join(dup))==False]
 sub_i = filter_sub.set_index('Record ID').copy()
 # identify subjects that consented, then check their screening info for race, sex, ethnicity ______
 # %%
-sub_consent = sub_i[sub_i['Event Name'].str.contains('Consent')]
+# sub_consent = sub_i[sub_i['Event Name'].str.contains('Consent')]
 sub_screen = sub_i[sub_i['Event Name'].str.contains('Screening')]
 df_consent = sub_screen.loc[list(sub_screen.index) ]
 df_ier = df_consent[['Sex:', 'Race', 'Ethnicity']]
@@ -123,7 +124,7 @@ df_tally = pivot_sort.append([new_row])
 
 # save file _______________________________________________________________________________________
 date_str = datetime.date.today().isoformat()
-df_tally.to_csv(f'./ier-table_include-foursessiononly_{date_str}.csv')
-df_ier.index.to_series().to_csv(f'./ier-subjects_include-foursessiononly_{date_str}.csv', index = False)
+df_tally.to_csv(f'./ier-table_include-onesessiononly_{date_str}.csv')
+df_ier.index.to_series().to_csv(f'./ier-subjects_include-onesessiononly_{date_str}.csv', index = False)
 
 # %%
