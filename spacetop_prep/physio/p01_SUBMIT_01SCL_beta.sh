@@ -23,7 +23,7 @@ while IFS=":" read -r key value; do
   var_value=$(echo "$value" | tr -d '[:space:]')
   eval "$var_name=\"$var_value\""
 done < <(yq eval '.[] | to_entries | .[] | .key + ":" + (.value | tostring)' "${CONFIGFILE}")
-
+# TODO:
 # Run the Python script with the extracted parameter values
 python ${PWD}/p01_grouplevel_01SCL.py \
 --input-physiodir "$input_physiodir" \
