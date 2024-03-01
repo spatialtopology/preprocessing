@@ -1,8 +1,8 @@
 % Preprocessing of behavior data from task-shortvideos
 
-% This script extracts the moment-by-moment mouse position data (sampled at 
+% This script extracts the moment-by-moment mouse position data (sampled at
 % 60 Hz) from original .mat files, finds ratings and motion time from them,
-% and adds those data to original .csv files which contain all other time 
+% and adds those data to original .csv files which contain all other time
 % stamps.
 % The new .csv files will be named as *_beh_preproc.csv.
 
@@ -12,10 +12,10 @@
 clear
 
 taskname = 'task-shortvideos';
->>>
+% >>>
 % fill in the top level of your d_beh folder
-dataDir = '';
->>>
+dataDir = '/Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh';
+% >>>
 % change below if you would like to process data from a subset of all subjects
 endSub = 133;
 
@@ -26,24 +26,24 @@ for i = 1:endSub
     csvFile = fullfile(dataDir, sub, taskname, ...
         strcat(sub, '_ses-03_', taskname, '_beh.csv'));
     if ~exist(csvFile, 'file')
-       continue
+        continue
     end
     csvData = readtable(csvFile);
-
+    
     % *trajectory.mat files contain mouse trajectories
     matFile = fullfile(dataDir, sub, taskname, ...
         strcat(sub, '_ses-03_', taskname, '_trajectory.mat'));
     if ~exist(matFile, 'file')
-       % if there is .csv file but no .mat file
-       % no information can be provided or updated
-       continue
+        % if there is .csv file but no .mat file
+        % no information can be provided or updated
+        continue
     end
     load(matFile)
     
     trialNum = size(csvData, 1);       % how many trials
     [rating_end_x, rating_end_y, RT_adj, motion_onset, motion_dur] ...
         = deal(zeros(trialNum, 1));    % data to extract and store
-
+    
     for j = 1:trialNum
         traj = rating_trajectory{j};
         if ~isnan(csvData.event03_rating_RT(j))
@@ -62,7 +62,7 @@ for i = 1:endSub
                 end
             end
             if l == 2 && (traj(2,1) == traj(1,1))...
-                            && (traj(2,2) == traj(1,2))
+                    && (traj(2,2) == traj(1,2))
                 % No movement at all
                 RT_adj(j) = NaN;
                 rating_end_x(j) = NaN;
@@ -73,8 +73,8 @@ for i = 1:endSub
                 rating_end_x(j) = traj(l, 1);
                 rating_end_y(j) = traj(l, 2);
             end
-        end    
-
+        end
+        
         % find motion onset time and duration
         for l = 2:size(traj, 1)
             if (traj(l,1)~=traj(l-1,1)) || (traj(l,2)~=traj(l-1,2))

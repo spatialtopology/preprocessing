@@ -11,11 +11,11 @@ import numpy as np
 import math
 
 # please change `behDataDir` to the top level of the `d_beh` directory
->>>
-behDataDir = ''
+# >>>
+behDataDir = '/Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh'
 # please change `outputDir` to the top level of the BIDS directory
->>>
-outputDir = ''
+# >>>
+outputDir = '/Users/h/Documents/projects_local/1076_spacetop'
 
 # get a list of subjects with available data
 folders = glob.glob(os.path.join(outputDir, 'sub-*'))
