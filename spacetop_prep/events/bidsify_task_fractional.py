@@ -60,7 +60,7 @@ for saxe_fpath in sorted(filtered_saxe_flist):
     task_name = re.search(r'run-\d+-(\w+)_beh', saxe_fname).group(1)
         # beh_fpath = join(beh_inputdir, sub, f"{sub}_{ses}_task-fractional_{run_bids}-tomsaxe_beh.csv")
     print(f"{sub_bids} {ses_bids} {run_bids} {task_name}")
-    beh_savedir = join(bids_dir, sub_bids, ses_bids, 'beh')
+    beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
     beh_df = pd.read_csv(saxe_fpath)
     beh_df['response_accuracy'] = beh_df['accuracy'].replace({1: 'correct', 0: 'incorrect'})
 
@@ -189,7 +189,7 @@ for posner_fpath in sorted(posner_flist):
     run_bids = re.search(r'run-\d+', posner_fname).group(0)
     task_name = re.search(r'run-\d+-(\w+)_beh', posner_fname).group(1)
     print(f"{sub_bids} {ses_bids} {run_bids} {task_name}")
-    beh_savedir = join(bids_dir, sub_bids, ses_bids, 'beh')
+    beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
         # beh_fpath = join(beh_inputdir, sub, f"{sub}_{ses}_task-fractional_{run_bids}-tomsaxe_beh.csv")
     beh_df = pd.read_csv(posner_fpath)
     beh_df['index'] = beh_df.index + 1
@@ -362,7 +362,7 @@ for posner_fpath in sorted(posner_flist):
     run_bids = re.search(r'run-\d+', posner_fname).group(0)
     task_name = re.search(r'run-\d+-(\w+)_beh', posner_fname).group(1)
     print(f"{sub_bids} {ses_bids} {run_bids} {task_name}")
-    beh_savedir = join(bids_dir, sub_bids, ses_bids, 'beh')
+    beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
         # beh_fpath = join(beh_inputdir, sub, f"{sub}_{ses}_task-fractional_{run_bids}-tomsaxe_beh.csv")
     beh_df = pd.read_csv(posner_fpath)
     subset_beh = beh_df[['param_valid_type', 'event02_cue_onset','event03_target_onset', 'event04_response_onset','event04_RT','accuracy']]
@@ -443,7 +443,7 @@ for memory_fpath in memory_flist:
     run_bids = re.search(r'run-\d+', memory_fname).group(0)
     task_name = re.search(r'run-\d+-(\w+)_beh', memory_fname).group(1)
     print(f"{sub_bids} {ses_bids} {run_bids} {task_name}")
-    beh_savedir = join(bids_dir, sub_bids, ses_bids, 'beh')
+    beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
     membids_df = pd.DataFrame(columns=['onset', 'duration', 'event_type', 'value', 'response_accuracy', 'stim_file', 'button_press'])
 
     df_memmain = pd.read_csv(memory_fpath)
@@ -631,7 +631,7 @@ for spunt_fpath in spunt_flist:
     run_bids = re.search(r'run-\d+', spunt_fname).group(0)
     task_name = re.search(r'run-\d+-(\w+)_beh', spunt_fname).group(1)
     print(f"{sub_bids} {ses_bids} {run_bids} {task_name}")
-    beh_savedir = join(bids_dir, sub_bids, ses_bids, 'beh')
+    beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
 
     df_spunt = pd.read_csv(spunt_fpath)
 
