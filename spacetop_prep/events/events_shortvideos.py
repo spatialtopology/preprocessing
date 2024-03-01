@@ -122,7 +122,8 @@ for sub in subList:
     try:
         newData.to_csv(newFilename, sep='\t', index=False)
     except Exception as e:
-        with open(os.path.join(outputDir,"error.txt"), "a") as error_file:
+        file_path = os.path.join(outputDir,"error.txt")
+        with open(file_path, "a") as error_file:
             error_file.write(f"Error processing {file_path}: {str(e)}\n")
             error_file.write(traceback.format_exc() + "\n")
         continue  # Skip to the next file
