@@ -8,13 +8,16 @@ import os
 import glob
 import pandas as pd
 import numpy as np
+import traceback
+
+
 
 # please change `behDataDir` to the top level of the `d_beh` directory
->>>
-behDataDir = ''
+# >>>
+behDataDir = '/Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh'
 # please change `outputDir` to the top level of the BIDS directory
->>>
-outputDir = ''
+# >>>
+outputDir = '/Users/h/Documents/projects_local/1076_spacetop'
 
 # get a list of subjects with behavior data
 folders = glob.glob(os.path.join(outputDir, 'sub-*'))
@@ -103,4 +106,13 @@ for sub in subList:
 
         # save new events file
         newFilename = os.path.join(outputDir, sub, 'ses-02', 'func', f'{sub}_ses-02_task-narratives_acq-mb8_run-{run}_events.tsv')
-        newData.to_csv(newFilename, sep='\t', index=False)
+
+        try:
+            newData.to_csv(newFilename, sep='\t', index=False)    # Your code that might raise an error
+        except OSError as e:
+            # Log the error
+            with open(os.path.join(outputDir, "error_log.txt"), "a") as log_file:
+                log_file.write(f"Error encountered: {e}\n")
+                # If you want to log the full traceback:
+                traceback.print_exc(file=log_file)
+            print(f"An error occurred and has been logged: {e}")
