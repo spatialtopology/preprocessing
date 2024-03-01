@@ -27,7 +27,7 @@ endSub = 133;
 % clone it, then fill in the top level of your task_narratives folder
 % taskDesignDir = '';
 % DesignTable = readtable(fullfile(dataDir, "design", "task-narratives_counterbalance_ver-01.csv"));
-url = 'https://github.com/spatialtopology/task-narratives/blob/master/design/task-narratives_counterbalance_ver-01.csv';
+url = 'https://raw.githubusercontent.com/spatialtopology/task-narratives/master/design/task-narratives_counterbalance_ver-01.csv';
 counterbalance_filename = fullfile(dataDir, 'task-narratives_counterbalance_ver-01.csv');
 filepath = websave(counterbalance_filename, url);
 DesignTable = readtable(counterbalance_filename);
