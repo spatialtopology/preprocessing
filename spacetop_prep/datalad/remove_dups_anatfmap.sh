@@ -31,23 +31,23 @@ for DUPJSON in "${dup_files[@]}"; do
 
     # Compare the numeric values
     if (( $(echo "$PRIMARYJSON_SEC < $DUPJSON_SEC" |bc -l) )); then
-        echo "PRIMARYJSON acquisition time is earlier." >> $LOG_FILE
-        echo "Error: PRIMARYJSON has an earlier time than DUPJSON" >> $LOG_FILE
+        echo "{DUPJSON}\nPRIMARYJSON acquisition time is earlier." >> $LOG_FILE
+        echo "Error: PRIMARYJSON has an earlier time than DUPJSON\n\n" >> $LOG_FILE
     elif (( $(echo "$PRIMARYJSON_SEC > $DUPJSON_SEC" |bc -l) )); then
         echo "DUPJSON acquisition time is earlier." >> $LOG_FILE
         echo "Info: DUPJSON is identified as the correct file due to earlier acquisition time." >> $LOG_FILE
         generic_filename=$(echo "$DUPJSON" | sed -E 's/(run-[0-9]+_).+(__dup-[0-9]+).*/\1*\2.*/')
         read -a files_to_remove <<< "$generic_filename"
-        echo "removed files: ${generic_filename}" >> $LOG_FILE
+        echo "removed files: ${generic_filename}\n\n" >> $LOG_FILE
         # Loop through the array and remove each file
         for rm_file in "${files_to_remove[@]}"; do
             echo "remove!"
             # git rm "$rm_file"
         done
     else
-        echo "Acquisition times are the same." >> $LOG_FILE
+        echo "${DUPJSON}Acquisition times are the same." >> $LOG_FILE
         # Log as error or info since times being the same might be unexpected
-        echo "Warning: PRIMARYJSON and DUPJSON have the same acquisition time." >> $LOG_FILE
+        echo "Warning: PRIMARYJSON and DUPJSON have the same acquisition time.\n\n" >> $LOG_FILE
     fi
 
 done
