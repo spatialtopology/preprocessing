@@ -7,6 +7,9 @@
 # Define a file to log errors
 # error_log="error_log_funcanat.txt"
 LOG_FILE="fmap_error_log.txt"
+if [ -f "$LOG_FILE" ]; then
+    rm "$LOG_FILE"
+fi
 # mapfile -t dup_files < <(find . -type f -name '*__dup-*')
 
 dup_files=()
@@ -26,14 +29,18 @@ for DUPJSON in "${dup_files[@]}"; do
         continue
     fi
 
-    PRIMARYJSON_SEC=$(echo $PRIMARYJSON_TR | awk -F: '{ print ($1 * 3600) + ($2 * 60) + $3 }')
-    DUPJSON_SEC=$(echo $DUPJSON_TR | awk -F: '{ print ($1 * 3600) + ($2 * 60) + $3 }')
+#    PRIMARYJSON_SEC=$(echo $PRIMARYJSON_TR | awk -F: '{ print ($1 * 3600) + ($2 * 60) + $3 }')
+#    DUPJSON_SEC=$(echo $DUPJSON_TR | awk -F: '{ print ($1 * 3600) + ($2 * 60) + $3 }')
+PRIMARYJSON_SEC=$(echo $PRIMARYJSON_TR | awk -F: '{ split($3, a, "."); print ($1 * 3600) + ($2 * 60) + a[1] }')
+DUPJSON_SEC=$(echo $DUPJSON_TR | awk -F: '{ split($3, a, "."); print ($1 * 3600) + ($2 * 60) + a[1] }')
 
     # Compare the numeric values
-    if (( $(echo "$PRIMARYJSON_SEC < $DUPJSON_SEC" |bc -l) )); then
-        echo -e "\n${DUPJSON}\nPRIMARYJSON acquisition time is earlier." >> $LOG_FILE
-        echo -e "Error: PRIMARYJSON ${PRIMARYJSON_SEC} has an earlier time than DUPJSON ${DUPJSON_SEC}\n\n" >> $LOG_FILE
-    elif (( $(echo "$PRIMARYJSON_SEC > $DUPJSON_SEC" |bc -l) )); then
+    #if (( $(echo "$PRIMARYJSON_SEC < $DUPJSON_SEC" |bc -l) )); then
+    if [ "$PRIMARYJSON_SEC" -lt "$DUPJSON_SEC" ]; then
+	echo -e "\n${DUPJSON}\nPRIMARYJSON acquisition time is earlier." >> $LOG_FILE
+        echo -e "Error: PRIMARYJSON ${PRIMARYJSON_SEC} ${PRIMARYJSON_TR} has an earlier time than DUPJSON ${DUPJSON_SEC} ${DUPJSON_TR}\n\n" >> $LOG_FILE
+elif [ "$PRIMARYJSON_SEC" -gt "$DUPJSON_SEC" ]; then
+#    elif (( $(echo "$PRIMARYJSON_SEC > $DUPJSON_SEC" |bc -l) )); then
         echo -e "\nDUPJSON acquisition time is earlier." >> $LOG_FILE
         echo -e "Info: DUPJSON is identified as the correct file due to earlier acquisition time." >> $LOG_FILE
         generic_filename=$(echo "$DUPJSON" | sed -E 's/(run-[0-9]+_).+(__dup-[0-9]+).*/\1*\2.*/')
@@ -47,7 +54,7 @@ for DUPJSON in "${dup_files[@]}"; do
     else
         echo -e "\n${DUPJSON}\nAcquisition times are the same." >> $LOG_FILE
         # Log as error or info since times being the same might be unexpected
-        echo -e "Warning: PRIMARYJSON ${PRIMARYJSON_SEC} and DUPJSON ${DUPJSON_SEC} have the same acquisition time.\n\n" >> $LOG_FILE
+        echo -e "Warning: PRIMARYJSON ${PRIMARYJSON_SEC} ${PRIMARYJSON_TR} and DUPJSON ${DUPJSON_SEC} ${DUPJSON_TR} have the same acquisition time.\n\n" >> $LOG_FILE
     fi
 
 done
