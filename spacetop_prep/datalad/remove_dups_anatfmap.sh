@@ -1,3 +1,4 @@
+#!/bin/bash
 ## TODO: change the file so that the dup is the earlier scan
 ## the latter scan should be better. always. 
 
