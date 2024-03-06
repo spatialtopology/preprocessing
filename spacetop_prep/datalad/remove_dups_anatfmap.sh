@@ -12,7 +12,8 @@ LOG_FILE="fmap_error_log.txt"
 dup_files=()
 while IFS= read -r -d $'\n' file; do
     dup_files+=("$file")
-done < <(find . -type f -name '**/fmap/*__dup-*')
+done < <(find . -type f -path "*/fmap/*__dup-*.json")
+#find . -type f -name '**/fmap/*__dup-*')
 # done < <(find . -type f -path '*/func/*__dup-*')
 # Loop through each file found.
 for DUPJSON in "${dup_files[@]}"; do
@@ -49,7 +50,7 @@ for DUPJSON in "${dup_files[@]}"; do
         echo "Warning: PRIMARYJSON and DUPJSON have the same acquisition time." >> $LOG_FILE
     fi
 
-
+done
 
 
 #     # Initialize a flag to indicate a matching key has been found.
