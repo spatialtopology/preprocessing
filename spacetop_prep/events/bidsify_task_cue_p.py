@@ -87,9 +87,9 @@ for pain_fpath in sorted(filtered_pain_flist):
     sub_bids = re.search(r'sub-\d+', pain_fname).group(0)
     ses_bids = re.search(r'ses-\d+', pain_fname).group(0)
     run_bids = re.search(r'run-\d+', pain_fname).group(0)
-    runtype = re.search(r'run-\d+-(\w+)_beh', pain_fname).group(1)
+    runtype = re.search(r'run-\d+-(\w+)', pain_fname).group(1)
 
-    print(f"{sub_bids} {ses_bids} {run_bids} {runtype}")
+    print(f"\n\n_______ {sub_bids} {ses_bids} {run_bids} {runtype} _______")
     beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
     beh_df = pd.read_csv(pain_fpath)
     trigger = beh_df['param_trigger_onset'][0]
@@ -125,7 +125,8 @@ for pain_fpath in sorted(filtered_pain_flist):
     traj_df['comparison_flag'] = ~comparison_mask
     expect_overall_flag = traj_df['comparison_flag'].any()
     if expect_overall_flag:
-         print(f"{sub_bids} {ses_bids} {run_bids} 3-3. angles do not match between behavioral data and trajectory data")
+        print(f"{sub_bids} {ses_bids} {run_bids} 3-3. angles do not match between behavioral data and trajectory data")
+        print(beh_df['event02_expect_angle'].head(), beh_df['adjusted_expectangle_degrees'].head())
 
     beh_df['event04_outcome_fillna'] = beh_df['event04_actual_angle']
     beh_df['event04_outcome_fillna'].fillna(traj_df['adjusted_outcomeangle_degrees'], inplace=True)
