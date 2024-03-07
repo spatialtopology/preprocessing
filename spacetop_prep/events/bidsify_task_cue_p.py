@@ -109,11 +109,27 @@ for pain_fpath in sorted(filtered_pain_flist):
     # 3. load trajectory data and calculate ratings ____________________________
     trajectory_glob = glob.glob(join(beh_inputdir, sub_bids, 'task-cue', ses_bids, f"{sub_bids}_{ses_bids}_task-cue_{run_bids}_runtype-{runtype}_beh-preproc.csv"))
     
-    if trajectory_glob:
-        trajectory_fname = trajectory_glob[0]
-        traj_df = pd.read_csv(trajectory_fname)
-    elif not trajectory_glob:
-        logger.critical("Trajectory preproc is empty.")
+    # if trajectory_glob:
+    #     trajectory_fname = trajectory_glob[0]
+    #     traj_df = pd.read_csv(trajectory_fname)
+    # elif not trajectory_glob:
+    #     logger.critical("Trajectory preproc is empty.")
+    #     break
+    try:
+        if trajectory_glob:
+            trajectory_fname = trajectory_glob[0]
+            traj_df = pd.read_csv(trajectory_fname)
+        else:
+            # If trajectory_glob is empty, raise a custom exception
+            raise FileNotFoundError("Trajectory preproc is empty.")
+            
+    except FileNotFoundError as e:
+        logger.critical(str(e))
+        break
+        
+    except Exception as e:
+        # This catches any other exceptions that might occur
+        logger.error("An error occurred while processing the trajectory file: %s", str(e))
         break
 
 
