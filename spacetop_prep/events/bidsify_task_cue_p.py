@@ -22,6 +22,7 @@ logging.basicConfig(filename='task-cue_pain.log',  # Log file path
 
 # Step 3: Create a logger object
 logger = logging.getLogger('ExampleLogger')
+logger.setLevel(logging.INFO)
 __author__ = "Heejung Jung"
 __copyright__ = "Spatial Topology Project"
 __credits__ = ["Heejung"] # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
@@ -111,7 +112,7 @@ for pain_fpath in sorted(filtered_pain_flist):
     if trajectory_glob:
         trajectory_fname = trajectory_glob[0]
         traj_df = pd.read_csv(trajectory_fname)
-    else:
+    elif not trajectory_glob:
         logger.critical("Trajectory preproc is empty.")
 
 
