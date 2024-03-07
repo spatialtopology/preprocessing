@@ -78,15 +78,26 @@ for i = 1:length(subjectsWithTaskSocial)
             strcat(sub, '_', ses, '_', taskname, '_', run, '*_trajectory.mat')));
         csvFile = dir(fullfile(dataDir, sub, taskname, ses,...
             strcat(sub, '_', ses, '_', taskname, '_', run, '*_beh.csv')));
-    	matfile_fname = fullfile(matFile.folder, matFile.name);
+        matfile_fname = fullfile(matFile.folder, matFile.name);
         if ~exist(matfile_fname, 'file')
             % if there is .csv file but no .mat file
             % no information can be provided or updated
             disp('sub exists but no trajectory file')
             continue
         end
-        % load behavioral and outcome_trajectory data
-        load(matfile_fname);
+        % load behavioral and outcome_trajectory data __________________________
+        % the early participants had a matfile with rating_trajectory, vs some other had rating_Trajectory
+        dataStruct = load(matfile_fname);
+        % Check for the existence of the variables and assign to a standard name
+        if isfield(dataStruct, 'rating_Trajectory')
+            rating_Trajectory = dataStruct.rating_Trajectory;
+            disp(strcat(sub, ' rating_Trajectory'))
+        elseif isfield(dataStruct, 'rating_trajectory')
+            rating_Trajectory = dataStruct.rating_trajectory;
+            disp(strcat(sub, ' rating_trajectory'))
+        else
+            error('Required variable not found in the .mat file.');
+        end
         csvData = readtable(fullfile(csvFile.folder, csvFile.name));
         
         
