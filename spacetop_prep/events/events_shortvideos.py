@@ -120,10 +120,9 @@ for sub in subList:
     # save new events file
     newFilename = os.path.join(outputDir, sub, session, 'func', f'{sub}_{session}_{taskname}_acq-mb8_run-01_events.tsv')
     try:
-        newData.to_csv(newFilename, sep='\t', index=False)
+	newData.to_csv(newFilename, sep='\t', index=False)
     except Exception as e:
-        file_path = "error.txt"
-        with open(file_path, "a") as error_file:
+        with open(os.path.join(outputDir,"error.txt"), "a") as error_file:
             error_file.write(f"Error processing {file_path}: {str(e)}\n")
             error_file.write(traceback.format_exc() + "\n")
-        continue 
+        continue  # Skip to the next file
