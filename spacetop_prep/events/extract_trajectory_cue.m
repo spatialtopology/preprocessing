@@ -222,7 +222,7 @@ for i = 1:length(subjectsWithTaskSocial)
             'outcomerating_end_x', 'outcomerating_end_y', 'outcomeRT_adj', 'outcome_motiononset', 'outcome_motiondur'});
 	save_dir = fullfile(dataDir, sub, newtaskname, ses);
 	if ~exist(save_dir, 'dir')
-		mkdir(dirName);
+		mkdir(save_dir);
 	end
         outputFile = fullfile(save_dir,...
             strcat(sub, '_', ses, '_', newtaskname, '_', run, '_', runtype,'_beh-preproc.csv'));
