@@ -36,9 +36,11 @@ for k = 1:length(subjectDirs)
     end
 end
 
+disp(subjectsWithTaskSocial);
 for i = 1:length(subjectsWithTaskSocial)
     % for i = 1:endSub
     sub = subjectsWithTaskSocial{i};
+    disp(sub);
     % sub = strcat('sub-', sprintf("%04d", i));
     sub_files = dir(fullfile(dataDir, sub, 'task-social','*', '*_beh.csv'));
     % for globbedfile
