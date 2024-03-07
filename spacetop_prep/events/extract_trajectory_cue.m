@@ -78,14 +78,15 @@ for i = 1:length(subjectsWithTaskSocial)
             strcat(sub, '_', ses, '_', taskname, '_', run, '*_trajectory.mat')));
         csvFile = dir(fullfile(dataDir, sub, taskname, ses,...
             strcat(sub, '_', ses, '_', taskname, '_', run, '*_beh.csv')));
-        if ~exist(matFile, 'file')
+    	matfile_fname = fullfile(matFile.folder, matFile.name);
+        if ~exist(matfile_fname, 'file')
             % if there is .csv file but no .mat file
             % no information can be provided or updated
             disp('sub exists but no trajectory file')
             continue
         end
         % load behavioral and outcome_trajectory data
-        load(fullfile(matFile.folder, matFile.name));
+        load(matfile_fname);
         csvData = readtable(fullfile(csvFile.folder, csvFile.name));
         
         
