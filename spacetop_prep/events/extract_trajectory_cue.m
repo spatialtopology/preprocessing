@@ -224,7 +224,7 @@ for i = 1:length(subjectsWithTaskSocial)
 	if ~exist(save_dir, 'dir')
 		mkdir(dirName);
 	end
-        outputFile = fullfile(save_dir,
+        outputFile = fullfile(save_dir,...
             strcat(sub, '_', ses, '_', newtaskname, '_', run, '_', runtype,'_beh-preproc.csv'));
         writetable(newCsvData, outputFile)
         
