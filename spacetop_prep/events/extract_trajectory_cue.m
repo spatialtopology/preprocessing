@@ -36,7 +36,7 @@ for k = 1:length(subjectDirs)
     end
 end
 
-for i = 1:2%length(subjectsWithTaskSocial)
+for i = 1:length(subjectsWithTaskSocial)
     % for i = 1:endSub
     sub = subjectsWithTaskSocial{i};
     % sub = strcat('sub-', sprintf("%04d", i));
