@@ -71,7 +71,6 @@ for i = 1:2%length(subjectsWithTaskSocial)
         end
         
         %% load data
-        csvData = readtable(sub_files{file_ind});
         % *outcome_trajectory.mat files contain mouse outcome_trajectories
         matFile = dir(fullfile(dataDir, sub, taskname, ses,...
             strcat(sub, '_', ses, '_', taskname, '_', run, '*_outcome_trajectory.mat')));
