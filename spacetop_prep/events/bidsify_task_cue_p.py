@@ -12,6 +12,16 @@ import pandas as pd
 import os, glob, re, json
 from os.path import join
 from pathlib import Path
+import logging
+
+# Step 2: Configure the logging system
+logging.basicConfig(filename='task-cue_pain.log',  # Log file path
+                    filemode='w',            # Append mode ('w' for overwrite)
+                    level=logging.DEBUG,     # Logging level
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')  # Log message format
+
+# Step 3: Create a logger object
+logger = logging.getLogger('ExampleLogger')
 __author__ = "Heejung Jung"
 __copyright__ = "Spatial Topology Project"
 __credits__ = ["Heejung"] # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
@@ -89,7 +99,8 @@ for pain_fpath in sorted(filtered_pain_flist):
     run_bids = re.search(r'run-\d+', pain_fname).group(0)
     runtype = re.search(r'run-\d+-(\w+)', pain_fname).group(1)
 
-    print(f"\n\n_______ {sub_bids} {ses_bids} {run_bids} {runtype} _______")
+
+    logger.info(f"\n\n_______ {sub_bids} {ses_bids} {run_bids} {runtype} _______")
     beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
     beh_df = pd.read_csv(pain_fpath)
     trigger = beh_df['param_trigger_onset'][0]
@@ -101,7 +112,8 @@ for pain_fpath in sorted(filtered_pain_flist):
         trajectory_fname = trajectory_glob[0]
         traj_df = pd.read_csv(trajectory_fname)
     else:
-        print("Trajectory preproc is empty.")
+        logger.critical("Trajectory preproc is empty.")
+
 
     # 3-1. calculate degree based on x, y coordinate
     # Translate the points so that the reference point becomes the origin
@@ -125,8 +137,8 @@ for pain_fpath in sorted(filtered_pain_flist):
     traj_df['comparison_flag'] = ~comparison_mask
     expect_overall_flag = traj_df['comparison_flag'].any()
     if expect_overall_flag:
-        print(f"{sub_bids} {ses_bids} {run_bids} 3-3. angles do not match between behavioral data and trajectory data")
-        print(beh_df['event02_expect_angle'].head(), beh_df['adjusted_expectangle_degrees'].head())
+        logger.error(f"{sub_bids} {ses_bids} {run_bids} 3-3. angles do not match between behavioral data and trajectory data")
+        logger.info(beh_df['event02_expect_angle'].head(), beh_df['adjusted_expectangle_degrees'].head())
 
     beh_df['event04_outcome_fillna'] = beh_df['event04_actual_angle']
     beh_df['event04_outcome_fillna'].fillna(traj_df['adjusted_outcomeangle_degrees'], inplace=True)
@@ -134,7 +146,8 @@ for pain_fpath in sorted(filtered_pain_flist):
     traj_df['outcome_comparisonflag'] = ~outcome_comparison_mask
     outcome_overall_flag = traj_df['outcome_comparisonflag'].any()
     if outcome_overall_flag:
-         print(f"{sub_bids} {ses_bids} {run_bids} 3-3. angles do not match between behavioral data and trajectory data")
+         logger.warning("3-3. angles do not match between behavioral data and trajectory data")
+
 
 
     # grab the intersection raise warning if dont match
@@ -154,7 +167,7 @@ for pain_fpath in sorted(filtered_pain_flist):
     if (beh_df['event01_cue_type'] == beh_df['param_cue_type']).all():
         cue['cue'] = beh_df['event01_cue_type'] 
     else:
-        print(f"ERROR: 4-1. {sub_bids} {ses_bids} {run_bids} cue parameter does not match")
+        logger.error(f"4-1. cue parameter does not match")
     cue['stimulusintensity'] =  "n/a"
     cue['onset_ttl1'] =  "n/a"
     cue['onset_ttl2'] =  "n/a"
@@ -205,7 +218,7 @@ for pain_fpath in sorted(filtered_pain_flist):
         for i, ttl_row in ttl_df.iterrows():
             ttl_df.loc[i] = calculate_ttl_values(stimulus_times, ttl_row, beh_df.loc[i])
     else:
-        print("Trajectory preproc is empty.")
+        logger.info("TTL dataframe non existent.")
 
         beh_df['total_stimulus_time'] = beh_df['event03_stimulus_type'].apply(lambda x: sum(stimulus_times[x].values()))
     temperature_map = {
@@ -270,8 +283,12 @@ for pain_fpath in sorted(filtered_pain_flist):
 
     events = pd.concat([cue, expect, stim, outcome], ignore_index=True)
     events_sorted = events.sort_values(by='onset')
-    # beh_savedir = join(main_dir, 'data' , 'beh', 'beh03_bids', sub_bids)
-    Path(beh_savedir).mkdir( parents=True, exist_ok=True )
+
+    if os.path.exists(beh_savedir) and os.path.isdir(beh_savedir):
+        events.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-{task_name}_{run_bids}_events.tsv"), sep='\t', index=False)
+    else:
+        logger.critical(f"WARNING: The directory {beh_savedir} does not exist.")
+    
     # extract bids info and save as new file
-    events.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-{task_name}_{run_bids}_events.tsv"), sep='\t', index=False)
+
 # %%
