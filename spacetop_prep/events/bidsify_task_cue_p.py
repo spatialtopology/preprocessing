@@ -21,7 +21,7 @@ logging.basicConfig(filename='task-cue_pain.log',  # Log file path
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')  # Log message format
 
 # Step 3: Create a logger object
-logger = logging.getLogger('ExampleLogger')
+logger = logging.getLogger('pain')
 
 __author__ = "Heejung Jung"
 __copyright__ = "Spatial Topology Project"
@@ -114,7 +114,7 @@ for pain_fpath in sorted(filtered_pain_flist):
         traj_df = pd.read_csv(trajectory_fname)
     elif not trajectory_glob:
         logger.critical("Trajectory preproc is empty.")
-        continue
+        break
 
 
     # 3-1. calculate degree based on x, y coordinate
@@ -150,6 +150,7 @@ for pain_fpath in sorted(filtered_pain_flist):
     outcome_overall_flag = traj_df['outcome_comparisonflag'].any()
     if outcome_overall_flag:
          logger.warning("3-3. angles do not match between behavioral data and trajectory data")
+         continue
 
 
 
