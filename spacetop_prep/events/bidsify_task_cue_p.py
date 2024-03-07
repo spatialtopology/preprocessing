@@ -137,8 +137,10 @@ for pain_fpath in sorted(filtered_pain_flist):
     traj_df['comparison_flag'] = ~comparison_mask
     expect_overall_flag = traj_df['comparison_flag'].any()
     if expect_overall_flag:
-        logger.error(f"{sub_bids} {ses_bids} {run_bids} 3-3. angles do not match between behavioral data and trajectory data")
+        logger.error(f"{sub_bids} {ses_bids} {run_bids} 3-3. angles do not match
+         between behavioral data and trajectory data")
         logger.info(beh_df['event02_expect_angle'].head(), beh_df['adjusted_expectangle_degrees'].head())
+        continue
 
     beh_df['event04_outcome_fillna'] = beh_df['event04_actual_angle']
     beh_df['event04_outcome_fillna'].fillna(traj_df['adjusted_outcomeangle_degrees'], inplace=True)
@@ -168,6 +170,7 @@ for pain_fpath in sorted(filtered_pain_flist):
         cue['cue'] = beh_df['event01_cue_type'] 
     else:
         logger.error(f"4-1. cue parameter does not match")
+        continue
     cue['stimulusintensity'] =  "n/a"
     cue['onset_ttl1'] =  "n/a"
     cue['onset_ttl2'] =  "n/a"
