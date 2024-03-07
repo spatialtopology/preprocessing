@@ -36,11 +36,11 @@ for k = 1:length(subjectDirs)
     end
 end
 
-for i = 1:1%length(subjectsWithTaskSocial)
-% for i = 1:endSub
+for i = 1:2%length(subjectsWithTaskSocial)
+    % for i = 1:endSub
     sub = subjectsWithTaskSocial{i};
     % sub = strcat('sub-', sprintf("%04d", i));
-    sub_files = dir(fullfile(taskSocialPath, '*_beh.csv'));
+    sub_files = dir(fullfile(dataDir, sub, 'task-social','*', '*_beh.csv'));
     % for globbedfile
     %     % .csv files contain onset time, stim_file, condition, etc.
     %     csvFile = fullfile(dataDir, sub, taskname, ...
@@ -48,13 +48,13 @@ for i = 1:1%length(subjectsWithTaskSocial)
     %     if ~exist(csvFile, 'file')
     %         continue
     %     end
-    for file_path = 1:length(sub_files)
+    for file_ind = 1:length(sub_files)
         % Regular expression to match sub, ses, and run
         pattern = 'sub-(?<sub>\d{4})_ses-(?<ses>\d{2})_task-social_run-(?<run>\d{2})-(?<runtype>\w+)_beh\.csv';
-
+        
         % Use regexp to search for patterns and extract matches
-        matches = regexp(filepath, pattern, 'names');
-
+        matches = regexp(sub_files(file_ind).name, pattern, 'names');
+        
         % Extract metadata from matches
         if ~isempty(matches)
             sub = ['sub-', matches.sub];
@@ -63,88 +63,153 @@ for i = 1:1%length(subjectsWithTaskSocial)
             runtype = ['runtype-', matches.runtype];
             
             % Display extracted metadata
-            fprintf('Sub: %s\n', sub);
-            fprintf('Ses: %s\n', ses);
-            fprintf('Run: %s\n', run);
+            fprintf('sub: %s\n', sub);
+            fprintf('ses: %s\n', ses);
+            fprintf('run: %s\n', run);
         else
             disp('No matches found.');
         end
-
-        csvData = readtable(file_path);
-
         
-        % *trajectory.mat files contain mouse trajectories
-        matFile = fullfile(dataDir, sub, taskname, ...
-            strcat(sub, '_', ses, '_', taskname, '*_trajectory.mat'));
+        %% load data
+        csvData = readtable(sub_files{file_ind});
+        % *outcome_trajectory.mat files contain mouse outcome_trajectories
+        matFile = dir(fullfile(dataDir, sub, taskname, ses,...
+            strcat(sub, '_', ses, '_', taskname, '_', run, '*_outcome_trajectory.mat')));
+        csvFile = dir(fullfile(dataDir, sub, taskname, ses,...
+            strcat(sub, '_', ses, '_', taskname, '_', run, '*_beh.csv')));
         if ~exist(matFile, 'file')
             % if there is .csv file but no .mat file
             % no information can be provided or updated
-            disp('sub exists but no trajectory file')
+            disp('sub exists but no outcome_trajectory file')
             continue
         end
-        load(matFile)
+        % load behavioral and outcome_trajectory data
+        load(fullfile(matFile.folder, matFile.name));
+        csvData = readtable(fullfile(csvFile.folder, csvFile.name));
+        
         
         trialNum = size(csvData, 1);       % how many trials
-        [rating_end_x, rating_end_y, RT_adj, motion_onset, motion_dur] ...
+        [expectrating_end_x, expectrating_end_y,expectRT_adj, expect_motiononset,expect_motiondur,            outcomerating_end_x, outcomerating_end_y, outcomeRT_adj, outcome_motiononset, outcome_motiondur,] ...
             = deal(zeros(trialNum, 1));    % data to extract and store
         
+        %% trajectory
         for j = 1:trialNum
-            traj = rating_trajectory{j};
-            if ~isnan(csvData.event03_rating_RT(j))
+            outcome_traj = rating_Trajectory{j, 2};
+            % if ~isnan(csvData.event03_rating_RT(j))
+            if ~isnan(csvData.event04_actual_RT(j))
                 % subject made a response in this trial
-                rating_end_x(j) = traj(end, 1);
-                rating_end_y(j) = traj(end, 2);
-                RT_adj(j) = NaN;
+                outcomerating_end_x(j) = outcome_traj(end,1);
+                outcomerating_end_y(j) = outcome_traj(end,2);
+                outcomeRT_adj(j) = NaN;
             else
                 % there was no response in this trial
                 % infer RT_adjusted by finding the last time mouse position changed
                 % but keep RT as nan
                 % disp(['Trial ' num2str(j) ' had no response'])  % for test
-                for l = size(traj, 1):-1:2
-                    if (traj(l,1)~=traj(l-1,1)) || (traj(l,2)~=traj(l-1,2))
+                for l = size(outcome_traj, 1):-1:2
+                    if (outcome_traj(l,1)~=outcome_traj(l-1,1)) || (outcome_traj(l,2)~=outcome_traj(l-1,2))
                         break
                     end
                 end
-                if l == 2 && (traj(2,1) == traj(1,1))...
-                        && (traj(2,2) == traj(1,2))
+                if l == 2 && (outcome_traj(2,1) == outcome_traj(1,1))...
+                        && (outcome_traj(2,2) == outcome_traj(1,2))
                     % No movement at all
-                    RT_adj(j) = NaN;
-                    rating_end_x(j) = NaN;
-                    rating_end_y(j) = NaN;
+                    outcomeRT_adj(j) = NaN;
+                    outcomerating_end_x(j) = NaN;
+                    outcomerating_end_y(j) = NaN;
                 else
                     % l-1 is when the last movement happened
-                    RT_adj(j) = (l-1)/60;
-                    rating_end_x(j) = traj(l, 1);
-                    rating_end_y(j) = traj(l, 2);
+                    outcomeRT_adj(j) = (l-1)/60;
+                    outcomerating_end_x(j) = outcome_traj(l, 1);
+                    outcomerating_end_y(j) = outcome_traj(l, 2);
                 end
             end
             
             % find motion onset time and duration
-            for l = 2:size(traj, 1)
-                if (traj(l,1)~=traj(l-1,1)) || (traj(l,2)~=traj(l-1,2))
+            for l = 2:size(outcome_traj, 1)
+                if (outcome_traj(l,1)~=outcome_traj(l-1,1)) || (outcome_traj(l,2)~=outcome_traj(l-1,2))
                     break
                 end
             end
-            if traj(l,1) == traj(1,1) && traj(l,2) == traj(1,2)
+            if outcome_traj(l,1) == outcome_traj(1,1) && outcome_traj(l,2) == outcome_traj(1,2)
                 % mouse didn't move at all
-                motion_onset(j) = NaN;
+                outcome_motiononset(j) = NaN;
             else
                 % l is when movement started
-                motion_onset(j) = l/60;
+                outcome_motiononset(j) = l/60;
             end
-            if isnan(csvData.event03_rating_RT(j))
+            if isnan(csvData.event04_actual_RT(j))
                 % no response
-                motion_dur(j) = RT_adj(j) - motion_onset(j);
+                outcome_motiondur(j) = outcomeRT_adj(j) - outcome_motiononset(j);
             else
-                motion_dur(j) = csvData.event03_rating_RT(j) - motion_onset(j);
+                outcome_motiondur(j) = csvData.event04_actual_RT(j) - outcome_motiononset(j);
             end
         end
-        newCsvData = addvars(csvData, rating_end_x, rating_end_y, RT_adj, ...
-            motion_onset, motion_dur, 'NewVariableNames', ...
-            {'rating_end_x', 'rating_end_y', 'RT_adj', 'motion_onset', 'motion_dur'});
+        
+        
+        
+        for j = 1:trialNum
+            expect_traj = rating_Trajectory{j,1};
+            % if ~isnan(csvData.event03_rating_RT(j))
+            if ~isnan(csvData.event02_expect_RT(j))
+                % subject made a response in this trial
+                expectrating_end_x(j) = expect_traj(end, 1);
+                expectrating_end_y(j) = expect_traj(end, 2);
+                expectRT_adj(j) = NaN;
+            else
+                % there was no response in this trial
+                % infer RT_adjusted by finding the last time mouse position changed
+                % but keep RT as nan
+                % disp(['Trial ' num2str(j) ' had no response'])  % for test
+                for l = size(expect_traj, 1):-1:2
+                    if (expect_traj(l,1)~=expect_traj(l-1,1)) || (expect_traj(l,2)~=expect_traj(l-1,2))
+                        break
+                    end
+                end
+                if l == 2 && (expect_traj(2,1) == expect_traj(1,1))...
+                        && (expect_traj(2,2) == expect_traj(1,2))
+                    % No movement at all
+                    expectRT_adj(j) = NaN;
+                    expectrating_end_x(j) = NaN;
+                    expectrating_end_y(j) = NaN;
+                else
+                    % l-1 is when the last movement happened
+                    expectRT_adj(j) = (l-1)/60;
+                    expectrating_end_x(j) = expect_traj(l, 1);
+                    expectrating_end_y(j) = expect_traj(l, 2);
+                end
+            end
+            
+            % find motion onset time and duration
+            for l = 2:size(expect_traj, 1)
+                if (expect_traj(l,1)~=expect_traj(l-1,1)) || (expect_traj(l,2)~=expect_traj(l-1,2))
+                    break
+                end
+            end
+            if expect_traj(l,1) == expect_traj(1,1) && expect_traj(l,2) == expect_traj(1,2)
+                % mouse didn't move at all
+                expect_motiononset(j) = NaN;
+            else
+                % l is when movement started
+                expect_motiononset(j) = l/60;
+            end
+            if isnan(csvData.event02_expect_RT(j))
+                % no response
+                expect_motiondur(j) = expectRT_adj(j) - expect_motiondur(j);
+            else
+                expect_motiondur(j) = csvData.event02_expect_RT(j) - expect_motiononset(j);
+            end
+        end
+        
+        
+        
+        newCsvData = addvars(csvData, expectrating_end_x, expectrating_end_y,expectRT_adj, expect_motiononset,expect_motiondur,            outcomerating_end_x, outcomerating_end_y, outcomeRT_adj, outcome_motiononset, outcome_motiondur, 'NewVariableNames', ...
+            {'expectrating_end_x', 'expectrating_end_y','expectRT_adj',...
+            'expect_motiononset','expect_motiondur',...
+            'outcomerating_end_x', 'outcomerating_end_y', 'outcomeRT_adj', 'outcome_motiononset', 'outcome_motiondur'});
         outputFile = fullfile(dataDir, sub, newtaskname, ...
             strcat(sub, '_', ses, '_', newtaskname, '_', run, '_', runtype,'_beh-preproc.csv'));
         writetable(newCsvData, outputFile)
-
+        
     end
 end
