@@ -75,13 +75,13 @@ for i = 1:length(subjectsWithTaskSocial)
         %% load data
         % *outcome_trajectory.mat files contain mouse outcome_trajectories
         matFile = dir(fullfile(dataDir, sub, taskname, ses,...
-            strcat(sub, '_', ses, '_', taskname, '_', run, '*_outcome_trajectory.mat')));
+            strcat(sub, '_', ses, '_', taskname, '_', run, '*_trajectory.mat')));
         csvFile = dir(fullfile(dataDir, sub, taskname, ses,...
             strcat(sub, '_', ses, '_', taskname, '_', run, '*_beh.csv')));
         if ~exist(matFile, 'file')
             % if there is .csv file but no .mat file
             % no information can be provided or updated
-            disp('sub exists but no outcome_trajectory file')
+            disp('sub exists but no trajectory file')
             continue
         end
         % load behavioral and outcome_trajectory data
