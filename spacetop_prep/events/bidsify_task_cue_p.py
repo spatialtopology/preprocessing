@@ -17,7 +17,7 @@ import logging
 # Step 2: Configure the logging system
 logging.basicConfig(filename='task-cue_pain.log',  # Log file path
                     filemode='w',            # Append mode ('w' for overwrite)
-                    level=logging.DEBUG,     # Logging level
+                    level=logging.INFO,     # Logging level
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')  # Log message format
 
 # Step 3: Create a logger object
