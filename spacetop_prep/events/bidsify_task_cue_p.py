@@ -114,6 +114,7 @@ for pain_fpath in sorted(filtered_pain_flist):
         traj_df = pd.read_csv(trajectory_fname)
     elif not trajectory_glob:
         logger.critical("Trajectory preproc is empty.")
+        continue
 
 
     # 3-1. calculate degree based on x, y coordinate
