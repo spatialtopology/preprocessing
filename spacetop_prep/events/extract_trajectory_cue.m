@@ -220,7 +220,11 @@ for i = 1:length(subjectsWithTaskSocial)
             {'expectrating_end_x', 'expectrating_end_y','expectRT_adj',...
             'expect_motiononset','expect_motiondur',...
             'outcomerating_end_x', 'outcomerating_end_y', 'outcomeRT_adj', 'outcome_motiononset', 'outcome_motiondur'});
-        outputFile = fullfile(dataDir, sub, newtaskname, ...
+	save_dir = fullfile(dataDir, sub, newtaskname, ses);
+	if ~exist(save_dir, 'dir')
+		mkdir(dirName);
+	end
+        outputFile = fullfile(save_dir,
             strcat(sub, '_', ses, '_', newtaskname, '_', run, '_', runtype,'_beh-preproc.csv'));
         writetable(newCsvData, outputFile)
         
