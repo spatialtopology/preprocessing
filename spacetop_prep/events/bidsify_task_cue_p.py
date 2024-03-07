@@ -98,7 +98,7 @@ for pain_fpath in sorted(filtered_pain_flist):
     sub_bids = re.search(r'sub-\d+', pain_fname).group(0)
     ses_bids = re.search(r'ses-\d+', pain_fname).group(0)
     run_bids = re.search(r'run-\d+', pain_fname).group(0)
-    runtype = re.search(r'run-\d+-(\w+)', pain_fname).group(1)
+    runtype = re.search(r'run-\d+-(\w+?)_beh', pain_fname).group(1)
 
 
     logger.info(f"\n\n_______ {sub_bids} {ses_bids} {run_bids} {runtype} _______")
@@ -108,7 +108,7 @@ for pain_fpath in sorted(filtered_pain_flist):
 
     # 3. load trajectory data and calculate ratings ____________________________
     trajectory_glob = glob.glob(join(beh_inputdir, sub_bids, 'task-cue', ses_bids, f"{sub_bids}_{ses_bids}_task-cue_{run_bids}_runtype-{runtype}_beh-preproc.csv"))
-
+    
     if trajectory_glob:
         trajectory_fname = trajectory_glob[0]
         traj_df = pd.read_csv(trajectory_fname)
