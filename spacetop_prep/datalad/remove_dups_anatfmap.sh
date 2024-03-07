@@ -16,8 +16,7 @@ dup_files=()
 while IFS= read -r -d $'\n' file; do
     dup_files+=("$file")
 done < <(find . -type f -path "*/fmap/*__dup-*.json")
-#find . -type f -name '**/fmap/*__dup-*')
-# done < <(find . -type f -path '*/func/*__dup-*')
+
 # Loop through each file found.
 for DUPJSON in "${dup_files[@]}"; do
     # Use jq to extract TR values.
@@ -28,19 +27,20 @@ for DUPJSON in "${dup_files[@]}"; do
         echo "$PRIMARYJSON: Error extracting TR value." >> "$error_log"
         continue
     fi
-
-#    PRIMARYJSON_SEC=$(echo $PRIMARYJSON_TR | awk -F: '{ print ($1 * 3600) + ($2 * 60) + $3 }')
-#    DUPJSON_SEC=$(echo $DUPJSON_TR | awk -F: '{ print ($1 * 3600) + ($2 * 60) + $3 }')
-PRIMARYJSON_SEC=$(echo $PRIMARYJSON_TR | awk -F: '{ split($3, a, "."); print ($1 * 3600) + ($2 * 60) + a[1] }')
-DUPJSON_SEC=$(echo $DUPJSON_TR | awk -F: '{ split($3, a, "."); print ($1 * 3600) + ($2 * 60) + a[1] }')
+PRIMARYJSON_NODEC=${PRIMARYJSON_TR%%.*}
+DUPJSON_NODEC=${DUPJSON_TR%%.*}
+    PRIMARYJSON_SEC=$(echo $PRIMARYJSON_NODEC |  tr -d '"'| awk -F: '{ print ($1 * 3600) + ($2 * 60) + $3 }')
+    DUPJSON_SEC=$(echo $DUPJSON_NODEC |  tr -d '"' | awk -F: '{ print ($1 * 3600) + ($2 * 60) + $3 }')
+#PRIMARYJSON_SEC=$(echo $PRIMARYJSON_TR | awk -F: '{ split($3, a, "."); print ($1 * 3600) + ($2 * 60) + a[1] }')
+#DUPJSON_SEC=$(echo $DUPJSON_TR | awk -F: '{ split($3, a, "."); print ($1 * 3600) + ($2 * 60) + a[1] }')
 
     # Compare the numeric values
     #if (( $(echo "$PRIMARYJSON_SEC < $DUPJSON_SEC" |bc -l) )); then
     if [ "$PRIMARYJSON_SEC" -lt "$DUPJSON_SEC" ]; then
 	echo -e "\n${DUPJSON}\nPRIMARYJSON acquisition time is earlier." >> $LOG_FILE
-        echo -e "Error: PRIMARYJSON ${PRIMARYJSON_SEC} ${PRIMARYJSON_TR} has an earlier time than DUPJSON ${DUPJSON_SEC} ${DUPJSON_TR}\n\n" >> $LOG_FILE
-elif [ "$PRIMARYJSON_SEC" -gt "$DUPJSON_SEC" ]; then
-#    elif (( $(echo "$PRIMARYJSON_SEC > $DUPJSON_SEC" |bc -l) )); then
+        echo -e "Error: PRIMARYJSON ${PRIMARYJSON_NODEC} ${PRIMARYJSON_SEC} has an earlier time than DUPJSON ${DUPJSON_NODEC} ${DUPJSON_SEC}\n\n" >> $LOG_FILE
+    elif [ "$PRIMARYJSON_SEC" -gt "$DUPJSON_SEC" ]; then
+    #elif (( $(echo "$PRIMARYJSON_SEC > $DUPJSON_SEC" |bc -l) )); then
         echo -e "\nDUPJSON acquisition time is earlier." >> $LOG_FILE
         echo -e "Info: DUPJSON is identified as the correct file due to earlier acquisition time." >> $LOG_FILE
         generic_filename=$(echo "$DUPJSON" | sed -E 's/(run-[0-9]+_).+(__dup-[0-9]+).*/\1*\2.*/')
@@ -54,7 +54,7 @@ elif [ "$PRIMARYJSON_SEC" -gt "$DUPJSON_SEC" ]; then
     else
         echo -e "\n${DUPJSON}\nAcquisition times are the same." >> $LOG_FILE
         # Log as error or info since times being the same might be unexpected
-        echo -e "Warning: PRIMARYJSON ${PRIMARYJSON_SEC} ${PRIMARYJSON_TR} and DUPJSON ${DUPJSON_SEC} ${DUPJSON_TR} have the same acquisition time.\n\n" >> $LOG_FILE
+        echo -e "Warning: PRIMARYJSON ${PRIMARYJSON_SEC} ${PRIMARYJSON_NODEC} and DUPJSON ${DUPJSON_SEC} ${DUPJSON_NODEC} have the same acquisition time.\n\n" >> $LOG_FILE
     fi
 
 done
