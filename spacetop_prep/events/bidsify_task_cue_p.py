@@ -22,7 +22,7 @@ logging.basicConfig(filename='task-cue_pain.log',  # Log file path
 
 # Step 3: Create a logger object
 logger = logging.getLogger('ExampleLogger')
-logger.setLevel(logging.INFO)
+
 __author__ = "Heejung Jung"
 __copyright__ = "Spatial Topology Project"
 __credits__ = ["Heejung"] # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
