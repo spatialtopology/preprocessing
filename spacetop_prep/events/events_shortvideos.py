@@ -11,6 +11,17 @@ import numpy as np
 import math
 import traceback
 
+def calc_adjusted_angle_df(df, x_col, y_col, xcenter, ycenter):
+    angles = np.arctan2((ycenter - df[y_col]), (df[x_col] - xcenter)) # Vectorized calculation of angles
+    angles = np.pi - angles # Adjust the angle so it's between 0 and π radians
+    angles_deg = np.abs(np.degrees(angles)) # Convert angles to degrees and ensure they are positive
+    # Ensure all angles fall within the 0 to 180 range
+    angles_deg = angles_deg % 360
+    angles_deg[angles_deg > 180] = 360 - angles_deg[angles_deg > 180]
+    return angles_deg
+
+# gLMS scale labels for expectation and outcome ratings
+
 # please change `behDataDir` to the top level of the `d_beh` directory
 # >>>
 behDataDir = '/Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh'
@@ -27,6 +38,18 @@ session = 'ses-03'
 run = '01'
 xcenter = 980
 ycenter = 707    # starting point and center point of the rating
+
+bins = [0, 1, 3, 10, 29, 64, 98, 180]
+labels = [
+    "No sensation",
+    "Barely detectable",
+    "Weak",
+    "Moderate",
+    "Strong",
+    "Very Strong",
+    "Strongest sensation of any kind"
+]
+
 
 for sub in subList: 
     dataFile = os.path.join(behDataDir, sub, taskname, f'{sub}_{session}_{taskname}_beh-preproc.csv')
@@ -74,6 +97,7 @@ for sub in subList:
         trial_type = 'rating'
         x = oriData.loc[t, 'rating_end_x']
         y = oriData.loc[t, 'rating_end_y']
+        # calc_adjusted_angle_df(oriData, 'rating_end_x', 'rating_end_y', xcenter, ycenter
         # calculating angles of ratings and corresponding labels
         if x > xcenter:
             response_angle = math.atan((ycenter-y)/(x-xcenter))
