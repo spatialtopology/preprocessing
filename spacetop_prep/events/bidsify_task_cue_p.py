@@ -139,12 +139,14 @@ for pain_fpath in sorted(filtered_pain_flist):
     traj_df['expect_translated_y'] = traj_df['expectrating_end_y'] - trajectory_y
     traj_df['outcome_translated_x'] = traj_df['outcomerating_end_x'] - trajectory_x
     traj_df['outcome_translated_y'] = traj_df['outcomerating_end_y'] - trajectory_y
+
+
     # 3-2. Calculate the angle in radians and then convert to degrees 
     traj_df['expectangle_degrees'] = np.degrees(np.arctan2(traj_df['expect_translated_y'], traj_df['expect_translated_x']))
-    traj_df['adjusted_expectangle_degrees'] = traj_df['expectangle_degrees'].apply(lambda x: x + 180 if x < 0 else x)
-
     traj_df['outcomeangle_degrees'] = np.degrees(np.arctan2(traj_df['outcome_translated_y'], traj_df['outcome_translated_x']))
-    traj_df['adjusted_outcomeangle_degrees'] = traj_df['outcomeangle_degrees'].apply(lambda x: x + 180 if x < 0 else x)
+
+    traj_df['adjusted_expectangle_degrees'] = traj_df['expectangle_degrees'] % 180
+    traj_df['adjusted_outcomeangle_degrees'] = traj_df['outcomeangle_degrees'] % 180
 
 
     # 3-3. check if the calculated new degree matches the one in beh_df
