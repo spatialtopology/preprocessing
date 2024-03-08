@@ -49,6 +49,8 @@ def calculate_ttl_values(stimulus_times, ttl_row, beh_df):
     
     return ttl_row
 # %%
+def is_equivalent(val1, val2, tolerance=1):
+    return abs(val1 - val2) <= tolerance
 # TODO:
 
 bids_dir = '/Users/h/Documents/projects_local/1076_spacetop' # the top directory of datalad
@@ -61,7 +63,7 @@ beh_inputdir = join(source_dir, 'd_beh')
 # -------------------------------------------------
 
 task_name = 'pain'
-pain_flist = glob.glob(join(beh_inputdir, '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
+pain_flist = glob.glob(join(beh_inputdir,'sub-*', '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
 filtered_pain_flist = [file for file in pain_flist if "sub-0001" not in file]
 trajectory_x = 960
 trajectory_y = 707
@@ -92,16 +94,16 @@ for pain_fpath in sorted(filtered_pain_flist):
     expect = bids_beh.copy();
     stim = bids_beh.copy();
     outcome = bids_beh.copy();
-   
+    logger.info(f"\n\n{pain_fpath}")   
     # 2. extract metadata from original behavioral file ________________________
     pain_fname = os.path.basename(pain_fpath)
     sub_bids = re.search(r'sub-\d+', pain_fname).group(0)
     ses_bids = re.search(r'ses-\d+', pain_fname).group(0)
     run_bids = re.search(r'run-\d+', pain_fname).group(0)
-    runtype = re.search(r'run-\d+-(\w+?)_beh', pain_fname).group(1)
+    runtype = re.search(r'run-\d+-(\w+?)_', pain_fname).group(1)
 
 
-    logger.info(f"\n\n_______ {sub_bids} {ses_bids} {run_bids} {runtype} _______")
+    logger.info(f"_______ {sub_bids} {ses_bids} {run_bids} {runtype} _______")
     beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
     beh_df = pd.read_csv(pain_fpath)
     trigger = beh_df['param_trigger_onset'][0]
@@ -124,13 +126,12 @@ for pain_fpath in sorted(filtered_pain_flist):
             raise FileNotFoundError("Trajectory preproc is empty.")
             
     except FileNotFoundError as e:
-        logger.critical(str(e))
-        break
-        
+        logger.warning(str(e))
+        continue 
     except Exception as e:
         # This catches any other exceptions that might occur
         logger.error("An error occurred while processing the trajectory file: %s", str(e))
-        break
+        continue
 
 
     # 3-1. calculate degree based on x, y coordinate
@@ -151,22 +152,29 @@ for pain_fpath in sorted(filtered_pain_flist):
 
     # 3-3. check if the calculated new degree matches the one in beh_df
 
-    beh_df['event02_expect_fillna'] = beh_df['event02_expect_angle']
-    beh_df['event02_expect_fillna'].fillna(traj_df['adjusted_expectangle_degrees'], inplace=True)
-    comparison_mask = np.isclose(beh_df['event02_expect_angle'], traj_df['adjusted_expectangle_degrees'], atol=1)
-    traj_df['comparison_flag'] = ~comparison_mask
+    beh_df['event02_expect_fillna'] = beh_df['event02_expect_angle'].round(2)
+    beh_df['event02_expect_fillna'].fillna(traj_df['adjusted_expectangle_degrees'].round(2), inplace=True)
+    comparison_series = beh_df['event02_expect_fillna'].round(2) == traj_df['adjusted_expectangle_degrees'].round(2)
+    traj_df['comparison_flag'] = ~comparison_series
     expect_overall_flag = traj_df['comparison_flag'].any()
     if expect_overall_flag:
-        logger.info(f"{sub_bids} {ses_bids} {run_bids} 3-3. angles do not match between behavioral data and trajectory data")
-        logger.info(f"{beh_df['event02_expect_fillna'].head()}, {traj_df['adjusted_expectangle_degrees'].head()}")
-        # break
-    beh_df['event04_outcome_fillna'] = beh_df['event04_actual_angle']
-    beh_df['event04_outcome_fillna'].fillna(traj_df['adjusted_outcomeangle_degrees'], inplace=True)
-    outcome_comparison_mask = np.isclose(beh_df['event04_actual_angle'], traj_df['adjusted_outcomeangle_degrees'], atol=1)
+        discrepancy_indices = traj_df[traj_df['comparison_flag']].index
+        for idx in discrepancy_indices:
+            logger.info(f"\tExpect Rating {idx}: (traj_df): {traj_df.loc[idx]['adjusted_expectangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event02_expect_fillna']}")
+
+    beh_df['event04_outcome_fillna'] = beh_df['event04_actual_angle'].round(2)
+    beh_df['event04_outcome_fillna'].fillna(traj_df['adjusted_outcomeangle_degrees'].round(2), inplace=True)
+    outcome_comparison_mask = beh_df['event04_actual_angle'].round(2) == traj_df['adjusted_outcomeangle_degrees'].round(2)
     traj_df['outcome_comparisonflag'] = ~outcome_comparison_mask
     outcome_overall_flag = traj_df['outcome_comparisonflag'].any()
+
     if outcome_overall_flag:
-        logger.warning("3-3. angles do not match between behavioral data and trajectory data")
+        discrepancy_indices = traj_df[traj_df['outcome_comparisonflag']].index
+        for idx in discrepancy_indices:
+            logger.info(f"\tOutcome Rating {idx} (traj_df): {traj_df.loc[idx]['adjusted_outcomeangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event04_outcome_fillna']}")
+
+
+
         # break
 
 
