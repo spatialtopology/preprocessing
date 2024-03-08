@@ -156,7 +156,7 @@ for pain_fpath in sorted(filtered_pain_flist):
     expect_overall_flag = traj_df['comparison_flag'].any()
     if expect_overall_flag:
         logger.error(f"{sub_bids} {ses_bids} {run_bids} 3-3. angles do not match between behavioral data and trajectory data")
-        logger.info(beh_df['event02_expect_fillna'].head(), traj_df['adjusted_expectangle_degrees'].head())
+        logger.info(f"{beh_df['event02_expect_fillna'].head()}, {traj_df['adjusted_expectangle_degrees'].head()}")
         break
     beh_df['event04_outcome_fillna'] = beh_df['event04_actual_angle']
     beh_df['event04_outcome_fillna'].fillna(traj_df['adjusted_outcomeangle_degrees'], inplace=True)
