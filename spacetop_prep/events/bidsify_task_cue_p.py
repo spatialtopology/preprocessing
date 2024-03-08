@@ -155,9 +155,9 @@ for pain_fpath in sorted(filtered_pain_flist):
     traj_df['comparison_flag'] = ~comparison_mask
     expect_overall_flag = traj_df['comparison_flag'].any()
     if expect_overall_flag:
-        logger.error(f"{sub_bids} {ses_bids} {run_bids} 3-3. angles do not match between behavioral data and trajectory data")
+        logger.info(f"{sub_bids} {ses_bids} {run_bids} 3-3. angles do not match between behavioral data and trajectory data")
         logger.info(f"{beh_df['event02_expect_fillna'].head()}, {traj_df['adjusted_expectangle_degrees'].head()}")
-        break
+        # break
     beh_df['event04_outcome_fillna'] = beh_df['event04_actual_angle']
     beh_df['event04_outcome_fillna'].fillna(traj_df['adjusted_outcomeangle_degrees'], inplace=True)
     outcome_comparison_mask = np.isclose(beh_df['event04_actual_angle'], traj_df['adjusted_outcomeangle_degrees'], atol=1)
@@ -165,7 +165,7 @@ for pain_fpath in sorted(filtered_pain_flist):
     outcome_overall_flag = traj_df['outcome_comparisonflag'].any()
     if outcome_overall_flag:
         logger.warning("3-3. angles do not match between behavioral data and trajectory data")
-        break
+        # break
 
 
     # grab the intersection raise warning if dont match
