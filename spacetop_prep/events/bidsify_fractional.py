@@ -232,7 +232,7 @@ for posner_fpath in sorted(posner_flist):
     # concatenate above dataframes and save in new folder
     posner_events = pd.concat([subset_valid, subset_invalid, subset_target], ignore_index=True)
     posner_events_sorted = posner_events.sort_values(by='onset')
-    # beh_savedir = join(main_dir, 'data' , 'beh', 'beh03_bids', sub_bids)
+
     Path(beh_savedir).mkdir( parents=True, exist_ok=True )
     # extract bids info and save as new file
     posner_events_sorted.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-{task_name}_{run_bids}_events.tsv"), sep='\t', index=False)
@@ -341,7 +341,6 @@ events_json = {"onset": description_onset,
                 "trial_index":description_trialind,
                 }  
 # TODO: change fname to be subject specific
-# json_fname = join(beh_savedir, f"{sub_bids}_{ses_bids}_task-{task_name}_{run_bids}_events.json")
 json_fname = join(bids_dir, f"task-{task_name}_events.json")
 with open(json_fname, 'w') as file:
     json.dump(events_json, file, indent=4)

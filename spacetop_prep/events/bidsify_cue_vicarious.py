@@ -6,7 +6,7 @@
 - rating onset
 - potential covariates?
 """
-# %%
+
 import numpy as np
 import pandas as pd
 import os, glob, re, json
@@ -14,14 +14,14 @@ from os.path import join
 from pathlib import Path
 import logging
 
-# Step 2: Configure the logging system
+# 0. Configure the logging system
 logging.basicConfig(filename='task-cue_vicarious.log',  # Log file path
                     filemode='w',            # Append mode ('w' for overwrite)
                     level=logging.INFO,     # Logging level
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')  # Log message format
 
 # Step 3: Create a logger object
-logger = logging.getLogger('cognitive')
+logger = logging.getLogger('vicarious')
 
 __author__ = "Heejung Jung"
 __copyright__ = "Spatial Topology Project"
@@ -32,11 +32,10 @@ __maintainer__ = "Heejung Jung"
 __email__ = "heejung.jung@colorado.edu"
 __status__ = "Development" 
 
+
 # %%
 def is_equivalent(val1, val2, tolerance=1):
     return abs(val1 - val2) <= tolerance
-# TODO:
-
 def calc_adjusted_angle_df(df, x_col, y_col, xcenter, ycenter):
     # Vectorized calculation of angles
     angles = np.arctan2((ycenter - df[y_col]), (df[x_col] - xcenter))
@@ -58,13 +57,13 @@ code_dir = '/Users/h/Documents/projects_local/1076_spacetop/code' # where this c
 source_dir = '/Users/h/Documents/projects_local/1076_spacetop/sourcedata'# where the source behavioral directory lives
 beh_inputdir = join(source_dir, 'd_beh')
 
-# %% -----------------------------------------------
-#                       cognitive
-# -------------------------------------------------
+# %% ---------------------------------------------------------------------------
+#                                vicarious
+# ------------------------------------------------------------------------------
 
-task_name = 'cognitive'
-cognitive_flist = glob.glob(join(beh_inputdir,'sub-*', '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
-filtered_cognitive_flist = [file for file in cognitive_flist if "sub-0001" not in file]
+task_name = 'vicarious'
+vicarious_flist = glob.glob(join(beh_inputdir,'sub-*', '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
+filtered_vicarious_flist = [file for file in vicarious_flist if "sub-0001" not in file]
 trajectory_x = 960
 trajectory_y = 707
 
@@ -81,44 +80,44 @@ labels = [
 ]
 
 # %%
-for cognitive_fpath in sorted(filtered_cognitive_flist):
+for vicarious_fpath in sorted(filtered_vicarious_flist):
 # %%
     # 1. create an empty dataframe to host new BIDS data _______________________
-    bids_beh = pd.DataFrame(columns=[
-        'onset', 'duration', 'trial_type','trial_index','cue', 'stimulusintensity', 
-        'rating_value', 'rating_glmslabel', 'rating_value_fillna', 
-        'rating_glmslabel_fillna','rating_mouseonset','rating_mousedur',
-        'stim_file', 'correct_response', 'participant_response', 'response_accuracy'])
-
+    bids_beh = pd.DataFrame(columns=['onset', 'duration', 'trial_type','trial_index','cue', 'stimulusintensity', 'rating_value', 'rating_glmslabel', 'rating_value_fillna', 'rating_glmslabel_fillna','rating_mouseonset','rating_mousedur','stim_file'])
     cue = bids_beh.copy();
     expect = bids_beh.copy();
     stim = bids_beh.copy();
     outcome = bids_beh.copy();
-    logger.info(f"\n\n{cognitive_fpath}")   
-
-
+    logger.info(f"\n\n{vicarious_fpath}")   
     # 2. extract metadata from original behavioral file ________________________
-    cognitive_fname = os.path.basename(cognitive_fpath)
-    sub_bids = re.search(r'sub-\d+', cognitive_fname).group(0)
-    ses_bids = re.search(r'ses-\d+', cognitive_fname).group(0)
-    run_bids = re.search(r'run-\d+', cognitive_fname).group(0)
-    runtype = re.search(r'run-\d+-(\w+?)_', cognitive_fname).group(1)
+    vicarious_fname = os.path.basename(vicarious_fpath)
+    sub_bids = re.search(r'sub-\d+', vicarious_fname).group(0)
+    ses_bids = re.search(r'ses-\d+', vicarious_fname).group(0)
+    run_bids = re.search(r'run-\d+', vicarious_fname).group(0)
+    runtype = re.search(r'run-\d+-(\w+?)_', vicarious_fname).group(1)
+
 
     logger.info(f"_______ {sub_bids} {ses_bids} {run_bids} {runtype} _______")
     beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
-    beh_df = pd.read_csv(cognitive_fpath)
+    beh_df = pd.read_csv(vicarious_fpath)
     trigger = beh_df['param_trigger_onset'][0]
 
     # 3. load trajectory data and calculate ratings ____________________________
     trajectory_glob = glob.glob(join(beh_inputdir, sub_bids, 'task-cue', ses_bids, f"{sub_bids}_{ses_bids}_task-cue_{run_bids}_runtype-{runtype}_beh-preproc.csv"))
     
+    # if trajectory_glob:
+    #     trajectory_fname = trajectory_glob[0]
+    #     traj_df = pd.read_csv(trajectory_fname)
+    # elif not trajectory_glob:
+    #     logger.critical("Trajectory preproc is empty.")
+    #     break
     try:
         if trajectory_glob:
             trajectory_fname = trajectory_glob[0]
             traj_df = pd.read_csv(trajectory_fname)
         else:
             # If trajectory_glob is empty, raise a custom exception
-            raise FileNotFoundError("Trajectory preproc DOES NOT exist")
+            raise FileNotFoundError("Trajectory preproc is empty.")
             
     except FileNotFoundError as e:
         logger.warning(str(e))
@@ -136,23 +135,24 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
     # traj_df['outcome_translated_x'] = traj_df['outcomerating_end_x'] - trajectory_x
     # traj_df['outcome_translated_y'] = traj_df['outcomerating_end_y'] - trajectory_y
 
+
+    # # 3-2. Calculate the angle in radians and then convert to degrees 
     # traj_df['expectangle_degrees'] = np.degrees(np.arctan2(traj_df['expect_translated_y'], traj_df['expect_translated_x']))
     # traj_df['outcomeangle_degrees'] = np.degrees(np.arctan2(traj_df['outcome_translated_y'], traj_df['outcome_translated_x']))
+
     # traj_df['adjusted_expectangle_degrees'] = traj_df['expectangle_degrees'] % 180
     # traj_df['adjusted_outcomeangle_degrees'] = traj_df['outcomeangle_degrees'] % 180
-
-    # 3-2. Calculate the angle in radians and then convert to degrees 
     traj_df['expectangle_degrees'] = calc_adjusted_angle_df(
         traj_df, 'expectrating_end_x', 'expectrating_end_y', trajectory_x, trajectory_y)
     traj_df['outcomeangle_degrees'] = calc_adjusted_angle_df(
         traj_df, 'outcomerating_end_x', 'outcomerating_end_y', trajectory_x, trajectory_y)
 
 
-
     # 3-3. check if the calculated new degree matches the one in beh_df
+
     beh_df['event02_expect_fillna'] = beh_df['event02_expect_angle'].round(2)
     beh_df['event02_expect_fillna'].fillna(traj_df['adjusted_expectangle_degrees'].round(2), inplace=True)
-    comparison_series = beh_df['event02_expect_fillna'].round(2) == traj_df['adjusted_expectangle_degrees'].round(2)
+    comparison_series = ((beh_df['event02_expect_angle'].round(2)) == (traj_df['adjusted_expectangle_degrees'].round(2)))
     traj_df['comparison_flag'] = ~comparison_series
     expect_overall_flag = traj_df['comparison_flag'].any()
     if expect_overall_flag:
@@ -162,7 +162,7 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
 
     beh_df['event04_outcome_fillna'] = beh_df['event04_actual_angle'].round(2)
     beh_df['event04_outcome_fillna'].fillna(traj_df['adjusted_outcomeangle_degrees'].round(2), inplace=True)
-    outcome_comparison_mask = beh_df['event04_actual_angle'].round(2) == traj_df['adjusted_outcomeangle_degrees'].round(2)
+    outcome_comparison_mask = ((beh_df['event04_actual_angle'].round(2)) == (traj_df['adjusted_outcomeangle_degrees'].round(2)))
     traj_df['outcome_comparisonflag'] = ~outcome_comparison_mask
     outcome_overall_flag = traj_df['outcome_comparisonflag'].any()
 
@@ -171,6 +171,8 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
         for idx in discrepancy_indices:
             logger.info(f"\tOutcome Rating {idx} (traj_df): {traj_df.loc[idx]['adjusted_outcomeangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event04_outcome_fillna']}")
 
+
+    # grab the intersection raise warning if dont match
     
     # map it to new label
     # 4. cue ___________________________________________________________________
@@ -191,9 +193,7 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
         continue
     cue['stimulusintensity'] =  "n/a"
     cue['stim_file'] = beh_df["event01_cue_filename"]
-    cue['correct_response'] = "n/a"
-    cue['participant_response'] = "n/a"
-    cue['response_accuracy'] = "n/a"
+
 
           
     # 5. expect ________________________________________________________________
@@ -201,6 +201,7 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
     expect['duration'] = (beh_df['event02_expect_RT']).round(2)
     expect['trial_type'] = 'expectrating'
     expect['trial_index'] =  beh_df.index +1
+
     expect['rating_value'] =  beh_df['event02_expect_angle'].round(2)
     expect['rating_glmslabel'] = pd.cut(expect['rating_value'], 
                                         bins=bins, labels=labels, right=True)
@@ -210,11 +211,9 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
     expect['rating_mouseonset'] = (traj_df['expect_motiononset']).round(2)
     expect['rating_mousedur'] = (traj_df['expect_motiondur']).round(2)
     expect['cue'] = beh_df['event01_cue_type'] # if same as param_cue_type
-    expect['stimulusintensity'] = "n/a"
+    expect['stimulusintensity'] =  "n/a"
     expect['stim_file'] = beh_df["event01_cue_filename"]
-    expect['correct_response'] = "n/a"
-    expect['participant_response'] = "n/a"
-    expect['response_accuracy'] = "n/a"
+
     
     # 6. stim __________________________________________________________________
 
@@ -230,10 +229,7 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
     stim['rating_mousedur'] = "n/a"
     stim['cue'] = beh_df['event01_cue_type'] # if same as param_cue_type
     stim['stimulusintensity'] =  beh_df['event03_stimulus_type']
-    stim['stim_file'] = beh_df['event03_C_stim_filename'] 
-    stim['correct_response'] = beh_df['event03_C_stim_match']
-    stim['participant_response'] = beh_df['event03_stimulusC_responsekeyname'].map({'right':'same', 'left':'diff'})
-    stim['response_accuracy'] = stim['correct_response'] == stim['participant_response']
+    stim['stim_file'] = beh_df['event03_stimulus_V_filename'] 
 
 
     # outcome __________________________________________________________________
@@ -251,10 +247,7 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
     outcome['rating_mousedur'] = (traj_df['outcome_motiondur']).round(2)
     outcome['cue'] = beh_df['event01_cue_type'] 
     outcome['stimulusintensity'] =  beh_df['event03_stimulus_type']
-    outcome['stim_file'] = 'task-cognitive_scale.png'
-    outcome['correct_response'] = "n/a"
-    outcome['participant_response'] = "n/a"
-    outcome['response_accuracy'] = "n/a"
+    outcome['stim_file'] = 'task-vicarious_scale.png'
 
 
     events = pd.concat([cue, expect, stim, outcome], ignore_index=True)
