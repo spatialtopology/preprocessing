@@ -55,6 +55,34 @@ def calc_adjusted_angle_df(df, x_col, y_col, xcenter, ycenter):
     
     return angles_deg
 
+
+
+def calc_adjusted_angle_df(df, x_col, y_col, xcenter, ycenter):
+    # Calculate distance from the origin (xcenter, ycenter)
+    distance = np.sqrt((df[x_col] - xcenter)**2 + (ycenter - df[y_col])**2)
+
+    # Initialize angles array with NaN or another default value for points too close to the origin
+    angles_deg = np.full(df.shape[0], np.nan)
+
+    # Only calculate angles for points more than 80 units away from the origin
+    mask = distance > 80
+    angles = np.arctan2((ycenter - df.loc[mask, y_col]), (df.loc[mask, x_col] - xcenter))
+
+    # Adjust the angle so it's between 0 and π radians
+    angles = np.pi - angles
+
+    # Convert angles to degrees and ensure they are positive
+    angles_deg[mask] = np.abs(np.degrees(angles))
+
+    # Ensure all angles fall within the 0 to 180 range
+    angles_deg = angles_deg % 360
+    angles_deg[angles_deg > 180] = 360 - angles_deg[angles_deg > 180]
+
+    return angles_deg
+
+
+
+
 def is_equivalent(val1, val2, tolerance=1):
     return abs(val1 - val2) <= tolerance
 # TODO:
@@ -148,7 +176,7 @@ for pain_fpath in sorted(filtered_pain_flist):
             
     except FileNotFoundError as e:
         logger.warning(str(e))
-        logger.warning("Trajectory preproc DOES NOT EXIST")
+        logger.warning(f"___{sub_bids}_{ses_bids}_task-cue_{run_bids}___ Trajectory preproc DOES NOT EXIST")
         continue 
     except Exception as e:
         # This catches any other exceptions that might occur
@@ -158,9 +186,9 @@ for pain_fpath in sorted(filtered_pain_flist):
 
     # 3-1. calculate degree based on x, y coordinate
     # 3-2. Calculate the angle in radians and then convert to degrees 
-    traj_df['expectangle_degrees'] = calc_adjusted_angle_df(
+    traj_df['adjusted_expectangle_degrees'] = calc_adjusted_angle_df(
         traj_df, 'expectrating_end_x', 'expectrating_end_y', trajectory_x, trajectory_y)
-    traj_df['outcomeangle_degrees'] = calc_adjusted_angle_df(
+    traj_df['adjusted_outcomeangle_degrees'] = calc_adjusted_angle_df(
         traj_df, 'outcomerating_end_x', 'outcomerating_end_y', trajectory_x, trajectory_y)
 
 
