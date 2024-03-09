@@ -277,7 +277,7 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
 
     events = pd.concat([cue, expect, stim, outcome], ignore_index=True)
     events_sorted = events.sort_values(by='onset')
-
+    events_sorted = events_sorted.fillna("n/a")
     if os.path.exists(beh_savedir) and os.path.isdir(beh_savedir):
         events.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-cue_acq-mb8_{run_bids}_desc-{task_name}_events.tsv"), sep='\t', index=False)
     else:
