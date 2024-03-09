@@ -103,7 +103,7 @@ for saxe_fpath in sorted(filtered_saxe_flist):
     # beh_savedir = join(main_dir, 'data' , 'beh', 'beh03_bids', sub_bids)
     Path(beh_savedir).mkdir( parents=True, exist_ok=True )
     # extract bids info and save as new file
-    events.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-{task_name}_{run_bids}_events.tsv"), sep='\t', index=False)
+    events.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_desc-{task_name}_events.tsv"), sep='\t', index=False)
 
 # create json files
 
@@ -235,7 +235,7 @@ for posner_fpath in sorted(posner_flist):
 
     Path(beh_savedir).mkdir( parents=True, exist_ok=True )
     # extract bids info and save as new file
-    posner_events_sorted.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-{task_name}_{run_bids}_events.tsv"), sep='\t', index=False)
+    posner_events_sorted.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_desc-{task_name}_events.tsv"), sep='\t', index=False)
 
     # create json files
 
@@ -504,7 +504,7 @@ for memory_fpath in memory_flist:
     
 
     Path(beh_savedir).mkdir( parents=True, exist_ok=True )
-    save_fname = f"{sub_bids}_ses-04_task-{task_name}_{run_bids}_events.tsv"
+    save_fname = f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_desc-{task_name}_events.tsv"
     membids_df.to_csv(join(beh_savedir, save_fname), sep='\t', index=False)
 
 
@@ -664,8 +664,9 @@ for spunt_fpath in spunt_flist:
 
 
     Path(beh_savedir).mkdir( parents=True, exist_ok=True )
-    save_fname = f"{sub_bids}_ses-04_task-{task_name}_{run_bids}_events.tsv"
+    save_fname = f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_desc-{task_name}_events.tsv"
     events.to_csv(join(beh_savedir, save_fname), sep='\t', index=False)
+
 
 # create metadata    
 description_onset = {
