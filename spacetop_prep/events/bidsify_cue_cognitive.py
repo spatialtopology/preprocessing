@@ -15,7 +15,7 @@ from pathlib import Path
 import logging
 
 # Step 2: Configure the logging system
-logging.basicConfig(filename='task-cue_vicarious.log',  # Log file path
+logging.basicConfig(filename='task-cue_cognitive.log',  # Log file path
                     filemode='w',            # Append mode ('w' for overwrite)
                     level=logging.INFO,     # Logging level
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')  # Log message format
