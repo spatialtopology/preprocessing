@@ -6,10 +6,12 @@
 
 # Define a file to log errors
 # error_log="error_log_funcanat.txt"
+
 LOG_FILE="fmap_error_log.txt"
 if [ -f "$LOG_FILE" ]; then
     rm "$LOG_FILE"
 fi
+
 
 SUMMARYLOG_FILE="fmap_summary_log.txt"
 if [ -f "$SUMMARYLOG_FILE" ]; then

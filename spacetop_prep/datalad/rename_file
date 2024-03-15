@@ -1,0 +1,59 @@
+#!/bin/bash
+# Simple helper which renames files but also checks _scans.tsv file
+# for possibly needed renaming and then tripple checks that git
+# doesn't have any memory of the old file left.
+# Restrictions:
+#  must be within the same folder
+# To swap two files names you can do smth like:
+#  f1=sub-0001_ses-03_task-alignvideo_acq-mb8_run-01_bold.nii.gz; f2=sub-0001_ses-03_task-alignvideo_acq-mb8_run-02_bold.nii.gz; \
+#	../../../code/rename_file "$f1" CRAP; ../../../code/rename_file "$f2" "$f1"; ../../../code/rename_file CRAP "$f2";
+
+
+set -eu
+
+fr="$1"
+to="$2"
+
+frd=$(realpath --no-symlinks "$fr" | xargs dirname)
+tod=$(realpath --no-symlinks "$to" | xargs dirname)
+
+sesdir="$frd/.."
+
+if [ "$frd" != "$tod" ] ; then
+	echo "ERROR: both paths must remain in the same directory. Got $frd != $tod"
+	exit 1
+fi
+
+# if [ ! -e "$fr" ]; then
+# 	echo "ERROR: $fr doesn't exist"
+# 	exit 1
+# fi
+
+if [ -e "$to" ]; then
+	echo "ERROR: $to already exists!"
+	exit 1
+fi
+
+sed_rule="s,$(basename $fr),$(basename $to),g"
+
+scans_file=$(/bin/ls -1 $frd/../*_scans.tsv 2>/dev/null || :)
+if [ -n "$scans_file" ]; then
+	# ensure we have all needed files
+	datalad get "$scans_file"
+	#echo "ERROR: we want our scans_file under $frd/.."
+	#exit 1
+	echo "Need to replace in $scans_file"
+	[ ! -s "$scans_file" ] || git annex unlock "$scans_file"
+	sed -i -e "$sed_rule" "$scans_file"
+	git annex add "$scans_file"
+fi
+fmap_folder=$(/bin/ls -d1 $frd/../fmap 2>/dev/null || :)
+if [ -e "$fmap_folder" ]; then
+	echo "Potentially fixing fieldmap side car files"
+	# doing lazy way for now -- just ignore if error. TODO: make it robust etc
+	git annex unlock "$fmap_folder"/*.json || :
+	sed -i -e "$sed_rule" "$fmap_folder"/*.json
+	git annex add "$fmap_folder"/*.json
+fi
+
+git mv "$fr" "$to"
