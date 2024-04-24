@@ -19,7 +19,7 @@ outputDir = '/Users/h/Documents/projects_local/1076_spacetop'
 # get a list of subjects with available data
 folders = glob.glob(os.path.join(outputDir, 'sub-*'))
 subList = [os.path.basename(x) for x in folders]
-taskname = 'task-alignvideo'
+taskname = 'task-alignvideos'
 sessionDict = {'ses-01': 4, 'ses-02': 4, 'ses-03': 3, 'ses-04': 2}    # different sessions have different numbers of runs
 
 for sub in sorted(subList):    
@@ -142,7 +142,7 @@ for sub in sorted(subList):
 
             # save new events file
             try:
-                newFilename = os.path.join(outputDir, sub, session, 'func', f'{sub}_{session}_{taskname}_acq-mb8_{run}_events.tsv')
+                newFilename = os.path.join(outputDir, sub, session, 'func', f'{sub}_{session}_task-alignvideo_acq-mb8_{run}_events.tsv')
                 newData.to_csv(newFilename, sep='\t', index=False)
             except:
                 print(f"failed to save {sub} {session} {taskname} {run}")
