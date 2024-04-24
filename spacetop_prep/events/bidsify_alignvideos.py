@@ -141,5 +141,8 @@ for sub in subList:
             newData = newData.replace(np.nan, 'n/a')
 
             # save new events file
-            newFilename = os.path.join(outputDir, sub, session, 'func', f'{sub}_{session}_{taskname}_acq-mb8_{run}_events.tsv')
-            newData.to_csv(newFilename, sep='\t', index=False)
+            try:
+                newFilename = os.path.join(outputDir, sub, session, 'func', f'{sub}_{session}_{taskname}_acq-mb8_{run}_events.tsv')
+                newData.to_csv(newFilename, sep='\t', index=False)
+            except:
+                print(f"failed to save {sub} {session} {taskname} {run}")
