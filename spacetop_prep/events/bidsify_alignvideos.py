@@ -22,7 +22,7 @@ subList = [os.path.basename(x) for x in folders]
 taskname = 'task-alignvideo'
 sessionDict = {'ses-01': 4, 'ses-02': 4, 'ses-03': 3, 'ses-04': 2}    # different sessions have different numbers of runs
 
-for sub in subList:    
+for sub in sorted(subList):    
     for session in sessionDict:
         for r in range(sessionDict[session]):
             run = 'run-0' + str(r+1)
