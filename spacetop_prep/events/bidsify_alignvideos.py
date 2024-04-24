@@ -19,7 +19,7 @@ outputDir = '/Users/h/Documents/projects_local/1076_spacetop'
 # get a list of subjects with available data
 folders = glob.glob(os.path.join(outputDir, 'sub-*'))
 subList = [os.path.basename(x) for x in folders]
-taskname = 'task-alignvideos'
+taskname = 'task-alignvideo'
 sessionDict = {'ses-01': 4, 'ses-02': 4, 'ses-03': 3, 'ses-04': 2}    # different sessions have different numbers of runs
 
 for sub in subList:    
