@@ -38,7 +38,7 @@ dup_files=()
 while IFS= read -r -d $'\n' file; do
     dup_files+=("$file")
 done < <(find . -name '*bold__dup-*')
-# done < <(find .  -path '*/func/*__dup-*')
+
 # Loop through each file found.
 for DUPJSON in "${dup_files[@]}"; do
     # Use jq to extract TR values.
