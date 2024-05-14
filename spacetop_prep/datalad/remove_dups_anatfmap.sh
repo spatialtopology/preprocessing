@@ -17,12 +17,11 @@ SUMMARYLOG_FILE="fmap_summary_log.txt"
 if [ -f "$SUMMARYLOG_FILE" ]; then
     rm "$SUMMARYLOG_FILE"
 fi
-# mapfile -t dup_files < <(find . -type f -name '*__dup-*')
 
 dup_files=()
 while IFS= read -r -d $'\n' file; do
     dup_files+=("$file")
-done < <(find . -type f -path "*/fmap/*__dup-*.json")
+done < <(find . -path "*/fmap/*__dup-*.json")
 
 # Loop through each file found.
 for DUPJSON in "${dup_files[@]}"; do

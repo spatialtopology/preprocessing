@@ -34,13 +34,11 @@ done
 # Define a file to log errors
 error_log="error_log.txt"
 
-# mapfile -t dup_files < <(find . -type f -name '*__dup-*')
-
 dup_files=()
 while IFS= read -r -d $'\n' file; do
     dup_files+=("$file")
-done < <(find . -type f -name '*bold__dup-*')
-# done < <(find . -type f -path '*/func/*__dup-*')
+done < <(find . -name '*bold__dup-*')
+# done < <(find .  -path '*/func/*__dup-*')
 # Loop through each file found.
 for DUPJSON in "${dup_files[@]}"; do
     # Use jq to extract TR values.
