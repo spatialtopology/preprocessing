@@ -37,7 +37,7 @@ error_log="error_log.txt"
 dup_files=()
 while IFS= read -r -d $'\n' file; do
     dup_files+=("$file")
-done < <(find . -name '*bold__dup-*')
+done < <(find . -path './.sourcedata' -prune -o -name '*bold__dup-*')
 
 # Loop through each file found.
 for DUPJSON in "${dup_files[@]}"; do
