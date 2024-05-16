@@ -141,7 +141,7 @@ for DUPJSON in "${dup_files[@]}"; do
                 # - [FALSE] DUP TR  == expected TR
                 # - [FALSE] DUP TR < BOLD, -> DUP ge BOLD
                 # - [ TRUE] DUP hour time is later than BOLD (BOLDJSON_SEC)
-                else [[ "$BOLDJSON_TR" -ne "$EXPECTED_TR" && \
+                elif [[ "$BOLDJSON_TR" -ne "$EXPECTED_TR" && \
                 "$DUPJSON_TR" -ne "$EXPECTED_TR" ]]; then
                     echo -e "\nCASE 3: DUP BOLD limbo"
                     echo -e "\t$BOLDJSON"
