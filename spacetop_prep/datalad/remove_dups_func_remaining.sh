@@ -87,14 +87,14 @@ for DUPJSON in "${dup_files[@]}"; do
             # - DUP hour time is later than BOLD (BOLDJSON_SEC)[NA]
             if [[ "$BOLDJSON_TR" -eq "$EXPECTED_TR" && \
                 "$DUPJSON_TR" -lt "$BOLDJSON_TR" ]]; then
-                echo "\nCASE 1: BOLD is primary; delete DUPS"
-                echo "Conditions met for $DUPJSON. Removing file."
+                echo -e "\nCASE 1: BOLD is primary; delete DUPS"
+                echo -e "\tConditions met for $DUPJSON. Removing file."
                 generic_filename=$(echo "$DUPJSON" | sed -E 's/(run-[0-9]+_).+(__dup-[0-9]+).*/\1*\2.*/')
                 read -a files_to_remove <<< "$generic_filename"
                 # Loop through the array and remove each file
                 for rm_file in "${files_to_remove[@]}"; do
                     ######################### TST START #########################
-                    echo "REMOVE: $rm_file"
+                    echo -e "\tREMOVE: $rm_file"
                     # git rm "$rm_file"
                     ######################### TST END #########################
                 done
@@ -109,13 +109,13 @@ for DUPJSON in "${dup_files[@]}"; do
                 "$DUPJSON_TR" -eq "$EXPECTED_TR" && \
                 "$DUPJSON_TR" -ge "$BOLDJSON_TR" && \
                 "$BOLDJSON_SEC" -lt "$DUPJSON_SEC" ]]; then
-                    echo "\nCASE 2: DUP is primary"
-                    echo "$BOLDJSON"
-                    echo "\t* $BOLDJSON: BOLDJSON_TR (${BOLDJSON_TR}) does not match expected TR (${EXPECTED_TR})." >> "$error_log"
-                    echo "\t* $DUPJSON: DUPJSON_TR (${DUPJSON_TR}) matches expected TR (${EXPECTED_TR})." >> "$error_log"
-                    echo "\t* $DUPJSON: DUPJSON_TR (${DUPJSON_TR}) is not smaller than BOLDJSON_TR (${BOLDJSON_TR})." >> "$error_log"
-                    echo "\t* $DUPJSON: DUPJSON (${DUPJSON_SEC}) is acquired later than BOLDJSON (${BOLDJSON_SEC})." >> "$error_log"
-                    echo "DUPJSON is the primary file/ rename and resolve"
+                    echo -e "\nCASE 2: DUP is primary"
+                    echo -e "\t$BOLDJSON"
+                    echo -e "\t* $BOLDJSON: BOLDJSON_TR (${BOLDJSON_TR}) does not match expected TR (${EXPECTED_TR})." >> "$error_log"
+                    echo -e "\t* $DUPJSON: DUPJSON_TR (${DUPJSON_TR}) matches expected TR (${EXPECTED_TR})." >> "$error_log"
+                    echo -e "\t* $DUPJSON: DUPJSON_TR (${DUPJSON_TR}) is not smaller than BOLDJSON_TR (${BOLDJSON_TR})." >> "$error_log"
+                    echo -e "\t* $DUPJSON: DUPJSON (${DUPJSON_SEC}) is acquired later than BOLDJSON (${BOLDJSON_SEC})." >> "$error_log"
+                    echo -e "\tDUPJSON is the primary file/ rename and resolve"
 
                     # rename BOLD.json
                     # echo "\t*CHANGE FILENAME: ${DUPJSON} -> ${BOLDJSON}"
@@ -143,9 +143,9 @@ for DUPJSON in "${dup_files[@]}"; do
                 # - [ TRUE] DUP hour time is later than BOLD (BOLDJSON_SEC)
                 if [[ "$BOLDJSON_TR" -ne "$EXPECTED_TR" && \
                 "$DUPJSON_TR" -ne "$EXPECTED_TR" ]]; then
-                    echo "\nCASE 3: DUP BOLD limbo"
-                    echo "$BOLDJSON"
-                    echo "\t* $BOLDJSON: $DUPJSON limbo BOLD NOR DUP matches expected TR" >> "$error_log"
+                    echo -e "\nCASE 3: DUP BOLD limbo"
+                    echo -e "\t$BOLDJSON"
+                    echo -e "\t* $BOLDJSON: $DUPJSON limbo BOLD NOR DUP matches expected TR" >> "$error_log"
                 fi
                 echo "\nCASE 4: No clue"
                 echo "$BOLDJSON"
