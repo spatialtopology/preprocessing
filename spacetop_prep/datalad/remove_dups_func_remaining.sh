@@ -81,17 +81,13 @@ for DUPJSON in "${dup_files[@]}"; do
             echo "Found matching key: $key with TR: $EXPECTED_TR for file $DUPJSON"
 
             # CASE 1: BOLD is primary
-            # - [TRUE] BOLD acquisiiton matches expected TR
-            # - [TRUE] DUP acquition is shorter than BOLD, 
-            # - [IMPLICIT_FALSE] DUP hour time is later than BOLD (BOLDJSON_SEC)
-
-        
             # - BOLD TR == expected TR [TRUE]
             # - DUP TR  == expected TR [NA]
             # - DUP TR < BOLD [TRUE]
             # - DUP hour time is later than BOLD (BOLDJSON_SEC)[NA]
             if [[ "$BOLDJSON_TR" -eq "$EXPECTED_TR" && \
                 "$DUPJSON_TR" -lt "$BOLDJSON_TR" ]]; then
+                echo "\nCASE 1: BOLD is primary; delete DUPS"
                 echo "Conditions met for $DUPJSON. Removing file."
                 generic_filename=$(echo "$DUPJSON" | sed -E 's/(run-[0-9]+_).+(__dup-[0-9]+).*/\1*\2.*/')
                 read -a files_to_remove <<< "$generic_filename"
@@ -104,6 +100,7 @@ for DUPJSON in "${dup_files[@]}"; do
                 done
 
             else
+                # CASE 2: DUP is primary
                 # - [FALSE] BOLD TR == expected TR ->  BOLD TR ne expected TR
                 # - [ TRUE] DUP TR  == expected TR
                 # - [FALSE] DUP TR < BOLD, -> DUP ge BOLD
@@ -112,6 +109,7 @@ for DUPJSON in "${dup_files[@]}"; do
                 "$DUPJSON_TR" -eq "$EXPECTED_TR" && \
                 "$DUPJSON_TR" -ge "$BOLDJSON_TR" && \
                 "$BOLDJSON_SEC" -lt "$DUPJSON_SEC" ]]; then
+                    echo "\nCASE 2: DUP is primary"
                     echo "$BOLDJSON"
                     echo "\t* $BOLDJSON: BOLDJSON_TR (${BOLDJSON_TR}) does not match expected TR (${EXPECTED_TR})." >> "$error_log"
                     echo "\t* $DUPJSON: DUPJSON_TR (${DUPJSON_TR}) matches expected TR (${EXPECTED_TR})." >> "$error_log"
@@ -145,9 +143,12 @@ for DUPJSON in "${dup_files[@]}"; do
                 # - [ TRUE] DUP hour time is later than BOLD (BOLDJSON_SEC)
                 if [[ "$BOLDJSON_TR" -ne "$EXPECTED_TR" && \
                 "$DUPJSON_TR" -ne "$EXPECTED_TR" ]]; then
+                    echo "\nCASE 3: DUP BOLD limbo"
                     echo "$BOLDJSON"
                     echo "\t* $BOLDJSON: $DUPJSON limbo BOLD NOR DUP matches expected TR" >> "$error_log"
                 fi
+                echo "\nCASE 4: No clue"
+                echo "$BOLDJSON"
             fi
             break
         fi
