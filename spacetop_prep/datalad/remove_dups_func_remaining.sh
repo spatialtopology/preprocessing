@@ -98,6 +98,7 @@ for DUPJSON in "${dup_files[@]}"; do
                 # Loop through the array and remove each file
                 for rm_file in "${files_to_remove[@]}"; do
                     ######################### TST START #########################
+                    echo "REMOVE: $rm_file"
                     # git rm "$rm_file"
                     ######################### TST END #########################
                 done
@@ -150,7 +151,7 @@ for DUPJSON in "${dup_files[@]}"; do
             fi
             break
         fi
-        done           
+    done           
     if [[ $found_match -eq 0 ]]; then
         echo "No matching key found in the array for $DUPJSON"
     fi
