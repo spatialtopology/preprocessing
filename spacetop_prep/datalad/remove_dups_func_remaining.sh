@@ -150,10 +150,11 @@ for DUPJSON in "${dup_files[@]}"; do
                 else
                 echo -e "\nCASE 4: No clue"
                 echo -e "\t$BOLDJSON"
+                fi
             fi
             break
         fi
-    done           
+    done
     if [[ $found_match -eq 0 ]]; then
         echo "No matching key found in the array for $DUPJSON"
     fi
