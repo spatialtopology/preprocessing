@@ -134,21 +134,22 @@ for DUPJSON in "${dup_files[@]}"; do
                     # $(dirname "$0")/rename_file "${DUPSBREFJSON}" "${SBREFJSON}"; 
                     # $(dirname "$0")/rename_file PURGESBREFJSON "${DUPSBREFJSON}"
                     ######################### TST END #########################
-                fi
+                
 
 
                 # - [FALSE] BOLD TR == expected TR ->  BOLD TR ne expected TR
                 # - [FALSE] DUP TR  == expected TR
                 # - [FALSE] DUP TR < BOLD, -> DUP ge BOLD
                 # - [ TRUE] DUP hour time is later than BOLD (BOLDJSON_SEC)
-                if [[ "$BOLDJSON_TR" -ne "$EXPECTED_TR" && \
+                else [[ "$BOLDJSON_TR" -ne "$EXPECTED_TR" && \
                 "$DUPJSON_TR" -ne "$EXPECTED_TR" ]]; then
                     echo -e "\nCASE 3: DUP BOLD limbo"
                     echo -e "\t$BOLDJSON"
                     echo -e "\t* $BOLDJSON: $DUPJSON limbo BOLD NOR DUP matches expected TR" >> "$error_log"
-                fi
-                echo "\nCASE 4: No clue"
-                echo "$BOLDJSON"
+                
+                else
+                echo -e "\nCASE 4: No clue"
+                echo -e "\t$BOLDJSON"
             fi
             break
         fi
