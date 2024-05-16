@@ -108,10 +108,10 @@ for DUPJSON in "${dup_files[@]}"; do
                 # - [ TRUE] DUP TR  == expected TR
                 # - [FALSE] DUP TR < BOLD, -> DUP ge BOLD
                 # - [ TRUE] DUP hour time is later than BOLD (BOLDJSON_SEC)
-                if [["$BOLDJSON_TR" -ne "$EXPECTED_TR" && \
+                if [[ "$BOLDJSON_TR" -ne "$EXPECTED_TR" && \
                 "$DUPJSON_TR" -eq "$EXPECTED_TR" && \
                 "$DUPJSON_TR" -ge "$BOLDJSON_TR" && \
-                "$BOLDJSON_SEC" -lt "$DUPJSON_SEC"]]; then
+                "$BOLDJSON_SEC" -lt "$DUPJSON_SEC" ]]; then
                     echo "$BOLDJSON"
                     echo "\t* $BOLDJSON: BOLDJSON_TR (${BOLDJSON_TR}) does not match expected TR (${EXPECTED_TR})." >> "$error_log"
                     echo "\t* $DUPJSON: DUPJSON_TR (${DUPJSON_TR}) matches expected TR (${EXPECTED_TR})." >> "$error_log"
@@ -143,8 +143,8 @@ for DUPJSON in "${dup_files[@]}"; do
                 # - [FALSE] DUP TR  == expected TR
                 # - [FALSE] DUP TR < BOLD, -> DUP ge BOLD
                 # - [ TRUE] DUP hour time is later than BOLD (BOLDJSON_SEC)
-                if [["$BOLDJSON_TR" -ne "$EXPECTED_TR" && \
-                "$DUPJSON_TR" -ne "$EXPECTED_TR"]]; then
+                if [[ "$BOLDJSON_TR" -ne "$EXPECTED_TR" && \
+                "$DUPJSON_TR" -ne "$EXPECTED_TR" ]]; then
                     echo "$BOLDJSON"
                     echo "\t* $BOLDJSON: $DUPJSON limbo BOLD NOR DUP matches expected TR" >> "$error_log"
                 fi
