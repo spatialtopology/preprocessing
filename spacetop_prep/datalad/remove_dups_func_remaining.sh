@@ -118,21 +118,21 @@ for DUPJSON in "${dup_files[@]}"; do
                     echo -e "\tDUPJSON is the primary file/ rename and resolve"
 
                     # rename BOLD.json
-                    # echo "\t*CHANGE FILENAME: ${DUPJSON} -> ${BOLDJSON}"
-                    # echo "\t*CHANGE FILENAME: ${DUPNII} -> ${BOLDNII}"
-                    # echo "\t*CHANGE FILENAME: ${DUPSBREFJSON} -> ${SBREFJSON}"
-                    # echo "\t*CHANGE FILENAME: ${DUPSBREFNII} -> ${SBREFNII}"
+                    echo "\t*CHANGE FILENAME: ${DUPJSON} -> ${BOLDJSON}"
+                    echo "\t*CHANGE FILENAME: ${DUPNII} -> ${BOLDNII}"
+                    echo "\t*CHANGE FILENAME: ${DUPSBREFJSON} -> ${SBREFJSON}"
+                    echo "\t*CHANGE FILENAME: ${DUPSBREFNII} -> ${SBREFNII}"
 
-                    ######################### TST START #########################
-                    # $(dirname "$0")/rename_file "${BOLDJSON}" PURGEJSON; 
-                    # $(dirname "$0")/rename_file "${DUPJSON}" "${BOLDJSON}"; 
-                    # $(dirname "$0")/rename_file PURGEJSON "${DUPJSON}"
+                    ######################## TST START #########################
+                    $(dirname "$0")/rename_file "${BOLDJSON}" PURGEJSON; 
+                    $(dirname "$0")/rename_file "${DUPJSON}" "${BOLDJSON}"; 
+                    $(dirname "$0")/rename_file PURGEJSON "${DUPJSON}"
 
-                    # # find SBREF
-                    # # rename BOLD.nii
-                    # $(dirname "$0")/rename_file "${SBREFJSON}" PURGESBREFJSON; 
-                    # $(dirname "$0")/rename_file "${DUPSBREFJSON}" "${SBREFJSON}"; 
-                    # $(dirname "$0")/rename_file PURGESBREFJSON "${DUPSBREFJSON}"
+                    # find SBREF
+                    # rename BOLD.nii
+                    $(dirname "$0")/rename_file "${SBREFJSON}" PURGESBREFJSON; 
+                    $(dirname "$0")/rename_file "${DUPSBREFJSON}" "${SBREFJSON}"; 
+                    $(dirname "$0")/rename_file PURGESBREFJSON "${DUPSBREFJSON}"
                     ######################### TST END #########################
                 
 
@@ -158,6 +158,16 @@ for DUPJSON in "${dup_files[@]}"; do
                     echo -e "\tBOLD TR: $BOLDJSON_TR vs. DUP TR: $DUPJSON_TR vs. EXPECTED TR $EXPECTED_TR"  >> "$error_log"
                     echo -e "\tBOLD TIME: $BOLDJSON_SEC vs. DUP TIME: $DUPJSON_SEC" >> "$error_log"
 
+
+                    generic_filename=$(echo "$DUPJSON" | sed -E 's/(run-[0-9]+_).+(__dup-[0-9]+).*/\1*\2.*/')
+                    read -a files_to_remove <<< "$generic_filename"
+
+                    # Loop through the array and remove each file
+                    for rm_file in "${files_to_remove[@]}"; do
+                        git rm "$rm_file"
+                    done
+
+                    
                 else
                     echo -e "\nCASE 5: No clue" >> "$error_log"
                     echo -e "\tBOLDJSON: $BOLDJSON" >> "$error_log"
