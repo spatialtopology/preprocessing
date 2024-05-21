@@ -104,7 +104,7 @@ for DUPJSON in "${dup_files[@]}"; do
                     git rm "$rm_file"
                     ######################### TST END #########################
                 done
-
+            fi
             # else
             #     # CASE 2: DUP is primary
             #     # - [FALSE] BOLD TR == expected TR ->  BOLD TR ne expected TR
