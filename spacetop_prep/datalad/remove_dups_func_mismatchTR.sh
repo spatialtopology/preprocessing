@@ -92,9 +92,12 @@ for DUPJSON in "${dup_files[@]}"; do
             # - DUP TR  == expected TR [NA]
             # - DUP TR < BOLD [TRUE]
             # - DUP hour time is later than BOLD (BOLDJSON_SEC)[NA]
-            if [[ "$BOLDJSON_TR" -eq "$EXPECTED_TR" ]]; then
+            # if [[ "$BOLDJSON_TR" -eq "$EXPECTED_TR" ]]; then
                 echo -e "\nCASE 1: BOLD is primary; delete DUPS" >> "$error_log"
                 echo -e "\tConditions met for $DUPJSON. Removing file." >> "$error_log"
+                echo -e "\t$BOLDJSON" >> "$error_log"
+                echo -e "\tBOLD TR: $BOLDJSON_TR vs. DUP TR: $DUPJSON_TR vs. EXPECTED TR $EXPECTED_TR"  >> "$error_log"
+                echo -e "\tBOLD TIME: $BOLDJSON_SEC vs. DUP TIME: $DUPJSON_SEC" >> "$error_log"
                 generic_filename=$(echo "$DUPJSON" | sed -E 's/(run-[0-9]+_).+(__dup-[0-9]+).*/\1*\2.*/')
                 read -a files_to_remove <<< "$generic_filename"
                 # Loop through the array and remove each file
@@ -104,7 +107,7 @@ for DUPJSON in "${dup_files[@]}"; do
                     git rm "$rm_file"
                     ######################### TST END #########################
                 done
-            fi
+            # fi
             # else
             #     # CASE 2: DUP is primary
             #     # - [FALSE] BOLD TR == expected TR ->  BOLD TR ne expected TR
