@@ -118,6 +118,12 @@ for DUPJSON in "${dup_files[@]}"; do
                     echo -e "\tDUPJSON is the primary file/ rename and resolve"
 
                     # rename BOLD.json
+                    # Change the extension to .nii.gz
+                    DUPNII="${DUPJSON%.json}.nii.gz"
+                    BOLDNII="${BOLDJSON%.json}.nii.gz"
+                    DUPSBREFNII="${DUPSBREFJSON%.json}.nii.gz"
+                    SBREFNII="${SBREFJSON%.json}.nii.gz"
+
                     echo "\t*CHANGE FILENAME: ${DUPJSON} -> ${BOLDJSON}" >> "$error_log"
                     echo "\t*CHANGE FILENAME: ${DUPNII} -> ${BOLDNII}" >> "$error_log"
                     echo "\t*CHANGE FILENAME: ${DUPSBREFJSON} -> ${SBREFJSON}" >> "$error_log"
