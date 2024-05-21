@@ -151,7 +151,7 @@ for DUPJSON in "${dup_files[@]}"; do
                 
 
                 elif [[ "$BOLDJSON_TR" -eq "$EXPECTED_TR" && \
-                    "$DUPJSON_TR" -eq "$EXPECTED_TR" && \ 
+                    "$DUPJSON_TR" -eq "$EXPECTED_TR" && \
                     "$DUPJSON_TR" -lt "$BOLDJSON_TR" ]]; then
                     echo -e "\nCASE 4: BOLD is primary" >> "$error_log"
                     echo -e "\t$BOLDJSON" >> "$error_log"
