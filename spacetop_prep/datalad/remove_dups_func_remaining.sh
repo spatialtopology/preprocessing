@@ -151,7 +151,8 @@ for DUPJSON in "${dup_files[@]}"; do
                 
                 else
                 echo -e "\nCASE 4: No clue" >> "$error_log"
-                echo -e "\t$BOLDJSON" >> "$error_log"
+                echo -e "\tBOLDJSON: $BOLDJSON" >> "$error_log"
+                echo -e "\tDUPJSON $DUPJSON" >> "$error_log"
                 echo -e "\tBOLD TR: $BOLDJSON_TR vs. DUP TR: $DUPJSON_TR"  >> "$error_log"
                 echo -e "\tBOLD TIME: $BOLDJSON_SEC vs. DUP TIME: $DUPJSON_SEC" >> "$error_log"
                 echo -e "\tBOLD TIME: $BOLDJSON_NODEC vs. DUP TIME: $DUPJSON_NODEC" >> "$error_log"
