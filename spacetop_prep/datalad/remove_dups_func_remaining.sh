@@ -145,13 +145,16 @@ for DUPJSON in "${dup_files[@]}"; do
                 "$DUPJSON_TR" -ne "$EXPECTED_TR" ]]; then
                     echo -e "\nCASE 3: DUP BOLD limbo" >> "$error_log"
                     echo -e "\t$BOLDJSON" >> "$error_log"
-                    echo -e "\t* $BOLDJSON: $DUPJSON limbo BOLD NOR DUP matches expected TR" >> "$error_log"
+                    echo -e "\t* $DUPJSON limbo BOLD NOR DUP matches expected TR" >> "$error_log"
+                    echo -e "\tBOLD TR: $BOLDJSON_TR vs. DUP TR: $DUPJSON_TR vs. EXPECTED TR $EXPECTED_TR"  >> "$error_log"
+                    echo -e "\tBOLD TIME: $BOLDJSON_SEC vs. DUP TIME: $DUPJSON_SEC" >> "$error_log"
                 
                 else
                 echo -e "\nCASE 4: No clue" >> "$error_log"
                 echo -e "\t$BOLDJSON" >> "$error_log"
                 echo -e "\tBOLD TR: $BOLDJSON_TR vs. DUP TR: $DUPJSON_TR"  >> "$error_log"
                 echo -e "\tBOLD TIME: $BOLDJSON_SEC vs. DUP TIME: $DUPJSON_SEC" >> "$error_log"
+                echo -e "\tBOLD TIME: $BOLDJSON_NODEC vs. DUP TIME: $DUPJSON_NODEC" >> "$error_log"
                 fi
             fi
             break
