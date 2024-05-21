@@ -95,7 +95,7 @@ for DUPJSON in "${dup_files[@]}"; do
                 for rm_file in "${files_to_remove[@]}"; do
                     ######################### TST START #########################
                     echo -e "\tREMOVE: $rm_file" >> "$error_log"
-                    # git rm "$rm_file"
+                    git rm "$rm_file"
                     ######################### TST END #########################
                 done
 
