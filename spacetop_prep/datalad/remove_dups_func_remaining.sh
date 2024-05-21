@@ -133,12 +133,18 @@ for DUPJSON in "${dup_files[@]}"; do
                     $(dirname "$0")/rename_file "${BOLDJSON}" PURGEJSON; 
                     $(dirname "$0")/rename_file "${DUPJSON}" "${BOLDJSON}"; 
                     $(dirname "$0")/rename_file PURGEJSON "${DUPJSON}"
-
                     # find SBREF
-                    # rename BOLD.nii
                     $(dirname "$0")/rename_file "${SBREFJSON}" PURGESBREFJSON; 
                     $(dirname "$0")/rename_file "${DUPSBREFJSON}" "${SBREFJSON}"; 
                     $(dirname "$0")/rename_file PURGESBREFJSON "${DUPSBREFJSON}"
+                    # rename BOLD.nii
+                    $(dirname "$0")/rename_file "${SBREFNII}" PURGESBREFJSON; 
+                    $(dirname "$0")/rename_file "${DUPSBREFNII}" "${SBREFNII}"; 
+                    $(dirname "$0")/rename_file PURGESBREFJSON "${DUPSBREFNII}"
+
+                    $(dirname "$0")/rename_file "${BOLDNII}" PURGESBREFJSON; 
+                    $(dirname "$0")/rename_file "${DUPNII}" "${BOLDNII}"; 
+                    $(dirname "$0")/rename_file PURGESBREFJSON "${DUPNII}"
 
                     echo "CHANGED NAMES"  >> "$error_log"
                     ######################### TST END #########################
