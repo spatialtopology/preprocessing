@@ -149,8 +149,18 @@ for DUPJSON in "${dup_files[@]}"; do
                     echo -e "\tBOLD TR: $BOLDJSON_TR vs. DUP TR: $DUPJSON_TR vs. EXPECTED TR $EXPECTED_TR"  >> "$error_log"
                     echo -e "\tBOLD TIME: $BOLDJSON_SEC vs. DUP TIME: $DUPJSON_SEC" >> "$error_log"
                 
+
+                elif [[ "$BOLDJSON_TR" -e "$EXPECTED_TR" && \
+                "$DUPJSON_TR" -e "$EXPECTED_TR" && \ 
+                "$DUPJSON_TR" -lt "$BOLDJSON_TR"
+                ]]; then
+                    echo -e "\nCASE 4: BOLD is primary" >> "$error_log"
+                    echo -e "\t$BOLDJSON" >> "$error_log"
+                    echo -e "\tBOLD TR: $BOLDJSON_TR vs. DUP TR: $DUPJSON_TR vs. EXPECTED TR $EXPECTED_TR"  >> "$error_log"
+                    echo -e "\tBOLD TIME: $BOLDJSON_SEC vs. DUP TIME: $DUPJSON_SEC" >> "$error_log"
+
                 else
-                echo -e "\nCASE 4: No clue" >> "$error_log"
+                echo -e "\nCASE 5: No clue" >> "$error_log"
                 echo -e "\tBOLDJSON: $BOLDJSON" >> "$error_log"
                 echo -e "\tDUPJSON $DUPJSON" >> "$error_log"
                 echo -e "\tBOLD TR: $BOLDJSON_TR vs. DUP TR: $DUPJSON_TR"  >> "$error_log"
