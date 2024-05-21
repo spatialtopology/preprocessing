@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Declare an associative array
 declare -A myArray=(
 ["task-narratives_acq-mb8_run-01"]=967
