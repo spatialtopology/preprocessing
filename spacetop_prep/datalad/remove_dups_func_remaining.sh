@@ -118,10 +118,10 @@ for DUPJSON in "${dup_files[@]}"; do
                     echo -e "\tDUPJSON is the primary file/ rename and resolve"
 
                     # rename BOLD.json
-                    echo "\t*CHANGE FILENAME: ${DUPJSON} -> ${BOLDJSON}"
-                    echo "\t*CHANGE FILENAME: ${DUPNII} -> ${BOLDNII}"
-                    echo "\t*CHANGE FILENAME: ${DUPSBREFJSON} -> ${SBREFJSON}"
-                    echo "\t*CHANGE FILENAME: ${DUPSBREFNII} -> ${SBREFNII}"
+                    echo "\t*CHANGE FILENAME: ${DUPJSON} -> ${BOLDJSON}" >> "$error_log"
+                    echo "\t*CHANGE FILENAME: ${DUPNII} -> ${BOLDNII}" >> "$error_log"
+                    echo "\t*CHANGE FILENAME: ${DUPSBREFJSON} -> ${SBREFJSON}" >> "$error_log"
+                    echo "\t*CHANGE FILENAME: ${DUPSBREFNII} -> ${SBREFNII}" >> "$error_log"
 
                     ######################## TST START #########################
                     $(dirname "$0")/rename_file "${BOLDJSON}" PURGEJSON; 
@@ -133,6 +133,8 @@ for DUPJSON in "${dup_files[@]}"; do
                     $(dirname "$0")/rename_file "${SBREFJSON}" PURGESBREFJSON; 
                     $(dirname "$0")/rename_file "${DUPSBREFJSON}" "${SBREFJSON}"; 
                     $(dirname "$0")/rename_file PURGESBREFJSON "${DUPSBREFJSON}"
+
+                    echo "CHANGED NAMES"  >> "$error_log"
                     ######################### TST END #########################
                 
 
