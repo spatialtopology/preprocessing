@@ -4,14 +4,23 @@ from os.path import join
 import os, glob, re
 import pathlib
 
+# def gifify(sub, img_dir, save_dir, file_pattern, save_fname):
+#     image_files = glob.glob(join(img_dir, f"{file_pattern}"))# f"*sbref*.png"))
+#     images = []
+#     for filename in sorted(image_files):
+#         img = Image.open(filename)
+#         images.append(img)
+#     pathlib.Path(save_dir).mkdir(parents=True, exist_ok=True)
+#     images[0].save(join(save_dir,  f'{save_fname}'), save_all=True, append_images=images[1:], duration=200, loop=0)#f'animation-sbref_{sub}.gif'), save_all=True, append_images=images[1:], duration=200, loop=0)
+
 def gifify(sub, img_dir, save_dir, file_pattern, save_fname):
-    image_files = glob.glob(join(img_dir, f"{file_pattern}"))# f"*sbref*.png"))
+    image_files = sorted(glob.glob(os.path.join(img_dir, f"{file_pattern}")))
     images = []
-    for filename in sorted(image_files):
-        img = Image.open(filename)
-        images.append(img)
-    pathlib.Path(save_dir).mkdir(parents=True, exist_ok=True)
-    images[0].save(join(save_dir,  f'{save_fname}'), save_all=True, append_images=images[1:], duration=200, loop=0)#f'animation-sbref_{sub}.gif'), save_all=True, append_images=images[1:], duration=200, loop=0)
+    for filename in image_files:
+        with Image.open(filename) as img:
+            images.append(img.copy())
+            pathlib.Path(save_dir).mkdir(parents=True, exist_ok=True)
+            images[0].save(os.path.join(save_dir, f'{save_fname}'), save_all=True, append_images=images[1:], duration=200, loop=0)
 
 img_dir = '/Volumes/derivatives/fmriprep_qc/runwisecorr/'
 sub_folders = next(os.walk(img_dir))[1]
