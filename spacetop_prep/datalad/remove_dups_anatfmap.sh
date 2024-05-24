@@ -3,7 +3,6 @@
 ## the latter scan should be better. always. 
 
 
-
 # Define a file to log errors
 # error_log="error_log_funcanat.txt"
 
@@ -47,17 +46,7 @@ DUPJSON_NODEC=${DUPJSON_TR%%.*}
         # SWAP DUP AND PRIMARY, THEN DELETED
         PRIMARYGZ=${PRIMARYJSON}
         DUPGZ=${DUPJSON} #TODO remove file extension
-        # RENAME JSON primary is crap, keep dup
-        # ../../../code/rename_file "${PRIMARYJSON}" CRAPJSON; 
-        # ../../../code/rename_file "${DUPJSON}" "${PRIMARYJSON}"; 
-        # ../../../code/rename_file CRAPJSON "${DUPJSON}"
-        # # RENAME fmap
-        # ../../../code/rename_file "${PRIMARYGZ}" CRAPNII; 
-        # ../../../code/rename_file "${DUPGZ}" "${PRIMARYGZ}"; 
-        # ../../../code/rename_file CRAPNII "${DUPGZ}"
-        # DELETE files
-        # git rm "${DUPGZ}"
-        # git rm "${DUPJSON}"
+
     elif [ "$PRIMARYJSON_SEC" -gt "$DUPJSON_SEC" ]; then
     #elif (( $(echo "$PRIMARYJSON_SEC > $DUPJSON_SEC" |bc -l) )); then
         echo -e "\nDUPJSON acquisition time is earlier." >> $LOG_FILE
