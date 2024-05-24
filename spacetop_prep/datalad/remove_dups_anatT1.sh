@@ -54,7 +54,8 @@ DUPJSON_NODEC=${DUPJSON_TR%%.*}
         # basename=$(basename "$DUPJSON" | sed 's/\.[^.]*$//')
         basename=$(basename "$DUPJSON" | sed 's/\.[^.]*$//')
         directory=$(dirname "$DUPJSON")
-
+        echo -e "$directory"
+        echo -e "$basename"
         related_files=$(find "$directory" -type f -name "${basename}*" -print)
 
         # Print and remove the related files
