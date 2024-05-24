@@ -56,7 +56,7 @@ DUPJSON_NODEC=${DUPJSON_TR%%.*}
         directory=$(dirname "$DUPJSON")
         echo -e "$directory"
         echo -e "$basename"
-        related_files=$(find "$directory" -type f -name "${basename}*" -print)
+        related_files=$(find "$directory" -name "${basename}*" -print)
 
         # Print and remove the related files
         echo -e "Removed files: ${related_files}\n\n" >> "$LOG_FILE"
