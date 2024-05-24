@@ -2,7 +2,6 @@
 ## TODO: change the file so that the dup is the earlier scan
 ## the latter scan should be better. always. 
 
-
 # Define a file to log errors
 # error_log="error_log_funcanat.txt"
 
@@ -51,7 +50,12 @@ DUPJSON_NODEC=${DUPJSON_TR%%.*}
     #elif (( $(echo "$PRIMARYJSON_SEC > $DUPJSON_SEC" |bc -l) )); then
         echo -e "\nDUPJSON acquisition time is earlier." >> $LOG_FILE
         echo -e "Info: DUPJSON is identified as the correct file due to earlier acquisition time." >> $SUMMARYLOG_FILE
-        generic_filename=$(echo "$DUPJSON" | sed -E 's/(run-[0-9]+_).+(__dup-[0-9]+).*/\1*\2.*/')
+        # generic_filename=$(echo "$DUPJSON" | sed -E 's/(run-[0-9]+_).+(__dup-[0-9]+).*/\1*\2.*/')
+        # basename=$(basename "$DUPJSON" | sed 's/\.[^.]*$//')
+        basename=$(basename "$DUPJSON" | sed 's/\.[^.]*$//')
+        directory=$(dirname "$DUPJSON")
+        generic_filename=$(find "$directory" -type f -name "${basename}*" -print)
+
         read -a files_to_remove <<< "$generic_filename"
         echo -e "removed files: ${generic_filename}\n\n" >> $LOG_FILE
         # Loop through the array and remove each file
