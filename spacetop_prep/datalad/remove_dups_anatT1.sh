@@ -54,15 +54,24 @@ DUPJSON_NODEC=${DUPJSON_TR%%.*}
         # basename=$(basename "$DUPJSON" | sed 's/\.[^.]*$//')
         basename=$(basename "$DUPJSON" | sed 's/\.[^.]*$//')
         directory=$(dirname "$DUPJSON")
-        generic_filename=$(find "$directory" -type f -name "${basename}*" -print)
 
-        read -a files_to_remove <<< "$generic_filename"
-        echo -e "removed files: ${generic_filename}\n\n" >> $LOG_FILE
-        # Loop through the array and remove each file
-        for rm_file in "${files_to_remove[@]}"; do
-            echo "remove!"
+        related_files=$(find "$directory" -type f -name "${basename}*" -print)
+
+        # Print and remove the related files
+        echo -e "Removed files: ${related_files}\n\n" >> "$LOG_FILE"
+        for rm_file in $related_files; do
+            echo "Removing: $rm_file"
             git rm "$rm_file"
         done
+        # generic_filename=$(find "$directory" -type f -name "${basename}*" -print)
+
+        # read -a files_to_remove <<< "$generic_filename"
+        # echo -e "removed files: ${generic_filename}\n\n" >> $LOG_FILE
+        # # Loop through the array and remove each file
+        # for rm_file in "${files_to_remove[@]}"; do
+        #     echo "remove!"
+        #     git rm "$rm_file"
+        # done
     else
         echo -e "\n${DUPJSON}\nAcquisition times are the same." >> $LOG_FILE
         # Log as error or info since times being the same might be unexpected
