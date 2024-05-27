@@ -662,7 +662,7 @@ for spunt_fpath in spunt_flist:
 
     events = pd.concat([events, block_unique], ignore_index=True)
 
-
+    events = events.fillna("n/a")
     Path(beh_savedir).mkdir( parents=True, exist_ok=True )
     save_fname = f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_desc-{task_name}_events.tsv"
     events.to_csv(join(beh_savedir, save_fname), sep='\t', index=False)
