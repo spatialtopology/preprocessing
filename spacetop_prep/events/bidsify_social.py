@@ -406,7 +406,7 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
     # 6. stim __________________________________________________________________
 
     stim['onset'] = (beh_df['event03_stimulus_displayonset'] - trigger).round(2)
-    stim['duration'] = (beh_df['ISI03_onset'] - beh_df['event03_stimulus_displayonset']).round(2)
+    stim['duration'] = 5 #(beh_df['ISI03_onset'] - beh_df['event03_stimulus_displayonset']).round(2)
     stim['run_type'] = task_name
     stim['trial_type'] = 'stimulus'
     stim['trial_index'] =  beh_df.index +1
@@ -653,16 +653,17 @@ for pain_fpath in sorted(filtered_pain_flist):
 
         beh_df['total_stimulus_time'] = beh_df['event03_stimulus_type'].apply(lambda x: sum(stimulus_times[x].values()))
     temperature_map = {
-    'high_stim': '50c',
-    'med_stim': '49c',
-    'low_stim': '48c'
+    'high_stim': '50_celsius',
+    'med_stim': '49_celsius',
+    'low_stim': '48_celsius'
     }
 
     stim['onset'] = (beh_df['event03_stimulus_displayonset'] - trigger).round(2)
     if ttl_glob: 
         stim['duration'] = (ttl_df['TTL4'] - ttl_df['TTL1']).round(2)
     else:
-        stim['duration'] = ((beh_df['event03_stimulus_displayonset']-trigger) + beh_df['total_stimulus_time']).round(2)
+        stim['duration'] = ((beh_df['event03_stimulus_displayonset']-trigger) + beh_df['total_stimulus_time']).round(2) - (beh_df['event03_stimulus_displayonset'] - trigger).round(2)
+
     stim['run_type'] = task_name
     stim['trial_type'] = 'stimulus'
     stim['trial_index'] =  beh_df.index +1
@@ -885,7 +886,7 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
     # 6. stim __________________________________________________________________
 
     stim['onset'] = (beh_df['event03_stimulus_displayonset'] - trigger).round(2)
-    stim['duration'] = (beh_df['ISI03_onset'] - beh_df['event03_stimulus_displayonset']).round(2)
+    stim['duration'] = 5 #(beh_df['ISI03_onset'] - beh_df['event03_stimulus_displayonset']).round(2)
     stim['run_type'] = task_name
     stim['trial_type'] = 'stimulus'
     stim['trial_index'] =  beh_df.index +1
