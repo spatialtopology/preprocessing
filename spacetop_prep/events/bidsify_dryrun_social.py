@@ -236,7 +236,7 @@ filtered_cognitive_flist = [file for file in cognitive_flist if "sub-0001" not i
 
 
 # Step 2: Configure the logging system
-logging.basicConfig(filename='task-cue_vicarious.log',  # Log file path
+logging.basicConfig(filename='task-cue_cognitive.log',  # Log file path
                     filemode='w',            # Append mode ('w' for overwrite)
                     level=logging.INFO,     # Logging level
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')  # Log message format
