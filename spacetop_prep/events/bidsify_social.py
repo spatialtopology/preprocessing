@@ -194,7 +194,7 @@ for scan_fname in scans_list:
             scans_df = scans_df[scans_df['filename'] != os.path.basename(orphan_file)]
 
     # Save the updated DataFrame back to the scans_file
-    scans_df.to_csv(scan_fname, index=False)
+    scans_df.to_csv(scan_fname, index=False, sep='\t')
 
     # Add the updated scans_file back to git annex
     print(f"made edits to events file and deleted nifti files if not harmonized: {scan_fname}")
