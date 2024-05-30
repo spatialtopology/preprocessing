@@ -22,7 +22,7 @@ subList = [os.path.basename(x) for x in folders]
 taskname = 'task-alignvideos'
 sessionDict = {'ses-01': 4, 'ses-02': 4, 'ses-03': 3, 'ses-04': 2}    # different sessions have different numbers of runs
 
-for sub in subList:    
+for sub in sorted(subList):    
     for session in sessionDict:
         for r in range(sessionDict[session]):
             run = 'run-0' + str(r+1)
@@ -141,5 +141,8 @@ for sub in subList:
             newData = newData.replace(np.nan, 'n/a')
 
             # save new events file
-            newFilename = os.path.join(outputDir, sub, session, 'func', f'{sub}_{session}_{taskname}_acq-mb8_{run}_events.tsv')
-            newData.to_csv(newFilename, sep='\t', index=False)
+            try:
+                newFilename = os.path.join(outputDir, sub, session, 'func', f'{sub}_{session}_task-alignvideo_acq-mb8_{run}_events.tsv')
+                newData.to_csv(newFilename, sep='\t', index=False)
+            except:
+                print(f"failed to save {sub} {session} {taskname} {run}")

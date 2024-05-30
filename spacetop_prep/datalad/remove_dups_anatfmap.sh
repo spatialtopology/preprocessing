@@ -3,19 +3,24 @@
 ## the latter scan should be better. always. 
 
 
-
 # Define a file to log errors
 # error_log="error_log_funcanat.txt"
+
 LOG_FILE="fmap_error_log.txt"
 if [ -f "$LOG_FILE" ]; then
     rm "$LOG_FILE"
 fi
-# mapfile -t dup_files < <(find . -type f -name '*__dup-*')
+
+
+SUMMARYLOG_FILE="fmap_summary_log.txt"
+if [ -f "$SUMMARYLOG_FILE" ]; then
+    rm "$SUMMARYLOG_FILE"
+fi
 
 dup_files=()
 while IFS= read -r -d $'\n' file; do
     dup_files+=("$file")
-done < <(find . -type f -path "*/fmap/*__dup-*.json")
+done < <(find . -path "*/fmap/*__dup-*.json")
 
 # Loop through each file found.
 for DUPJSON in "${dup_files[@]}"; do
@@ -31,25 +36,28 @@ PRIMARYJSON_NODEC=${PRIMARYJSON_TR%%.*}
 DUPJSON_NODEC=${DUPJSON_TR%%.*}
     PRIMARYJSON_SEC=$(echo $PRIMARYJSON_NODEC |  tr -d '"'| awk -F: '{ print ($1 * 3600) + ($2 * 60) + $3 }')
     DUPJSON_SEC=$(echo $DUPJSON_NODEC |  tr -d '"' | awk -F: '{ print ($1 * 3600) + ($2 * 60) + $3 }')
-#PRIMARYJSON_SEC=$(echo $PRIMARYJSON_TR | awk -F: '{ split($3, a, "."); print ($1 * 3600) + ($2 * 60) + a[1] }')
-#DUPJSON_SEC=$(echo $DUPJSON_TR | awk -F: '{ split($3, a, "."); print ($1 * 3600) + ($2 * 60) + a[1] }')
 
     # Compare the numeric values
     #if (( $(echo "$PRIMARYJSON_SEC < $DUPJSON_SEC" |bc -l) )); then
     if [ "$PRIMARYJSON_SEC" -lt "$DUPJSON_SEC" ]; then
 	echo -e "\n${DUPJSON}\nPRIMARYJSON acquisition time is earlier." >> $LOG_FILE
-        echo -e "Error: PRIMARYJSON ${PRIMARYJSON_NODEC} ${PRIMARYJSON_SEC} has an earlier time than DUPJSON ${DUPJSON_NODEC} ${DUPJSON_SEC}\n\n" >> $LOG_FILE
+        echo -e "\n>>>>> ERROR: PRIMARYJSON ${PRIMARYJSON_NODEC} ${PRIMARYJSON_SEC} has an earlier time than DUPJSON ${DUPJSON_NODEC} ${DUPJSON_SEC}\n\n" >> $LOG_FILE
+
+        # SWAP DUP AND PRIMARY, THEN DELETED
+        PRIMARYGZ=${PRIMARYJSON}
+        DUPGZ=${DUPJSON} #TODO remove file extension
+
     elif [ "$PRIMARYJSON_SEC" -gt "$DUPJSON_SEC" ]; then
     #elif (( $(echo "$PRIMARYJSON_SEC > $DUPJSON_SEC" |bc -l) )); then
         echo -e "\nDUPJSON acquisition time is earlier." >> $LOG_FILE
-        echo -e "Info: DUPJSON is identified as the correct file due to earlier acquisition time." >> $LOG_FILE
+        echo -e "Info: DUPJSON is identified as the correct file due to earlier acquisition time." >> $SUMMARYLOG_FILE
         generic_filename=$(echo "$DUPJSON" | sed -E 's/(run-[0-9]+_).+(__dup-[0-9]+).*/\1*\2.*/')
         read -a files_to_remove <<< "$generic_filename"
         echo -e "removed files: ${generic_filename}\n\n" >> $LOG_FILE
         # Loop through the array and remove each file
         for rm_file in "${files_to_remove[@]}"; do
             echo "remove!"
-            # git rm "$rm_file"
+            git rm "$rm_file"
         done
     else
         echo -e "\n${DUPJSON}\nAcquisition times are the same." >> $LOG_FILE
