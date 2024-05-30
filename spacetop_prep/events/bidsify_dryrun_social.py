@@ -35,6 +35,21 @@ __status__ = "Development"
 #                                   Functions
 # ------------------------------------------------------------------------------
 
+# Configure the logger globally
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+def setup_logger(name, log_file, level=logging.INFO):
+    """Function to setup as many loggers as you want"""
+    handler = logging.FileHandler(log_file, mode='w')
+    handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+
+    logger = logging.getLogger(name)
+    logger.setLevel(level)
+    logger.addHandler(handler)
+
+    return logger
+
+
 def run_command(command):
     result = subprocess.run(command, shell=True, capture_output=True, text=True)
     if result.returncode != 0:
@@ -143,7 +158,7 @@ def is_equivalent(val1, val2, tolerance=1):
 scans_list = sorted(glob.glob('sub-*/**/*scans*.tsv', recursive=True))
 for scan_fname in scans_list:
     # NOTE: Step 1: Get the scans.tsv using datalad
-    #run_command(f"datalad get {scan_fname}")
+    run_command(f"datalad get {scan_fname}")
     print(f"datalad get {scan_fname} ")
     # Check if scans_file is not empty and unlock it using git annex
     if os.path.exists(scan_fname) and os.path.getsize(scan_fname) > 0:
@@ -236,13 +251,14 @@ filtered_cognitive_flist = [file for file in cognitive_flist if "sub-0001" not i
 
 
 # Step 2: Configure the logging system
-logging.basicConfig(filename='task-cue_vicarious.log',  # Log file path
-                    filemode='w',            # Append mode ('w' for overwrite)
-                    level=logging.INFO,     # Logging level
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')  # Log message format
+# logging.basicConfig(filename='task-cue_vicarious.log',  # Log file path
+#                     filemode='w',            # Append mode ('w' for overwrite)
+#                     level=logging.INFO,     # Logging level
+#                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')  # Log message format
 
-# Step 3: Create a logger object
-logger = logging.getLogger('cognitive')
+# # Step 3: Create a logger object
+# logger = logging.getLogger('cognitive')
+cognitive_logger = setup_logger('cognitive', 'task-cue_cognitive.log')
 
 for cognitive_fpath in sorted(filtered_cognitive_flist):
 
@@ -259,7 +275,7 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
     expect = bids_beh.copy();
     stim = bids_beh.copy();
     outcome = bids_beh.copy();
-    logger.info(f"\n\n{cognitive_fpath}")   
+    cognitive_logger.info(f"\n\n{cognitive_fpath}")   
 
 
     # 2. extract metadata from original behavioral file ________________________
@@ -269,7 +285,7 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
     run_bids = re.search(r'run-\d+', cognitive_fname).group(0)
     runtype = re.search(r'run-\d+-(\w+?)_', cognitive_fname).group(1)
 
-    logger.info(f"_______ {sub_bids} {ses_bids} {run_bids} {runtype} _______")
+    cognitive_logger.info(f"_______ {sub_bids} {ses_bids} {run_bids} {runtype} _______")
     beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
     beh_df = pd.read_csv(cognitive_fpath)
     trigger = beh_df['param_trigger_onset'][0]
@@ -286,11 +302,11 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
             raise FileNotFoundError("Trajectory preproc DOES NOT exist")
             
     except FileNotFoundError as e:
-        logger.warning(str(e))
+        cognitive_logger.warning(str(e))
         continue 
     except Exception as e:
         # This catches any other exceptions that might occur
-        logger.error("An error occurred while processing the trajectory file: %s", str(e))
+        cognitive_logger.error("An error occurred while processing the trajectory file: %s", str(e))
         continue
 
 
@@ -314,7 +330,7 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
     if expect_overall_flag:
         discrepancy_indices = traj_df[traj_df['comparison_flag']].index
         for idx in discrepancy_indices:
-            logger.info(f"\tExpect Rating {idx}: (traj_df): {traj_df.loc[idx]['adjusted_expectangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event02_expect_fillna']}")
+            cognitive_logger.info(f"\tExpect Rating {idx}: (traj_df): {traj_df.loc[idx]['adjusted_expectangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event02_expect_fillna']}")
 
     beh_df['event04_outcome_fillna'] = beh_df['event04_actual_angle'].round(2)
     beh_df['event04_outcome_fillna'].fillna(traj_df['adjusted_outcomeangle_degrees'].round(2), inplace=True)
@@ -325,7 +341,7 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
     if outcome_overall_flag:
         discrepancy_indices = traj_df[traj_df['outcome_comparisonflag']].index
         for idx in discrepancy_indices:
-            logger.info(f"\tOutcome Rating {idx} (traj_df): {traj_df.loc[idx]['adjusted_outcomeangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event04_outcome_fillna']}")
+            cognitive_logger.info(f"\tOutcome Rating {idx} (traj_df): {traj_df.loc[idx]['adjusted_outcomeangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event04_outcome_fillna']}")
 
     
     # map it to new label
@@ -344,7 +360,7 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
     if (beh_df['event01_cue_type'] == beh_df['param_cue_type']).all():
         cue['cue'] = beh_df['event01_cue_type'] 
     else:
-        logger.error(f"4-1. cue parameter does not match")
+        cognitive_logger.error(f"4-1. cue parameter does not match")
         continue
     cue['stimulusintensity'] =  "n/a"
     # cue['stim_file'] = beh_df["event01_cue_filename"]
@@ -449,7 +465,7 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
     if os.path.exists(beh_savedir) and os.path.isdir(beh_savedir):
         events_sorted.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-social_{run_bids}_events.tsv"), sep='\t', index=False)
     else:
-        logger.critical(f"WARNING: The directory {beh_savedir} does not exist.")
+        cognitive_logger.critical(f"WARNING: The directory {beh_savedir} does not exist.")
     
     # extract bids info and save as new file
 
@@ -464,23 +480,27 @@ filtered_pain_flist = [file for file in pain_flist if "sub-0001" not in file]
 
 # %%
 # Create a custom logger _______________________________________________________
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+# logger = logging.getLogger(__name__)
+# logger.setLevel(logging.DEBUG)
 
-# Create handlers
-info_handler = logging.FileHandler('task-cue_pain_info.log', mode='w')
-info_handler.setLevel(logging.INFO)
+# # Create handlers
+# info_handler = logging.FileHandler('task-cue_pain_info.log', mode='w')
+# info_handler.setLevel(logging.INFO)
 
-warning_handler = logging.FileHandler('task-cue_pain_warning.log',  mode='w')
-warning_handler.setLevel(logging.WARNING)
+# warning_handler = logging.FileHandler('task-cue_pain_warning.log',  mode='w')
+# warning_handler.setLevel(logging.WARNING)
 
-# Create formatters and add them to the handlers
-info_format = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-warning_format = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-info_handler.setFormatter(info_format)
-warning_handler.setFormatter(warning_format)
-logger.addHandler(info_handler)
-logger.addHandler(warning_handler)
+# # Create formatters and add them to the handlers
+# info_format = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# warning_format = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# info_handler.setFormatter(info_format)
+# warning_handler.setFormatter(warning_format)
+# logger.addHandler(info_handler)
+# logger.addHandler(warning_handler)
+
+pain_info_logger = setup_logger('pain_info', 'task-cue_pain_info.log', level=logging.INFO)
+pain_warning_logger = setup_logger('pain_warning', 'task-cue_pain_warning.log', level=logging.WARNING)
+
 
 for pain_fpath in sorted(filtered_pain_flist):
 
@@ -497,7 +517,7 @@ for pain_fpath in sorted(filtered_pain_flist):
     expect = bids_beh.copy();
     stim = bids_beh.copy();
     outcome = bids_beh.copy();
-    logger.info(f"\n\n{pain_fpath}")   
+    pain_info_logger.info(f"\n\n{pain_fpath}")   
 
 
     # 2. extract metadata from original behavioral file ________________________
@@ -507,7 +527,7 @@ for pain_fpath in sorted(filtered_pain_flist):
     run_bids = re.search(r'run-\d+', pain_fname).group(0)
     runtype = re.search(r'run-\d+-(\w+?)_', pain_fname).group(1)
 
-    logger.info(f"_______ {sub_bids} {ses_bids} {run_bids} {runtype} _______")
+    pain_info_logger.info(f"_______ {sub_bids} {ses_bids} {run_bids} {runtype} _______")
     beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
     beh_df = pd.read_csv(pain_fpath)
     trigger = beh_df['param_trigger_onset'][0]
@@ -524,12 +544,12 @@ for pain_fpath in sorted(filtered_pain_flist):
             raise FileNotFoundError("Trajectory preproc DOES NOT EXIST")
             
     except FileNotFoundError as e:
-        logger.warning(str(e))
-        logger.warning("Trajectory preproc DOES NOT EXIST")
+        pain_warning_logger.warning(str(e))
+        pain_warning_logger.warning("Trajectory preproc DOES NOT EXIST")
         continue 
     except Exception as e:
         # This catches any other exceptions that might occur
-        logger.error("An error occurred while processing the trajectory file: %s", str(e))
+        pain_warning_logger.error("An error occurred while processing the trajectory file: %s", str(e))
         continue
 
 
@@ -550,7 +570,7 @@ for pain_fpath in sorted(filtered_pain_flist):
     if expect_overall_flag:
         discrepancy_indices = traj_df[traj_df['comparison_flag']].index
         for idx in discrepancy_indices:
-            logger.info(f"\tExpect Rating {idx}: (traj_df): {traj_df.loc[idx]['adjusted_expectangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event02_expect_fillna']}")
+            pain_info_logger.info(f"\tExpect Rating {idx}: (traj_df): {traj_df.loc[idx]['adjusted_expectangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event02_expect_fillna']}")
 
     beh_df['event04_outcome_fillna'] = beh_df['event04_actual_angle'].round(2)
     beh_df['event04_outcome_fillna'].fillna(traj_df['adjusted_outcomeangle_degrees'].round(2), inplace=True)
@@ -561,7 +581,7 @@ for pain_fpath in sorted(filtered_pain_flist):
     if outcome_overall_flag:
         discrepancy_indices = traj_df[traj_df['outcome_comparisonflag']].index
         for idx in discrepancy_indices:
-            logger.info(f"\tOutcome Rating {idx} (traj_df): {traj_df.loc[idx]['adjusted_outcomeangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event04_outcome_fillna']}")
+            pain_info_logger.info(f"\tOutcome Rating {idx} (traj_df): {traj_df.loc[idx]['adjusted_outcomeangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event04_outcome_fillna']}")
 
     
 
@@ -580,7 +600,7 @@ for pain_fpath in sorted(filtered_pain_flist):
     if (beh_df['event01_cue_type'] == beh_df['param_cue_type']).all():
         cue['cue'] = beh_df['event01_cue_type'] 
     else:
-        logger.error(f"4-1. cue parameter does not match")
+        pain_info_logger.error(f"4-1. cue parameter does not match")
         continue
     cue['stimulusintensity'] =  "n/a"
     cue['stim_file'] = beh_df["event01_cue_filename"].apply(
@@ -642,7 +662,7 @@ for pain_fpath in sorted(filtered_pain_flist):
         for i, ttl_row in ttl_df.iterrows():
             ttl_df.loc[i] = calculate_ttl_values(stimulus_times, ttl_row, beh_df.loc[i])
     else:
-        logger.info("TTL dataframe non existent.")
+        pain_info_logger.info("TTL dataframe non existent.")
 
         beh_df['total_stimulus_time'] = beh_df['event03_stimulus_type'].apply(lambda x: sum(stimulus_times[x].values()))
     temperature_map = {
@@ -717,7 +737,7 @@ for pain_fpath in sorted(filtered_pain_flist):
     if os.path.exists(beh_savedir) and os.path.isdir(beh_savedir):
         events_sorted.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-social_{run_bids}_events.tsv"), sep='\t', index=False)
     else:
-        logger.critical(f"WARNING: The directory {beh_savedir} does not exist.")
+        pain_warning_logger.critical(f"WARNING: The directory {beh_savedir} does not exist.")
     
     # extract bids info and save as new file
 
@@ -728,13 +748,15 @@ task_name = 'vicarious'
 vicarious_flist = glob.glob(join(beh_inputdir,'sub-*', '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
 filtered_vicarious_flist = [file for file in vicarious_flist if "sub-0001" not in file]
 # 0. Configure the logging system
-logging.basicConfig(filename='task-cue_vicarious.log',  # Log file path
-                    filemode='w',            # Append mode ('w' for overwrite)
-                    level=logging.INFO,     # Logging level
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')  # Log message format
+# logging.basicConfig(filename='task-cue_vicarious.log',  # Log file path
+#                     filemode='w',            # Append mode ('w' for overwrite)
+#                     level=logging.INFO,     # Logging level
+#                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')  # Log message format
 
 # Step 3: Create a logger object
-logger = logging.getLogger('vicarious')
+# logger = logging.getLogger('vicarious')
+vicarious_logger = setup_logger('vicarious', 'task-cue_vicarious.log')
+
 for vicarious_fpath in sorted(filtered_vicarious_flist):
 
     # 1. create an empty dataframe to host new BIDS data _______________________
@@ -749,7 +771,7 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
     expect = bids_beh.copy();
     stim = bids_beh.copy();
     outcome = bids_beh.copy();
-    logger.info(f"\n\n{vicarious_fpath}")   
+    vicarious_logger.info(f"\n\n{vicarious_fpath}")   
     # 2. extract metadata from original behavioral file ________________________
     vicarious_fname = os.path.basename(vicarious_fpath)
     sub_bids = re.search(r'sub-\d+', vicarious_fname).group(0)
@@ -758,7 +780,7 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
     runtype = re.search(r'run-\d+-(\w+?)_', vicarious_fname).group(1)
 
 
-    logger.info(f"_______ {sub_bids} {ses_bids} {run_bids} {runtype} _______")
+    vicarious_logger.info(f"_______ {sub_bids} {ses_bids} {run_bids} {runtype} _______")
     beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
     beh_df = pd.read_csv(vicarious_fpath)
     trigger = beh_df['param_trigger_onset'][0]
@@ -775,11 +797,11 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
             raise FileNotFoundError("Trajectory preproc is empty.")
             
     except FileNotFoundError as e:
-        logger.warning(str(e))
+        vicarious_logger.warning(str(e))
         continue 
     except Exception as e:
         # This catches any other exceptions that might occur
-        logger.error("An error occurred while processing the trajectory file: %s", str(e))
+        vicarious_logger.error("An error occurred while processing the trajectory file: %s", str(e))
         continue
 
 
@@ -799,7 +821,7 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
     if expect_overall_flag:
         discrepancy_indices = traj_df[traj_df['comparison_flag']].index
         for idx in discrepancy_indices:
-            logger.info(f"\tExpect Rating {idx}: (traj_df): {traj_df.loc[idx]['adjusted_expectangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event02_expect_fillna']}")
+            vicarious_logger.info(f"\tExpect Rating {idx}: (traj_df): {traj_df.loc[idx]['adjusted_expectangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event02_expect_fillna']}")
 
     beh_df['event04_outcome_fillna'] = beh_df['event04_actual_angle'].round(2)
     beh_df['event04_outcome_fillna'].fillna(traj_df['adjusted_outcomeangle_degrees'].round(2), inplace=True)
@@ -810,7 +832,7 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
     if outcome_overall_flag:
         discrepancy_indices = traj_df[traj_df['outcome_comparisonflag']].index
         for idx in discrepancy_indices:
-            logger.info(f"\tOutcome Rating {idx} (traj_df): {traj_df.loc[idx]['adjusted_outcomeangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event04_outcome_fillna']}")
+            vicarious_logger.info(f"\tOutcome Rating {idx} (traj_df): {traj_df.loc[idx]['adjusted_outcomeangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event04_outcome_fillna']}")
 
 
     # grab the intersection raise warning if dont match
@@ -831,7 +853,7 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
     if (beh_df['event01_cue_type'] == beh_df['param_cue_type']).all():
         cue['cue'] = beh_df['event01_cue_type'] 
     else:
-        logger.error(f"4-1. cue parameter does not match")
+        vicarious_logger.error(f"4-1. cue parameter does not match")
         continue
     cue['stimulusintensity'] =  "n/a"
     cue['stim_file'] = beh_df["event01_cue_filename"].apply(
@@ -931,6 +953,6 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
     if os.path.exists(beh_savedir) and os.path.isdir(beh_savedir):
         events_sorted.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-social_{run_bids}_events.tsv"), sep='\t', index=False)
     else:
-        logger.critical(f"WARNING: The directory {beh_savedir} does not exist.")
+        vicarious_logger.critical(f"WARNING: The directory {beh_savedir} does not exist.")
     
     # extract bids info and save as new file
