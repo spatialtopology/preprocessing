@@ -314,10 +314,16 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
 
 
     # 3-2. Calculate the angle in radians and then convert to degrees 
-    traj_df['expectangle_degrees'] = calc_adjusted_angle_df(
+    traj_df['adjusted_expectangle_degrees'] = calc_adjusted_angle_df(
         traj_df, 'expectrating_end_x', 'expectrating_end_y', trajectory_x, trajectory_y)
-    traj_df['outcomeangle_degrees'] = calc_adjusted_angle_df(
+    traj_df['adjusted_outcomeangle_degrees'] = calc_adjusted_angle_df(
         traj_df, 'outcomerating_end_x', 'outcomerating_end_y', trajectory_x, trajectory_y)
+
+
+    # traj_df['expectangle_degrees'] = calc_adjusted_angle_df(
+    #     traj_df, 'expectrating_end_x', 'expectrating_end_y', trajectory_x, trajectory_y)
+    # traj_df['outcomeangle_degrees'] = calc_adjusted_angle_df(
+    #     traj_df, 'outcomerating_end_x', 'outcomerating_end_y', trajectory_x, trajectory_y)
 
 
 
@@ -555,10 +561,15 @@ for pain_fpath in sorted(filtered_pain_flist):
 
     # 3-1. calculate degree based on x, y coordinate
     # 3-2. Calculate the angle in radians and then convert to degrees 
-    traj_df['expectangle_degrees'] = calc_adjusted_angle_df(
+    # traj_df['expectangle_degrees'] = calc_adjusted_angle_df(
+    #     traj_df, 'expectrating_end_x', 'expectrating_end_y', trajectory_x, trajectory_y)
+    # traj_df['outcomeangle_degrees'] = calc_adjusted_angle_df(
+    #     traj_df, 'outcomerating_end_x', 'outcomerating_end_y', trajectory_x, trajectory_y)
+    traj_df['adjusted_expectangle_degrees'] = calc_adjusted_angle_df(
         traj_df, 'expectrating_end_x', 'expectrating_end_y', trajectory_x, trajectory_y)
-    traj_df['outcomeangle_degrees'] = calc_adjusted_angle_df(
+    traj_df['adjusted_outcomeangle_degrees'] = calc_adjusted_angle_df(
         traj_df, 'outcomerating_end_x', 'outcomerating_end_y', trajectory_x, trajectory_y)
+
 
 
     # 3-3. check if the calculated new degree matches the one in beh_df
@@ -806,10 +817,15 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
 
 
     # 3-1. calculate degree based on x, y coordinate
-    traj_df['expectangle_degrees'] = calc_adjusted_angle_df(
+    # traj_df['expectangle_degrees'] = calc_adjusted_angle_df(
+    #     traj_df, 'expectrating_end_x', 'expectrating_end_y', trajectory_x, trajectory_y)
+    # traj_df['outcomeangle_degrees'] = calc_adjusted_angle_df(
+    #     traj_df, 'outcomerating_end_x', 'outcomerating_end_y', trajectory_x, trajectory_y)
+    traj_df['adjusted_expectangle_degrees'] = calc_adjusted_angle_df(
         traj_df, 'expectrating_end_x', 'expectrating_end_y', trajectory_x, trajectory_y)
-    traj_df['outcomeangle_degrees'] = calc_adjusted_angle_df(
+    traj_df['adjusted_outcomeangle_degrees'] = calc_adjusted_angle_df(
         traj_df, 'outcomerating_end_x', 'outcomerating_end_y', trajectory_x, trajectory_y)
+
 
 
     # 3-3. check if the calculated new degree matches the one in beh_df
