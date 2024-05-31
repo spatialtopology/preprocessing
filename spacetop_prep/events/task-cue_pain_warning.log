@@ -1,10 +1,6 @@
-2024-03-09 15:50:44,094 - __main__ - WARNING - Trajectory preproc DOES NOT EXIST
-2024-03-09 15:50:44,094 - __main__ - WARNING - ___sub-0019_ses-03_task-cue_run-02___ Trajectory preproc DOES NOT EXIST
-2024-03-09 15:50:44,389 - __main__ - CRITICAL - WARNING: The directory /Users/h/Documents/projects_local/1076_spacetop/sub-0023/ses-03/func does not exist.
-2024-03-09 15:50:44,402 - __main__ - CRITICAL - WARNING: The directory /Users/h/Documents/projects_local/1076_spacetop/sub-0023/ses-03/func does not exist.
-2024-03-09 15:50:46,236 - __main__ - CRITICAL - WARNING: The directory /Users/h/Documents/projects_local/1076_spacetop/sub-0039/ses-03/func does not exist.
-2024-03-09 15:50:46,264 - __main__ - CRITICAL - WARNING: The directory /Users/h/Documents/projects_local/1076_spacetop/sub-0039/ses-03/func does not exist.
-2024-03-09 15:50:46,644 - __main__ - CRITICAL - WARNING: The directory /Users/h/Documents/projects_local/1076_spacetop/sub-0046/ses-01/func does not exist.
-2024-03-09 15:50:46,658 - __main__ - CRITICAL - WARNING: The directory /Users/h/Documents/projects_local/1076_spacetop/sub-0046/ses-01/func does not exist.
-2024-03-09 15:50:53,018 - __main__ - CRITICAL - WARNING: The directory /Users/h/Documents/projects_local/1076_spacetop/sub-0105/ses-01/func does not exist.
-2024-03-09 15:50:53,046 - __main__ - CRITICAL - WARNING: The directory /Users/h/Documents/projects_local/1076_spacetop/sub-0105/ses-01/func does not exist.
+2024-05-30 15:47:12,574 - pain_warning - WARNING - Trajectory preproc DOES NOT EXIST
+2024-05-30 15:47:12,574 - pain_warning - WARNING - Trajectory preproc DOES NOT EXIST
+2024-05-30 15:47:18,696 - pain_warning - CRITICAL - WARNING: The directory /Users/h/Documents/projects_local/1076_spacetop/sub-0023/ses-03/func does not exist.
+2024-05-30 15:47:18,740 - pain_warning - CRITICAL - WARNING: The directory /Users/h/Documents/projects_local/1076_spacetop/sub-0023/ses-03/func does not exist.
+2024-05-30 15:48:14,781 - pain_warning - CRITICAL - WARNING: The directory /Users/h/Documents/projects_local/1076_spacetop/sub-0039/ses-03/func does not exist.
+2024-05-30 15:48:15,563 - pain_warning - CRITICAL - WARNING: The directory /Users/h/Documents/projects_local/1076_spacetop/sub-0039/ses-03/func does not exist.
