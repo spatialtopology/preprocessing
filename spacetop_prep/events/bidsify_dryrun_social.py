@@ -469,7 +469,7 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
     events_sorted = events.sort_values(by='onset')
     events_sorted.fillna('n/a', inplace=True)
     if os.path.exists(beh_savedir) and os.path.isdir(beh_savedir):
-        events_sorted.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-social_{run_bids}_events.tsv"), sep='\t', index=False)
+        events_sorted.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-social_acq-mb8_{run_bids}_events.tsv"), sep='\t', index=False)
     else:
         cognitive_logger.critical(f"WARNING: The directory {beh_savedir} does not exist.")
     
@@ -746,7 +746,7 @@ for pain_fpath in sorted(filtered_pain_flist):
     events_sorted = events.sort_values(by='onset')
     events_sorted.fillna('n/a', inplace=True)
     if os.path.exists(beh_savedir) and os.path.isdir(beh_savedir):
-        events_sorted.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-social_{run_bids}_events.tsv"), sep='\t', index=False)
+        events_sorted.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-social_acq-mb8_{run_bids}_events.tsv"), sep='\t', index=False)
     else:
         pain_warning_logger.critical(f"WARNING: The directory {beh_savedir} does not exist.")
     
@@ -927,7 +927,7 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
     stim['rating_mousedur'] = "n/a"
     stim['cue'] = beh_df['event01_cue_type'] # if same as param_cue_type
     stim['stimulusintensity'] =  beh_df['event03_stimulus_type']    
-    stim['stim_file'] = '/task-social/cue/runtype-{task_name}/' + beh_df['event03_stimulus_V_filename'] 
+    stim['stim_file'] = f'/task-social/cue/runtype-{task_name}/' + beh_df['event03_stimulus_V_filename'] 
     stim['pain_onset_ttl1'] = "n/a"
     stim['pain_onset_ttl2'] = "n/a"
     stim['pain_onset_ttl3'] = "n/a"
@@ -962,12 +962,11 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
     outcome['cognitive_correct_response'] = "n/a"
     outcome['cognitive_participant_response'] = "n/a"
     outcome['cognitive_response_accuracy'] = "n/a"
-
     events = pd.concat([cue, expect, stim, outcome], ignore_index=True)
     events_sorted = events.sort_values(by='onset')
     events_sorted.fillna('n/a', inplace=True)
     if os.path.exists(beh_savedir) and os.path.isdir(beh_savedir):
-        events_sorted.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-social_{run_bids}_events.tsv"), sep='\t', index=False)
+        events_sorted.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-social_acq-mb8_{run_bids}_events.tsv"), sep='\t', index=False)
     else:
         vicarious_logger.critical(f"WARNING: The directory {beh_savedir} does not exist.")
     
