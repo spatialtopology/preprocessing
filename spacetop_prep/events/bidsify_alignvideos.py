@@ -28,9 +28,9 @@ for sub in sorted(subList):
             run = 'run-0' + str(r+1)
 
             dataFile = os.path.join(behDataDir, sub, 'task-alignvideos', session, f'{sub}_{session}_task-alignvideos_{run}_beh.csv')
-             if not os.path.isfile(dataFile):
-                 print(f'No behavior data file for {sub}_{session}_{run}')
-                 continue
+            if not os.path.isfile(dataFile):
+                print(f'No behavior data file for {sub}_{session}_{run}')
+                continue
 
             oriData = pd.read_csv(dataFile)
             newData = pd.DataFrame(columns=["onset", "duration", "trial_type", 
