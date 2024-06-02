@@ -1,6 +1,6 @@
-# Generate events files for task-alignvideos
+# Generate events files for task-alignvideo
 
-# This script reads raw behavior data files from d_beh for task-alignvideos, extracts time stamps and design information, and stores them in new *events.tsv files accompanying BOLD files.
+# This script reads raw behavior data files from d_beh for task-alignvideo, extracts time stamps and design information, and stores them in new *events.tsv files accompanying BOLD files.
 
 # For more information, please see README.md and the associated paper (Jung et al., 2024)
 
@@ -19,7 +19,7 @@ outputDir = '/Users/h/Documents/projects_local/1076_spacetop'
 # get a list of subjects with available data
 folders = glob.glob(os.path.join(outputDir, 'sub-*'))
 subList = [os.path.basename(x) for x in folders]
-taskname = 'task-alignvideos'
+taskname = 'task-alignvideo'
 sessionDict = {'ses-01': 4, 'ses-02': 4, 'ses-03': 3, 'ses-04': 2}    # different sessions have different numbers of runs
 
 for sub in sorted(subList):    
