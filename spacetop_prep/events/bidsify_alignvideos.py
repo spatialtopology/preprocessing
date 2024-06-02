@@ -27,7 +27,7 @@ for sub in sorted(subList):
         for r in range(sessionDict[session]):
             run = 'run-0' + str(r+1)
 
-            dataFile = os.path.join(behDataDir, sub, taskname, session, f'{sub}_{session}_{taskname}_{run}_beh.csv')
+            dataFile = os.path.join(behDataDir, sub, 'task-alignvideos', session, f'{sub}_{session}_{taskname}_{run}_beh.csv')
             if not os.path.isfile(dataFile):
                 print(f'No behavior data file for {sub}_{session}_{run}')
                 continue
