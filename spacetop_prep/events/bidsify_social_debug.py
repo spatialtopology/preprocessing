@@ -417,7 +417,7 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
     stim['rating_mousedur'] = "n/a"
     stim['cue'] = beh_df['event01_cue_type'] # if same as param_cue_type
     stim['stimulusintensity'] =  beh_df['event03_stimulus_type']
-    stim['stim_file'] = f'task-social/cue/runtype-{task_name}/' + beh_df['event03_C_stim_filename'] 
+    stim['stim_file'] = f'task-social/stim/runtype-{task_name}/' + beh_df['event03_C_stim_filename'] 
 
     stim['pain_onset_ttl1'] = "n/a"
     stim['pain_onset_ttl2'] = "n/a"
@@ -674,7 +674,7 @@ for pain_fpath in sorted(filtered_pain_flist):
     stim['rating_mousedur'] = "n/a"
     stim['cue'] = beh_df['event01_cue_type'] # if same as param_cue_type
     stim['stimulusintensity'] =  beh_df['event03_stimulus_type']
-    stim['stim_file'] = beh_df['event03_stimulus_type'].map(temperature_map) 
+    stim['stim_file'] = "n/a" #beh_df['event03_stimulus_type'].map(temperature_map) 
     if ttl_glob:
         stim['pain_onset_ttl1'] = (ttl_df['TTL1']).round(2)
         stim['pain_onset_ttl2'] = (ttl_df['TTL2']).round(2)
@@ -897,7 +897,7 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
     stim['rating_mousedur'] = "n/a"
     stim['cue'] = beh_df['event01_cue_type'] # if same as param_cue_type
     stim['stimulusintensity'] =  beh_df['event03_stimulus_type']    
-    stim['stim_file'] = f'task-social/cue/runtype-{task_name}/' + beh_df['event03_stimulus_V_filename'] 
+    stim['stim_file'] = f'task-social/stim/runtype-{task_name}/' + beh_df['event03_stimulus_V_filename'] 
     stim['pain_onset_ttl1'] = "n/a"
     stim['pain_onset_ttl2'] = "n/a"
     stim['pain_onset_ttl3'] = "n/a"
