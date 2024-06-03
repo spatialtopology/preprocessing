@@ -622,7 +622,7 @@ for spunt_fpath in spunt_flist:
     events['participant_response'] = df_spunt['event03_response_keyname'].replace({'left': 'yes', 'right':'no'})
     events['normative_response'] = df_spunt['param_normative_response'].replace({1:'yes', 2:'no'})
     events['event_type'] = df_spunt['event_type'].str[:3] + '_' + df_spunt['event_type'].str[3:]
-    events['stim_file'] = task_name + '/' + df_spunt['param_image_filename']
+    events['stim_file'] = 'task-' + task_name + '/' + df_spunt['param_image_filename']
     df_spunt['reponse_subject'] = df_spunt['event03_response_key'].replace(3, 2)
     events['response_accuracy'] = (events['participant_response'] == events['normative_response']).astype(int).replace({1: "correct", 0: "incorrect"})
 
