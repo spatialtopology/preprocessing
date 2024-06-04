@@ -71,14 +71,14 @@ for saxe_fpath in sorted(filtered_saxe_flist):
     subset_belief['event_type'] = "stimulus" 
     subset_belief['value'] = "falsebelief"
     subset_belief['response_accuracy'] = "n/a" 
-    subset_belief['stim_file'] = task_name + '/' + subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'event02_filename']
+    subset_belief['stim_file'] = "task-" + task_name + '/' + subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'event02_filename']
 
     subset_photo['onset'] = subset_beh.loc[subset_beh.event02_filetype == 'false_photo', 'event02_story_onset']
     subset_photo['duration'] = 11
     subset_photo['event_type'] = "stimulus"
     subset_photo['value'] = "falsephoto"
     subset_photo['response_accuracy'] = "n/a" 
-    subset_photo['stim_file'] =  task_name + '/' + subset_beh.loc[subset_beh.event02_filetype == 'false_photo', 'event02_filename']
+    subset_photo['stim_file'] =  "task-" + task_name + '/' + subset_beh.loc[subset_beh.event02_filetype == 'false_photo', 'event02_filename']
 
     subset_beliefrating['onset'] = subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'event03_question_onset']
     subset_beliefrating['duration'] = subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'event04_RT'] 
