@@ -941,3 +941,238 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
         vicarious_logger.critical(f"WARNING: The directory {beh_savedir} does not exist.")
     
     # extract bids info and save as new file
+
+
+# %% HED tag
+description_onset = {
+    "LongName": "Onset time of event",
+    "Description": "Marks the start of an ongoing event of temporal extent.",
+    "Units": "s",
+    "HED": "Property/Data-property/Data-marker/Temporal-marker/Onset"
+}
+description_duration = {
+    "LongName": "The period of time during which an event occurs.",
+    "Description": "Refers to duration of cue presentation or response time towards target item. (a) For valid_cue and invalid_cue, duration refers to the image presentation of cue. (b) For target_response, duration refers to response time to respond to target item. It is calculated as the interval between onset of button press and onset of target presentation ",
+    "Units": "s",
+    "HED": "Property/Data-property/Data-value/Spatiotemporal-value/Temporal-value/Duration"
+    } 
+
+description_runtype = {
+    "LongName": "The type of subtasks within task-social",
+    "Description": "Refers to the type of subtask: [pain, vicarious, cognitive']",
+    "Levels": {
+        "pain": "The stimuli being delivered is thermal heat.",
+        "vicarious": "The stimuli being delivered is a video with patients in pain",
+        "cognitive": "The stimuli being delivered is an image with two figures; participants are prompted to mentally rotate the figures and decide whether they are same or different"
+        },
+    "HED": {
+        "pain": "Property/Sensory-property/Sensory-attribute/Somatic-attribute/Pain",
+        "vicarious": "Action/Think/Judge",
+        "cognitive": "Action/Think/Discriminate"
+    }
+} 
+
+description_trialtype = {
+    "LongName": "Type of epochs with each trial",
+    "Description": "There are four epochs in each trial: cue, expectrating, stim, outcomerating",
+    "Levels": {
+        "cue": "Participants passively viewed a presentation of a high or low social cue, consisting of data points that participants believed indicated other people's ratings for that stimulus presented for 1 second on screen",
+        "expectrating": "Participants provided ratings of their expectations on the upcoming stimulus intensity on a gLMS scale for a total duration of 4 seconds overlaid with the cue image",
+        "stim": "Participants passively received/viewed experimentally delivered stimuli for each of the mental rotation, vicarious pain, and somatic pain tasks for 5 seconds each",
+        "outcomerating": "Participants provided ratings on their subjective experience of cognitive effort, vicarious pain, or somatic pain for 4 seconds"
+    },
+    "HED": {
+        "cue": "Property/Task-property/Task-stimulus-role/Cue",
+        "expectrating": "Action/Think/Encode",
+        "stim": "Action/Perceive",
+        "outcomerating": "Action/Think/Encode"
+    }
+}
+
+description_trialindex = {
+    "LongName": "Trial order",
+    "Description": "Indicates the trial order. There are a total of 12 trials in each run.",
+    "HED": "Property/Data-property/Data-value/Quantitative-value/Item-index/1-12"
+}
+
+description_ratingvalue = {
+    "LongName": "Rating value",
+    "Description": "The rating degree on a semicircle scale",
+    "HED": "Property/Data-property/Data-value/Quantitative-value/Item-interval/0-180"
+}
+
+description_ratingglms = {
+    "LongName": "Labels of generalized Labeled Magnitude Scale (gLMS)",
+    "Description": "Labels of generalized Labeled Magnitude Scale (gLMS)",
+    "Levels": {
+        "No sensation": "No sensation",
+        "Barely detectable": "Barely detectable",
+        "Weak": "Weak",
+        "Moderate": "Moderate",
+        "Strong": "Strong",
+        "Very Strong": "Very Strong",
+        "Strongest sensation of any kind": "Strongest sensation of any kind"
+    },
+    "HED": "Property/Data-property/Data-marker"
+}
+description_ratingvalueNA = {
+    "LongName": "Rating value with imputed values from mouse trajectory data",
+    "Description": "Using mouse trajectory data, we extract the last degree recorded on the scale. From this, we impute degrees for cells that were originally marked n/a",
+    "HED": "Property/Data-property/Data-value/Quantitative-value/Item-interval/0-180"
+}
+description_ratingglmsNA = {
+    "LongName": "Labels of generalized Labeled Magnitude Scale (gLMS)",
+    "Description": "Labels of generalized Labeled Magnitude Scale (gLMS)",
+    "Levels": {
+        "No sensation": "No sensation",
+        "Barely detectable": "Barely detectable",
+        "Weak": "Weak",
+        "Moderate": "Moderate",
+        "Strong": "Strong",
+        "Very Strong": "Very Strong",
+        "Strongest sensation of any kind": "Strongest sensation of any kind"
+    },
+    "HED": "Property/Data-property/Data-marker"
+}
+description_ratingmouseonset = {
+    "LongName": "Onset time of mouse trajectory",
+    "Description": "the time when the participant started moving the trackball in relation to the rating epoch",
+    "Units": "s",
+    "HED": "Property/Data-property/Data-marker/Temporal-marker/Onset"
+}
+
+description_mousedur = {
+    "LongName": "The period of time during which an event occurs.",
+    "Description": "Refers to duration of cue presentation or response time towards target item. (a) For valid_cue and invalid_cue, duration refers to the image presentation of cue. (b) For target_response, duration refers to response time to respond to target item. It is calculated as the interval between onset of button press and onset of target presentation ",
+    "Units": "s",
+    "HED": "Property/Data-property/Data-value/Spatiotemporal-value/Temporal-value/Duration"
+
+}
+description_cue = {
+    "LongName": "A cue to indicate level of upcoming stimulus intensity",
+    "Description": "Participants passively viewed a presentation of a high or low social cue, consisting of data points that participants believed indicated other people's ratings for that stimulus presented for 1 second on screen",
+    "Levels": {
+        "high_cue": "Data points on the cue indicate that past participants perceived the upcoming stimulus as having high intensity",
+        "low_cue": "Data points on the cue indicate that past participants perceived the upcoming stimulus as having low intensity"
+    },
+    "HED": {
+        "high_cue": ["Property/Task-property/Task-stimulus-role/Cue", "Property/Data-property/Data-value/Categorical-value/Categorical-level-value/High"],
+        "low_cue": ["Property/Task-property/Task-stimulus-role/Cue", "Property/Data-property/Data-value/Categorical-value/Categorical-level-value/Low"]
+    }
+}
+
+description_stimulusintensity = {
+    "LongName": "",
+    "Description": "",
+    "Levels": {
+        "high_stim": "High intensity stimulus (pain, vicarious, cognitive task)",
+        "med_stim": "Medium intensity stimulus (pain, vicarious, cognitive task)",
+        "low_stim": "Low intensity stimulus (pain, vicarious, cognitive task)"
+    },
+    "HED":  {
+        "high_stim": ["Property/Task-property/Task-event-role/Experimental-stimulus", "Property/Data-property/Data-value/Categorical-value/Categorical-level-value/High"],
+        "med_stim": ["Property/Task-property/Task-event-role/Experimental-stimulus", "Property/Data-property/Data-value/Categorical-value/Categorical-level-value/Medium"], 
+        "low_stim": ["Property/Task-property/Task-event-role/Experimental-stimulus", "Property/Data-property/Data-value/Categorical-value/Categorical-level-value/Low"]
+    }
+}
+
+description_stimfile = {
+    "LongName": "stimulus file path",
+    "Description": "Represents the location of the stimulus file (such as an image, video, or audio file) presented at the given onset time.",
+    "HED": "Property/Task-property/Task-event-role/Experimental-stimulus"
+}
+description_painonset1 = {
+    "LongName": "Onset time of pain stimulus (ramp up)",
+    "Description": "Marks the start of an pain stimulus trigger.",
+    "Units": "s",
+    "HED": "Property/Data-property/Data-marker/Temporal-marker/Onset"
+}
+description_painonset2 = {
+    "LongName": "Onset time of pain stimulus (reach plateau)",
+    "Description": "Marks the start of when pain stimulus reaches intended temperature and starts plateau.",
+    "Units": "s",
+    "HED": "Property/Data-property/Data-marker/Temporal-marker/Onset"
+}
+description_painonset3 = {
+    "LongName": "Onset time of pain stimulus (ramp down)",
+    "Description": "Marks the end of an pain plateau.",
+    "Units": "s",
+    "HED": "Property/Data-property/Data-marker/Temporal-marker/Onset"
+}
+description_painonset4 = {
+    "LongName": "Onset time of pain stimulus (baseline)",
+    "Description": "Marks the end of a pain stimulus trigger, returning to baseline.",
+    "Units": "s",
+    "HED": "Property/Data-property/Data-marker/Temporal-marker/Onset"
+}
+description_painsuccess = {
+    "LongName": "Onset time of pain stimulus (baseline)",
+    "Description": "Marks the end of a pain stimulus trigger, returning to baseline.",
+    "Units": "s",
+    "HED": "Property/Data-property/Data-value/Categorical-value/Categorical-class-value/True"
+}
+description_cognitiveresponse = {
+    "LongName": "Correct response for the rotated image",
+    "Description": "Correct answer for whether two figures are same or different",
+    "Levels": {
+        "same": "The two figures are the same",
+        "diff": "The two figures are different"
+    },
+    "HED": { 
+        "same": "Action/Think/Discriminate", 
+        "diff": "Action/Think/Discriminate"
+        }
+}
+description_cognitiveparticipant = {
+    "LongName": "Participant response for the rotated image",
+    "Description": "Participant respond to two options -- same or diff -- to the two figures on screen",
+    "Levels": {
+        "same": "The two figures are the same",
+        "diff": "The two figures are different"
+    },
+    "HED": { 
+        "same": "Action/Think/Discriminate", 
+        "diff": "Action/Think/Discriminate"
+        }
+}
+description_cognitiveaccuracy = {
+    "LongName": "Mental rotation task accuracy",
+    "Description": "Marks the end of a pain stimulus trigger, returning to baseline.",
+    "Levels": {
+        "True": "Correct response in regards to image (correctly identified as old or new)",
+        "False": "Incorrect response in regards to image (incorrectly identified as old or new)"
+    },
+    "HED": { 
+        "True": "Property/Task-property/Task-action-type/Correct-action", 
+        "False": "Property/Task-property/Task-action-type/Incorrect-action"
+        }
+}
+
+events_json = {"onset": description_onset,
+                "duration": description_duration, 
+                "run_type": description_runtype, 
+                "trial_type": description_trialtype,
+                "trial_index": description_trialindex,
+                "cue": description_cue, 
+                "stimulusintensity": description_stimulusintensity, 
+                "rating_value":description_ratingvalue,
+                "rating_glmslabel": description_ratingglms,
+                "rating_value_fillna": description_ratingvalueNA, 
+                "rating_glmslabel_fillna": description_ratingglmsNA, 
+                "rating_mouseonset": description_ratingmouseonset, 
+                "rating_mousedur": description_mousedur, 
+                "stim_file": description_stimfile, 
+                "pain_onset_ttl1": description_painonset1, 
+                "pain_onset_ttl2": description_painonset2, 
+                "pain_onset_ttl3": description_painonset3, 
+                "pain_onset_ttl4": description_painonset4, 
+                "pain_stimulus_delivery_success": description_painsuccess, 
+                "cognitive_correct_response": description_cognitiveresponse, 
+                "cognitive_participant_response": description_cognitiveparticipant, 
+                "cognitive_response_accuracy": description_cognitiveaccuracy
+                }  
+
+
+json_fname = join(bids_dir, f"task-social_events.json")
+with open(json_fname, 'w') as file:
+    json.dump(events_json, file, indent=4)
