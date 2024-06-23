@@ -167,6 +167,11 @@ for scan_fname in scans_list:
             run_command(f"git rm {orphan_file}")
             scans_df = scans_df[scans_df['filename'] != os.path.basename(orphan_file)]
 
+    scans_df.to_csv(scan_fname, index=False)
+
+    # Add the updated scans_file back to git annex
+    print(f"made edits to events file and deleted nifti files if not harmonized: {scan_fname}")
+    run_command(f"git annex add {scan_fname}")
 
 
 
@@ -180,14 +185,14 @@ for scan_fname in scans_list:
         df.to_csv(event_fpath, sep='\t', index=False) 
         new_event_fpath = event_fpath.replace(f"_desc-{keyword}", "") # Rename the event_fpath to drop the "_desc-keyword"
         os.rename(event_fpath, new_event_fpath)
+        run_command(f"git annex add {new_event_fpath}")
         run_command(f"git rm {event_fpath}")
         print(f"remove all the task-cue events files {event_fpath}")
 
         # Add the updated scans_file back to git annex
         print(f"made edits to events file and deleted nifti files if not harmonized: {scan_fname}")
-        run_command(f"git annex add {new_event_fpath}")
-        run_command(f"git commit -m 'DOC: update scans tsv with task-fractional runtype metadata and remove orphan NIfTI files'")        
-    #run_command(f"git commit -m 'DEP: delete non-bids compliant events file'")
-    print("run_command(git commit -m DEP: delete non-bids compliant events file")
+
+      
 
 
+run_command(f"git commit -m 'DOC: update scans tsv with task-fractional runtype metadata and remove orphan NIfTI files delete non-bids compliant events file'")
