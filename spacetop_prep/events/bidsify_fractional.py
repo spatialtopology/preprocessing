@@ -85,14 +85,14 @@ for saxe_fpath in sorted(filtered_saxe_flist):
     subset_beliefrating['event_type'] = "response" 
     subset_beliefrating['value'] = "falsebelief" 
     subset_beliefrating['response_accuracy'] = subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'response_accuracy']
-    subset_beliefrating['stim_file'] = task_name + '/' + subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'event02_filename'].str.replace('story', 'question')
+    subset_beliefrating['stim_file'] = "task-" + task_name + '/' + subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'event02_filename'].str.replace('story', 'question')
 
     subset_photorating['onset'] = subset_beh.loc[subset_beh.event02_filetype == 'false_photo', 'event03_question_onset']
     subset_photorating['duration'] = subset_beh.loc[subset_beh.event02_filetype == 'false_photo', 'event04_RT']
     subset_photorating['event_type'] = "response" 
     subset_photorating['value'] = "falsephoto"
     subset_photorating['response_accuracy'] = subset_beh.loc[subset_beh.event02_filetype == 'false_photo', 'response_accuracy'] 
-    subset_photorating['stim_file'] = task_name + '/' + subset_beh.loc[subset_beh.event02_filetype == 'false_photo', 'event02_filename'].str.replace('story', 'question')
+    subset_photorating['stim_file'] = "task-" + task_name + '/' + subset_beh.loc[subset_beh.event02_filetype == 'false_photo', 'event02_filename'].str.replace('story', 'question')
     # concatenate above dataframes and save in new folder
     events = pd.concat([subset_belief, subset_photo, subset_beliefrating, subset_photorating], ignore_index=True)
     events_sorted = events.sort_values(by='onset')
