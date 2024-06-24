@@ -87,7 +87,7 @@ def remove_orphan_nifti_files(nifti_files, event_files):
         nifti_basename = os.path.basename(nifti_file)
         task, run = extract_run_and_task(nifti_basename)
         if task and run:
-            expected_event_filename = f'sub-*_ses-*_task-cue*_run-{run}_desc*_events.tsv'
+            expected_event_filename = f'sub-*_ses-*_task-fractional*_run-{run}_desc*_events.tsv'
             if not any(re.match(expected_event_filename.replace('*', '.*'), event_filename) for event_filename in event_file_basenames):
                 orphan_files.append(nifti_file)
     
@@ -167,6 +167,7 @@ for scan_fname in scans_list:
             run_command(f"git rm {orphan_file}")
             scans_df = scans_df[scans_df['filename'] != os.path.basename(orphan_file)]
 
+    # save the unlocked scans tsv
     scans_df.to_csv(scan_fname, index=False)
 
     # Add the updated scans_file back to git annex
