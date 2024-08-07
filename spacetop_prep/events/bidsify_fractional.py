@@ -68,6 +68,7 @@ for saxe_fpath in sorted(filtered_saxe_flist):
 
     subset_belief['onset'] = subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'event02_story_onset']
     subset_belief['duration'] = 11
+    subset_belief['subtask_type'] = task_name
     subset_belief['event_type'] = "stimulus" 
     subset_belief['value'] = "falsebelief"
     subset_belief['response_accuracy'] = "n/a" 
@@ -75,6 +76,7 @@ for saxe_fpath in sorted(filtered_saxe_flist):
 
     subset_photo['onset'] = subset_beh.loc[subset_beh.event02_filetype == 'false_photo', 'event02_story_onset']
     subset_photo['duration'] = 11
+    subset_photo['subtask_type'] = task_name
     subset_photo['event_type'] = "stimulus"
     subset_photo['value'] = "falsephoto"
     subset_photo['response_accuracy'] = "n/a" 
@@ -82,6 +84,7 @@ for saxe_fpath in sorted(filtered_saxe_flist):
 
     subset_beliefrating['onset'] = subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'event03_question_onset']
     subset_beliefrating['duration'] = subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'event04_RT'] 
+    subset_beliefrating['subtask_type'] = task_name
     subset_beliefrating['event_type'] = "response" 
     subset_beliefrating['value'] = "falsebelief" 
     subset_beliefrating['response_accuracy'] = subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'response_accuracy']
@@ -89,6 +92,7 @@ for saxe_fpath in sorted(filtered_saxe_flist):
 
     subset_photorating['onset'] = subset_beh.loc[subset_beh.event02_filetype == 'false_photo', 'event03_question_onset']
     subset_photorating['duration'] = subset_beh.loc[subset_beh.event02_filetype == 'false_photo', 'event04_RT']
+    subset_photorating['subtask_type'] = task_name
     subset_photorating['event_type'] = "response" 
     subset_photorating['value'] = "falsephoto"
     subset_photorating['response_accuracy'] = subset_beh.loc[subset_beh.event02_filetype == 'false_photo', 'response_accuracy'] 
@@ -98,7 +102,7 @@ for saxe_fpath in sorted(filtered_saxe_flist):
     events_sorted = events.sort_values(by='onset')
     events = events.fillna("n/a")
     Path(beh_savedir).mkdir( parents=True, exist_ok=True )
-    events.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_desc-{task_name}_events.tsv"), sep='\t', index=False)
+    events.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_events.tsv"), sep='\t', index=False)
 
 # create json files
 description_onset = {
@@ -194,6 +198,7 @@ for posner_fpath in sorted(posner_flist):
 
     subset_valid['onset'] = subset_beh.loc[subset_beh.param_valid_type == 'valid', 'event02_cue_onset']
     subset_valid['duration'] = 0.2
+    subset_valid['subtask_type'] = task_name
     subset_valid['event_type'] = "valid_cue"
     subset_valid['response_accuracy'] = subset_beh.loc[subset_beh.param_valid_type == 'valid', 'response_accuracy']
     subset_valid['cue_location'] = subset_beh.loc[subset_beh.param_valid_type == 'valid', 'param_cue_location']
@@ -203,6 +208,7 @@ for posner_fpath in sorted(posner_flist):
 
     subset_invalid['onset'] = subset_beh.loc[subset_beh.param_valid_type == 'invalid', 'event02_cue_onset']
     subset_invalid['duration'] = 0.2
+    subset_invalid['subtask_type'] = task_name
     subset_invalid['event_type'] = "invalid_cue"
     subset_invalid['response_accuracy'] = subset_beh.loc[subset_beh.param_valid_type == 'invalid', 'response_accuracy']
     subset_invalid['cue_location'] = subset_beh.loc[subset_beh.param_valid_type == 'invalid', 'param_cue_location']
@@ -213,6 +219,7 @@ for posner_fpath in sorted(posner_flist):
 
     subset_target['onset'] = subset_beh.event03_target_onset
     subset_target['duration'] = subset_beh.event04_RT
+    subset_target['subtask_type'] = task_name
     subset_target['event_type'] = "target_response" 
     subset_target['response_accuracy'] = subset_beh.response_accuracy
     subset_target['cue_location'] = subset_beh.param_cue_location
@@ -227,7 +234,7 @@ for posner_fpath in sorted(posner_flist):
     posner_events_sorted = posner_events_sorted.fillna("n/a")
     Path(beh_savedir).mkdir( parents=True, exist_ok=True )
     # extract bids info and save as new file
-    posner_events_sorted.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_desc-{task_name}_events.tsv"), sep='\t', index=False)
+    posner_events_sorted.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_events.tsv"), sep='\t', index=False)
 
 description_onset = {
     "LongName": "Onset time of event",
@@ -422,7 +429,7 @@ for memory_fpath in memory_flist:
     task_name = re.search(r'run-\d+-(\w+)_beh', memory_fname).group(1)
     print(f"{sub_bids} {ses_bids} {run_bids} {task_name}")
     beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
-    membids_df = pd.DataFrame(columns=['onset', 'duration', 'event_type', 'value', 'response_accuracy', 'stim_file', 'button_press'])
+    membids_df = pd.DataFrame(columns=['onset', 'duration', 'subtask_type', 'event_type', 'value', 'response_accuracy', 'stim_file', 'button_press'])
 
     df_memmain = pd.read_csv(memory_fpath)
     trigger = df_memmain['param_trigger_onset'].values[0]
@@ -435,6 +442,7 @@ for memory_study_fname in memory_study_flist:
     temp_study = pd.DataFrame(columns=['onset', 'duration', 'event_type', 'value', 'response_accuracy', 'stim_file', 'button_press', 'reaction_time'])
     temp_study['onset'] = df_memstudy['RAW_event02_image_onset'] - trigger
     temp_study['duration'] = df_memstudy['RAW_event03_isi_onset'] - df_memstudy['RAW_event02_image_onset']
+    temp_study['subtask_type'] = task_name
     temp_study['event_type'] = df_memstudy['event02_dummy_stimuli_type'].replace({0: 'dummy', 1: 'study'})
     temp_study['value'] = temp_study['event_type'].replace({'dummy': 'study_dummy', 'study':'study'})
     temp_study['stim_file'] = task_name + '/' + df_memstudy['event02_image_filename']
@@ -452,6 +460,7 @@ for memory_test_fname in memory_test_flist:
     temp_test['onset'] = df_memtest['RAW_event02_image_onset'] - trigger
     temp_test['duration'] = df_memtest['RAW_event03_response_onset'] - df_memtest['RAW_event02_image_onset']
     temp_test['duration'] = temp_test['duration'].fillna(2) # if duration is na, fill with 2
+    temp_test['subtask_type'] = task_name
     temp_test['event_type'] = 'test'
     temp_test['value'] =  df_memtest['param_answer'].replace({0: 'test_new', 1:'test_old'})
     temp_test['stim_file'] = task_name + '/' + df_memtest['event02_image_filename']
@@ -471,6 +480,7 @@ for memory_dist_fname in memory_dist_flist:
     temp_dist = pd.DataFrame(columns=['onset', 'duration', 'event_type', 'value', 'response_accuracy', 'stim_file',  'button_press', 'reaction_time']) 
     temp_dist['onset'] = df_memdist['p2_operation'] - trigger
     temp_dist['duration'] = 25 
+    temp_dist['subtask_type'] = task_name
     temp_dist['event_type'] = 'distraction_math'
     temp_dist['value'] = 'math'
     temp_dist['stim_file'] = "n/a"
@@ -481,7 +491,7 @@ for memory_dist_fname in memory_dist_flist:
 
 membids_df = membids_df.fillna("n/a")
 Path(beh_savedir).mkdir( parents=True, exist_ok=True )
-save_fname = f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_desc-{task_name}_events.tsv"
+save_fname = f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_events.tsv"
 membids_df.to_csv(join(beh_savedir, save_fname), sep='\t', index=False)
 
 
@@ -612,11 +622,12 @@ for spunt_fpath in spunt_flist:
 
     df_spunt = pd.read_csv(spunt_fpath)
 
-    events = pd.DataFrame(columns=['onset', 'duration','question', 'event_type','participant_response', 'normative_response', 'response_accuracy', 'stim_file']) 
-    blockquestion = pd.DataFrame(columns=['onset', 'duration','question', 'event_type','participant_response', 'normative_response', 'response_accuracy', 'stim_file']) 
+    events = pd.DataFrame(columns=['onset', 'duration', 'subtask_type', 'question', 'event_type','participant_response', 'normative_response', 'response_accuracy', 'stim_file']) 
+    blockquestion = pd.DataFrame(columns=['onset', 'duration', 'subtask_type', 'question', 'event_type','participant_response', 'normative_response', 'response_accuracy', 'stim_file']) 
 
     events['onset'] = df_spunt['RAW_e2_image_onset'] - df_spunt['param_trigger_onset']
     events['duration'] = df_spunt['RAW_e3_response_onset'] - df_spunt['RAW_e2_image_onset'] 
+    events['subtask_type'] = task_name
     events['question'] = df_spunt['param_ques_type_string']
     df_spunt['event_type'] = df_spunt['param_cond_type_string'].str.replace('^(c[1234])_', '', regex=True).str.replace(r'([a-z])([A-Z])', r'\1_\2').str.lower()
     events['participant_response'] = df_spunt['event03_response_keyname'].replace({'left': 'yes', 'right':'no'})
@@ -628,6 +639,7 @@ for spunt_fpath in spunt_flist:
 
     blockquestion['onset'] = df_spunt['event01_blockquestion_onset']
     blockquestion['duration'] = df_spunt['event01_blockquestion_dur']
+    blockquestion['subtask_type'] = task_name
     blockquestion['question'] = df_spunt['param_ques_type_string']
     blockquestion['event_type'] = "block_question_presentation"
     blockquestion['participant_response'] = "n/a"
@@ -640,7 +652,7 @@ for spunt_fpath in spunt_flist:
 
     events = events.fillna("n/a")
     Path(beh_savedir).mkdir( parents=True, exist_ok=True )
-    save_fname = f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_desc-{task_name}_events.tsv"
+    save_fname = f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_events.tsv"
     events.to_csv(join(beh_savedir, save_fname), sep='\t', index=False)
 
 

@@ -90,6 +90,7 @@ def remove_orphan_nifti_files(nifti_files, event_files):
             expected_event_filename = f'sub-*_ses-*_task-fractional*_run-{run}_desc*_events.tsv'
             if not any(re.match(expected_event_filename.replace('*', '.*'), event_filename) for event_filename in event_file_basenames):
                 orphan_files.append(nifti_file)
+    # TODO. need to remove these files from the scans tsv as well
     
     return orphan_files
 
