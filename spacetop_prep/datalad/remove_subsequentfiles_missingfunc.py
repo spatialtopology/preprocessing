@@ -44,6 +44,6 @@ for sub in sublist:
             for file in file_list:
                 print(f"{file_list}")
                 print(f"Removing file: {file}")
-                #os.remove(file)
+                os.remove(file)
 
     print("Cleanup completed.")
