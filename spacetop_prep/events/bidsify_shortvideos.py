@@ -31,8 +31,8 @@ outputDir = '/Users/h/Documents/projects_local/1076_spacetop'
 
 # get a list of subjects with available data
 folders = glob.glob(os.path.join(outputDir, 'sub-*'))
-subList = [os.path.basename(x) for x in folders]
-taskname = 'task-shortvideo'
+sublist = sorted([os.path.basename(x) for x in folders])
+taskname = 'task-shortvideos'
 session = 'ses-03'
 
 run = '01'
@@ -51,7 +51,7 @@ labels = [
 ]
 
 
-for sub in subList: 
+for sub in sublist: 
     dataFile = os.path.join(behDataDir, sub, taskname, f'{sub}_{session}_{taskname}_beh-preproc.csv')
     if not os.path.isfile(dataFile):
         print(f'No behavior data file for {sub}_run-{run}')
@@ -142,7 +142,7 @@ for sub in subList:
     newData = newData.replace(np.nan, 'n/a')
 
     # save new events file
-    newFilename = os.path.join(outputDir, sub, session, 'func', f'{sub}_{session}_{taskname}_acq-mb8_run-01_events.tsv')
+    newFilename = os.path.join(outputDir, sub, session, 'func', f'{sub}_{session}_task-shortvideo_acq-mb8_run-01_events.tsv')
     try:
         newData.to_csv(newFilename, sep='\t', index=False)
     except Exception as e:
