@@ -32,7 +32,7 @@ outputDir = '/Users/h/Documents/projects_local/1076_spacetop'
 # get a list of subjects with available data
 folders = glob.glob(os.path.join(outputDir, 'sub-*'))
 subList = [os.path.basename(x) for x in folders]
-taskname = 'task-shortvideos'
+taskname = 'task-shortvideo'
 session = 'ses-03'
 
 run = '01'
