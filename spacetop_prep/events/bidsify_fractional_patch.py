@@ -194,7 +194,4 @@ for scan_fname in scans_list:
         # Add the updated scans_file back to git annex
         print(f"made edits to events file and deleted nifti files if not harmonized: {scan_fname}")
 
-      
 
-
-run_command(f"git commit -m 'DOC: update scans tsv with task-fractional runtype metadata and remove orphan NIfTI files delete non-bids compliant events file'")

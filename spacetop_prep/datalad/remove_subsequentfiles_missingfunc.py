@@ -1,7 +1,7 @@
 import os
 import glob
 
-datalad_dir = '/Users/h/Documents/projects_local/1076_spacetop'
+datalad_dir = '/Users/h/Documents/projects_local/1076)spacetop'
 # Define the suffixes for the different file types
 file_suffixes = ['_bold.json', '_bold.nii.gz', '_events.tsv', '_sbref.json', '_sbref.nii.gz']
 
@@ -12,7 +12,7 @@ sublist = sorted([os.path.basename(x) for x in folders])
 
 for sub in sublist:
 
-    files = glob.glob(os.path.join(datalad_dir, sub, '*'))
+    files = glob.glob(os.path.join(datalad_dir, sub, 'ses-*', 'func', '*' ))
 
     # Dictionary to keep track of files grouped by their base name
     file_dict = {}
@@ -42,10 +42,8 @@ for sub in sublist:
         if not bold_nifti_exists:
             # If no _bold.nii.gz file exists, remove all files in this group
             for file in file_list:
+                print(f"{file_list}")
                 print(f"Removing file: {file}")
                 os.remove(file)
 
     print("Cleanup completed.")
-
-
-
