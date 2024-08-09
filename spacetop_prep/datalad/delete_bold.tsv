@@ -1,0 +1,337 @@
+Deprecate_category	BIDS_string	Scan_comments
+delete	sub-0002_ses-03_task-social_acq-mb8_run-04	"- PVC thermode failure (8002) 
+- PVC questionable biopac for the PVC runs (EDA) 
+- short-video: audio was off (for first 2 min)
+- Also, behavioural RA (MA) noticed that she dozed off a couple of times "
+delete	sub-0007_ses-03_task-social_acq-mb8_run-06	#NAME?
+delete	sub-0009_ses-01_task-alignvideo_acq-mb8_run-04	"- had to restart PVC task because the DTI put out 5 triggers before we pressed s
+- matlab error message popped up at the end of 4th run - 4th run not saved"
+delete	sub-0026_ses-01_task-social_acq-mb8_run-02	"- PVC run 02, post=test setting was too long that it bleaded into other trials
+- PVC, don't think participant reported expectation rating
+"
+delete	sub-0064_ses-04_task-social_acq-mb8_run-01	PVC: Thermode was received and passed the test yesterday but failed the first pain run. We skipped both pain runs for this participant PCVCPV
+delete	sub-0068_ses-01_task-alignvideo_acq-mb8_run-04	"-AlignVid-06: P had to use the washroom right before run 6 and had had also felt distressed since he had been trying to locate the squeeze ball for a while and was not able to. Since we were running late due to the P asking for glasses after he was put in, we skipped the last align vid run 6 to add to the next session. "
+delete	sub-0071_ses-01_task-social_acq-mb8_run-02	PVC: thermode worked fine for a few trials in run 2 but then stopped reaching the correct temperature and ultimately failed a pre-test. We had to stop that run. The thermode then threw an 8007 error during pretest before the next pain run so it wasn't usable
+delete	sub-0084_ses-03_task-social_acq-mb8_run-03	"PVC: skipped pain runs (03+06) due to 8007 error. Details: the TSA had passed the safety test and successfully ran with matlab pretest before setting up the participant. When starting the first pain run, I noticed medoc wasn't making the usual trigger sound but the participant was still making ratings (she later confirmed verbally she did not feel pain stimulus). I pulled up medoc and saw that everything was greyed out and there was an error message about failing the pre-test even though the TSA unit itself was still green. I restarted matlab, stopped the run, and detached the thermode from the participant before redoing the safety test, which is when 8007 error first appeared. 
+Align videos: participant hit the emergency ball to report that the trackball stopped working properly. She verified that it had been working up until that point. We re-calibrated and went ahead to the next run. Issue was reported a little less than halfway through (circa the car flood video)."
+delete	sub-0094_ses-04_task-alignvideo_acq-mb8_run-01	Alignvideo 01: Participant could not lock in responses towards the end of the run. Aborted. Run02 was fine
+delete	sub-0111_ses-04_task-social_acq-mb8_run-05	PVC 05: vicarious participant couldn't lock in response. We aborted scan and moved on to run06
+delete	sub-0116_ses-02_task-faces_acq-mb8_run-03	faces 03: did not run at all. Do not use
+delete	sub-0118_ses-02_task-alignvideo_acq-mb8_run-03	
+delete	sub-0131_ses-01_task-social_acq-mb8_run-05	PVC 05 error on TSA
+delete	sub-0131_ses-04_task-social_acq-mb8_run-01	- PVC run 01 aborted prematurely
+investigate: TR length correct	sub-0001_ses-01_task-social_acq-mb8_run-01	
+investigate: TR length correct	sub-0001_ses-01_task-social_acq-mb8_run-02	
+investigate: TR length correct	sub-0001_ses-01_task-social_acq-mb8_run-03	
+investigate: TR length correct	sub-0003_ses-03_task-social_acq-mb8_run-01	#NAME?
+investigate: TR length correct	sub-0003_ses-03_task-social_acq-mb8_run-02	#NAME?
+investigate: TR length correct	sub-0003_ses-03_task-social_acq-mb8_run-03	#NAME?
+investigate: TR length correct	sub-0003_ses-03_task-social_acq-mb8_run-04	#NAME?
+investigate: TR length correct	sub-0003_ses-03_task-social_acq-mb8_run-05	#NAME?
+investigate: TR length correct	sub-0003_ses-03_task-social_acq-mb8_run-06	#NAME?
+investigate: TR length correct	sub-0003_ses-04_task-social_acq-mb8_run-01	#NAME?
+investigate: TR length correct	sub-0003_ses-04_task-social_acq-mb8_run-02	#NAME?
+investigate: TR length correct	sub-0003_ses-04_task-social_acq-mb8_run-03	#NAME?
+investigate: TR length correct	sub-0003_ses-04_task-social_acq-mb8_run-04	#NAME?
+investigate: TR length correct	sub-0003_ses-04_task-social_acq-mb8_run-05	#NAME?
+investigate: TR length correct	sub-0003_ses-04_task-social_acq-mb8_run-06	#NAME?
+investigate: TR length correct	sub-0004_ses-03_task-social_acq-mb8_run-01	"- Used v2 protocol for arm site measurements
+- PVC run 03 briefly stopped"
+investigate: TR length correct	sub-0004_ses-03_task-social_acq-mb8_run-02	"- Used v2 protocol for arm site measurements
+- PVC run 03 briefly stopped"
+investigate: TR length correct	sub-0004_ses-03_task-social_acq-mb8_run-03	"- Used v2 protocol for arm site measurements
+- PVC run 03 briefly stopped"
+investigate: TR length correct	sub-0004_ses-03_task-social_acq-mb8_run-04	"- Used v2 protocol for arm site measurements
+- PVC run 03 briefly stopped"
+investigate: TR length correct	sub-0004_ses-03_task-social_acq-mb8_run-05	"- Used v2 protocol for arm site measurements
+- PVC run 03 briefly stopped"
+investigate: TR length correct	sub-0004_ses-03_task-social_acq-mb8_run-06	"- Used v2 protocol for arm site measurements
+- PVC run 03 briefly stopped"
+investigate: TR length correct	sub-0004_ses-04_task-social_acq-mb8_run-01	"- Used v2 protocol for arm site measurements
+- No calibration for biopac before fractionals task
+- Attached PPG to left toe (with EDA on base of left foot) because of participant sprain on right foot
+- Paused and stopped biopac twice before beginning saxe task (due to audio)
+- To Do: should probably add another fieldmap before PVC
+- To Do: ""press s"" ""press e"" for narratives
+- Ran biopac calibration before PVC (PPG was unhooked; EDA was hooked during calibration)
+- Restarted PVC task because TSA was not in external control mode
+- Restarted Align Videos because shutter was on
+- Recalibrated biopac before Narratives task (PPG and EDA unhooked during calibration)
+- Completed Narratives task during this session"
+investigate: TR length correct	sub-0004_ses-04_task-social_acq-mb8_run-02	"- Used v2 protocol for arm site measurements
+- No calibration for biopac before fractionals task
+- Attached PPG to left toe (with EDA on base of left foot) because of participant sprain on right foot
+- Paused and stopped biopac twice before beginning saxe task (due to audio)
+- To Do: should probably add another fieldmap before PVC
+- To Do: ""press s"" ""press e"" for narratives
+- Ran biopac calibration before PVC (PPG was unhooked; EDA was hooked during calibration)
+- Restarted PVC task because TSA was not in external control mode
+- Restarted Align Videos because shutter was on
+- Recalibrated biopac before Narratives task (PPG and EDA unhooked during calibration)
+- Completed Narratives task during this session"
+investigate: TR length correct	sub-0004_ses-04_task-social_acq-mb8_run-03	"- Used v2 protocol for arm site measurements
+- No calibration for biopac before fractionals task
+- Attached PPG to left toe (with EDA on base of left foot) because of participant sprain on right foot
+- Paused and stopped biopac twice before beginning saxe task (due to audio)
+- To Do: should probably add another fieldmap before PVC
+- To Do: ""press s"" ""press e"" for narratives
+- Ran biopac calibration before PVC (PPG was unhooked; EDA was hooked during calibration)
+- Restarted PVC task because TSA was not in external control mode
+- Restarted Align Videos because shutter was on
+- Recalibrated biopac before Narratives task (PPG and EDA unhooked during calibration)
+- Completed Narratives task during this session"
+investigate: TR length correct	sub-0004_ses-04_task-social_acq-mb8_run-04	"- Used v2 protocol for arm site measurements
+- No calibration for biopac before fractionals task
+- Attached PPG to left toe (with EDA on base of left foot) because of participant sprain on right foot
+- Paused and stopped biopac twice before beginning saxe task (due to audio)
+- To Do: should probably add another fieldmap before PVC
+- To Do: ""press s"" ""press e"" for narratives
+- Ran biopac calibration before PVC (PPG was unhooked; EDA was hooked during calibration)
+- Restarted PVC task because TSA was not in external control mode
+- Restarted Align Videos because shutter was on
+- Recalibrated biopac before Narratives task (PPG and EDA unhooked during calibration)
+- Completed Narratives task during this session"
+investigate: TR length correct	sub-0004_ses-04_task-social_acq-mb8_run-05	"- Used v2 protocol for arm site measurements
+- No calibration for biopac before fractionals task
+- Attached PPG to left toe (with EDA on base of left foot) because of participant sprain on right foot
+- Paused and stopped biopac twice before beginning saxe task (due to audio)
+- To Do: should probably add another fieldmap before PVC
+- To Do: ""press s"" ""press e"" for narratives
+- Ran biopac calibration before PVC (PPG was unhooked; EDA was hooked during calibration)
+- Restarted PVC task because TSA was not in external control mode
+- Restarted Align Videos because shutter was on
+- Recalibrated biopac before Narratives task (PPG and EDA unhooked during calibration)
+- Completed Narratives task during this session"
+investigate: TR length correct	sub-0004_ses-04_task-social_acq-mb8_run-06	"- Used v2 protocol for arm site measurements
+- No calibration for biopac before fractionals task
+- Attached PPG to left toe (with EDA on base of left foot) because of participant sprain on right foot
+- Paused and stopped biopac twice before beginning saxe task (due to audio)
+- To Do: should probably add another fieldmap before PVC
+- To Do: ""press s"" ""press e"" for narratives
+- Ran biopac calibration before PVC (PPG was unhooked; EDA was hooked during calibration)
+- Restarted PVC task because TSA was not in external control mode
+- Restarted Align Videos because shutter was on
+- Recalibrated biopac before Narratives task (PPG and EDA unhooked during calibration)
+- Completed Narratives task during this session"
+investigate: TR length correct	sub-0011_ses-03_task-social_acq-mb8_run-02	"- PVC run 02 (pain) stopped in the middle. no connection (however, TTL bells were in the background. ) Maryam took a photo of the error message >> check spacetop recruitment channel
+- alignvideo even though we checked audio right before short video, participant reported that they could not hear anything during run 1"
+investigate: TR length correct	sub-0011_ses-03_task-alignvideo_acq-mb8_run-01	"- PVC run 02 (pain) stopped in the middle. no connection (however, TTL bells were in the background. ) Maryam took a photo of the error message >> check spacetop recruitment channel
+- alignvideo even though we checked audio right before short video, participant reported that they could not hear anything during run 1"
+investigate: TR length correct	sub-0019_ses-03_task-social_acq-mb8_run-02	- PVC run-02 pain run. Medoc crashed - the program was hanging without any error message. Should be able to use the other trials that were collected. 
+investigate: TR length correct	sub-0020_ses-01_task-social_acq-mb8_run-01	"- PVC Participant didn’t understand the instructions
+did not rate “expect” ratings
+did not use button for logging in ratings
+Has been instructed after 1st run, and has been rating correctly afterwards"
+investigate: TR length correct	sub-0020_ses-04_task-social_acq-mb8_run-06	#NAME?
+investigate: TR length correct	sub-0021_ses-01_task-alignvideo_acq-mb8_run-03	"- PVC: used sub-0098 to collect data >> moved data to behavioral git >> however, still need to update subject ids that are collected within file
+- PVC: hard skipped run 6 because of time - 
+Align videos: Run 3: completed full run, but on the end screen, the press ""e"" command didn't work so we had to close out of matlab in order to start run 4"
+investigate: TR length correct	sub-0021_ses-03_task-social_acq-mb8_run-04	-PVC run04 Vicarious and pvc run05 pain - SOOOOO much movement!!!!!
+investigate: TR length correct	sub-0021_ses-03_task-social_acq-mb8_run-05	-PVC run04 Vicarious and pvc run05 pain - SOOOOO much movement!!!!!
+investigate: TR length correct	sub-0021_ses-04_task-social_acq-mb8_run-03	#NAME?
+investigate: TR length correct	sub-0021_ses-04_task-social_acq-mb8_run-06	#NAME?
+investigate: TR length correct	sub-0024_ses-03_task-social_acq-mb8_run-03	"- PVC run-05: scanner error during 5th run of PVC
+- PVC run-06: participant could not tolerate pain task and thus we skipped. 
+- PVC run-05 no no data for run 5
+"
+investigate: TR length correct	sub-0025_ses-01_task-social_acq-mb8_run-04	"- After 4th PVC run they noted that they could not move the track ball to make a rating. We re-calibrated the trackball after that, but they still had difficulties moving the cursor out to the semi-circle. It was still a problem during the fifth run. We recalibrated it again and it was fixed during the 6th run of PVC.
+- Trackball was fine for videos"
+investigate: TR length correct	sub-0025_ses-01_task-social_acq-mb8_run-05	"- After 4th PVC run they noted that they could not move the track ball to make a rating. We re-calibrated the trackball after that, but they still had difficulties moving the cursor out to the semi-circle. It was still a problem during the fifth run. We recalibrated it again and it was fixed during the 6th run of PVC.
+- Trackball was fine for videos"
+investigate: TR length correct	sub-0039_ses-01_task-social_acq-mb8_run-02	"- PVC 01: participant is not responding in the expect phase. 
+- PVC 02: participant did not respond to the same/diff mental rotation task, we checked after the run, and participant confirmed that her response was not fast enough. 
+- PVC 03: participant ran under John Smith instead of sub-0039
+- no data collected for align videos 03 04 due to timing"
+investigate: TR length correct	sub-0046_ses-02_task-faces_acq-mb8_run-03	"-third faces run ran over scan by approx. 7-10 face stimuli
+-had to adjust volume on narratives run1"
+investigate: TR length correct	sub-0052_ses-01_task-social_acq-mb8_run-01	"- Participant noted lag with trackball during practice, so we re-calibrated before first PVC run
+- After first PVC run, the participant noted that there were still issues with the trackball (couldn't reach the semi-circle a cpl times) and we re-calibrated again before starting the second PVC run
+- No issues with trackball after second re-calibration"
+investigate: TR length correct	sub-0056_ses-02_task-alignvideo_acq-mb8_run-01	#NAME?
+investigate: TR length correct	sub-0056_ses-02_task-alignvideo_acq-mb8_run-02	#NAME?
+investigate: TR length correct	sub-0056_ses-02_task-alignvideo_acq-mb8_run-03	#NAME?
+investigate: TR length correct	sub-0056_ses-02_task-alignvideo_acq-mb8_run-04	#NAME?
+investigate: TR length correct	sub-0058_ses-01_task-social_acq-mb8_run-01	-PVC run1(pain) - sub didn't rate expectations
+investigate: TR length correct	sub-0069_ses-01_task-social_acq-mb8_run-03	"010 run-01
+011 scout_ses-51
+012 fmap_run-51
+014 func_run-01
+015 func_run-02
+016 func_run-03
+017 func_run-03
+018 scout_ses-61
+019 scout_ses-01
+020 fmap_run-61
+021 fmap_run-61
+022 func_run-04
+023 func_run-05
+024 func_run-06"
+investigate: TR length correct	sub-0075_ses-01_task-social_acq-mb8_run-01	"PVC: Due to current thermode issues and all being dysfunctional, we skipped the pain runs PCVCPV. We used the first 4 runs on the sccanner and skipped the last two. "
+investigate: TR length correct	sub-0079_ses-03_task-social_acq-mb8_run-02	
+investigate: TR length correct	sub-0112_ses-01_task-social_acq-mb8_run-01	"PVC run 01: talked to participant about expectation ratings. did not lock in any ratingsimage: 16 movement. 
+PVC run 06: extreme movement. potentially removed. "
+investigate: TR length correct	sub-0112_ses-01_task-social_acq-mb8_run-06	"PVC run 01: talked to participant about expectation ratings. did not lock in any ratingsimage: 16 movement. 
+PVC run 06: extreme movement. potentially removed. "
+investigate: TR length correct	sub-0112_ses-04_task-social_acq-mb8_run-03	"Participant moved so much - p was informed not to move
+- PVC run 02 - p asked to come out of scanner. redid fieldmap and yoked with reference
+- PVC run 03 p moved during run 3 and 4. also reminded not to move
+- PVC run 03 - thermode trial was hanging. 
+- observed artifact during PVC run 03, slice 127
+- PVC run 05 - biopac terminated towards end of data collection
+- PVC run 06 - restarted run. 
+- aligne video - p could only hear audio in left ear, during the middle of the run. Couldn't identify which run"
+investigate: TR length correct	sub-0112_ses-04_task-social_acq-mb8_run-04	"Participant moved so much - p was informed not to move
+- PVC run 02 - p asked to come out of scanner. redid fieldmap and yoked with reference
+- PVC run 03 p moved during run 3 and 4. also reminded not to move
+- PVC run 03 - thermode trial was hanging. 
+- observed artifact during PVC run 03, slice 127
+- PVC run 05 - biopac terminated towards end of data collection
+- PVC run 06 - restarted run. 
+- aligne video - p could only hear audio in left ear, during the middle of the run. Couldn't identify which run"
+investigate: TR length correct	sub-0112_ses-04_task-alignvideo_acq-mb8_run-01	"Participant moved so much - p was informed not to move
+- PVC run 02 - p asked to come out of scanner. redid fieldmap and yoked with reference
+- PVC run 03 p moved during run 3 and 4. also reminded not to move
+- PVC run 03 - thermode trial was hanging. 
+- observed artifact during PVC run 03, slice 127
+- PVC run 05 - biopac terminated towards end of data collection
+- PVC run 06 - restarted run. 
+- aligne video - p could only hear audio in left ear, during the middle of the run. Couldn't identify which run"
+investigate: TR length correct	sub-0112_ses-04_task-alignvideo_acq-mb8_run-02	"Participant moved so much - p was informed not to move
+- PVC run 02 - p asked to come out of scanner. redid fieldmap and yoked with reference
+- PVC run 03 p moved during run 3 and 4. also reminded not to move
+- PVC run 03 - thermode trial was hanging. 
+- observed artifact during PVC run 03, slice 127
+- PVC run 05 - biopac terminated towards end of data collection
+- PVC run 06 - restarted run. 
+- aligne video - p could only hear audio in left ear, during the middle of the run. Couldn't identify which run"
+investigate: TR length correct	sub-0124_ses-01_task-social_acq-mb8_run-03	
+investigate: TR length correct	sub-0128_ses-04_task-social_acq-mb8_run-05	"- PVC initially done under john doe in Medoc
+- Issues with Medoc during second pain run (run 5). Software was in external control but not triggering stimuli. Participant estimated she had 4-5 stimuli with no pain.
+- Run 5 was redone at the end of the scan using the correct sub # in medoc 
+- Attempt to redo run 5 at end of scan resulted in same trigger error in Medoc"
+investigate: other	sub-0001_ses-01_task-social_acq-mb8_run-04	
+investigate: other	sub-0001_ses-01_task-social_acq-mb8_run-05	
+investigate: other	sub-0001_ses-01_task-social_acq-mb8_run-06	
+investigate: other	sub-0002_ses-03_unknown-task_acq-mb8_unknown-run	"- PVC thermode failure (8002) 
+- PVC questionable biopac for the PVC runs (EDA) 
+- short-video: audio was off (for first 2 min)
+- Also, behavioural RA (MA) noticed that she dozed off a couple of times "
+investigate: other	sub-0006_ses-04_task-fractional_acq-mb8_run-01	"- FRACTIONAL: no data from fractionals
+- AUDIO audio doesn't work for the left ear"
+investigate: other	sub-0006_ses-04_task-fractional_acq-mb8_run-02	"- FRACTIONAL: no data from fractionals
+- AUDIO audio doesn't work for the left ear"
+investigate: other	sub-0021_ses-01_task-social_acq-mb8_run-06	"- PVC: used sub-0098 to collect data >> moved data to behavioral git >> however, still need to update subject ids that are collected within file
+- PVC: hard skipped run 6 because of time - 
+Align videos: Run 3: completed full run, but on the end screen, the press ""e"" command didn't work so we had to close out of matlab in order to start run 4"
+investigate: other	sub-0024_ses-01_task-social_acq-mb8_run-04	#NAME?
+investigate: other	sub-0024_ses-01_task-alignvideo_acq-mb8_run-04	#NAME?
+investigate: other	sub-0024_ses-03_task-social_acq-mb8_run-06	"- PVC run-05: scanner error during 5th run of PVC
+- PVC run-06: participant could not tolerate pain task and thus we skipped. 
+- PVC run-05 no no data for run 5
+"
+investigate: other	sub-0024_ses-04_task-social_acq-mb8_run-01	#NAME?
+investigate: other	sub-0024_ses-04_task-social_acq-mb8_run-05	#NAME?
+investigate: other	sub-0026_ses-03_unknown-task_acq-mb8_unknown-run	"- PVC 05: biopac acquisition terminated. Started in the middle, so the latter half may not be aligned well, need to reverse track it with the last TR. 
+- short videos: scanner ended 10 seconds earlier than the experiment. Participant was watching last clip and ratings after the scanner ended. LUKE: this is due to INFO: Statechange in progress with GST_STATE_CHANGE_ASYNC. A low level ptb issue. Luke is looking into it."
+investigate: other	sub-0028_ses-01_task-alignvideo_acq-mb8_run-02	-Ran late. Subject had to be gone at a certain time so we skipped 3 align vids. 
+investigate: other	sub-0028_ses-01_task-alignvideo_acq-mb8_run-03	-Ran late. Subject had to be gone at a certain time so we skipped 3 align vids. 
+investigate: other	sub-0028_ses-01_task-alignvideo_acq-mb8_run-04	-Ran late. Subject had to be gone at a certain time so we skipped 3 align vids. 
+investigate: other	sub-0029_ses-02_task-faces_acq-mb8_run-03	"- Faces 03: SKIPPED (Medoc couldn't finish loading faces 03 -stuck at 79%- had to do hard reboot of stim PC; still encountered u3 errors after troubleshooting). 
+- Participant said she'd be willing to come early/stay late at another session to redo the skipped task"
+investigate: other	sub-0035_ses-03_task-social_acq-mb8_run-02	#NAME?
+investigate: other	sub-0035_ses-03_task-social_acq-mb8_run-05	#NAME?
+investigate: other	sub-0039_ses-01_task-alignvideo_acq-mb8_run-03	"- PVC 01: participant is not responding in the expect phase. 
+- PVC 02: participant did not respond to the same/diff mental rotation task, we checked after the run, and participant confirmed that her response was not fast enough. 
+- PVC 03: participant ran under John Smith instead of sub-0039
+- no data collected for align videos 03 04 due to timing"
+investigate: other	sub-0039_ses-01_task-alignvideo_acq-mb8_run-04	"- PVC 01: participant is not responding in the expect phase. 
+- PVC 02: participant did not respond to the same/diff mental rotation task, we checked after the run, and participant confirmed that her response was not fast enough. 
+- PVC 03: participant ran under John Smith instead of sub-0039
+- no data collected for align videos 03 04 due to timing"
+investigate: other	sub-0040_ses-03_task-social_acq-mb8_run-02	#NAME?
+investigate: other	sub-0040_ses-03_task-social_acq-mb8_run-04	#NAME?
+investigate: other	sub-0041_ses-01_task-alignvideo_acq-mb8_run-04	
+investigate: other	sub-0041_ses-03_task-social_acq-mb8_run-02	- Medoc went over the allowed temp and errored out and we didn't catch it. So we repeated the second run. It failed again with error saying the tsa2 did not reach the the temperature in the required time. Then the pre-test failed. Debugging now
+investigate: other	sub-0041_ses-03_task-social_acq-mb8_run-05	- Medoc went over the allowed temp and errored out and we didn't catch it. So we repeated the second run. It failed again with error saying the tsa2 did not reach the the temperature in the required time. Then the pre-test failed. Debugging now
+investigate: other	sub-0057_ses-04_task-alignvideo_acq-mb8_run-01	Align Vid: No data since subject needed to use the bathroom and we would have been put behind if we put her back in the scanner again. 
+investigate: other	sub-0057_ses-04_task-alignvideo_acq-mb8_run-02	Align Vid: No data since subject needed to use the bathroom and we would have been put behind if we put her back in the scanner again. 
+investigate: other	sub-0059_ses-04_task-social_acq-mb8_run-02	"PVC: Due to current thermode issues and all being dysfunctional, we skipped the pain runs CPVVPC. We skipped the ryns on the scanner accordingly. "
+investigate: other	sub-0059_ses-04_task-social_acq-mb8_run-05	"PVC: Due to current thermode issues and all being dysfunctional, we skipped the pain runs CPVVPC. We skipped the ryns on the scanner accordingly. "
+investigate: other	sub-0063_ses-01_task-social_acq-mb8_run-02	o sub withdrew after first PVC pain run
+investigate: other	sub-0063_ses-01_task-social_acq-mb8_run-03	o sub withdrew after first PVC pain run
+investigate: other	sub-0063_ses-01_task-social_acq-mb8_run-04	o sub withdrew after first PVC pain run
+investigate: other	sub-0063_ses-01_task-social_acq-mb8_run-05	o sub withdrew after first PVC pain run
+investigate: other	sub-0063_ses-01_task-social_acq-mb8_run-06	o sub withdrew after first PVC pain run
+investigate: other	sub-0063_ses-01_task-alignvideo_acq-mb8_run-01	o sub withdrew after first PVC pain run
+investigate: other	sub-0063_ses-01_task-alignvideo_acq-mb8_run-02	o sub withdrew after first PVC pain run
+investigate: other	sub-0063_ses-01_task-alignvideo_acq-mb8_run-03	o sub withdrew after first PVC pain run
+investigate: other	sub-0063_ses-01_task-alignvideo_acq-mb8_run-04	o sub withdrew after first PVC pain run
+investigate: other	sub-0064_ses-03_task-social_acq-mb8_run-03	"PVC: Due to current thermode issues and all being dysfunctional, we skipped the pain runs CVPVCP"
+investigate: other	sub-0064_ses-03_unknown-task_acq-mb8_unknown-run	"PVC: Due to current thermode issues and all being dysfunctional, we skipped the pain runs CVPVCP"
+investigate: other	sub-0064_ses-04_task-social_acq-mb8_run-05	PVC: Thermode was received and passed the test yesterday but failed the first pain run. We skipped both pain runs for this participant PCVCPV
+investigate: other	sub-0066_ses-01_task-social_acq-mb8_run-02	"PVC: due to thermode error 8007, we skipped both pain runs VPCPVC and reopened matlab to make other runs. "
+investigate: other	sub-0066_ses-01_task-social_acq-mb8_run-04	"PVC: due to thermode error 8007, we skipped both pain runs VPCPVC and reopened matlab to make other runs. "
+investigate: other	sub-0066_ses-03_task-social_acq-mb8_run-02	"PVC: Due to current thermode issues and all being dysfunctional, we skipped the pain runs CPVVPC
+R03: After the first run, matlab was closed up and openned again but something in the code was changed and had to get it from github. so procceded with short and then align vids and then went back to run 3 of PVC.  "
+investigate: other	sub-0066_ses-03_task-social_acq-mb8_run-05	"PVC: Due to current thermode issues and all being dysfunctional, we skipped the pain runs CPVVPC
+R03: After the first run, matlab was closed up and openned again but something in the code was changed and had to get it from github. so procceded with short and then align vids and then went back to run 3 of PVC.  "
+investigate: other	sub-0069_ses-03_task-social_acq-mb8_run-01	"PVC: Due to current thermode issues and all being dysfunctional, we skipped the pain runs PVCCVP. We ran run-02, 03, 04, 05"
+investigate: other	sub-0069_ses-03_task-social_acq-mb8_run-06	"PVC: Due to current thermode issues and all being dysfunctional, we skipped the pain runs PVCCVP. We ran run-02, 03, 04, 05"
+investigate: other	sub-0069_ses-04_task-social_acq-mb8_run-01	"PVC: Due to current thermode issues and all being dysfunctional, we skipped the pain runs PCVCPV. "
+investigate: other	sub-0069_ses-04_task-social_acq-mb8_run-05	"PVC: Due to current thermode issues and all being dysfunctional, we skipped the pain runs PCVCPV. "
+investigate: other	sub-0070_ses-01_task-social_acq-mb8_run-03	"The thermode was still not working from first participant today, so no pain data was collected"
+investigate: other	sub-0070_ses-01_task-social_acq-mb8_run-06	"The thermode was still not working from first participant today, so no pain data was collected"
+investigate: other	sub-0070_ses-03_task-social_acq-mb8_run-03	"PVC: Due to the newly received thermode breaking again, we skipped the pain runs VCPPCV. "
+investigate: other	sub-0070_ses-03_task-social_acq-mb8_run-04	"PVC: Due to the newly received thermode breaking again, we skipped the pain runs VCPPCV. "
+investigate: other	sub-0071_ses-01_task-social_acq-mb8_run-05	PVC: thermode worked fine for a few trials in run 2 but then stopped reaching the correct temperature and ultimately failed a pre-test. We had to stop that run. The thermode then threw an 8007 error during pretest before the next pain run so it wasn't usable
+investigate: other	sub-0074_ses-04_task-social_acq-mb8_run-05	"- Encountered reconstruction error at the start of the scan. Had to reboot and skip 2nd half of PVC and all of align videos due to timing contraints. 
+- Participant noted that it was hard to read the narratives during the fractional task but she was able to figure out some words based on context"
+investigate: other	sub-0074_ses-04_task-social_acq-mb8_run-06	"- Encountered reconstruction error at the start of the scan. Had to reboot and skip 2nd half of PVC and all of align videos due to timing contraints. 
+- Participant noted that it was hard to read the narratives during the fractional task but she was able to figure out some words based on context"
+investigate: other	sub-0074_ses-04_task-alignvideo_acq-mb8_run-01	"- Encountered reconstruction error at the start of the scan. Had to reboot and skip 2nd half of PVC and all of align videos due to timing contraints. 
+- Participant noted that it was hard to read the narratives during the fractional task but she was able to figure out some words based on context"
+investigate: other	sub-0074_ses-04_task-alignvideo_acq-mb8_run-02	"- Encountered reconstruction error at the start of the scan. Had to reboot and skip 2nd half of PVC and all of align videos due to timing contraints. 
+- Participant noted that it was hard to read the narratives during the fractional task but she was able to figure out some words based on context"
+investigate: other	sub-0075_ses-01_task-social_acq-mb8_run-05	"PVC: Due to current thermode issues and all being dysfunctional, we skipped the pain runs PCVCPV. We used the first 4 runs on the sccanner and skipped the last two. "
+investigate: other	sub-0075_ses-03_task-social_acq-mb8_run-02	ShortVid: Repeated midway since P squeezed the ball to have the volume increased
+investigate: other	sub-0075_ses-03_task-social_acq-mb8_run-05	ShortVid: Repeated midway since P squeezed the ball to have the volume increased
+investigate: other	sub-0076_ses-01_task-social_acq-mb8_run-02	"PVC: Due to current thermode issues and all being dysfunctional, we skipped the pain runs VPCPVC"
+investigate: other	sub-0076_ses-01_task-social_acq-mb8_run-04	"PVC: Due to current thermode issues and all being dysfunctional, we skipped the pain runs VPCPVC"
+investigate: other	sub-0076_ses-03_task-social_acq-mb8_run-03	
+investigate: other	sub-0076_ses-03_task-social_acq-mb8_run-06	
+investigate: other	sub-0077_ses-01_task-social_acq-mb8_run-03	"PVC: Due to current thermode issues and all being dysfunctional, we skipped the pain runs VCPPCV"
+investigate: other	sub-0077_ses-01_task-social_acq-mb8_run-04	"PVC: Due to current thermode issues and all being dysfunctional, we skipped the pain runs VCPPCV"
+investigate: other	sub-0079_ses-01_task-social_acq-mb8_run-03	"PVC: Due to current thermode issues and all being dysfunctional, we skipped the pain runs VCPPCV"
+investigate: other	sub-0079_ses-01_task-social_acq-mb8_run-04	"PVC: Due to current thermode issues and all being dysfunctional, we skipped the pain runs VCPPCV"
+investigate: other	sub-0081_ses-03_unknown-task_acq-mb8_unknown-run	
+investigate: other	sub-0082_ses-01_task-social_acq-mb8_run-01	"PVC: We start PVC task multiple times (P), the cursor kep diappering and the code was freezing midway. After restarting everything (besides getting the lab jack error multiple times) and checking connections, I notived the anchor for cable from stim PC to TP link was broken and connection was loose. Since we're in the middle of align vids, I'm not sure if the problem is resolved but will check before the next participant."
+investigate: other	sub-0082_ses-01_task-social_acq-mb8_run-02	"PVC: We start PVC task multiple times (P), the cursor kep diappering and the code was freezing midway. After restarting everything (besides getting the lab jack error multiple times) and checking connections, I notived the anchor for cable from stim PC to TP link was broken and connection was loose. Since we're in the middle of align vids, I'm not sure if the problem is resolved but will check before the next participant."
+investigate: other	sub-0082_ses-01_task-social_acq-mb8_run-03	"PVC: We start PVC task multiple times (P), the cursor kep diappering and the code was freezing midway. After restarting everything (besides getting the lab jack error multiple times) and checking connections, I notived the anchor for cable from stim PC to TP link was broken and connection was loose. Since we're in the middle of align vids, I'm not sure if the problem is resolved but will check before the next participant."
+investigate: other	sub-0082_ses-01_task-social_acq-mb8_run-04	"PVC: We start PVC task multiple times (P), the cursor kep diappering and the code was freezing midway. After restarting everything (besides getting the lab jack error multiple times) and checking connections, I notived the anchor for cable from stim PC to TP link was broken and connection was loose. Since we're in the middle of align vids, I'm not sure if the problem is resolved but will check before the next participant."
+investigate: other	sub-0082_ses-01_task-social_acq-mb8_run-05	"PVC: We start PVC task multiple times (P), the cursor kep diappering and the code was freezing midway. After restarting everything (besides getting the lab jack error multiple times) and checking connections, I notived the anchor for cable from stim PC to TP link was broken and connection was loose. Since we're in the middle of align vids, I'm not sure if the problem is resolved but will check before the next participant."
+investigate: other	sub-0082_ses-01_task-social_acq-mb8_run-06	"PVC: We start PVC task multiple times (P), the cursor kep diappering and the code was freezing midway. After restarting everything (besides getting the lab jack error multiple times) and checking connections, I notived the anchor for cable from stim PC to TP link was broken and connection was loose. Since we're in the middle of align vids, I'm not sure if the problem is resolved but will check before the next participant."
+investigate: other	sub-0084_ses-03_task-social_acq-mb8_run-06	"PVC: skipped pain runs (03+06) due to 8007 error. Details: the TSA had passed the safety test and successfully ran with matlab pretest before setting up the participant. When starting the first pain run, I noticed medoc wasn't making the usual trigger sound but the participant was still making ratings (she later confirmed verbally she did not feel pain stimulus). I pulled up medoc and saw that everything was greyed out and there was an error message about failing the pre-test even though the TSA unit itself was still green. I restarted matlab, stopped the run, and detached the thermode from the participant before redoing the safety test, which is when 8007 error first appeared. 
+Align videos: participant hit the emergency ball to report that the trackball stopped working properly. She verified that it had been working up until that point. We re-calibrated and went ahead to the next run. Issue was reported a little less than halfway through (circa the car flood video)."
+investigate: other	sub-0085_ses-01_task-alignvideo_acq-mb8_run-04	"- Possible abnormality: I'm not sure its a genuine concern, probably just a structural difference, but there's some asymmetry going on --> CLEARED BY TERRY 10/7
+- PVC: Recalibrated trackball before second pain run (participant reported that it was lagging)
+- Align videos: recalibrated trackball again before first AV run. 
+- Align videos: One headphone fell out of the participants ear during the first run.  Participant was able to reinsert without head movement. Restarted once fixed.
+- Align Videos: Option to ""repeat"" run 1 was unavailable so we pulled it from the program card and yolked it to the proper fmap
+- Align videos: skipped last run due to time contraints"
+investigate: other	sub-0091_ses-04_task-alignvideo_acq-mb8_run-01	"AV(01 and 02): We got a combination of image reconstruction error that would not proceed by clicking ""ok"" so we skipped AV"
+investigate: other	sub-0091_ses-04_task-alignvideo_acq-mb8_run-02	"AV(01 and 02): We got a combination of image reconstruction error that would not proceed by clicking ""ok"" so we skipped AV"
+investigate: other	sub-0103_ses-01_task-social_acq-mb8_run-04	PCV: We skipped the last 3 because we faced issues with heat calibration both upstairs and downstairs we also skipped the last align vid run since the P needed to get out at a certain time
+investigate: other	sub-0103_ses-01_task-social_acq-mb8_run-05	PCV: We skipped the last 3 because we faced issues with heat calibration both upstairs and downstairs we also skipped the last align vid run since the P needed to get out at a certain time
+investigate: other	sub-0103_ses-01_task-social_acq-mb8_run-06	PCV: We skipped the last 3 because we faced issues with heat calibration both upstairs and downstairs we also skipped the last align vid run since the P needed to get out at a certain time
+investigate: other	sub-0103_ses-01_task-alignvideo_acq-mb8_run-04	PCV: We skipped the last 3 because we faced issues with heat calibration both upstairs and downstairs we also skipped the last align vid run since the P needed to get out at a certain time
+investigate: other	sub-0118_ses-02_task-alignvideo_acq-mb8_run-04	
+investigate: other	sub-0123_ses-03_task-social_acq-mb8_run-04	p did not feel well. had to pull them out
+investigate: other	sub-0123_ses-03_task-social_acq-mb8_run-05	p did not feel well. had to pull them out
+investigate: other	sub-0123_ses-03_task-social_acq-mb8_run-06	p did not feel well. had to pull them out
+investigate: other	sub-0123_ses-03_unknown-task_acq-mb8_unknown-run	p did not feel well. had to pull them out
+investigate: other	sub-0123_ses-03_task-alignvideo_acq-mb8_run-01	p did not feel well. had to pull them out
+investigate: other	sub-0123_ses-03_task-alignvideo_acq-mb8_run-02	p did not feel well. had to pull them out
+investigate: other	sub-0123_ses-03_task-alignvideo_acq-mb8_run-03	p did not feel well. had to pull them out
+investigate: other	sub-0128_ses-01_task-alignvideo_acq-mb8_run-03	audio issues - we troubleshooted. took longer than planned. dropped two video scans
+investigate: other	sub-0128_ses-01_task-alignvideo_acq-mb8_run-04	audio issues - we troubleshooted. took longer than planned. dropped two video scans
+investigate: other	sub-0131_ses-01_task-t1_acq-mb8_(structural)	PVC 05 error on TSA
