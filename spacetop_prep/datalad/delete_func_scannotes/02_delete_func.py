@@ -10,7 +10,6 @@ to delete. In this code, we delete funcs and keep ones that require further inve
 import os, re
 import pandas as pd
 # read .tsv
-df = pd.read_csv('datalad/delete_func_scannotes/delete_bold.tsv')
 
 # if  HJ_manualdecision column ['HJ_manualdecision'] == 'delete'
 # grab the BIDS_string in that corresponding row
@@ -19,7 +18,8 @@ df = pd.read_csv('datalad/delete_func_scannotes/delete_bold.tsv')
 
 
 # Load the .tsv file into a DataFrame
-df = pd.read_csv('datalad/delete_func_scannotes/delete_bold.tsv', sep='\t')
+df = pd.read_csv('/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/datalad/delete_func_scannotes/delete_bold.tsv', sep='\t', encoding='ISO-8859-1')
+
 
 # Filter rows where the 'HJ_manualdecision' column is 'delete'
 to_delete = df[df['HJ_manualdecision'] == 'delete']
