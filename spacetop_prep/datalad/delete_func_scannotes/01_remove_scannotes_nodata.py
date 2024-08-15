@@ -258,16 +258,11 @@ def main():
     df_other = pd.DataFrame(other)
 
     # Display the DataFrames
-    print("Files to delete:")
-    print(df_delete)
-    print("\nFiles to investigate (intact events.tsv):")
-    print(df_investigate_intactevents)
-    print("\nFiles to investigate (intact TR):")
-    print(df_investigate_intactTR)
-    print("\nFiles to investigate (missing JSON):")
-    print(df_investigate_nojson)
-    print("\nOther files:")
-    print(df_other)
+    print("Files to delete:");     print(df_delete)
+    print("\nFiles to investigate (intact events.tsv):");     print(df_investigate_intactevents)
+    print("\nFiles to investigate (intact TR):");     print(df_investigate_intactTR)
+    print("\nFiles to investigate (missing JSON):");     print(df_investigate_nojson)
+    print("\nOther files:");     print(df_other)
 
     # Add the Deprecate_category column to each DataFrame
     df_delete['Deprecate_category'] = 'delete'
