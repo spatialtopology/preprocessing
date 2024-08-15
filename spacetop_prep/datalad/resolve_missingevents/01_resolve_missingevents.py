@@ -119,24 +119,27 @@ for _, row in df.iterrows():
         c1_process_temp_files(sub, ses, task, run, repo2task_dict)
     
     elif row['case'] == 'C3':
-        c3_handle_typo_cases('./d_beh/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_TEMP_beh.csv', 
+        c3_handle_typo_cases('~/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv', 
                              corrected_subject_id=16, 
-                             dest_fname="./d_beh/sub-0016/task-alignvideos/ses-04/sub-0016_ses-04_task-alignvideos_run-01_TEMP_beh.csv",update_session_id=True)
+                             dest_fname="~/repos/data/sub-0016/task-alignvideos/ses-04/sub-0016_ses-04_task-alignvideos_run-01_beh.csv",update_session_id=True)
         
-        typo_flist = ['sub-0021/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-01_events.tsv',
-        'sub-0021/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-02_events.tsv',
-        'sub-0021/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-03_events.tsv',
-        'sub-0021/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-04_events.tsv']
+        typo_flist = ['~/repos/data/sub-0021/task-social/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-01_events.tsv',
+        '~/repos/data/sub-0021/task-social/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-02_events.tsv',
+        '~/repos/data/sub-0021/task-social/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-03_events.tsv',
+        '~/repos/data/sub-0021/task-social/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-04_events.tsv']
         for typo_fname in typo_flist:
             c3_handle_typo_cases(f"{typo_fname}", 
                                 corrected_subject_id=21, 
                                 dest_fname=f"{typo_fname}",update_session_id=True)
 
-        typo_flist = ['sub-0019/ses-04/func/sub-0019_ses-19_task-fractional_acq-mb8_run-01_events.tsv',
-        'sub-0019/ses-04/func/sub-0019_ses-19_task-fractional_acq-mb8_run-02_events.tsv']
-        for typo_fname in typo_flist:
-            c3_handle_typo_cases(f"{typo_fname}", 
+        typo_flist = ['~/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-01-tomspunt_beh.csv',
+        '~/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-02-posner_beh.csv']
+        fix_flist = ['~/repos/data/sub-0019/task-fractional/sub-0019_ses-04_task-fractional_run-01-tomspunt_beh.csv',
+        '~/repos/data/sub-0019/task-fractional/sub-0019_ses-04_task-fractional_run-02-posner_beh.csv']
+
+        for typo_fname, fix_fname in zip_longest(typo_flist, fix_flist):
+            c3_handle_typo_cases(typo_fname, 
                                 corrected_subject_id=19, 
-                                dest_fname="sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-02_events.tsv",update_session_id=True)
+                                dest_fname=fix_fname,update_session_id=True)
 
 
