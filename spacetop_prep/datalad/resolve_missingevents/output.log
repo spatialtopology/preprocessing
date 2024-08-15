@@ -1,0 +1,1026 @@
+   src_subject_id   session_id  param_run_num  param_trigger_onset  ...  event02_rating04_onset event02_rating05_onset  event02_rating06_onset  event02_rating07_onset
+0              16  04/sub-0016              1         1.619457e+09  ...            1.619457e+09           1.619457e+09            1.619457e+09            1.619457e+09
+1              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+2              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+3              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+
+[4 rows x 63 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.099207
+1              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.046976
+2              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.083673
+3              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.030402
+4              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.075692
+
+[5 rows x 57 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              2  ...                               NaN                27                 diff             27_50_R.jpg
+1              21  01/sub-0021       cognitive              2  ...                               NaN                18                 same               18_50.jpg
+2              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_100_R.jpg
+3              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_150_R.jpg
+4              21  01/sub-0021       cognitive              2  ...                               NaN                11                 diff            11_100_R.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num  event03_stimulus_C_stim_filename
+0              21  01/sub-0021       vicarious  ...         ll042t1afunaff_M.mp4                            0                               NaN
+1              21  01/sub-0021       vicarious  ...         mg066t2aeunaff_L.mp4                            0                               NaN
+2              21  01/sub-0021       vicarious  ...         gf097t2aaunaff_H.mp4                            0                               NaN
+3              21  01/sub-0021       vicarious  ...         aa048t2aaunaff_L.mp4                            0                               NaN
+4              21  01/sub-0021       vicarious  ...         th108t2aaunaff_M.mp4                            0                               NaN
+
+[5 rows x 56 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              4  ...                               NaN                47                 same               47_50.jpg
+1              21  01/sub-0021       cognitive              4  ...                               NaN                27                 same              27_100.jpg
+2              21  01/sub-0021       cognitive              4  ...                               NaN                47                 diff            47_100_R.jpg
+3              21  01/sub-0021       cognitive              4  ...                               NaN                10                 same              10_150.jpg
+4              21  01/sub-0021       cognitive              4  ...                               NaN                38                 same              38_100.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.060431
+1              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.064859
+2              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.030383
+3              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.058542
+4              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.033300
+
+[5 rows x 57 columns]
+   src_subject_id session_id  run_id  param_counterbalance_ver  ...  RAW_e3_response_onset  RAW_e4_shortquestion_onset  RAW_param_end_instruct_onset accuracy
+0              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+1              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+2              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+3              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+4              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+
+[5 rows x 39 columns]
+   src_subject_id  param_session_id  run_num  param_counterbalance_ver  ...  RAW_event05_fixation_onset_biopac RAW_param_end_instruct_onset RAW_param_end_biopac accuracy
+0              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+1              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+2              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+3              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+4              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+
+[5 rows x 45 columns]
+   src_subject_id   session_id  param_run_num  param_trigger_onset  ...  event02_rating04_onset event02_rating05_onset  event02_rating06_onset  event02_rating07_onset
+0              16  04/sub-0016              1         1.619457e+09  ...            1.619457e+09           1.619457e+09            1.619457e+09            1.619457e+09
+1              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+2              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+3              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+
+[4 rows x 63 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.099207
+1              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.046976
+2              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.083673
+3              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.030402
+4              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.075692
+
+[5 rows x 57 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              2  ...                               NaN                27                 diff             27_50_R.jpg
+1              21  01/sub-0021       cognitive              2  ...                               NaN                18                 same               18_50.jpg
+2              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_100_R.jpg
+3              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_150_R.jpg
+4              21  01/sub-0021       cognitive              2  ...                               NaN                11                 diff            11_100_R.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num  event03_stimulus_C_stim_filename
+0              21  01/sub-0021       vicarious  ...         ll042t1afunaff_M.mp4                            0                               NaN
+1              21  01/sub-0021       vicarious  ...         mg066t2aeunaff_L.mp4                            0                               NaN
+2              21  01/sub-0021       vicarious  ...         gf097t2aaunaff_H.mp4                            0                               NaN
+3              21  01/sub-0021       vicarious  ...         aa048t2aaunaff_L.mp4                            0                               NaN
+4              21  01/sub-0021       vicarious  ...         th108t2aaunaff_M.mp4                            0                               NaN
+
+[5 rows x 56 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              4  ...                               NaN                47                 same               47_50.jpg
+1              21  01/sub-0021       cognitive              4  ...                               NaN                27                 same              27_100.jpg
+2              21  01/sub-0021       cognitive              4  ...                               NaN                47                 diff            47_100_R.jpg
+3              21  01/sub-0021       cognitive              4  ...                               NaN                10                 same              10_150.jpg
+4              21  01/sub-0021       cognitive              4  ...                               NaN                38                 same              38_100.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.060431
+1              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.064859
+2              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.030383
+3              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.058542
+4              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.033300
+
+[5 rows x 57 columns]
+   src_subject_id session_id  run_id  param_counterbalance_ver  ...  RAW_e3_response_onset  RAW_e4_shortquestion_onset  RAW_param_end_instruct_onset accuracy
+0              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+1              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+2              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+3              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+4              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+
+[5 rows x 39 columns]
+   src_subject_id  param_session_id  run_num  param_counterbalance_ver  ...  RAW_event05_fixation_onset_biopac RAW_param_end_instruct_onset RAW_param_end_biopac accuracy
+0              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+1              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+2              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+3              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+4              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+
+[5 rows x 45 columns]
+   src_subject_id   session_id  param_run_num  param_trigger_onset  ...  event02_rating04_onset event02_rating05_onset  event02_rating06_onset  event02_rating07_onset
+0              16  04/sub-0016              1         1.619457e+09  ...            1.619457e+09           1.619457e+09            1.619457e+09            1.619457e+09
+1              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+2              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+3              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+
+[4 rows x 63 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.099207
+1              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.046976
+2              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.083673
+3              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.030402
+4              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.075692
+
+[5 rows x 57 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              2  ...                               NaN                27                 diff             27_50_R.jpg
+1              21  01/sub-0021       cognitive              2  ...                               NaN                18                 same               18_50.jpg
+2              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_100_R.jpg
+3              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_150_R.jpg
+4              21  01/sub-0021       cognitive              2  ...                               NaN                11                 diff            11_100_R.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num  event03_stimulus_C_stim_filename
+0              21  01/sub-0021       vicarious  ...         ll042t1afunaff_M.mp4                            0                               NaN
+1              21  01/sub-0021       vicarious  ...         mg066t2aeunaff_L.mp4                            0                               NaN
+2              21  01/sub-0021       vicarious  ...         gf097t2aaunaff_H.mp4                            0                               NaN
+3              21  01/sub-0021       vicarious  ...         aa048t2aaunaff_L.mp4                            0                               NaN
+4              21  01/sub-0021       vicarious  ...         th108t2aaunaff_M.mp4                            0                               NaN
+
+[5 rows x 56 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              4  ...                               NaN                47                 same               47_50.jpg
+1              21  01/sub-0021       cognitive              4  ...                               NaN                27                 same              27_100.jpg
+2              21  01/sub-0021       cognitive              4  ...                               NaN                47                 diff            47_100_R.jpg
+3              21  01/sub-0021       cognitive              4  ...                               NaN                10                 same              10_150.jpg
+4              21  01/sub-0021       cognitive              4  ...                               NaN                38                 same              38_100.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.060431
+1              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.064859
+2              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.030383
+3              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.058542
+4              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.033300
+
+[5 rows x 57 columns]
+   src_subject_id session_id  run_id  param_counterbalance_ver  ...  RAW_e3_response_onset  RAW_e4_shortquestion_onset  RAW_param_end_instruct_onset accuracy
+0              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+1              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+2              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+3              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+4              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+
+[5 rows x 39 columns]
+   src_subject_id  param_session_id  run_num  param_counterbalance_ver  ...  RAW_event05_fixation_onset_biopac RAW_param_end_instruct_onset RAW_param_end_biopac accuracy
+0              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+1              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+2              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+3              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+4              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+
+[5 rows x 45 columns]
+sub-0008 ses-02 task-faces run-01
+sub-0008_ses-02task-faces_run-02-sex_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0008/task-faces/sub-0008_ses-02_task-faces_run-01_beh_TEMP.csv
+sub-0008_ses-02task-faces_run-01-age_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0008/task-faces/sub-0008_ses-02_task-faces_run-01_beh_TEMP.csv
+sub-0008_ses-02task-faces_run-03-intensity_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0008/task-faces/sub-0008_ses-02_task-faces_run-01_beh_TEMP.csv
+sub-0008 ses-02 task-faces run-02
+sub-0008_ses-02task-faces_run-02-sex_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0008/task-faces/sub-0008_ses-02_task-faces_run-02_beh_TEMP.csv
+sub-0008_ses-02task-faces_run-01-age_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0008/task-faces/sub-0008_ses-02_task-faces_run-02_beh_TEMP.csv
+sub-0008_ses-02task-faces_run-03-intensity_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0008/task-faces/sub-0008_ses-02_task-faces_run-02_beh_TEMP.csv
+sub-0008 ses-02 task-faces run-03
+sub-0008_ses-02task-faces_run-02-sex_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0008/task-faces/sub-0008_ses-02_task-faces_run-03_beh_TEMP.csv
+sub-0008_ses-02task-faces_run-01-age_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0008/task-faces/sub-0008_ses-02_task-faces_run-03_beh_TEMP.csv
+sub-0008_ses-02task-faces_run-03-intensity_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0008/task-faces/sub-0008_ses-02_task-faces_run-03_beh_TEMP.csv
+sub-0008 ses-04 task-social run-05
+sub-0008_ses-04_task-social_run-05-pain_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0008/task-social/ses-04/sub-0008_ses-04_task-social_run-05_beh_TEMP.csv
+sub-0011 ses-02 task-narratives run-02
+sub-0011_run-03_task-narratives_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0011/task-narratives/sub-0011_ses-02_task-narratives_run-02_beh_TEMP.csv
+sub-0011_run-02_task-narratives_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0011/task-narratives/sub-0011_ses-02_task-narratives_run-02_beh_TEMP.csv
+sub-0011_run-01_task-narratives_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0011/task-narratives/sub-0011_ses-02_task-narratives_run-02_beh_TEMP.csv
+sub-0011_run-04_task-narratives_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0011/task-narratives/sub-0011_ses-02_task-narratives_run-02_beh_TEMP.csv
+sub-0011 ses-03 task-social run-02
+sub-0011_ses-03_task-social_run-02-pain_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0011/task-social/ses-03/sub-0011_ses-03_task-social_run-02_beh_TEMP.csv
+sub-0011 ses-04 task-social run-01
+sub-0011_ses-04_task-social_run-01-pain_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0011/task-social/ses-04/sub-0011_ses-04_task-social_run-01_beh_TEMP.csv
+sub-0013 ses-01 task-social run-03
+sub-0013_ses-01_task-social_run-03-pain_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0013/task-social/ses-01/sub-0013_ses-01_task-social_run-03_beh_TEMP.csv
+sub-0014 ses-01 task-social run-02
+sub-0014_ses-01_task-social_run-02-cognitive_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0014/task-social/ses-01/sub-0014_ses-01_task-social_run-02_beh_TEMP.csv
+   src_subject_id   session_id  param_run_num  param_trigger_onset  ...  event02_rating04_onset event02_rating05_onset  event02_rating06_onset  event02_rating07_onset
+0              16  04/sub-0016              1         1.619457e+09  ...            1.619457e+09           1.619457e+09            1.619457e+09            1.619457e+09
+1              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+2              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+3              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+
+[4 rows x 63 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.099207
+1              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.046976
+2              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.083673
+3              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.030402
+4              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.075692
+
+[5 rows x 57 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              2  ...                               NaN                27                 diff             27_50_R.jpg
+1              21  01/sub-0021       cognitive              2  ...                               NaN                18                 same               18_50.jpg
+2              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_100_R.jpg
+3              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_150_R.jpg
+4              21  01/sub-0021       cognitive              2  ...                               NaN                11                 diff            11_100_R.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num  event03_stimulus_C_stim_filename
+0              21  01/sub-0021       vicarious  ...         ll042t1afunaff_M.mp4                            0                               NaN
+1              21  01/sub-0021       vicarious  ...         mg066t2aeunaff_L.mp4                            0                               NaN
+2              21  01/sub-0021       vicarious  ...         gf097t2aaunaff_H.mp4                            0                               NaN
+3              21  01/sub-0021       vicarious  ...         aa048t2aaunaff_L.mp4                            0                               NaN
+4              21  01/sub-0021       vicarious  ...         th108t2aaunaff_M.mp4                            0                               NaN
+
+[5 rows x 56 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              4  ...                               NaN                47                 same               47_50.jpg
+1              21  01/sub-0021       cognitive              4  ...                               NaN                27                 same              27_100.jpg
+2              21  01/sub-0021       cognitive              4  ...                               NaN                47                 diff            47_100_R.jpg
+3              21  01/sub-0021       cognitive              4  ...                               NaN                10                 same              10_150.jpg
+4              21  01/sub-0021       cognitive              4  ...                               NaN                38                 same              38_100.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.060431
+1              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.064859
+2              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.030383
+3              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.058542
+4              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.033300
+
+[5 rows x 57 columns]
+   src_subject_id session_id  run_id  param_counterbalance_ver  ...  RAW_e3_response_onset  RAW_e4_shortquestion_onset  RAW_param_end_instruct_onset accuracy
+0              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+1              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+2              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+3              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+4              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+
+[5 rows x 39 columns]
+   src_subject_id  param_session_id  run_num  param_counterbalance_ver  ...  RAW_event05_fixation_onset_biopac RAW_param_end_instruct_onset RAW_param_end_biopac accuracy
+0              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+1              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+2              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+3              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+4              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+
+[5 rows x 45 columns]
+   src_subject_id   session_id  param_run_num  param_trigger_onset  ...  event02_rating04_onset event02_rating05_onset  event02_rating06_onset  event02_rating07_onset
+0              16  04/sub-0016              1         1.619457e+09  ...            1.619457e+09           1.619457e+09            1.619457e+09            1.619457e+09
+1              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+2              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+3              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+
+[4 rows x 63 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.099207
+1              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.046976
+2              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.083673
+3              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.030402
+4              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.075692
+
+[5 rows x 57 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              2  ...                               NaN                27                 diff             27_50_R.jpg
+1              21  01/sub-0021       cognitive              2  ...                               NaN                18                 same               18_50.jpg
+2              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_100_R.jpg
+3              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_150_R.jpg
+4              21  01/sub-0021       cognitive              2  ...                               NaN                11                 diff            11_100_R.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num  event03_stimulus_C_stim_filename
+0              21  01/sub-0021       vicarious  ...         ll042t1afunaff_M.mp4                            0                               NaN
+1              21  01/sub-0021       vicarious  ...         mg066t2aeunaff_L.mp4                            0                               NaN
+2              21  01/sub-0021       vicarious  ...         gf097t2aaunaff_H.mp4                            0                               NaN
+3              21  01/sub-0021       vicarious  ...         aa048t2aaunaff_L.mp4                            0                               NaN
+4              21  01/sub-0021       vicarious  ...         th108t2aaunaff_M.mp4                            0                               NaN
+
+[5 rows x 56 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              4  ...                               NaN                47                 same               47_50.jpg
+1              21  01/sub-0021       cognitive              4  ...                               NaN                27                 same              27_100.jpg
+2              21  01/sub-0021       cognitive              4  ...                               NaN                47                 diff            47_100_R.jpg
+3              21  01/sub-0021       cognitive              4  ...                               NaN                10                 same              10_150.jpg
+4              21  01/sub-0021       cognitive              4  ...                               NaN                38                 same              38_100.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.060431
+1              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.064859
+2              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.030383
+3              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.058542
+4              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.033300
+
+[5 rows x 57 columns]
+   src_subject_id session_id  run_id  param_counterbalance_ver  ...  RAW_e3_response_onset  RAW_e4_shortquestion_onset  RAW_param_end_instruct_onset accuracy
+0              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+1              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+2              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+3              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+4              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+
+[5 rows x 39 columns]
+   src_subject_id  param_session_id  run_num  param_counterbalance_ver  ...  RAW_event05_fixation_onset_biopac RAW_param_end_instruct_onset RAW_param_end_biopac accuracy
+0              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+1              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+2              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+3              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+4              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+
+[5 rows x 45 columns]
+sub-0016 ses-04 task-social run-03
+sub-0016_ses-04_task-social_run-03-pain_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0016/task-social/ses-04/sub-0016_ses-04_task-social_run-03_beh_TEMP.csv
+sub-0017 ses-01 task-alignvideo run-04
+sub-0017_ses-01_task-alignvideos_run-01_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0017/task-alignvideos/ses-01/sub-0017_ses-01_task-alignvideos_run-04_beh_TEMP.csv
+sub-0017_ses-01_task-alignvideos_run-02_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0017/task-alignvideos/ses-01/sub-0017_ses-01_task-alignvideos_run-04_beh_TEMP.csv
+sub-0017_ses-01_task-alignvideos_run-04_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0017/task-alignvideos/ses-01/sub-0017_ses-01_task-alignvideos_run-04_beh_TEMP.csv
+sub-0017_ses-01_task-alignvideos_run-03_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0017/task-alignvideos/ses-01/sub-0017_ses-01_task-alignvideos_run-04_beh_TEMP.csv
+sub-0017 ses-02 task-alignvideo run-01
+sub-0017_ses-02_task-alignvideos_run-02_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0017/task-alignvideos/ses-02/sub-0017_ses-02_task-alignvideos_run-01_beh_TEMP.csv
+sub-0017_ses-02_task-alignvideos_run-04_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0017/task-alignvideos/ses-02/sub-0017_ses-02_task-alignvideos_run-01_beh_TEMP.csv
+sub-0017_ses-02_task-alignvideos_run-03_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0017/task-alignvideos/ses-02/sub-0017_ses-02_task-alignvideos_run-01_beh_TEMP.csv
+sub-0017_ses-02_task-alignvideos_run-01_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0017/task-alignvideos/ses-02/sub-0017_ses-02_task-alignvideos_run-01_beh_TEMP.csv
+sub-0019 ses-03 task-social run-02
+sub-0019_ses-03_task-social_run-02-pain_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0019/task-social/ses-03/sub-0019_ses-03_task-social_run-02_beh_TEMP.csv
+   src_subject_id   session_id  param_run_num  param_trigger_onset  ...  event02_rating04_onset event02_rating05_onset  event02_rating06_onset  event02_rating07_onset
+0              16  04/sub-0016              1         1.619457e+09  ...            1.619457e+09           1.619457e+09            1.619457e+09            1.619457e+09
+1              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+2              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+3              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+
+[4 rows x 63 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.099207
+1              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.046976
+2              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.083673
+3              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.030402
+4              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.075692
+
+[5 rows x 57 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              2  ...                               NaN                27                 diff             27_50_R.jpg
+1              21  01/sub-0021       cognitive              2  ...                               NaN                18                 same               18_50.jpg
+2              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_100_R.jpg
+3              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_150_R.jpg
+4              21  01/sub-0021       cognitive              2  ...                               NaN                11                 diff            11_100_R.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num  event03_stimulus_C_stim_filename
+0              21  01/sub-0021       vicarious  ...         ll042t1afunaff_M.mp4                            0                               NaN
+1              21  01/sub-0021       vicarious  ...         mg066t2aeunaff_L.mp4                            0                               NaN
+2              21  01/sub-0021       vicarious  ...         gf097t2aaunaff_H.mp4                            0                               NaN
+3              21  01/sub-0021       vicarious  ...         aa048t2aaunaff_L.mp4                            0                               NaN
+4              21  01/sub-0021       vicarious  ...         th108t2aaunaff_M.mp4                            0                               NaN
+
+[5 rows x 56 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              4  ...                               NaN                47                 same               47_50.jpg
+1              21  01/sub-0021       cognitive              4  ...                               NaN                27                 same              27_100.jpg
+2              21  01/sub-0021       cognitive              4  ...                               NaN                47                 diff            47_100_R.jpg
+3              21  01/sub-0021       cognitive              4  ...                               NaN                10                 same              10_150.jpg
+4              21  01/sub-0021       cognitive              4  ...                               NaN                38                 same              38_100.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.060431
+1              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.064859
+2              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.030383
+3              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.058542
+4              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.033300
+
+[5 rows x 57 columns]
+   src_subject_id session_id  run_id  param_counterbalance_ver  ...  RAW_e3_response_onset  RAW_e4_shortquestion_onset  RAW_param_end_instruct_onset accuracy
+0              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+1              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+2              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+3              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+4              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+
+[5 rows x 39 columns]
+   src_subject_id  param_session_id  run_num  param_counterbalance_ver  ...  RAW_event05_fixation_onset_biopac RAW_param_end_instruct_onset RAW_param_end_biopac accuracy
+0              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+1              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+2              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+3              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+4              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+
+[5 rows x 45 columns]
+   src_subject_id   session_id  param_run_num  param_trigger_onset  ...  event02_rating04_onset event02_rating05_onset  event02_rating06_onset  event02_rating07_onset
+0              16  04/sub-0016              1         1.619457e+09  ...            1.619457e+09           1.619457e+09            1.619457e+09            1.619457e+09
+1              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+2              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+3              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+
+[4 rows x 63 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.099207
+1              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.046976
+2              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.083673
+3              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.030402
+4              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.075692
+
+[5 rows x 57 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              2  ...                               NaN                27                 diff             27_50_R.jpg
+1              21  01/sub-0021       cognitive              2  ...                               NaN                18                 same               18_50.jpg
+2              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_100_R.jpg
+3              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_150_R.jpg
+4              21  01/sub-0021       cognitive              2  ...                               NaN                11                 diff            11_100_R.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num  event03_stimulus_C_stim_filename
+0              21  01/sub-0021       vicarious  ...         ll042t1afunaff_M.mp4                            0                               NaN
+1              21  01/sub-0021       vicarious  ...         mg066t2aeunaff_L.mp4                            0                               NaN
+2              21  01/sub-0021       vicarious  ...         gf097t2aaunaff_H.mp4                            0                               NaN
+3              21  01/sub-0021       vicarious  ...         aa048t2aaunaff_L.mp4                            0                               NaN
+4              21  01/sub-0021       vicarious  ...         th108t2aaunaff_M.mp4                            0                               NaN
+
+[5 rows x 56 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              4  ...                               NaN                47                 same               47_50.jpg
+1              21  01/sub-0021       cognitive              4  ...                               NaN                27                 same              27_100.jpg
+2              21  01/sub-0021       cognitive              4  ...                               NaN                47                 diff            47_100_R.jpg
+3              21  01/sub-0021       cognitive              4  ...                               NaN                10                 same              10_150.jpg
+4              21  01/sub-0021       cognitive              4  ...                               NaN                38                 same              38_100.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.060431
+1              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.064859
+2              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.030383
+3              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.058542
+4              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.033300
+
+[5 rows x 57 columns]
+   src_subject_id session_id  run_id  param_counterbalance_ver  ...  RAW_e3_response_onset  RAW_e4_shortquestion_onset  RAW_param_end_instruct_onset accuracy
+0              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+1              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+2              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+3              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+4              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+
+[5 rows x 39 columns]
+   src_subject_id  param_session_id  run_num  param_counterbalance_ver  ...  RAW_event05_fixation_onset_biopac RAW_param_end_instruct_onset RAW_param_end_biopac accuracy
+0              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+1              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+2              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+3              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+4              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+
+[5 rows x 45 columns]
+sub-0020 ses-04 task-social run-06
+sub-0020_ses-04_task-social_run-06-pain_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0020/task-social/ses-04/sub-0020_ses-04_task-social_run-06_beh_TEMP.csv
+sub-0021 ses-01 task-alignvideo run-03
+sub-0021_ses-01_task-alignvideos_run-04_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0021/task-alignvideos/ses-01/sub-0021_ses-01_task-alignvideos_run-03_beh_TEMP.csv
+sub-0021_ses-01_task-alignvideos_run-01_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0021/task-alignvideos/ses-01/sub-0021_ses-01_task-alignvideos_run-03_beh_TEMP.csv
+sub-0021_ses-01_task-alignvideos_run-03_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0021/task-alignvideos/ses-01/sub-0021_ses-01_task-alignvideos_run-03_beh_TEMP.csv
+sub-0021_ses-01_task-alignvideos_run-02_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0021/task-alignvideos/ses-01/sub-0021_ses-01_task-alignvideos_run-03_beh_TEMP.csv
+   src_subject_id   session_id  param_run_num  param_trigger_onset  ...  event02_rating04_onset event02_rating05_onset  event02_rating06_onset  event02_rating07_onset
+0              16  04/sub-0016              1         1.619457e+09  ...            1.619457e+09           1.619457e+09            1.619457e+09            1.619457e+09
+1              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+2              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+3              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+
+[4 rows x 63 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.099207
+1              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.046976
+2              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.083673
+3              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.030402
+4              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.075692
+
+[5 rows x 57 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              2  ...                               NaN                27                 diff             27_50_R.jpg
+1              21  01/sub-0021       cognitive              2  ...                               NaN                18                 same               18_50.jpg
+2              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_100_R.jpg
+3              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_150_R.jpg
+4              21  01/sub-0021       cognitive              2  ...                               NaN                11                 diff            11_100_R.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num  event03_stimulus_C_stim_filename
+0              21  01/sub-0021       vicarious  ...         ll042t1afunaff_M.mp4                            0                               NaN
+1              21  01/sub-0021       vicarious  ...         mg066t2aeunaff_L.mp4                            0                               NaN
+2              21  01/sub-0021       vicarious  ...         gf097t2aaunaff_H.mp4                            0                               NaN
+3              21  01/sub-0021       vicarious  ...         aa048t2aaunaff_L.mp4                            0                               NaN
+4              21  01/sub-0021       vicarious  ...         th108t2aaunaff_M.mp4                            0                               NaN
+
+[5 rows x 56 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              4  ...                               NaN                47                 same               47_50.jpg
+1              21  01/sub-0021       cognitive              4  ...                               NaN                27                 same              27_100.jpg
+2              21  01/sub-0021       cognitive              4  ...                               NaN                47                 diff            47_100_R.jpg
+3              21  01/sub-0021       cognitive              4  ...                               NaN                10                 same              10_150.jpg
+4              21  01/sub-0021       cognitive              4  ...                               NaN                38                 same              38_100.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.060431
+1              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.064859
+2              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.030383
+3              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.058542
+4              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.033300
+
+[5 rows x 57 columns]
+   src_subject_id session_id  run_id  param_counterbalance_ver  ...  RAW_e3_response_onset  RAW_e4_shortquestion_onset  RAW_param_end_instruct_onset accuracy
+0              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+1              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+2              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+3              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+4              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+
+[5 rows x 39 columns]
+   src_subject_id  param_session_id  run_num  param_counterbalance_ver  ...  RAW_event05_fixation_onset_biopac RAW_param_end_instruct_onset RAW_param_end_biopac accuracy
+0              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+1              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+2              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+3              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+4              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+
+[5 rows x 45 columns]
+   src_subject_id   session_id  param_run_num  param_trigger_onset  ...  event02_rating04_onset event02_rating05_onset  event02_rating06_onset  event02_rating07_onset
+0              16  04/sub-0016              1         1.619457e+09  ...            1.619457e+09           1.619457e+09            1.619457e+09            1.619457e+09
+1              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+2              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+3              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+
+[4 rows x 63 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.099207
+1              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.046976
+2              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.083673
+3              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.030402
+4              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.075692
+
+[5 rows x 57 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              2  ...                               NaN                27                 diff             27_50_R.jpg
+1              21  01/sub-0021       cognitive              2  ...                               NaN                18                 same               18_50.jpg
+2              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_100_R.jpg
+3              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_150_R.jpg
+4              21  01/sub-0021       cognitive              2  ...                               NaN                11                 diff            11_100_R.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num  event03_stimulus_C_stim_filename
+0              21  01/sub-0021       vicarious  ...         ll042t1afunaff_M.mp4                            0                               NaN
+1              21  01/sub-0021       vicarious  ...         mg066t2aeunaff_L.mp4                            0                               NaN
+2              21  01/sub-0021       vicarious  ...         gf097t2aaunaff_H.mp4                            0                               NaN
+3              21  01/sub-0021       vicarious  ...         aa048t2aaunaff_L.mp4                            0                               NaN
+4              21  01/sub-0021       vicarious  ...         th108t2aaunaff_M.mp4                            0                               NaN
+
+[5 rows x 56 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              4  ...                               NaN                47                 same               47_50.jpg
+1              21  01/sub-0021       cognitive              4  ...                               NaN                27                 same              27_100.jpg
+2              21  01/sub-0021       cognitive              4  ...                               NaN                47                 diff            47_100_R.jpg
+3              21  01/sub-0021       cognitive              4  ...                               NaN                10                 same              10_150.jpg
+4              21  01/sub-0021       cognitive              4  ...                               NaN                38                 same              38_100.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.060431
+1              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.064859
+2              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.030383
+3              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.058542
+4              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.033300
+
+[5 rows x 57 columns]
+   src_subject_id session_id  run_id  param_counterbalance_ver  ...  RAW_e3_response_onset  RAW_e4_shortquestion_onset  RAW_param_end_instruct_onset accuracy
+0              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+1              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+2              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+3              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+4              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+
+[5 rows x 39 columns]
+   src_subject_id  param_session_id  run_num  param_counterbalance_ver  ...  RAW_event05_fixation_onset_biopac RAW_param_end_instruct_onset RAW_param_end_biopac accuracy
+0              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+1              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+2              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+3              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+4              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+
+[5 rows x 45 columns]
+   src_subject_id   session_id  param_run_num  param_trigger_onset  ...  event02_rating04_onset event02_rating05_onset  event02_rating06_onset  event02_rating07_onset
+0              16  04/sub-0016              1         1.619457e+09  ...            1.619457e+09           1.619457e+09            1.619457e+09            1.619457e+09
+1              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+2              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+3              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+
+[4 rows x 63 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.099207
+1              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.046976
+2              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.083673
+3              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.030402
+4              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.075692
+
+[5 rows x 57 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              2  ...                               NaN                27                 diff             27_50_R.jpg
+1              21  01/sub-0021       cognitive              2  ...                               NaN                18                 same               18_50.jpg
+2              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_100_R.jpg
+3              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_150_R.jpg
+4              21  01/sub-0021       cognitive              2  ...                               NaN                11                 diff            11_100_R.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num  event03_stimulus_C_stim_filename
+0              21  01/sub-0021       vicarious  ...         ll042t1afunaff_M.mp4                            0                               NaN
+1              21  01/sub-0021       vicarious  ...         mg066t2aeunaff_L.mp4                            0                               NaN
+2              21  01/sub-0021       vicarious  ...         gf097t2aaunaff_H.mp4                            0                               NaN
+3              21  01/sub-0021       vicarious  ...         aa048t2aaunaff_L.mp4                            0                               NaN
+4              21  01/sub-0021       vicarious  ...         th108t2aaunaff_M.mp4                            0                               NaN
+
+[5 rows x 56 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              4  ...                               NaN                47                 same               47_50.jpg
+1              21  01/sub-0021       cognitive              4  ...                               NaN                27                 same              27_100.jpg
+2              21  01/sub-0021       cognitive              4  ...                               NaN                47                 diff            47_100_R.jpg
+3              21  01/sub-0021       cognitive              4  ...                               NaN                10                 same              10_150.jpg
+4              21  01/sub-0021       cognitive              4  ...                               NaN                38                 same              38_100.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.060431
+1              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.064859
+2              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.030383
+3              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.058542
+4              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.033300
+
+[5 rows x 57 columns]
+   src_subject_id session_id  run_id  param_counterbalance_ver  ...  RAW_e3_response_onset  RAW_e4_shortquestion_onset  RAW_param_end_instruct_onset accuracy
+0              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+1              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+2              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+3              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+4              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+
+[5 rows x 39 columns]
+   src_subject_id  param_session_id  run_num  param_counterbalance_ver  ...  RAW_event05_fixation_onset_biopac RAW_param_end_instruct_onset RAW_param_end_biopac accuracy
+0              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+1              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+2              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+3              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+4              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+
+[5 rows x 45 columns]
+   src_subject_id   session_id  param_run_num  param_trigger_onset  ...  event02_rating04_onset event02_rating05_onset  event02_rating06_onset  event02_rating07_onset
+0              16  04/sub-0016              1         1.619457e+09  ...            1.619457e+09           1.619457e+09            1.619457e+09            1.619457e+09
+1              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+2              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+3              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+
+[4 rows x 63 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.099207
+1              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.046976
+2              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.083673
+3              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.030402
+4              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.075692
+
+[5 rows x 57 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              2  ...                               NaN                27                 diff             27_50_R.jpg
+1              21  01/sub-0021       cognitive              2  ...                               NaN                18                 same               18_50.jpg
+2              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_100_R.jpg
+3              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_150_R.jpg
+4              21  01/sub-0021       cognitive              2  ...                               NaN                11                 diff            11_100_R.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num  event03_stimulus_C_stim_filename
+0              21  01/sub-0021       vicarious  ...         ll042t1afunaff_M.mp4                            0                               NaN
+1              21  01/sub-0021       vicarious  ...         mg066t2aeunaff_L.mp4                            0                               NaN
+2              21  01/sub-0021       vicarious  ...         gf097t2aaunaff_H.mp4                            0                               NaN
+3              21  01/sub-0021       vicarious  ...         aa048t2aaunaff_L.mp4                            0                               NaN
+4              21  01/sub-0021       vicarious  ...         th108t2aaunaff_M.mp4                            0                               NaN
+
+[5 rows x 56 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              4  ...                               NaN                47                 same               47_50.jpg
+1              21  01/sub-0021       cognitive              4  ...                               NaN                27                 same              27_100.jpg
+2              21  01/sub-0021       cognitive              4  ...                               NaN                47                 diff            47_100_R.jpg
+3              21  01/sub-0021       cognitive              4  ...                               NaN                10                 same              10_150.jpg
+4              21  01/sub-0021       cognitive              4  ...                               NaN                38                 same              38_100.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.060431
+1              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.064859
+2              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.030383
+3              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.058542
+4              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.033300
+
+[5 rows x 57 columns]
+   src_subject_id session_id  run_id  param_counterbalance_ver  ...  RAW_e3_response_onset  RAW_e4_shortquestion_onset  RAW_param_end_instruct_onset accuracy
+0              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+1              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+2              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+3              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+4              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+
+[5 rows x 39 columns]
+   src_subject_id  param_session_id  run_num  param_counterbalance_ver  ...  RAW_event05_fixation_onset_biopac RAW_param_end_instruct_onset RAW_param_end_biopac accuracy
+0              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+1              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+2              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+3              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+4              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+
+[5 rows x 45 columns]
+   src_subject_id   session_id  param_run_num  param_trigger_onset  ...  event02_rating04_onset event02_rating05_onset  event02_rating06_onset  event02_rating07_onset
+0              16  04/sub-0016              1         1.619457e+09  ...            1.619457e+09           1.619457e+09            1.619457e+09            1.619457e+09
+1              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+2              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+3              16  04/sub-0016              1         1.619457e+09  ...            1.619458e+09           1.619458e+09            1.619458e+09            1.619458e+09
+
+[4 rows x 63 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.099207
+1              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.046976
+2              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.083673
+3              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.030402
+4              21  01/sub-0021            pain              1  ...                          NaN                            0                              NaN            0.075692
+
+[5 rows x 57 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              2  ...                               NaN                27                 diff             27_50_R.jpg
+1              21  01/sub-0021       cognitive              2  ...                               NaN                18                 same               18_50.jpg
+2              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_100_R.jpg
+3              21  01/sub-0021       cognitive              2  ...                               NaN                42                 diff            42_150_R.jpg
+4              21  01/sub-0021       cognitive              2  ...                               NaN                11                 diff            11_100_R.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num  event03_stimulus_C_stim_filename
+0              21  01/sub-0021       vicarious  ...         ll042t1afunaff_M.mp4                            0                               NaN
+1              21  01/sub-0021       vicarious  ...         mg066t2aeunaff_L.mp4                            0                               NaN
+2              21  01/sub-0021       vicarious  ...         gf097t2aaunaff_H.mp4                            0                               NaN
+3              21  01/sub-0021       vicarious  ...         aa048t2aaunaff_L.mp4                            0                               NaN
+4              21  01/sub-0021       vicarious  ...         th108t2aaunaff_M.mp4                            0                               NaN
+
+[5 rows x 56 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_C_stim_filename  param_C_stim_num event03_C_stim_match event03_C_stim_filename
+0              21  01/sub-0021       cognitive              4  ...                               NaN                47                 same               47_50.jpg
+1              21  01/sub-0021       cognitive              4  ...                               NaN                27                 same              27_100.jpg
+2              21  01/sub-0021       cognitive              4  ...                               NaN                47                 diff            47_100_R.jpg
+3              21  01/sub-0021       cognitive              4  ...                               NaN                10                 same              10_150.jpg
+4              21  01/sub-0021       cognitive              4  ...                               NaN                38                 same              38_100.jpg
+
+[5 rows x 59 columns]
+   src_subject_id   session_id param_task_name  param_run_num  ...  event03_stimulus_V_filename  event03_stimulus_C_stim_num event03_stimulus_C_stim_filename delay_between_medoc
+0              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.060431
+1              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.064859
+2              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.030383
+3              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.058542
+4              21  01/sub-0021            pain              5  ...                          NaN                            0                              NaN            0.033300
+
+[5 rows x 57 columns]
+   src_subject_id session_id  run_id  param_counterbalance_ver  ...  RAW_e3_response_onset  RAW_e4_shortquestion_onset  RAW_param_end_instruct_onset accuracy
+0              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+1              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+2              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+3              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        1
+4              19         04       1                         2  ...           1.621538e+09                1.621538e+09                  1.621538e+09        0
+
+[5 rows x 39 columns]
+   src_subject_id  param_session_id  run_num  param_counterbalance_ver  ...  RAW_event05_fixation_onset_biopac RAW_param_end_instruct_onset RAW_param_end_biopac accuracy
+0              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+1              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+2              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+3              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+4              19                19        2                        19  ...                       1.621538e+09                 1.621539e+09         1.621539e+09        1
+
+[5 rows x 45 columns]
+sub-0023 ses-04 task-social run-02
+sub-0023_ses-04_task-social_run-02-pain_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0023/task-social/ses-04/sub-0023_ses-04_task-social_run-02_beh_TEMP.csv
+sub-0024 ses-03 task-social run-05
+sub-0024_ses-03_task-social_run-05-cognitive_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0024/task-social/ses-03/sub-0024_ses-03_task-social_run-05_beh_TEMP.csv
+sub-0038 ses-02 task-narratives run-03
+sub-0038_run-02_task-narratives_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0038/task-narratives/sub-0038_ses-02_task-narratives_run-03_beh_TEMP.csv
+sub-0038_run-01_task-narratives_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0038/task-narratives/sub-0038_ses-02_task-narratives_run-03_beh_TEMP.csv
+sub-0038_run-04_task-narratives_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0038/task-narratives/sub-0038_ses-02_task-narratives_run-03_beh_TEMP.csv
+sub-0038_run-03_task-narratives_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0038/task-narratives/sub-0038_ses-02_task-narratives_run-03_beh_TEMP.csv
+sub-0065 ses-04 task-alignvideo run-02
+sub-0065_ses-04_task-alignvideos_run-01_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0065/task-alignvideos/ses-04/sub-0065_ses-04_task-alignvideos_run-02_beh_TEMP.csv
+sub-0065_ses-04_task-alignvideos_run-02_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0065/task-alignvideos/ses-04/sub-0065_ses-04_task-alignvideos_run-02_beh_TEMP.csv
+sub-0066 ses-04 task-social run-06
+sub-0066_ses-04_task-social_run-06-pain_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0066/task-social/ses-04/sub-0066_ses-04_task-social_run-06_beh_TEMP.csv
+sub-0069 ses-02 task-alignvideo run-04
+sub-0069_ses-02_task-alignvideos_run-04_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0069/task-alignvideos/ses-02/sub-0069_ses-02_task-alignvideos_run-04_beh_TEMP.csv
+sub-0069_ses-02_task-alignvideos_run-03_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0069/task-alignvideos/ses-02/sub-0069_ses-02_task-alignvideos_run-04_beh_TEMP.csv
+sub-0069_ses-02_task-alignvideos_run-02_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0069/task-alignvideos/ses-02/sub-0069_ses-02_task-alignvideos_run-04_beh_TEMP.csv
+sub-0069_ses-02_task-alignvideos_run-01_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0069/task-alignvideos/ses-02/sub-0069_ses-02_task-alignvideos_run-04_beh_TEMP.csv
+sub-0069 ses-02 task-narratives run-03
+sub-0069_run-02_task-narratives_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0069/task-narratives/sub-0069_ses-02_task-narratives_run-03_beh_TEMP.csv
+sub-0069_run-01_task-narratives_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0069/task-narratives/sub-0069_ses-02_task-narratives_run-03_beh_TEMP.csv
+sub-0069_run-03_task-narratives_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0069/task-narratives/sub-0069_ses-02_task-narratives_run-03_beh_TEMP.csv
+sub-0069_run-04_task-narratives_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0069/task-narratives/sub-0069_ses-02_task-narratives_run-03_beh_TEMP.csv
+sub-0076 ses-02 task-faces run-03
+sub-0076_ses-02_task-faces_run-01-age_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0076/task-faces/sub-0076_ses-02_task-faces_run-03_beh_TEMP.csv
+sub-0076_ses-02_task-faces_run-02-sex_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0076/task-faces/sub-0076_ses-02_task-faces_run-03_beh_TEMP.csv
+sub-0076_ses-02_task-faces_run-03-intensity_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0076/task-faces/sub-0076_ses-02_task-faces_run-03_beh_TEMP.csv
+sub-0083 ses-04 task-social run-02
+sub-0083_ses-04_task-social_run-02-pain_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0083/task-social/ses-04/sub-0083_ses-04_task-social_run-02_beh_TEMP.csv
+sub-0084 ses-03 task-alignvideo run-01
+sub-0084_ses-03_task-alignvideos_run-02_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0084/task-alignvideos/ses-03/sub-0084_ses-03_task-alignvideos_run-01_beh_TEMP.csv
+sub-0084_ses-03_task-alignvideos_run-01_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0084/task-alignvideos/ses-03/sub-0084_ses-03_task-alignvideos_run-01_beh_TEMP.csv
+sub-0084_ses-03_task-alignvideos_run-03_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0084/task-alignvideos/ses-03/sub-0084_ses-03_task-alignvideos_run-01_beh_TEMP.csv
+sub-0087 ses-01 task-alignvideo run-01
+sub-0087_ses-01_task-alignvideos_run-01_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0087/task-alignvideos/ses-01/sub-0087_ses-01_task-alignvideos_run-01_beh_TEMP.csv
+sub-0087_ses-01_task-alignvideos_run-02_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0087/task-alignvideos/ses-01/sub-0087_ses-01_task-alignvideos_run-01_beh_TEMP.csv
+sub-0087_ses-01_task-alignvideos_run-04_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0087/task-alignvideos/ses-01/sub-0087_ses-01_task-alignvideos_run-01_beh_TEMP.csv
+sub-0087_ses-01_task-alignvideos_run-03_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0087/task-alignvideos/ses-01/sub-0087_ses-01_task-alignvideos_run-01_beh_TEMP.csv
+sub-0088 ses-03 task-social run-03
+sub-0088_ses-03_task-social_run-03-cognitive_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0088/task-social/ses-03/sub-0088_ses-03_task-social_run-03_beh_TEMP.csv
+sub-0089 ses-01 task-social run-04
+sub-0089_ses-01_task-social_run-04-pain_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0089/task-social/ses-01/sub-0089_ses-01_task-social_run-04_beh_TEMP.csv
+sub-0094 ses-04 task-alignvideo run-01
+sub-0094_ses-04_task-alignvideos_run-02_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0094/task-alignvideos/ses-04/sub-0094_ses-04_task-alignvideos_run-01_beh_TEMP.csv
+sub-0094_ses-04_task-alignvideos_run-01_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0094/task-alignvideos/ses-04/sub-0094_ses-04_task-alignvideos_run-01_beh_TEMP.csv
+sub-0105 ses-02 task-alignvideo run-02
+sub-0105_ses-02_task-alignvideos_run-01_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0105/task-alignvideos/ses-02/sub-0105_ses-02_task-alignvideos_run-02_beh_TEMP.csv
+sub-0105_ses-02_task-alignvideos_run-02_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0105/task-alignvideos/ses-02/sub-0105_ses-02_task-alignvideos_run-02_beh_TEMP.csv
+sub-0105_ses-02_task-alignvideos_run-03_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0105/task-alignvideos/ses-02/sub-0105_ses-02_task-alignvideos_run-02_beh_TEMP.csv
+sub-0105_ses-02_task-alignvideos_run-04_TEMP_beh.csv
+/home/spacetop/repos/data/sub-0105/task-alignvideos/ses-02/sub-0105_ses-02_task-alignvideos_run-02_beh_TEMP.csv
+sub-0112 ses-04 task-social run-03
+sub-0112_ses-04_task-social_run-03-pain_TEMPbeh.csv
+/home/spacetop/repos/data/sub-0112/task-social/ses-04/sub-0112_ses-04_task-social_run-03_beh_TEMP.csv
+
+
+mv: cannot stat '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-01-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-02-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-03-vicarious_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-04-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-05-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-01-tomspunt_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-02-posner_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-01-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-02-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-03-vicarious_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-04-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-05-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-01-tomspunt_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-02-posner_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-01-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-02-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-03-vicarious_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-04-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-05-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-01-tomspunt_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-02-posner_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-01-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-02-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-03-vicarious_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-04-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-05-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-01-tomspunt_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-02-posner_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-01-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-02-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-03-vicarious_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-04-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-05-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-01-tomspunt_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-02-posner_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-01-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-02-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-03-vicarious_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-04-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-05-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-01-tomspunt_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-02-posner_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-01-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-02-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-03-vicarious_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-04-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-05-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-01-tomspunt_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-02-posner_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-01-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-02-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-03-vicarious_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-04-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-05-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-01-tomspunt_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-02-posner_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-01-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-02-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-03-vicarious_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-04-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-05-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-01-tomspunt_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-02-posner_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-01-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-02-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-03-vicarious_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-04-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-05-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-01-tomspunt_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-02-posner_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-01-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-02-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-03-vicarious_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-04-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-05-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-01-tomspunt_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-02-posner_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-01-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-02-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-03-vicarious_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-04-cognitive_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-05-pain_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-01-tomspunt_beh.csv': No such file or directory
+mv: cannot stat '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-02-posner_beh.csv': No such file or directory
+
