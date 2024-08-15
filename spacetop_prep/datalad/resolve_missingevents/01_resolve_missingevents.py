@@ -67,8 +67,9 @@ def c1_process_temp_files(sub, ses, task, run, repo2task_dict):
 
         subprocess.run(["cp", file, destination])
         print(destination)
-        #subprocess.run(["git", "add", os.path.expanduser(destination)])
-        #subprocess.run(["git", "commit", "-m", "DOC: copy over temporary data"])
+        subprocess.run(["cd /home/spacetop/repos/data"])
+        subprocess.run(["git", "add", destination])
+        subprocess.run(["git", "commit", "-m", "DOC: copy over temporary data"])
 
 def c3_handle_typo_cases(typo_fname, corrected_subject_id=None, dest_fname=None, update_session_id=False):
     """
@@ -100,11 +101,12 @@ def c3_handle_typo_cases(typo_fname, corrected_subject_id=None, dest_fname=None,
     
     # Save the updated DataFrame back to the file
     print(typodf.head(5))
-    #typodf.to_csv(dest_fname, index=False)
+    typodf.to_csv(dest_fname, index=False)
     
     # Add the file to Git and commit the changes
-    #subprocess.run(["git", "add", os.path.expanduser(dest_fname)])
-    #subprocess.run(["git", "commit", "-m", "BUG: resolve typo and update BIDS fields"])
+    subprocess.run(["cd /home/spacetop/repos/data"])
+    subprocess.run(["git", "add", os.path.expanduser(dest_fname)])
+    subprocess.run(["git", "commit", "-m", "BUG: resolve typo and update BIDS fields"])
 
 sys.stdout = open('output.log', 'w')
 
