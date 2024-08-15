@@ -24,9 +24,8 @@ data can be analyzed without the events file:
 
 """
 # %%
-import os
+import os, glob, sys
 import subprocess
-import glob
 import pandas as pd
 from itertools import zip_longest
 
