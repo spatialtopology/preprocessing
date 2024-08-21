@@ -153,7 +153,7 @@ for _, row in df.iterrows():
 
         directory = Path('/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04')
         for old_filename in directory.glob('sub-0156_ses-04*.mat'):
-            new_filename = old_filename.with_name(old_filename.name.replace('sub-0156', 'sub-0156'))     # Create the new filename by replacing part of the string
+            new_filename = old_filename.with_name(old_filename.name.replace('sub-0156', 'sub-0016'))     # Create the new filename by replacing part of the string
             old_filename.rename(new_filename)
 
         # sub-0098 -> sub-0021
