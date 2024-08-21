@@ -69,7 +69,7 @@ def c1_process_temp_files(sub, ses, task, run, repo2task_dict):
         print(destination)
         os.chdir("/home/spacetop/repos/data")
         subprocess.run(["git", "add", destination])
-        subprocess.run(["git", "commit", "-m", "DOC: copy over temporary data"])
+
 
 def c3_handle_typo_cases(typo_fname, corrected_subject_id=None, dest_fname=None, update_session_id=False):
     """
@@ -106,7 +106,7 @@ def c3_handle_typo_cases(typo_fname, corrected_subject_id=None, dest_fname=None,
     # Add the file to Git and commit the changes
     os.chdir("/home/spacetop/repos/data")
     subprocess.run(["git", "add", os.path.expanduser(dest_fname)])
-    subprocess.run(["git", "commit", "-m", "BUG: resolve typo and update BIDS fields"])
+
 
 sys.stdout = open('output.log', 'w')
 
@@ -133,6 +133,7 @@ for _, row in df.iterrows():
     if row['case'] == 'C1':
         # if case 1, copy over TEMP files from git repo
         c1_process_temp_files(sub, ses, task, run, repo2task_dict)
+        subprocess.run(["git", "commit", "-m", "DOC: copy over temporary data"])
     
     elif row['case'] == 'C3':
         # c3_handle_typo_cases('/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv', 
@@ -150,11 +151,12 @@ for _, row in df.iterrows():
             c3_handle_typo_cases(typo_fname, 
                                 corrected_subject_id=16, 
                                 dest_fname=fix_fname,update_session_id=True)
-
+        
         directory = Path('/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04')
         for old_filename in directory.glob('sub-0156_ses-04*.mat'):
             new_filename = old_filename.with_name(old_filename.name.replace('sub-0156', 'sub-0016'))     # Create the new filename by replacing part of the string
             old_filename.rename(new_filename)
+        subprocess.run(["git", "commit", "-m", "BUG: resolve typo and update BIDS fields from sub-0156 to sub-0016"])
 
         # sub-0098 -> sub-0021
         typo_flist = ['/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-01-pain_beh.csv',
@@ -177,7 +179,7 @@ for _, row in df.iterrows():
         for old_filename in directory.glob('sub-0098*.mat'):
             new_filename = old_filename.with_name(old_filename.name.replace('sub-0098', 'sub-0021'))     # Create the new filename by replacing part of the string
             old_filename.rename(new_filename)
-
+        subprocess.run(["git", "commit", "-m", "BUG: resolve typo and update BIDS fields from sub-0098 to sub-0021"])
 
         # ses-19 -> ses-04
         typo_flist = ['/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-01-tomspunt_beh.csv',
@@ -194,6 +196,6 @@ for _, row in df.iterrows():
         for old_filename in directory.glob('sub-0019_ses-19*.mat'):
             new_filename = old_filename.with_name(old_filename.name.replace('ses-19', 'ses-04'))     # Create the new filename by replacing part of the string
             old_filename.rename(new_filename)
-
+        subprocess.run(["git", "commit", "-m", "BUG: resolve typo and update BIDS fields from ses-19 to ses-04"])
 sys.stdout = sys.__stdout__
 print("complete")
