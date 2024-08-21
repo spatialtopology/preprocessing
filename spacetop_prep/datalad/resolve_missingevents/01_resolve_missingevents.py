@@ -64,7 +64,9 @@ def c1_process_temp_files(sub, ses, task, run, repo2task_dict):
             destination = f"/home/spacetop/repos/data/{sub}/{task}/{ses}/{sub}_{ses}_{task}_{run}_beh_TEMP.csv"
         else:
             destination = f"/home/spacetop/repos/data/{sub}/{task}/{sub}_{ses}_{task}_{run}_beh_TEMP.csv"
-
+        
+        destination_dir = Path(destination).parent
+        destination_dir.mkdir(parents=True, exist_ok=True)
         subprocess.run(["cp", file, destination])
         print(destination)
         os.chdir("/home/spacetop/repos/data")
