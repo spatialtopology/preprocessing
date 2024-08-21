@@ -151,6 +151,11 @@ for _, row in df.iterrows():
                                 corrected_subject_id=16, 
                                 dest_fname=fix_fname,update_session_id=True)
 
+        directory = Path('/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04')
+        for old_filename in directory.glob('sub-0156_ses-04*.mat'):
+            new_filename = old_filename.with_name(old_filename.name.replace('sub-0156', 'sub-0156'))     # Create the new filename by replacing part of the string
+            old_filename.rename(new_filename)
+
         # sub-0098 -> sub-0021
         typo_flist = ['/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-01-pain_beh.csv',
         '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-02-cognitive_beh.csv',
@@ -185,9 +190,7 @@ for _, row in df.iterrows():
                                 corrected_subject_id=19, 
                                 dest_fname=fix_fname,update_session_id=True)
             
-        # Path to the directory where files are located
         directory = Path('/home/spacetop/repos/data/sub-0019/task-fractional/ses-04')
-        # Iterate over all files matching the pattern
         for old_filename in directory.glob('sub-0019_ses-19*.mat'):
             new_filename = old_filename.with_name(old_filename.name.replace('ses-19', 'ses-04'))     # Create the new filename by replacing part of the string
             old_filename.rename(new_filename)
