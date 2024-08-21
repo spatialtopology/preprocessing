@@ -83,7 +83,7 @@ def c3_handle_typo_cases(typo_fname, corrected_subject_id=None, dest_fname=None,
     """
     # Rename the file if dest_fname is provided
     if dest_fname:
-        subprocess.run(["mv", typo_fname, dest_fname])
+        subprocess.run(["git", "mv", typo_fname, dest_fname])
         typo_fname = dest_fname
     
     # Load the file into a DataFrame
@@ -96,8 +96,8 @@ def c3_handle_typo_cases(typo_fname, corrected_subject_id=None, dest_fname=None,
     # Update the 'session_id' column if required
     if update_session_id and 'session_id' in typodf.columns:
         # Extract the session ID from the filename or corrected subject ID
-        session_id = dest_fname.split('ses-')[1].split('_')[0] if dest_fname else corrected_subject_id.split('-')[-1]
-        typodf['session_id'] = session_id
+        session_id = os.path.basename(dest_fname).split('ses-')[1].split('_')[0] if dest_fname else corrected_subject_id.split('-')[-1]
+        typodf['session_id'] = int(session_id)
     
     # Save the updated DataFrame back to the file
     print(typodf.head(5))
