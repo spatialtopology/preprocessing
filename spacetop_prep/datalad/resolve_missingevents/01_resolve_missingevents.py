@@ -28,7 +28,7 @@ import os, glob, sys
 import subprocess
 import pandas as pd
 from itertools import zip_longest
-
+from pathlib import Path
 def extract_bids(filename: str, key: str) -> str:
     """
     Extracts BIDS information based on input "key" prefix.
@@ -135,10 +135,23 @@ for _, row in df.iterrows():
         c1_process_temp_files(sub, ses, task, run, repo2task_dict)
     
     elif row['case'] == 'C3':
-        c3_handle_typo_cases('/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv', 
-                             corrected_subject_id=16, 
-                             dest_fname="/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0016_ses-04_task-alignvideos_run-01_beh.csv",update_session_id=True)
-        
+        # c3_handle_typo_cases('/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv', 
+                            #  corrected_subject_id=16, 
+                            #  dest_fname="/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0016_ses-04_task-alignvideos_run-01_beh.csv",update_session_id=True)
+        typo_flist = ['/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv',
+                      '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_TEMP_beh.csv',
+                      '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-02_beh.csv',
+                      '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-02_TEMP_beh.csv']
+        fix_flist = ['/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0016_ses-04_task-alignvideos_run-01_beh.csv',
+                      '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0016_ses-04_task-alignvideos_run-01_TEMP_beh.csv',
+                      '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0016_ses-04_task-alignvideos_run-02_beh.csv',
+                      '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0016_ses-04_task-alignvideos_run-02_TEMP_beh.csv']
+        for typo_fname, fix_fname in zip_longest(typo_flist, fix_flist):
+            c3_handle_typo_cases(typo_fname, 
+                                corrected_subject_id=16, 
+                                dest_fname=fix_fname,update_session_id=True)
+
+        # sub-0098 -> sub-0021
         typo_flist = ['/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-01-pain_beh.csv',
         '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-02-cognitive_beh.csv',
         '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-03-vicarious_beh.csv',
@@ -154,7 +167,14 @@ for _, row in df.iterrows():
             c3_handle_typo_cases(typo_fname, 
                                 corrected_subject_id=21, 
                                 dest_fname=fix_fname,update_session_id=True)
+            
+        directory = Path('/home/spacetop/repos/data/sub-0021/task-social/ses-01')
+        for old_filename in directory.glob('sub-0098*.mat'):
+            new_filename = old_filename.with_name(old_filename.name.replace('sub-0098', 'sub-0021'))     # Create the new filename by replacing part of the string
+            old_filename.rename(new_filename)
 
+
+        # ses-19 -> ses-04
         typo_flist = ['/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-01-tomspunt_beh.csv',
         '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-02-posner_beh.csv']
         fix_flist = ['/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-04_task-fractional_run-01-tomspunt_beh.csv',
@@ -164,6 +184,13 @@ for _, row in df.iterrows():
             c3_handle_typo_cases(typo_fname, 
                                 corrected_subject_id=19, 
                                 dest_fname=fix_fname,update_session_id=True)
+            
+        # Path to the directory where files are located
+        directory = Path('/home/spacetop/repos/data/sub-0019/task-fractional/ses-04')
+        # Iterate over all files matching the pattern
+        for old_filename in directory.glob('sub-0019_ses-19*.mat'):
+            new_filename = old_filename.with_name(old_filename.name.replace('ses-19', 'ses-04'))     # Create the new filename by replacing part of the string
+            old_filename.rename(new_filename)
 
 sys.stdout = sys.__stdout__
 print("complete")
