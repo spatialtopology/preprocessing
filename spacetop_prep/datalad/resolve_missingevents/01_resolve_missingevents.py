@@ -85,7 +85,7 @@ def c3_handle_typo_cases(typo_fname, corrected_subject_id=None, dest_fname=None,
     """
     # Rename the file if dest_fname is provided
     if dest_fname:
-        subprocess.run(["git", "mv", typo_fname, dest_fname])
+        subprocess.run(["mv", typo_fname, dest_fname])
         typo_fname = dest_fname
     
     # Load the file into a DataFrame
