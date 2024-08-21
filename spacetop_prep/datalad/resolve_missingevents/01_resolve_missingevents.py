@@ -137,67 +137,67 @@ for _, row in df.iterrows():
         c1_process_temp_files(sub, ses, task, run, repo2task_dict)
         subprocess.run(["git", "commit", "-m", f"DOC: copy over temporary data {sub} {ses} {run} {task}"])
     
-    elif row['case'] == 'C3':
+    # elif row['case'] == 'C3':
         # c3_handle_typo_cases('/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv', 
                             #  corrected_subject_id=16, 
                             #  dest_fname="/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0016_ses-04_task-alignvideos_run-01_beh.csv",update_session_id=True)
-        typo_flist = ['/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv',
-                      '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_TEMP_beh.csv',
-                      '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-02_beh.csv',
-                      '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-02_TEMP_beh.csv']
-        fix_flist = ['/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0016_ses-04_task-alignvideos_run-01_beh.csv',
-                      '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0016_ses-04_task-alignvideos_run-01_TEMP_beh.csv',
-                      '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0016_ses-04_task-alignvideos_run-02_beh.csv',
-                      '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0016_ses-04_task-alignvideos_run-02_TEMP_beh.csv']
-        for typo_fname, fix_fname in zip_longest(typo_flist, fix_flist):
-            c3_handle_typo_cases(typo_fname, 
-                                corrected_subject_id=16, 
-                                dest_fname=fix_fname,update_session_id=True)
-        
-        directory = Path('/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04')
-        for old_filename in directory.glob('sub-0156_ses-04*.mat'):
-            new_filename = old_filename.with_name(old_filename.name.replace('sub-0156', 'sub-0016'))     # Create the new filename by replacing part of the string
-            old_filename.rename(new_filename)
-        subprocess.run(["git", "commit", "-m", "BUG: resolve typo and update BIDS fields from sub-0156 to sub-0016"])
+typo_flist = ['/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv',
+                '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_TEMP_beh.csv',
+                '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-02_beh.csv',
+                '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-02_TEMP_beh.csv']
+fix_flist = ['/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0016_ses-04_task-alignvideos_run-01_beh.csv',
+                '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0016_ses-04_task-alignvideos_run-01_TEMP_beh.csv',
+                '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0016_ses-04_task-alignvideos_run-02_beh.csv',
+                '/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0016_ses-04_task-alignvideos_run-02_TEMP_beh.csv']
+for typo_fname, fix_fname in zip_longest(typo_flist, fix_flist):
+    c3_handle_typo_cases(typo_fname, 
+                        corrected_subject_id=16, 
+                        dest_fname=fix_fname,update_session_id=True)
 
-        # sub-0098 -> sub-0021
-        typo_flist = ['/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-01-pain_beh.csv',
-        '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-02-cognitive_beh.csv',
-        '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-03-vicarious_beh.csv',
-        '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-04-cognitive_beh.csv',
-        '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-05-pain_beh.csv']
-        fix_flist = ['/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0021_ses-01_task-social_run-01-pain_beh.csv',
-        '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0021_ses-01_task-social_run-02-cognitive_beh.csv',
-        '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0021_ses-01_task-social_run-03-vicarious_beh.csv',
-        '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0021_ses-01_task-social_run-04-cognitive_beh.csv',
-        '/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0021_ses-01_task-social_run-05-pain_beh.csv']
+directory = Path('/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04')
+for old_filename in directory.glob('sub-0156_ses-04*.mat'):
+    new_filename = old_filename.with_name(old_filename.name.replace('sub-0156', 'sub-0016'))     # Create the new filename by replacing part of the string
+    old_filename.rename(new_filename)
+subprocess.run(["git", "commit", "-m", "BUG: resolve typo and update BIDS fields from sub-0156 to sub-0016"])
 
-        for typo_fname, fix_fname in zip_longest(typo_flist, fix_flist):
-            c3_handle_typo_cases(typo_fname, 
-                                corrected_subject_id=21, 
-                                dest_fname=fix_fname,update_session_id=True)
-            
-        directory = Path('/home/spacetop/repos/data/sub-0021/task-social/ses-01')
-        for old_filename in directory.glob('sub-0098*.mat'):
-            new_filename = old_filename.with_name(old_filename.name.replace('sub-0098', 'sub-0021'))     # Create the new filename by replacing part of the string
-            old_filename.rename(new_filename)
-        subprocess.run(["git", "commit", "-m", "BUG: resolve typo and update BIDS fields from sub-0098 to sub-0021"])
+# sub-0098 -> sub-0021
+typo_flist = ['/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-01-pain_beh.csv',
+'/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-02-cognitive_beh.csv',
+'/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-03-vicarious_beh.csv',
+'/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-04-cognitive_beh.csv',
+'/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0098_ses-01_task-social_run-05-pain_beh.csv']
+fix_flist = ['/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0021_ses-01_task-social_run-01-pain_beh.csv',
+'/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0021_ses-01_task-social_run-02-cognitive_beh.csv',
+'/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0021_ses-01_task-social_run-03-vicarious_beh.csv',
+'/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0021_ses-01_task-social_run-04-cognitive_beh.csv',
+'/home/spacetop/repos/data/sub-0021/task-social/ses-01/sub-0021_ses-01_task-social_run-05-pain_beh.csv']
 
-        # ses-19 -> ses-04
-        typo_flist = ['/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-01-tomspunt_beh.csv',
-        '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-02-posner_beh.csv']
-        fix_flist = ['/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-04_task-fractional_run-01-tomspunt_beh.csv',
-        '/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-04_task-fractional_run-02-posner_beh.csv']
+for typo_fname, fix_fname in zip_longest(typo_flist, fix_flist):
+    c3_handle_typo_cases(typo_fname, 
+                        corrected_subject_id=21, 
+                        dest_fname=fix_fname,update_session_id=True)
+    
+directory = Path('/home/spacetop/repos/data/sub-0021/task-social/ses-01')
+for old_filename in directory.glob('sub-0098*.mat'):
+    new_filename = old_filename.with_name(old_filename.name.replace('sub-0098', 'sub-0021'))     # Create the new filename by replacing part of the string
+    old_filename.rename(new_filename)
+subprocess.run(["git", "commit", "-m", "BUG: resolve typo and update BIDS fields from sub-0098 to sub-0021"])
 
-        for typo_fname, fix_fname in zip_longest(typo_flist, fix_flist):
-            c3_handle_typo_cases(typo_fname, 
-                                corrected_subject_id=19, 
-                                dest_fname=fix_fname,update_session_id=True)
-            
-        directory = Path('/home/spacetop/repos/data/sub-0019/task-fractional/ses-04')
-        for old_filename in directory.glob('sub-0019_ses-19*.mat'):
-            new_filename = old_filename.with_name(old_filename.name.replace('ses-19', 'ses-04'))     # Create the new filename by replacing part of the string
-            old_filename.rename(new_filename)
-        subprocess.run(["git", "commit", "-m", "BUG: resolve typo and update BIDS fields from ses-19 to ses-04"])
+# ses-19 -> ses-04
+typo_flist = ['/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-01-tomspunt_beh.csv',
+'/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-19_task-fractional_run-02-posner_beh.csv']
+fix_flist = ['/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-04_task-fractional_run-01-tomspunt_beh.csv',
+'/home/spacetop/repos/data/sub-0019/task-fractional/sub-0019_ses-04_task-fractional_run-02-posner_beh.csv']
+
+for typo_fname, fix_fname in zip_longest(typo_flist, fix_flist):
+    c3_handle_typo_cases(typo_fname, 
+                        corrected_subject_id=19, 
+                        dest_fname=fix_fname,update_session_id=True)
+    
+directory = Path('/home/spacetop/repos/data/sub-0019/task-fractional/ses-04')
+for old_filename in directory.glob('sub-0019_ses-19*.mat'):
+    new_filename = old_filename.with_name(old_filename.name.replace('ses-19', 'ses-04'))     # Create the new filename by replacing part of the string
+    old_filename.rename(new_filename)
+subprocess.run(["git", "commit", "-m", "BUG: resolve typo and update BIDS fields from ses-19 to ses-04"])
 sys.stdout = sys.__stdout__
 print("complete")
