@@ -64,7 +64,9 @@ def c1_process_temp_files(sub, ses, task, run, repo2task_dict):
             destination = f"/home/spacetop/repos/data/{sub}/{task}/{ses}/{sub}_{ses}_{task}_{run}_beh_TEMP.csv"
         else:
             destination = f"/home/spacetop/repos/data/{sub}/{task}/{sub}_{ses}_{task}_{run}_beh_TEMP.csv"
-
+        
+        destination_dir = Path(destination).parent
+        destination_dir.mkdir(parents=True, exist_ok=True)
         subprocess.run(["cp", file, destination])
         print(destination)
         os.chdir("/home/spacetop/repos/data")
@@ -133,7 +135,7 @@ for _, row in df.iterrows():
     if row['case'] == 'C1':
         # if case 1, copy over TEMP files from git repo
         c1_process_temp_files(sub, ses, task, run, repo2task_dict)
-        subprocess.run(["git", "commit", "-m", "DOC: copy over temporary data"])
+        subprocess.run(["git", "commit", "-m", f"DOC: copy over temporary data {sub} {ses} {run} {task}"])
     
     elif row['case'] == 'C3':
         # c3_handle_typo_cases('/home/spacetop/repos/data/sub-0016/task-alignvideos/ses-04/sub-0156_ses-04_task-alignvideos_run-01_beh.csv', 
