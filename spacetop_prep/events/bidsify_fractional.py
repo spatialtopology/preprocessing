@@ -142,7 +142,7 @@ description_value = {
 
 description_accuracy = {
     "LongName": "Correct or Incorrect response",
-    "Description": "Correct or Incorrect response in regards to question presented on screen; Options are True or False, presented on screen, underneath question. Participants are promted to respond with MR-compatible button box",
+    "Description": "Correct or Incorrect response in regards to question presented on screen; Options are True or False, presented on screen, underneath question. Participants are prompted to respond with MR-compatible button box",
     "Levels": {
         "correct": "Correct response in regards to question",
         "incorrect": "Incorrect response in regards to question"
@@ -265,7 +265,7 @@ description_eventtype = {
 
 description_accuracy = {
     "LongName": "Correct or Incorrect response",
-    "Description": "Correct or Incorrect response in regards to question presented on screen; Options are True or False, presented on screen, underneath question. Participants are promted to respond with MR-compatible button box.",
+    "Description": "Correct or Incorrect response in regards to question presented on screen; Options are True or False, presented on screen, underneath question. Participants are prompted to respond with MR-compatible button box.",
     "Levels": {
         "correct": "Correct response in regards to question.",
         "incorrect": "Incorrect response in regards to question."
@@ -543,7 +543,7 @@ description_value = {
 
 description_accuracy = {
     "LongName": "Correct or Incorrect response",
-    "Description": "Correct or Incorrect response in regards to question presented on screen; Options are Old and New, presented on screen, underneath image. Participants are promted to respond with MR-compatible button box",
+    "Description": "Correct or Incorrect response in regards to question presented on screen; Options are Old and New, presented on screen, underneath image. Participants are prompted to respond with MR-compatible button box",
     "Levels": {
         "correct": "Correct response in regards to image (correctly identified as old or new)",
         "incorrect": "Incorrect response in regards to image (incorrectly identified as old or new)"
@@ -714,7 +714,7 @@ description_normative_response =  {
 
 description_accuracy = {
     "LongName": "Correct or Incorrect response",
-    "Description": "Correct or Incorrect response in regards to question presented on screen; Options are Yes or No, presented on screen, underneath image. Participants are promted to respond with MR-compatible button box",
+    "Description": "Correct or Incorrect response in regards to question presented on screen; Options are Yes or No, presented on screen, underneath image. Participants are prompted to respond with MR-compatible button box",
     "Levels": {
         "correct": "Correct response in regards to question",
         "incorrect": "Incorrect response in regards to question"
