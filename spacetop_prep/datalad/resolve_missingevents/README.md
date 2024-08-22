@@ -1,4 +1,4 @@
-In cases where we have an exisiting BOLD, but missing events.tsv file, 
+In cases where we have an existing BOLD, but missing events.tsv file, 
 there are a couple of case scenarios
 1. The behavioral data was not completely collected, but the TEMP files exist. 
 (TEMP files are back-up data where the data was printed out on a trial-by-trial basis, 
