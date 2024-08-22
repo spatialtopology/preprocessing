@@ -690,7 +690,7 @@ description_eventtype = {
 
 description_participantresponse =  {
         "LongName": "Participant response",
-        "Description": "Participant responds Yes or No, based on experimetal question and image presented",
+        "Description": "Participant responds Yes or No, based on experimental question and image presented",
         "Levels": {
             "yes": "Participant presses yes button to indicate the image matches the question", 
             "no": "Participant presses no button to indicate the image does NOT match the question"},
