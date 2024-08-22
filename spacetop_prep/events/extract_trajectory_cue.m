@@ -9,7 +9,7 @@
 % See README.md and the associated paper (Jung et al., 2024) for more
 % information.
 
-% check if the extracted degreees agree with the logged degrees
+% check if the extracted degrees agree with the logged degrees
 
 clear
 
