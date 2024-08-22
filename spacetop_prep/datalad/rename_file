@@ -1,6 +1,6 @@
 #!/bin/bash
 # Simple helper which renames files but also checks _scans.tsv file
-# for possibly needed renaming and then tripple checks that git
+# for possibly needed renaming and then triple checks that git
 # doesn't have any memory of the old file left.
 # Restrictions:
 #  must be within the same folder
