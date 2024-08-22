@@ -20,7 +20,7 @@ from os.path import join
 from pathlib import Path
 import logging
 import subprocess
-
+import argparse
 
 __author__ = "Heejung Jung"
 __copyright__ = "Spatial Topology Project"
@@ -116,17 +116,67 @@ def is_equivalent(val1, val2, tolerance=1):
     return abs(val1 - val2) <= tolerance
 # TODO:
 
-
-
 def is_equivalent(val1, val2, tolerance=1):
     return abs(val1 - val2) <= tolerance
 
+def extract_bids(filename: str, key: str) -> str:
+    """
+    Extracts BIDS information based on input "key" prefix.
+    If filename includes an extension, code will remove it.
+    """
+    bids_info = [match for match in filename.split('_') if key in match][0]
+    bids_info_rmext = bids_info.split(os.extsep, 1)
+    return bids_info_rmext[0]
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Process behavioral files for specific subjects or all subjects.")
+
+
+    parser.add_argument(
+        '--bids_string', 
+        type=str, 
+        help="BIDS formatted string in format: sub-{sub%4d} ses-{ses%2d} task-{task} run-{run%2d}"
+    )
+    parser.add_argument(
+        '--bids_dir',
+        type=str,
+        default='/Users/h/Documents/projects_local/1076_spacetop',
+        help="curated top directory of datalad."
+    )
+    parser.add_argument(
+        '--code_dir',
+        type=str,
+        default='/Users/h/Documents/projects_local/1076_spacetop/code',
+        help="where this code lives."
+    )
+    parser.add_argument(
+        '--source_dir',
+        type=str,
+        default='/Users/h/Documents/projects_local/1076_spacetop/sourcedata',
+        help="where this code lives."
+    )
+    return parser.parse_args()
+
+args = parse_args()
+bids_string = args.bids_string
+bids_dir = args.bids_dir
+code_dir = args.code_dir
+source_dir = args.source_dir
+beh_inputdir = join(source_dir, 'd_beh')
 # %% ---------------------------------------------------------------------------
 #  1. add task-fractional runtype metadata & 2. harmonize scans tsv and nifti files
 # ------------------------------------------------------------------------------
 
 
-scans_list = sorted(glob.glob('sub-*/**/*ses-04*scans*.tsv', recursive=True))
+if args.bids_string:
+    sub = extract_bids(bids_string, 'sub')
+    scans_list = glob.glob(join(beh_inputdir, sub,  '**','task-fractional', '**', f'*{bids_string}*.csv'), recursive=True)
+else:
+    scans_list = sorted(glob.glob('sub-*/**/*ses-04*scans*.tsv', recursive=True))
+
+
+
+
 for scan_fname in scans_list:
     # NOTE: Step 1: Get the scans.tsv using datalad
     run_command(f"datalad get {scan_fname}")

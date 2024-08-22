@@ -13,6 +13,8 @@ import pandas as pd
 import os, glob, re, json
 from os.path import join
 from pathlib import Path
+import argparse
+
 __author__ = "Heejung Jung"
 __copyright__ = "Spatial Topology Project"
 __credits__ = ["Yaroslav Halchenko", "Zizhuang Miao"] # people who reported bug fixes, made suggestions, etc. but did not actually write the code.
@@ -22,12 +24,69 @@ __maintainer__ = "Heejung Jung"
 __email__ = "heejung.jung@colorado.edu"
 __status__ = "Development" 
 
+
+def extract_bids(filename: str, key: str) -> str:
+    """
+    Extracts BIDS information based on input "key" prefix.
+    If filename includes an extension, code will remove it.
+    """
+    bids_info = [match for match in filename.split('_') if key in match][0]
+    bids_info_rmext = bids_info.split(os.extsep, 1)
+    return bids_info_rmext[0]
 # argparse
 
-bids_dir = '/Users/h/Documents/projects_local/1076_spacetop' # the top directory of datalad
-code_dir = '/Users/h/Documents/projects_local/1076_spacetop/code' # where this code live
-source_dir = '/Users/h/Documents/projects_local/1076_spacetop/sourcedata'# where the source behavioral directory lives
+def parse_args():
+    parser = argparse.ArgumentParser(description="Process behavioral files for specific subjects or all subjects.")
+
+
+    parser.add_argument(
+        '--bids_string', 
+        type=str, 
+        help="BIDS formatted string in format: sub-{sub%4d} ses-{ses%2d} task-{task} run-{run%2d}"
+    )
+    parser.add_argument(
+        '--bids_dir',
+        type=str,
+        default='/Users/h/Documents/projects_local/1076_spacetop',
+        help="curated top directory of datalad."
+    )
+    parser.add_argument(
+        '--code_dir',
+        type=str,
+        default='/Users/h/Documents/projects_local/1076_spacetop/code',
+        help="where this code lives."
+    )
+    parser.add_argument(
+        '--source_dir',
+        type=str,
+        default='/Users/h/Documents/projects_local/1076_spacetop/sourcedata',
+        help="where this code lives."
+    )
+    return parser.parse_args()
+
+args = parse_args()
+bids_string = args.bids_string
+bids_dir = args.bids_dir
+code_dir = args.code_dir
+source_dir = args.source_dir
 beh_inputdir = join(source_dir, 'd_beh')
+# %% ---------------------------------------------------------------------------
+#  1. add task-fractional runtype metadata & 2. harmonize scans tsv and nifti files
+# ------------------------------------------------------------------------------
+
+
+# if args.bids_string:
+#     sub = extract_bids(bids_string, 'sub')
+#     scans_list = glob.glob(join(beh_inputdir, sub,  '**','task-fractional', '**', f'*{bids_string}*.csv'), recursive=True)
+# else:
+#     scans_list = sorted(glob.glob('sub-*/**/*ses-04*scans*.tsv', recursive=True))
+
+
+
+# bids_dir = '/Users/h/Documents/projects_local/1076_spacetop' # the top directory of datalad
+# code_dir = '/Users/h/Documents/projects_local/1076_spacetop/code' # where this code live
+# source_dir = '/Users/h/Documents/projects_local/1076_spacetop/sourcedata'# where the source behavioral directory lives
+# beh_inputdir = join(source_dir, 'd_beh')
 
 
 # %% -----------------------------------------------
@@ -43,11 +102,16 @@ beh_inputdir = join(source_dir, 'd_beh')
 # 'event04_RT','accuracy'
 
 task_name = "tomsaxe"
-current_path = Path.cwd()
-main_dir = current_path.parent.parent 
+# current_path = Path.cwd()
+# main_dir = current_path.parent.parent 
 # %%
-saxe_flist = glob.glob(join(beh_inputdir, '**', f'*{task_name}*.csv'), recursive=True)
-filtered_saxe_flist = [file for file in saxe_flist if "sub-0001" not in file]
+if args.bids_string and 'tomsaxe' in extract_bids(bids_string, 'task') :
+    sub = extract_bids(bids_string, 'sub')
+    filtered_saxe_flist = glob.glob(join(beh_inputdir, sub,  '**','task-fractional', '**', f'*{bids_string}*.csv'), recursive=True)
+else:
+    # scans_list = sorted(glob.glob('sub-*/**/*ses-04*scans*.tsv', recursive=True))
+    saxe_flist = glob.glob(join(beh_inputdir, '**', f'*{task_name}*.csv'), recursive=True)
+    filtered_saxe_flist = [file for file in saxe_flist if "sub-0001" not in file]
 
 for saxe_fpath in sorted(filtered_saxe_flist):
     
@@ -175,12 +239,19 @@ with open(json_fname, 'w') as file:
 #                       posner
 # -------------------------------------------------
 task_name = "posner"
-current_path = Path.cwd()
-main_dir = current_path.parent.parent 
+# current_path = Path.cwd()
+# main_dir = current_path.parent.parent 
+if args.bids_string and task_name in extract_bids(bids_string, 'task') :
+    sub = extract_bids(bids_string, 'sub')
+    filtered_posner_flist = glob.glob(join(beh_inputdir, sub,  '**','task-fractional', '**', f'*{bids_string}*.csv'), recursive=True)
+else:
+    # scans_list = sorted(glob.glob('sub-*/**/*ses-04*scans*.tsv', recursive=True))
+    posner_flist = glob.glob(join(beh_inputdir, '**', f'*{task_name}*.csv'), recursive=True)
+    filtered_posner_flist = [file for file in posner_flist if "sub-0001" not in file]
 
-posner_flist = glob.glob(join(beh_inputdir, '**', f'*{task_name}*.csv'), recursive=True)
+# posner_flist = glob.glob(join(beh_inputdir, '**', f'*{task_name}*.csv'), recursive=True)
 
-for posner_fpath in sorted(posner_flist):
+for posner_fpath in sorted(filtered_posner_flist):
     posner_fname = os.path.basename(posner_fpath)
     sub_bids = re.search(r'sub-\d+', posner_fname).group(0)
     ses_bids = re.search(r'ses-\d+', posner_fname).group(0)
@@ -418,10 +489,19 @@ pmod_accuracy
 
 """
 task_name = "memory"
-current_path = Path.cwd()
-memory_flist = sorted(glob.glob(join(beh_inputdir, '**', f'*{task_name}_beh.csv'), recursive=True))
+# current_path = Path.cwd()
+# memory_flist = sorted(glob.glob(join(beh_inputdir, '**', f'*{task_name}_beh.csv'), recursive=True))
 
-for memory_fpath in memory_flist:
+if args.bids_string and task_name in extract_bids(bids_string, 'task') :
+    sub = extract_bids(bids_string, 'sub')
+    filtered_memory_flist = glob.glob(join(beh_inputdir, sub,  '**','task-fractional', '**', f'*{bids_string}*.csv'), recursive=True)
+else:
+    # scans_list = sorted(glob.glob('sub-*/**/*ses-04*scans*.tsv', recursive=True))
+    memory_flist = glob.glob(join(beh_inputdir, '**', f'*{task_name}*.csv'), recursive=True)
+    filtered_memory_flist = [file for file in memory_flist if "sub-0001" not in file]
+
+
+for memory_fpath in filtered_memory_flist:
     memory_fname = os.path.basename(memory_fpath)
     sub_bids = re.search(r'sub-\d+', memory_fname).group(0)
     ses_bids = re.search(r'ses-\d+', memory_fname).group(0)
@@ -609,9 +689,19 @@ event03_response_key: 1,3 -> convert to 1,2
 Yes = 1, No =2
 """
 task_name = "tomspunt"
-current_path = Path.cwd()
-spunt_flist = sorted(glob.glob(join(beh_inputdir, '**', f'*{task_name}_beh.csv'), recursive=True))
-for spunt_fpath in spunt_flist:
+# current_path = Path.cwd()
+# spunt_flist = sorted(glob.glob(join(beh_inputdir, '**', f'*{task_name}_beh.csv'), recursive=True))
+
+if args.bids_string and task_name in extract_bids(bids_string, 'task') :
+    sub = extract_bids(bids_string, 'sub')
+    filtered_spunt_flist = glob.glob(join(beh_inputdir, sub,  '**','task-fractional', '**', f'*{bids_string}*.csv'), recursive=True)
+else:
+    # scans_list = sorted(glob.glob('sub-*/**/*ses-04*scans*.tsv', recursive=True))
+    spunt_flist = glob.glob(join(beh_inputdir, '**', f'*{task_name}*.csv'), recursive=True)
+    filtered_spunt_flist = [file for file in spunt_flist if "sub-0001" not in file]
+
+
+for spunt_fpath in filtered_spunt_flist:
     spunt_fname = os.path.basename(spunt_fpath)
     sub_bids = re.search(r'sub-\d+', spunt_fname).group(0)
     ses_bids = re.search(r'ses-\d+', spunt_fname).group(0)

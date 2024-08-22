@@ -19,6 +19,7 @@ from os.path import join
 from pathlib import Path
 import logging
 import subprocess
+import argparse
 
 
 __author__ = "Heejung Jung"
@@ -150,6 +151,15 @@ def calculate_ttl_values(stimulus_times, ttl_row, beh_df):
 def is_equivalent(val1, val2, tolerance=1):
     return abs(val1 - val2) <= tolerance
 
+def extract_bids(filename: str, key: str) -> str:
+    """
+    Extracts BIDS information based on input "key" prefix.
+    If filename includes an extension, code will remove it.
+    """
+    bids_info = [match for match in filename.split('_') if key in match][0]
+    bids_info_rmext = bids_info.split(os.extsep, 1)
+    return bids_info_rmext[0]
+
 # %% ---------------------------------------------------------------------------
 #  1. add task-social runtype metadata & 2. harmonize scans tsv and nifti files
 # ------------------------------------------------------------------------------
@@ -219,10 +229,47 @@ def is_equivalent(val1, val2, tolerance=1):
 #                                   Parameters
 # ------------------------------------------------------------------------------
 
-bids_dir = '/Users/h/Documents/projects_local/1076_spacetop' # the top directory of datalad
-code_dir = '/Users/h/Documents/projects_local/1076_spacetop/code' # where this code live
-source_dir = '/Users/h/Documents/projects_local/1076_spacetop/sourcedata'# where the source behavioral directory lives
+def parse_args():
+    parser = argparse.ArgumentParser(description="Process behavioral files for specific subjects or all subjects.")
+
+
+    parser.add_argument(
+        '--bids_string', 
+        type=str, 
+        help="BIDS formatted string in format: sub-{sub%4d} ses-{ses%2d} task-{task} run-{run%2d}"
+    )
+    parser.add_argument(
+        '--bids_dir',
+        type=str,
+        default='/Users/h/Documents/projects_local/1076_spacetop',
+        help="curated top directory of datalad."
+    )
+    parser.add_argument(
+        '--code_dir',
+        type=str,
+        default='/Users/h/Documents/projects_local/1076_spacetop/code',
+        help="where this code lives."
+    )
+    parser.add_argument(
+        '--source_dir',
+        type=str,
+        default='/Users/h/Documents/projects_local/1076_spacetop/sourcedata',
+        help="where this code lives."
+    )
+    return parser.parse_args()
+
+args = parse_args()
+bids_string = args.bids_string
+bids_dir = args.bids_dir
+code_dir = args.code_dir
+source_dir = args.source_dir
 beh_inputdir = join(source_dir, 'd_beh')
+# task_name = args.task_name
+
+# bids_dir = '/Users/h/Documents/projects_local/1076_spacetop' # the top directory of datalad
+# code_dir = '/Users/h/Documents/projects_local/1076_spacetop/code' # where this code live
+# source_dir = '/Users/h/Documents/projects_local/1076_spacetop/sourcedata'# where the source behavioral directory lives
+# beh_inputdir = join(source_dir, 'd_beh')
 
 trajectory_x = 960
 trajectory_y = 707
@@ -246,8 +293,13 @@ labels = [
 
 
 task_name = 'cognitive'
-cognitive_flist = glob.glob(join(beh_inputdir,'sub-*', '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
-filtered_cognitive_flist = [file for file in cognitive_flist if "sub-0001" not in file]
+
+if args.bids_string and task_name in args.bids_string:
+    sub = extract_bids(bids_string, 'sub')
+    filtered_cognitive_flist = glob.glob(join(beh_inputdir, sub,  '**','task-social', '**', f'*{bids_string}*.csv'), recursive=True)
+else:
+    cognitive_flist = glob.glob(join(beh_inputdir,'sub-*', '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
+    filtered_cognitive_flist = [file for file in cognitive_flist if "sub-0001" not in file]
 
 
 cognitive_logger = setup_logger('cognitive', 'task-cue_cognitive.log')
@@ -472,13 +524,18 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
 #                           3. Pain BIDSify
 # ------------------------------------------------------------------------------
 task_name = 'pain'
-pain_flist = glob.glob(join(beh_inputdir,'sub-*', '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
-filtered_pain_flist = [file for file in pain_flist if "sub-0001" not in file]
+
+if args.bids_string and task_name in args.bids_string:
+    sub = extract_bids(bids_string, 'sub')
+    filtered_pain_flist = glob.glob(join(beh_inputdir, sub,  '**','task-social', '**', f'*{bids_string}*.csv'), recursive=True)
+else:
+    pain_flist = glob.glob(join(beh_inputdir,'sub-*', '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
+    filtered_pain_flist = [file for file in pain_flist if "sub-0001" not in file]
+
+
 
 # %%
 # Create a custom logger _______________________________________________________
-
-
 pain_info_logger = setup_logger('pain_info', 'task-cue_pain_info.log', level=logging.INFO)
 pain_warning_logger = setup_logger('pain_warning', 'task-cue_pain_warning.log', level=logging.WARNING)
 
@@ -732,8 +789,16 @@ for pain_fpath in sorted(filtered_pain_flist):
 #                           3. Vicarious BIDSify
 # ------------------------------------------------------------------------------
 task_name = 'vicarious'
-vicarious_flist = glob.glob(join(beh_inputdir,'sub-*', '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
-filtered_vicarious_flist = [file for file in vicarious_flist if "sub-0001" not in file]
+
+
+if args.bids_string and task_name in args.bids_string:
+    sub = extract_bids(bids_string, 'sub')
+    filtered_vicarious_flist = glob.glob(join(beh_inputdir, sub,  '**','task-social', '**', f'*{bids_string}*.csv'), recursive=True)
+else:
+    vicarious_flist = glob.glob(join(beh_inputdir,'sub-*', '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
+    filtered_vicarious_flist = [file for file in vicarious_flist if "sub-0001" not in file]
+
+
 # 0. Configure the logging system
 
 vicarious_logger = setup_logger('vicarious', 'task-cue_vicarious.log')
