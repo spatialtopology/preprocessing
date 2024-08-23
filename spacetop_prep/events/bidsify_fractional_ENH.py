@@ -110,9 +110,10 @@ else:
 for saxe_fpath in sorted(filtered_saxe_flist):
     
     saxe_fname = os.path.basename(saxe_fpath)
-    sub_bids = re.search(r'sub-\d+', saxe_fname).group(0)
-    ses_bids = re.search(r'ses-\d+', saxe_fname).group(0)
-    run_bids = re.search(r'run-\d+', saxe_fname).group(0)
+    
+    sub_bids = extract_bids(saxe_fname, 'sub') # re.search(r'sub-\d+', saxe_fname).group(0)
+    ses_bids = extract_bids(saxe_fname, 'ses') # re.search(r'ses-\d+', saxe_fname).group(0)
+    run_bids = extract_bids(saxe_fname, 'run') # re.search(r'run-\d+', saxe_fname).group(0)
     task_name = re.search(r'run-\d+-(\w+)_beh', saxe_fname).group(1)
     print(f"{sub_bids} {ses_bids} {run_bids} {task_name}")
     beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
