@@ -19,12 +19,20 @@ def extract_bids(filename: str, key: str) -> str:
     bids_info_rmext = bids_info.split(os.extsep, 1)
     return bids_info_rmext[0]
 
-def load_data_file(sub, session, taskname, run, rating_type, beh_inputdir):
-    beh_fname = beh_inputdir / sub / taskname / f'{sub}_{session}_{taskname}_{run}-{rating_type}_beh-preproc.csv'
+def load_data_file(sub, ses, taskname, run, rating_type, beh_inputdir):
+    beh_fname = beh_inputdir / sub / taskname / f'{sub}_{ses}_{taskname}_{run}-{rating_type}_beh-preproc.csv'
+
     if not beh_fname.is_file():
-        print(f'No file for {sub}_{run}')
-        return None
+    # Attempt to find a temporary or alternative file
+        temp_fpath = Path(beh_inputdir) / sub / 'task-alignvideos' / ses / f'{sub}_{ses}_task-alignvideos_{run}_beh_TEMP.csv'
+        
+        if temp_fpath.is_file():
+            beh_fname = temp_fpath
+        else:
+            print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
+            return None
     return pd.read_csv(beh_fname)
+    
 
 def process_trial_data(source_beh, run, rating_type):
     new_beh = pd.DataFrame(columns=["onset", "duration", "trial_type", "response_value", 
@@ -80,22 +88,22 @@ def create_trial_data(source_beh, trial_index, t_runstart, rating_type):
 
     return new_beh
 
-def save_events_file(new_beh, bids_dir, sub, session, taskname, run):
+def save_events_file(new_beh, bids_dir, sub, ses, taskname, run):
     precision_dic = {'onset': 3, 'duration': 3, 'response_value': 4}
     new_beh = new_beh.round(precision_dic)
     
     new_beh = new_beh.replace(np.nan, 'n/a') # replace missing values the BIDS way
-    new_fname = Path(bids_dir) / sub / session / 'func' / f'{sub}_{session}_{taskname}_acq-mb8_{run}_events.tsv'
+    new_fname = Path(bids_dir) / sub / ses / 'func' / f'{sub}_{ses}_{taskname}_acq-mb8_{run}_events.tsv'
     try:
         new_beh.to_csv(new_fname, sep='\t', index=False)
     except Exception as e:
         print(f"Error saving file {new_fname}: {e}")
 
-def faces_format2bids(sub, session, taskname, run, rating_type, beh_inputdir, bids_dir):
-    source_beh = load_data_file(sub, session, taskname, run, rating_type, beh_inputdir)
+def faces_format2bids(sub, ses, taskname, run, rating_type, beh_inputdir, bids_dir):
+    source_beh = load_data_file(sub, ses, taskname, run, rating_type, beh_inputdir)
     if source_beh is not None:
         new_beh = process_trial_data(source_beh, run, rating_type) #def process_trial_data(source_beh, run, rating_type):
-        save_events_file(new_beh, bids_dir, sub, session, taskname, run)
+        save_events_file(new_beh, bids_dir, sub, ses, taskname, run)
 
 
 def parse_args():

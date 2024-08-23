@@ -105,13 +105,28 @@ task_name = "tomsaxe"
 # current_path = Path.cwd()
 # main_dir = current_path.parent.parent 
 # %%
-if args.bids_string and 'tomsaxe' in extract_bids(bids_string, 'task') :
-    sub = extract_bids(bids_string, 'sub')
-    filtered_saxe_flist = glob.glob(join(beh_inputdir, sub,  '**','task-fractional', '**', f'*{bids_string}*.csv'), recursive=True)
+
+if args.bids_string and 'tomsaxe' in extract_bids(args.bids_string, 'task'):
+    sub = extract_bids(args.bids_string, 'sub')
+    saxe_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*.csv'))
+    
+    if not saxe_flist:
+        # Attempt to find a TEMP file
+        temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*TEMP*.csv'))
+        
+        if temp_flist:
+            filtered_saxe_flist = temp_flist
+        else:
+            print(f'No behavior data file found for {args.bids_string}. Checked both standard and temporary filenames.')
+            filtered_saxe_flist = []
+    else:
+        filtered_saxe_flist = saxe_flist
 else:
-    # scans_list = sorted(glob.glob('sub-*/**/*ses-04*scans*.tsv', recursive=True))
-    saxe_flist = glob.glob(join(beh_inputdir, '**', f'*{task_name}*.csv'), recursive=True)
-    filtered_saxe_flist = [file for file in saxe_flist if "sub-0001" not in file]
+    # Get a list of all relevant files, excluding specific subjects
+    saxe_flist = list(Path(beh_inputdir).rglob(f'**/{task_name}*.csv'))
+    filtered_saxe_flist = [file for file in saxe_flist if "sub-0001" not in str(file)]
+
+
 
 for saxe_fpath in sorted(filtered_saxe_flist):
     

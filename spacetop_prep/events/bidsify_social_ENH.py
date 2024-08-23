@@ -93,7 +93,6 @@ def remove_orphan_nifti_files(nifti_files, event_files):
     
     return orphan_files
 
-
 def extract_cue_metadata_and_run(filename):
     cue_metadata = re.search(r'_desc-(\w+)_events\.tsv', filename).group(1)
     run = re.search(r'_run-(\d+)_', filename).group(1)
@@ -231,31 +230,10 @@ def extract_bids(filename: str, key: str) -> str:
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Process behavioral files for specific subjects or all subjects.")
-
-
-    parser.add_argument(
-        '--bids_string', 
-        type=str, 
-        help="BIDS formatted string in format: sub-{sub%4d} ses-{ses%2d} task-{task} run-{run%2d}"
-    )
-    parser.add_argument(
-        '--bids_dir',
-        type=str,
-        default='/Users/h/Documents/projects_local/1076_spacetop',
-        help="curated top directory of datalad."
-    )
-    parser.add_argument(
-        '--code_dir',
-        type=str,
-        default='/Users/h/Documents/projects_local/1076_spacetop/code',
-        help="where this code lives."
-    )
-    parser.add_argument(
-        '--source_dir',
-        type=str,
-        default='/Users/h/Documents/projects_local/1076_spacetop/sourcedata',
-        help="where this code lives."
-    )
+    parser.add_argument('--bids_string', type=str, help="BIDS formatted string in format: sub-{sub%4d} ses-{ses%2d} task-{task} run-{run%2d}")
+    parser.add_argument('--bids_dir', type=str, default='/Users/h/Documents/projects_local/1076_spacetop', help="curated top directory of datalad.")
+    parser.add_argument('--code_dir', type=str, default='/Users/h/Documents/projects_local/1076_spacetop/code', help="where this code lives.")
+    parser.add_argument('--source_dir', type=str, default='/Users/h/Documents/projects_local/1076_spacetop/sourcedata', help="where this code lives.")
     return parser.parse_args()
 
 args = parse_args()
@@ -265,7 +243,6 @@ code_dir = args.code_dir
 source_dir = args.source_dir
 beh_inputdir = join(source_dir, 'd_beh')
 # task_name = args.task_name
-
 # bids_dir = '/Users/h/Documents/projects_local/1076_spacetop' # the top directory of datalad
 # code_dir = '/Users/h/Documents/projects_local/1076_spacetop/code' # where this code live
 # source_dir = '/Users/h/Documents/projects_local/1076_spacetop/sourcedata'# where the source behavioral directory lives
@@ -291,18 +268,28 @@ labels = [
 #                           3. Cognitive BIDSify
 # ------------------------------------------------------------------------------
 
-
 task_name = 'cognitive'
+cognitive_logger = setup_logger('cognitive', 'task-cue_cognitive.log')
 
 if args.bids_string and task_name in args.bids_string:
     sub = extract_bids(bids_string, 'sub')
-    filtered_cognitive_flist = glob.glob(join(beh_inputdir, sub,  '**','task-social', '**', f'*{bids_string}*.csv'), recursive=True)
+    ses = extract_bids(bids_string, 'ses')
+    run = extract_bids(bids_string, 'run')
+    # filtered_cognitive_flist = glob.glob(join(beh_inputdir, sub,  '**','task-social', '**', f'*{bids_string}*.csv'), recursive=True)
+    filtered_cognitive_flist = glob.glob(str(Path(beh_inputdir) / sub / '**' / 'task-social' / '**' / f'*{args.bids_string}*.csv'), recursive=True)
+
+    if not filtered_cognitive_flist:
+        temp_fpath = Path(beh_inputdir) / sub / 'task-social' / ses / f'{sub}_{ses}_task-social_{run}_beh_TEMP.csv'
+        if temp_fpath.is_file():
+            filtered_cognitive_flist = [str(temp_fpath)]
+        else:
+            print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
+            filtered_cognitive_flist = []
+            cognitive_logger.error("An error occurred while processing the trajectory file: %s", str(e))
 else:
     cognitive_flist = glob.glob(join(beh_inputdir,'sub-*', '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
     filtered_cognitive_flist = [file for file in cognitive_flist if "sub-0001" not in file]
 
-
-cognitive_logger = setup_logger('cognitive', 'task-cue_cognitive.log')
 
 for cognitive_fpath in sorted(filtered_cognitive_flist):
 
@@ -362,13 +349,6 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
         traj_df, 'expectrating_end_x', 'expectrating_end_y', trajectory_x, trajectory_y)
     traj_df['adjusted_outcomeangle_degrees'] = calc_adjusted_angle_df(
         traj_df, 'outcomerating_end_x', 'outcomerating_end_y', trajectory_x, trajectory_y)
-
-
-    # traj_df['expectangle_degrees'] = calc_adjusted_angle_df(
-    #     traj_df, 'expectrating_end_x', 'expectrating_end_y', trajectory_x, trajectory_y)
-    # traj_df['outcomeangle_degrees'] = calc_adjusted_angle_df(
-    #     traj_df, 'outcomerating_end_x', 'outcomerating_end_y', trajectory_x, trajectory_y)
-
 
 
     # 3-3. check if the calculated new degree matches the one in beh_df
@@ -525,20 +505,28 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
 # ------------------------------------------------------------------------------
 task_name = 'pain'
 
-if args.bids_string and task_name in args.bids_string:
-    sub = extract_bids(bids_string, 'sub')
-    filtered_pain_flist = glob.glob(join(beh_inputdir, sub,  '**','task-social', '**', f'*{bids_string}*.csv'), recursive=True)
-else:
-    pain_flist = glob.glob(join(beh_inputdir,'sub-*', '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
-    filtered_pain_flist = [file for file in pain_flist if "sub-0001" not in file]
-
-
-
-# %%
-# Create a custom logger _______________________________________________________
 pain_info_logger = setup_logger('pain_info', 'task-cue_pain_info.log', level=logging.INFO)
 pain_warning_logger = setup_logger('pain_warning', 'task-cue_pain_warning.log', level=logging.WARNING)
 
+
+if args.bids_string and task_name in args.bids_string:
+    sub = extract_bids(bids_string, 'sub')
+    ses = extract_bids(bids_string, 'ses')
+    run = extract_bids(bids_string, 'run')
+    # filtered_cognitive_flist = glob.glob(join(beh_inputdir, sub,  '**','task-social', '**', f'*{bids_string}*.csv'), recursive=True)
+    filtered_pain_flist = glob.glob(str(Path(beh_inputdir) / sub / '**' / 'task-social' / '**' / f'*{args.bids_string}*.csv'), recursive=True)
+
+    if not filtered_pain_flist:
+        temp_fpath = Path(beh_inputdir) / sub / 'task-social' / ses / f'{sub}_{ses}_task-social_{run}*beh_TEMP.csv'
+        if temp_fpath.is_file():
+            filtered_pain_flist = [str(temp_fpath)]
+        else:
+            print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
+            filtered_pain_flist = []
+            pain_warning_logger.error("An error occurred while processing the trajectory file: %s", str(e))
+else:
+    pain_list = glob.glob(join(beh_inputdir,'sub-*', '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
+    filtered_pain_flist = [file for file in pain_list if "sub-0001" not in file]
 
 for pain_fpath in sorted(filtered_pain_flist):
 
@@ -593,16 +581,10 @@ for pain_fpath in sorted(filtered_pain_flist):
 
     # 3-1. calculate degree based on x, y coordinate
     # 3-2. Calculate the angle in radians and then convert to degrees 
-    # traj_df['expectangle_degrees'] = calc_adjusted_angle_df(
-    #     traj_df, 'expectrating_end_x', 'expectrating_end_y', trajectory_x, trajectory_y)
-    # traj_df['outcomeangle_degrees'] = calc_adjusted_angle_df(
-    #     traj_df, 'outcomerating_end_x', 'outcomerating_end_y', trajectory_x, trajectory_y)
     traj_df['adjusted_expectangle_degrees'] = calc_adjusted_angle_df(
         traj_df, 'expectrating_end_x', 'expectrating_end_y', trajectory_x, trajectory_y)
     traj_df['adjusted_outcomeangle_degrees'] = calc_adjusted_angle_df(
         traj_df, 'outcomerating_end_x', 'outcomerating_end_y', trajectory_x, trajectory_y)
-
-
 
     # 3-3. check if the calculated new degree matches the one in beh_df
     beh_df['event02_expect_fillna'] = beh_df['event02_expect_angle'].round(2)
@@ -789,19 +771,26 @@ for pain_fpath in sorted(filtered_pain_flist):
 #                           3. Vicarious BIDSify
 # ------------------------------------------------------------------------------
 task_name = 'vicarious'
-
+vicarious_logger = setup_logger('vicarious', 'task-cue_vicarious.log')
 
 if args.bids_string and task_name in args.bids_string:
     sub = extract_bids(bids_string, 'sub')
-    filtered_vicarious_flist = glob.glob(join(beh_inputdir, sub,  '**','task-social', '**', f'*{bids_string}*.csv'), recursive=True)
+    ses = extract_bids(bids_string, 'ses')
+    run = extract_bids(bids_string, 'run')
+    # filtered_cognitive_flist = glob.glob(join(beh_inputdir, sub,  '**','task-social', '**', f'*{bids_string}*.csv'), recursive=True)
+    filtered_vicarious_flist = glob.glob(str(Path(beh_inputdir) / sub / '**' / 'task-social' / '**' / f'*{args.bids_string}*.csv'), recursive=True)
+
+    if not filtered_vicarious_flist:
+        temp_fpath = Path(beh_inputdir) / sub / 'task-social' / ses / f'{sub}_{ses}_task-social_{run}*beh_TEMP.csv'
+        if temp_fpath.is_file():
+            filtered_vicarious_flist = [str(temp_fpath)]
+        else:
+            print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
+            filtered_vicarious_flist = []
+            vicarious_logger.error(f"No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.")
 else:
     vicarious_flist = glob.glob(join(beh_inputdir,'sub-*', '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
     filtered_vicarious_flist = [file for file in vicarious_flist if "sub-0001" not in file]
-
-
-# 0. Configure the logging system
-
-vicarious_logger = setup_logger('vicarious', 'task-cue_vicarious.log')
 
 for vicarious_fpath in sorted(filtered_vicarious_flist):
 
@@ -824,7 +813,6 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
     ses_bids = re.search(r'ses-\d+', vicarious_fname).group(0)
     run_bids = re.search(r'run-\d+', vicarious_fname).group(0)
     runtype = re.search(r'run-\d+-(\w+?)_', vicarious_fname).group(1)
-
 
     vicarious_logger.info(f"_______ {sub_bids} {ses_bids} {run_bids} {runtype} _______")
     beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
@@ -852,10 +840,6 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
 
 
     # 3-1. calculate degree based on x, y coordinate
-    # traj_df['expectangle_degrees'] = calc_adjusted_angle_df(
-    #     traj_df, 'expectrating_end_x', 'expectrating_end_y', trajectory_x, trajectory_y)
-    # traj_df['outcomeangle_degrees'] = calc_adjusted_angle_df(
-    #     traj_df, 'outcomerating_end_x', 'outcomerating_end_y', trajectory_x, trajectory_y)
     traj_df['adjusted_expectangle_degrees'] = calc_adjusted_angle_df(
         traj_df, 'expectrating_end_x', 'expectrating_end_y', trajectory_x, trajectory_y)
     traj_df['adjusted_outcomeangle_degrees'] = calc_adjusted_angle_df(

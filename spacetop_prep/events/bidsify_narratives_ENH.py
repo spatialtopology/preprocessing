@@ -9,6 +9,7 @@ import pandas as pd
 import numpy as np
 import traceback
 import argparse
+from pathlib import Path
 
 def extract_bids(filename: str, key: str) -> str:
     """
@@ -18,6 +19,28 @@ def extract_bids(filename: str, key: str) -> str:
     bids_info = [match for match in filename.split('_') if key in match][0]
     bids_info_rmext = bids_info.split(os.extsep, 1)
     return bids_info_rmext[0]
+
+def get_column_value(df, column_name, default_value=''):
+    """
+    Safely get the value from a DataFrame column, returns default_value if column does not exist.
+    """
+    return df[column_name] if column_name in df else default_value
+
+def create_event_row(onset, duration, trial_type, modality, stim_file, situation=None, context=None, response_x=None, response_y=None):
+    """
+    Creates a DataFrame row for an event with specified attributes.
+    """
+    return pd.DataFrame({
+        "onset": onset,
+        "duration": duration,
+        "trial_type": trial_type,
+        "response_x": response_x,
+        "response_y": response_y,
+        "situation": situation,
+        "context": context,
+        "modality": modality,
+        "stim_file": stim_file
+    }, index=[0])
 
 
 def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
@@ -71,116 +94,95 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
     --------
     narrative_format2bids('sub-0001', 'ses-02', '01', 'task-narratives', '/path/to/beh_data', '/path/to/bids_data')
     """
-    fpath = os.path.join(beh_inputdir, sub, taskname, f'{sub}_{ses}_{taskname}_run-{run}_beh-preproc.csv')
-    if not os.path.isfile(fpath):
-        print(f'No behavior data file for {sub}_run-{run}')
-        return
+    # fpath = os.path.join(beh_inputdir, sub, taskname, f'{sub}_{ses}_{taskname}_run-{run}_beh-preproc.csv')
+    # if not os.path.isfile(fpath):
+    #     print(f'No behavior data file for {sub}_run-{run}')
+    #     return
+    
+    beh_fname = Path(beh_inputdir) / sub / taskname / f'{sub}_{ses}_{taskname}_{run}_beh-preproc.csv'
 
-    source_beh = pd.read_csv(fpath)
+    if not beh_fname.is_file():
+    # Attempt to find a temporary or alternative file
+        temp_fpath = Path(beh_inputdir) / sub / 'task-narratives' / ses / f'{sub}_{ses}_task-narratives_{run}_beh_TEMP.csv'
+        
+        if temp_fpath.is_file():
+            beh_fname = temp_fpath
+        else:
+            print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
+            return None
+
+    source_beh = pd.read_csv(beh_fname)
     new_beh = pd.DataFrame(columns=["onset", "duration", "trial_type", 
                             "response_x", "response_y",
                             "situation", "context", "modality", "stim_file"])    # new events to store
-    if run in ['01', '02']:
-        modality = 'Audio'
-    else:
-        modality = 'Text'
-    
-    t_runStart = source_beh.loc[0, 'param_trigger_onset']    # start time of this run; all onsets calibrated by this
+    # if run in ['01', '02']:
+    #     modality = 'Audio'
+    # else:
+    #     modality = 'Text'
+    modality = 'Audio' if run in ['01', '02'] else 'Text'
+    t_run_start = source_beh.loc[0, 'param_trigger_onset']    # start time of this run; all onsets calibrated by this
 
     for t in range(len(source_beh)):    # each trial
         # Event 1. narrative presentation
-        onset = source_beh.loc[t, 'event02_administer_onset'] - t_runStart
+        onset = source_beh.loc[t, 'event02_administer_onset'] - t_run_start
         duration = source_beh.loc[t, 'event03_feel_displayonset'] - source_beh.loc[t, 'event02_administer_onset']
         trial_type = "narrative_presentation"
         situation = source_beh.loc[t, 'situation']
         context = source_beh.loc[t, 'context']
-        stim_file = source_beh.loc[t, 'param_stimulus_filename']
-        stim_file = stim_file[:20] + '.mp3' if run in ['01', '02'] else stim_file[:20] + '.txt'
-        stim_file = 'task-narratives/' + stim_file
-        newRow = pd.DataFrame({"onset": onset, "duration": duration, "trial_type": trial_type, \
-                        "situation": situation, "context": context, "modality": modality, "stim_file": stim_file}, index=[0])
-        new_beh = pd.concat([new_beh, newRow], ignore_index=True)
+        stim_file = f'task-narratives/{source_beh.loc[t, "param_stimulus_filename"][:20] + (".mp3" if run in ["01", "02"] else ".txt")}'
+        new_row = create_event_row(onset, duration, trial_type, modality, stim_file, situation, context)
+        new_beh = pd.concat([new_beh, new_row], ignore_index=True)
 
         # Event 2. feeling rating
-        onset = source_beh.loc[t, 'event03_feel_displayonset'] - t_runStart
-        duration = source_beh.loc[t, 'RT_feeling'] if ~np.isnan(source_beh.loc[t, 'RT_feeling']) else source_beh.loc[t, 'RT_feeling_adj']
+        onset = source_beh.loc[t, 'event03_feel_displayonset'] - t_run_start
+        duration = source_beh.loc[t, 'RT_feeling'] if pd.notna(source_beh.loc[t, 'RT_feeling']) else source_beh.loc[t, 'RT_feeling_adj']
         trial_type = 'rating_feeling'
-        response_x = source_beh.loc[t, 'feeling_end_x']
-        response_y = source_beh.loc[t, 'feeling_end_y']
-        newRow = pd.DataFrame({"onset": onset, "duration": duration, "trial_type": trial_type, \
-                        "response_x": response_x, "response_y": response_y, \
-                        "situation": situation, "context": context, "modality": modality}, index=[0])
-        new_beh = pd.concat([new_beh, newRow], ignore_index=True)
+        response_x = get_column_value(source_beh, 'feeling_end_x')
+        response_y = get_column_value(source_beh, 'feeling_end_y')
+        new_row = create_event_row(onset, duration, trial_type, modality, stim_file, situation, context, response_x, response_y)
+        new_beh = pd.concat([new_beh, new_row], ignore_index=True)
         
         # Event 3. feeling mouse trajectory
         onset += source_beh.loc[t, 'motion_onset_feeling']
         duration = source_beh.loc[t, 'motion_dur_feeling']
         trial_type = 'feeling_mouse_trajectory'
-        newRow = pd.DataFrame({"onset": onset, "duration": duration, "trial_type": trial_type, \
-                        "response_x": response_x, "response_y": response_y, \
-                        "situation": situation, "context": context, "modality": modality}, index=[0])
-        new_beh = pd.concat([new_beh, newRow], ignore_index=True)
+        new_row = create_event_row(onset, duration, trial_type, modality, stim_file, situation, context, response_x, response_y)
+        new_beh = pd.concat([new_beh, new_row], ignore_index=True)
 
         # Event 4. expectation rating
-        onset = source_beh.loc[t, 'event04_expect_displayonset'] - t_runStart
-        duration = source_beh.loc[t, 'RT_expectation'] if ~np.isnan(source_beh.loc[t, 'RT_expectation']) else source_beh.loc[t, 'RT_expectation_adj']
+        onset = source_beh.loc[t, 'event04_expect_displayonset'] - t_run_start
+        duration = source_beh.loc[t, 'RT_expectation'] if pd.notna(source_beh.loc[t, 'RT_expectation']) else source_beh.loc[t, 'RT_expectation_adj']
         trial_type = 'rating_expectation'
-        response_x = source_beh.loc[t, 'expectation_end_x']
-        response_y = source_beh.loc[t, 'expectation_end_y']
-        newRow = pd.DataFrame({"onset": onset, "duration": duration, "trial_type": trial_type, \
-                        "response_x": response_x, "response_y": response_y, \
-                        "situation": situation, "context": context, "modality": modality}, index=[0])
-        new_beh = pd.concat([new_beh, newRow], ignore_index=True)
-        
+        response_x = get_column_value(source_beh, 'expectation_end_x')
+        response_y = get_column_value(source_beh, 'expectation_end_y')
+        new_row = create_event_row(onset, duration, trial_type, modality, stim_file, situation, context, response_x, response_y)
+        new_beh = pd.concat([new_beh, new_row], ignore_index=True)
+
         # Event 5. expectation mouse trajectory
         onset += source_beh.loc[t, 'motion_onset_expectation']
         duration = source_beh.loc[t, 'motion_dur_expectation']
         trial_type = 'expectation_mouse_trajectory'
-        newRow = pd.DataFrame({"onset": onset, "duration": duration, "trial_type": trial_type, \
-                        "response_x": response_x, "response_y": response_y, \
-                        "situation": situation, "context": context, "modality": modality}, index=[0])
-        new_beh = pd.concat([new_beh, newRow], ignore_index=True)
-    
-    # change precisions
-    precision_dic = {'onset': 3, 'duration': 3}
-    new_beh = new_beh.round(precision_dic)
-    # replace missing values
-    new_beh = new_beh.replace(np.nan, 'n/a')
+        new_row = create_event_row(onset, duration, trial_type, modality, stim_file, situation, context, response_x, response_y)
+        new_beh = pd.concat([new_beh, new_row], ignore_index=True)
 
-    # save new events file
-    new_fname = os.path.join(bids_dir, sub, 'ses-02', 'func', f'{sub}_ses-02_task-narratives_acq-mb8_run-{run}_events.tsv')
+    # Change precisions and replace missing values
+    new_beh = new_beh.round({'onset': 3, 'duration': 3}).replace(np.nan, 'n/a')
+    new_fname = Path(bids_dir) / sub / 'ses-02' / 'func' / f'{sub}_ses-02_task-narratives_acq-mb8_run-{run}_events.tsv'
 
     try:
-        new_beh.to_csv(new_fname, sep='\t', index=False)    # Your code that might raise an error
+        new_beh.to_csv(new_fname, sep='\t', index=False)
     except OSError as e:
-        # Log the error
-        with open(os.path.join(bids_dir, "error_log.txt"), "a") as log_file:
-            log_file.write(f"Error encountered: {e}\n")
-            # If you want to log the full traceback:
+        with open(Path(bids_dir) / "error_log.txt", "a") as log_file:
+            log_file.write(f"Error encountered for {sub}, {ses}, {run}: {e}\n")
             traceback.print_exc(file=log_file)
         print(f"An error occurred and has been logged: {e}")
 
+
 def parse_args():
     parser = argparse.ArgumentParser(description="Process behavioral files for specific subjects or all subjects.")
-
-    parser.add_argument(
-        '--bids_string', 
-        type=str, 
-        help="BIDS formatted string in format: sub-{sub%4d} ses-{ses%2d} task-{task} run-{run%2d}"
-    )
-    parser.add_argument(
-        '--beh_inputdir',
-        type=str,
-        default='/Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh',
-        help="Input directory where raw behavioral data lives."
-    )
-    parser.add_argument(
-        '--bids_dir',
-        type=str,
-        default='/Users/h/Documents/projects_local/1076_spacetop',
-        help="Base directory of the curated BIDS dataset."
-    )
-
+    parser.add_argument('--bids_string', type=str, help="BIDS formatted string in format: sub-{sub%04d}_ses-{ses%02d}_task-{task}_run-{run%02d}")
+    parser.add_argument('--beh_inputdir', type=str, default='/Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh', help="Input directory where raw behavioral data lives.")
+    parser.add_argument('--bids_dir', type=str, default='/Users/h/Documents/projects_local/1076_spacetop', help="Base directory of the curated BIDS dataset.")
     return parser.parse_args()
 
 args = parse_args()
@@ -188,8 +190,6 @@ bids_string = args.bids_string
 beh_inputdir = args.beh_inputdir
 bids_dir = args.bids_dir
 
-# get a list of subjects with behavior data
-# folders = glob.glob(os.path.join(bids_dir, 'sub-*'))
 taskname = 'task-narratives'
 ses = 'ses-02'
 
@@ -201,23 +201,10 @@ if bids_string:
     narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir)
 else:
     # If no bids_string is provided, loop through the entire directory
-    file_list = sorted(glob.glob(os.path.join(beh_inputdir, '**', f'sub-*task-narratives*.csv'), recursive=True))
+    file_list = sorted(glob.glob(os.path.join(beh_inputdir, '**', f'sub-*task-narratives*_beh.csv'), recursive=True))
     for fpath in file_list:
         sub = extract_bids(bids_string, 'sub')
         ses = extract_bids(bids_string, 'ses')
         run = extract_bids(bids_string, 'run')
         narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir)
 
-# please change `beh_inputdir` to the top level of the `d_beh` directory
-# >>>
-# beh_inputdir = '/Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh'
-# # please change `bids_dir` to the top level of the BIDS directory
-# # >>>
-# bids_dir = '/Users/h/Documents/projects_local/1076_spacetop'
-
-# if args.bids_string:
-#     bids_string = args.bids_string
-# else:
-#     # subject_list = [os.path.basename(x) for x in glob.glob(os.path.join(beh_inputdir, 'sub-*'))]
-#     bids_string = sorted(glob.glob(os.path.join(beh_inputdir, '**', f'sub-*task-narratives*.csv')))
-# subList = [os.path.basename(x) for x in folders]

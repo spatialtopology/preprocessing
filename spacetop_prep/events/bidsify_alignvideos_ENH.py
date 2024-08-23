@@ -97,9 +97,15 @@ def alignvideo_format_to_bids(sub, ses, run, task_name, beh_inputdir, bids_dir):
     """
     fpath = Path(beh_inputdir) / sub / 'task-alignvideos' / ses / f'{sub}_{ses}_task-alignvideos_{run}_beh.csv'
     if not fpath.is_file():
-        print(f'No behavior data file for {sub}_{ses}_{run}')
-        return
-
+        # Attempt to find a temporary or alternative file
+        temp_fpath = Path(beh_inputdir) / sub / 'task-alignvideos' / ses / f'{sub}_{ses}_task-alignvideos_{run}_beh_TEMP.csv'
+        
+        if temp_fpath.is_file():
+            fpath = temp_fpath
+        else:
+            print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
+            return
+        
     source_beh = pd.read_csv(fpath)
     new_beh = pd.DataFrame(columns=["onset", "duration", "trial_type", 
                             "response_value", "stim_file"])    # new events to store
