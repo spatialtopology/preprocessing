@@ -124,11 +124,11 @@ def alignvideo_format_to_bids(sub, ses, run, task_name, beh_inputdir, bids_dir):
     #         fpath = None
     #         print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
     #         return
-    base_dir = Path(beh_inputdir) / sub / ses
+    base_dir = Path(beh_inputdir) / sub
 
     # Search for the primary behavior file
     primary_pattern = f'{sub}_{ses}_task-alignvideo*_{run}_beh.csv'
-    primary_files = list(base_dir.glob(f'task-alignvideo*/{primary_pattern}'))
+    primary_files = list(base_dir.glob(f'task-alignvideo*/{ses}/{primary_pattern}'))
 
     # Initialize fpath as None
     fpath = None
@@ -140,7 +140,7 @@ def alignvideo_format_to_bids(sub, ses, run, task_name, beh_inputdir, bids_dir):
     # If the primary file does not exist, search for a temporary file
     if fpath is None or not fpath.is_file():
         temp_pattern = f'{sub}_{ses}_task-alignvideo*_{run}_*TEMP*.csv'
-        temp_files = list(base_dir.glob(f'task-alignvideo*/{temp_pattern}'))
+        temp_files = list(base_dir.glob(f'task-alignvideo*/{ses}/{temp_pattern}'))
 
         if temp_files:
             fpath = temp_files[0]
