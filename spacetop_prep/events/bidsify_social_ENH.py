@@ -281,7 +281,7 @@ if args.bids_string and task_name in args.bids_string:
     filtered_cognitive_flist = glob.glob(str(Path(beh_inputdir) / sub / '**' / 'task-social' / '**' / f'*{args.bids_string}*.csv'), recursive=True)
 
     if not filtered_cognitive_flist:
-        temp_fpath = Path(beh_inputdir) / sub / 'task-social' / ses / f'{sub}_{ses}_task-social_{run}_beh_TEMP.csv'
+        temp_fpath = Path(beh_inputdir) / sub / 'task-social' / ses / f'{sub}_{ses}_task-social_{run}*TEMP*.csv'
         if temp_fpath.is_file():
             filtered_cognitive_flist = [str(temp_fpath)]
         else:
