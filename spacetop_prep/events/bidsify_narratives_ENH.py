@@ -194,17 +194,18 @@ taskname = 'task-narratives'
 ses = 'ses-02'
 
 if bids_string:
-    # If bids_string is provided, process that specific file
-    sub = extract_bids(bids_string, 'sub')
-    ses = extract_bids(bids_string, 'ses')
-    run = extract_bids(bids_string, 'run')
+    fname = Path(bids_string).name
+    sub = extract_bids(fname, 'sub')
+    ses = extract_bids(fname, 'ses')
+    run = extract_bids(fname, 'run')
     narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir)
 else:
     # If no bids_string is provided, loop through the entire directory
     file_list = sorted(glob.glob(os.path.join(beh_inputdir, '**', f'sub-*task-narratives*_beh.csv'), recursive=True))
     for fpath in file_list:
-        sub = extract_bids(bids_string, 'sub')
-        ses = extract_bids(bids_string, 'ses')
-        run = extract_bids(bids_string, 'run')
+        fname = Path(fpath).name
+        sub = extract_bids(fname, 'sub')
+        ses = extract_bids(fname, 'ses')
+        run = extract_bids(fname, 'run')
         narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir)
 

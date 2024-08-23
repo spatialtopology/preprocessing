@@ -272,9 +272,11 @@ task_name = 'cognitive'
 cognitive_logger = setup_logger('cognitive', 'task-cue_cognitive.log')
 
 if args.bids_string and task_name in args.bids_string:
-    sub = extract_bids(bids_string, 'sub')
-    ses = extract_bids(bids_string, 'ses')
-    run = extract_bids(bids_string, 'run')
+    fname = Path(bids_string).name
+    sub = extract_bids(fname, 'sub')
+    ses = extract_bids(fname, 'ses')
+    run = extract_bids(fname, 'run')
+
     # filtered_cognitive_flist = glob.glob(join(beh_inputdir, sub,  '**','task-social', '**', f'*{bids_string}*.csv'), recursive=True)
     filtered_cognitive_flist = glob.glob(str(Path(beh_inputdir) / sub / '**' / 'task-social' / '**' / f'*{args.bids_string}*.csv'), recursive=True)
 

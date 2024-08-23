@@ -86,7 +86,7 @@ task_name = "tomsaxe"
 # %%
 
 if args.bids_string and 'tomsaxe' in extract_bids(args.bids_string, 'task'):
-    sub = extract_bids(args.bids_string, 'sub')
+    sub = extract_bids(Path(args.bids_string).name, 'sub')
     saxe_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*.csv'))
     
     if not saxe_flist:
@@ -236,8 +236,9 @@ with open(json_fname, 'w') as file:
 task_name = "posner"
 # current_path = Path.cwd()
 # main_dir = current_path.parent.parent 
-if args.bids_string and task_name in extract_bids(bids_string, 'task') :
-    sub = extract_bids(bids_string, 'sub')
+if args.bids_string and task_name in extract_bids(bids_string, 'task'):
+    sub = extract_bids(Path(args.bids_string).name, 'sub')
+    # sub = extract_bids(bids_string, 'sub')
     filtered_posner_flist = glob.glob(join(beh_inputdir, sub,  '**','task-fractional', '**', f'*{bids_string}*.csv'), recursive=True)
 else:
     # scans_list = sorted(glob.glob('sub-*/**/*ses-04*scans*.tsv', recursive=True))
@@ -487,8 +488,9 @@ task_name = "memory"
 # current_path = Path.cwd()
 # memory_flist = sorted(glob.glob(join(beh_inputdir, '**', f'*{task_name}_beh.csv'), recursive=True))
 
-if args.bids_string and task_name in extract_bids(bids_string, 'task') :
-    sub = extract_bids(bids_string, 'sub')
+if args.bids_string and task_name in extract_bids(bids_string, 'task'):
+    sub = extract_bids(Path(args.bids_string).name, 'sub')
+    # sub = extract_bids(bids_string, 'sub')
     filtered_memory_flist = glob.glob(join(beh_inputdir, sub,  '**','task-fractional', '**', f'*{bids_string}*.csv'), recursive=True)
 else:
     # scans_list = sorted(glob.glob('sub-*/**/*ses-04*scans*.tsv', recursive=True))
@@ -688,7 +690,8 @@ task_name = "tomspunt"
 # spunt_flist = sorted(glob.glob(join(beh_inputdir, '**', f'*{task_name}_beh.csv'), recursive=True))
 
 if args.bids_string and task_name in extract_bids(bids_string, 'task') :
-    sub = extract_bids(bids_string, 'sub')
+    sub = extract_bids(Path(args.bids_string).name, 'sub')
+    # sub = extract_bids(bids_string, 'sub')
     filtered_spunt_flist = glob.glob(join(beh_inputdir, sub,  '**','task-fractional', '**', f'*{bids_string}*.csv'), recursive=True)
 else:
     # scans_list = sorted(glob.glob('sub-*/**/*ses-04*scans*.tsv', recursive=True))

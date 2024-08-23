@@ -124,9 +124,10 @@ def main():
     taskname = 'task-faces'
     
     if bids_string:
-        sub = extract_bids(bids_string, 'sub')
-        ses = extract_bids(bids_string, 'ses')
-        run = extract_bids(bids_string, 'run')
+        fname = Path(bids_string).name
+        sub = extract_bids(fname, 'sub')
+        ses = extract_bids(fname, 'ses')
+        run = extract_bids(fname, 'run')
         run_dict = {'run-01': 'age', 'run-02': 'sex', 'run-03': 'intensity'} if int(sub[-4:])%2 == 0 else {'run-01': 'intensity', 'run-02': 'sex', 'run-03': 'age'}
         rating_type = run_dict[run]
         faces_format2bids(sub, ses, taskname, run, rating_type, beh_inputdir, bids_dir)

@@ -9,7 +9,14 @@ from pathlib import Path
 # This script reads raw behavior data files from d_beh for task-alignvideo, extracts time stamps and design information, and stores them in new *events.tsv files accompanying BOLD files.
 # For more information, please see README.md and the associated paper (Jung et al., 2024)
 """
-
+def extract_bids(filename: str, key: str) -> str:
+    """
+    Extracts BIDS information based on input "key" prefix.
+    If filename includes an extension, code will remove it.
+    """
+    bids_info = [match for match in filename.split('_') if key in match][0]
+    bids_info_rmext = bids_info.split(os.extsep, 1)
+    return bids_info_rmext[0]
 def add_rating_event(source_beh, t, t_run_start, rating_type, event_onset, event_rt, response_value_column):
     """
     Adds a rating event to the new BIDS-compliant DataFrame.
@@ -167,10 +174,10 @@ task_name = 'task-alignvideo'
 session_dict = {'ses-01': 4, 'ses-02': 4, 'ses-03': 3, 'ses-04': 2} # NOTE: different sessions have different numbers of runs
 
 if bids_string:
-    # If bids_string is provided, process that specific file
-    sub = re.search(r'sub-\d+', bids_string).group(0)
-    ses = re.search(r'ses-\d+', bids_string).group(0)
-    run = re.search(r'run-\d+', bids_string).group(0)
+    fname = Path(bids_string).name
+    sub = extract_bids(fname, 'sub')
+    ses = extract_bids(fname, 'ses')
+    run = extract_bids(fname, 'run')
     alignvideo_format_to_bids(sub, ses, run, task_name, beh_inputdir, bids_dir)
 else:
     # If no bids_string is provided, loop through the entire directory
