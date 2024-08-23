@@ -167,7 +167,7 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
 
     # Change precisions and replace missing values
     new_beh = new_beh.round({'onset': 3, 'duration': 3}).replace(np.nan, 'n/a')
-    new_fname = Path(bids_dir) / sub / 'ses-02' / 'func' / f'{sub}_ses-02_task-narratives_acq-mb8_run-{run}_events.tsv'
+    new_fname = Path(bids_dir) / sub / 'ses-02' / 'func' / f'{sub}_ses-02_task-narratives_acq-mb8_{run}_events.tsv'
 
     try:
         new_beh.to_csv(new_fname, sep='\t', index=False)
