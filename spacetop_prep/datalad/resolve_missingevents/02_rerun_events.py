@@ -53,6 +53,8 @@ with open(log_file_path, 'w') as log_file:
         # Determine the script to run based on the task name
         script_map = {
             'task-alignvideos': 'bidsify_alignvideos_ENH.py',
+            'task-alignvideo': 'bidsify_alignvideos_ENH.py',
+            'task-social': 'bidsify_social_ENH.py',
             'task-faces': 'bidsify_faces_ENH.py',
             'task-fractional': 'bidsify_fractional_ENH.py',
             'task-narratives': 'bidsify_narratives_ENH.py'
