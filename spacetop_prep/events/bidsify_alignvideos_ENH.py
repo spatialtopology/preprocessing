@@ -102,10 +102,10 @@ def alignvideo_format_to_bids(sub, ses, run, task_name, beh_inputdir, bids_dir):
     --------
     format2bids('sub-0001', 'ses-01', 'run-01', 'task-alignvideos', '/path/to/beh_data', '/path/to/bids_data')
     """
-    fpath = Path(beh_inputdir) / sub / 'task-alignvideos' / ses / f'{sub}_{ses}_task-alignvideos_{run}_beh.csv'
+    fpath = Path(beh_inputdir) / sub / 'task-alignvideo*' / ses / f'{sub}_{ses}_task-alignvideo*_{run}_beh.csv'
     if not fpath.is_file():
         # Attempt to find a temporary or alternative file
-        temp_fpath = Path(beh_inputdir) / sub / 'task-alignvideos' / ses / f'{sub}_{ses}_task-alignvideo*{run}*TEMP*.csv'
+        temp_fpath = Path(beh_inputdir) / sub / 'task-alignvideo*' / ses / f'{sub}_{ses}_task-alignvideo*{run}*TEMP*.csv'
         
         if temp_fpath.is_file():
             fpath = temp_fpath
