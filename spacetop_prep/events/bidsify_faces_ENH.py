@@ -24,7 +24,7 @@ def load_data_file(sub, ses, taskname, run, rating_type, beh_inputdir):
 
     if not beh_fname.is_file():
     # Attempt to find a temporary or alternative file
-        temp_fpath = Path(beh_inputdir) / sub / 'task-alignvideos' / ses / f'{sub}_{ses}_task-alignvideos_{run}_beh_TEMP.csv'
+        temp_fpath = Path(beh_inputdir) / sub / 'task-faces' / ses / f'{sub}_{ses}_task-faces*{run}*TEMP*.csv'
         
         if temp_fpath.is_file():
             beh_fname = temp_fpath
