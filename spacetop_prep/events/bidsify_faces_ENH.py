@@ -108,23 +108,9 @@ def faces_format2bids(sub, ses, taskname, run, rating_type, beh_inputdir, bids_d
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Process behavioral files for specific subjects or all subjects.")
-    parser.add_argument(
-        '--bids_string', 
-        type=str, 
-        help="BIDS formatted string in format: sub-{sub%04d}_ses-{ses%02d}_task-{task}_run-{run%02d}"
-    )
-    parser.add_argument(
-        '--bids_dir',
-        type=str,
-        default='/Users/h/Documents/projects_local/1076_spacetop',
-        help="Curated top directory of datalad."
-    )
-    parser.add_argument(
-        '--source_dir',
-        type=str,
-        default='/Users/h/Documents/projects_local/1076_spacetop/sourcedata',
-        help="Where the source behavioral directory lives."
-    )
+    parser.add_argument('--bids_string', type=str, help="BIDS formatted string in format: sub-{sub%04d}_ses-{ses%02d}_task-{task}_run-{run%02d}")
+    parser.add_argument('--bids_dir', type=str, default='/Users/h/Documents/projects_local/1076_spacetop', help="Curated top directory of datalad.")
+    parser.add_argument('--source_dir', type=str, default='/Users/h/Documents/projects_local/1076_spacetop/sourcedata', help="Where the source behavioral directory lives.")
     return parser.parse_args()
 
 
