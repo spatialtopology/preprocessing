@@ -46,7 +46,7 @@ with open(log_file_path, 'w') as log_file:
     # Iterate over each row in the DataFrame
     for index, row in missing_df.iterrows():
         bids_string = row['BIDS_string']
-        taskname = extract_bids(bids_string, 'taskname')
+        taskname = extract_bids(bids_string, 'task')
         if taskname is None:
             print(f"Task name extraction failed for index {index}. Skipping.")
             continue
