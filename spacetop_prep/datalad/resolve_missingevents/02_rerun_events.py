@@ -31,9 +31,9 @@ def run_subprocess(command: list):
     except subprocess.CalledProcessError as e:
         print(f"Error occurred: {e.stderr}")
 
-code_dir = '/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep'
+code_dir = '/Users/h/Documents/projects_local/1076_spacetop/spacetop-prep/spacetop_prep'
 
-log_file_path = '/path/to/output_log_file.log'  # Update this path to your desired log file location
+log_file_path = Path(code_dir) / 'datalad' / 'resolve_missingevents' / 'output_log_file.log'  # Update this path to your desired log file location
 with open(log_file_path, 'w') as log_file:
     sys.stdout = log_file
     sys.stderr = log_file
