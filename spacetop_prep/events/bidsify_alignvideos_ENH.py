@@ -102,29 +102,58 @@ def alignvideo_format_to_bids(sub, ses, run, task_name, beh_inputdir, bids_dir):
     --------
     format2bids('sub-0001', 'ses-01', 'run-01', 'task-alignvideos', '/path/to/beh_data', '/path/to/bids_data')
     """
-    fpath = Path(beh_inputdir) / sub / 'task-alignvideo*' / ses / f'{sub}_{ses}_task-alignvideo*_{run}_beh.csv'
+    # fpath = Path(beh_inputdir) / sub / 'task-alignvideo*' / ses / f'{sub}_{ses}_task-alignvideo*_{run}_beh.csv'
 
-    directory_path = Path(beh_inputdir) / sub / f'task-alignvideo*' / ses
+    # directory_path = Path(beh_inputdir) / sub / f'task-alignvideo*' / ses
 
-    # Use glob to match the desired file pattern within that directory
-    flist = list(directory_path.glob(f'{sub}_{ses}_task-alignvideo*{run}_beh.csv'))
+    # # Use glob to match the desired file pattern within that directory
+    # flist = list(directory_path.glob(f'{sub}_{ses}_task-alignvideo*{run}_beh.csv'))
 
-    if flist:
-        fpath = flist[0]
-    else:
-        fpath = None
+    # if flist:
+    #     fpath = flist[0]
+    # else:
+    #     fpath = None
 
-    if not fpath.is_file():
-        # Attempt to find a temporary or alternative file
+    # if not fpath.is_file():
+    #     # Attempt to find a temporary or alternative file
 
-        temp_flist = list(directory_path.glob(f'{sub}_{ses}_task-alignvideo*{run}*TEMP*.csv'))
-        if temp_flist:
-            fpath = temp_flist[0]
+    #     temp_flist = list(directory_path.glob(f'{sub}_{ses}_task-alignvideo*{run}*TEMP*.csv'))
+    #     if temp_flist:
+    #         fpath = temp_flist[0]
+    #     else:
+    #         fpath = None
+    #         print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
+    #         return
+    base_dir = Path(beh_inputdir) / sub / ses
+
+    # Search for the primary behavior file
+    primary_pattern = f'{sub}_{ses}_task-alignvideo*_{run}_beh.csv'
+    primary_files = list(base_dir.glob(f'task-alignvideo*/{primary_pattern}'))
+
+    # Initialize fpath as None
+    fpath = None
+
+    # Check if the primary file exists
+    if primary_files:
+        fpath = primary_files[0]
+
+    # If the primary file does not exist, search for a temporary file
+    if fpath is None or not fpath.is_file():
+        temp_pattern = f'{sub}_{ses}_task-alignvideo*_{run}_*TEMP*.csv'
+        temp_files = list(base_dir.glob(f'task-alignvideo*/{temp_pattern}'))
+
+        if temp_files:
+            fpath = temp_files[0]
         else:
-            fpath = None
             print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
             return
-        
+
+    # At this point, fpath should not be None
+    if fpath is not None and fpath.is_file():
+        source_beh = pd.read_csv(fpath)
+    else:
+        print(f'File found, but it is not a valid file: {fpath}')
+        return        
     source_beh = pd.read_csv(fpath)
     new_beh = pd.DataFrame(columns=["onset", "duration", "trial_type", 
                             "response_value", "stim_file"])    # new events to store
