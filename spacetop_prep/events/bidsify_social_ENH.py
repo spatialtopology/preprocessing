@@ -512,14 +512,15 @@ pain_warning_logger = setup_logger('pain_warning', 'task-cue_pain_warning.log', 
 
 
 if args.bids_string and task_name in args.bids_string:
-    sub = extract_bids(bids_string, 'sub')
-    ses = extract_bids(bids_string, 'ses')
-    run = extract_bids(bids_string, 'run')
-    # filtered_cognitive_flist = glob.glob(join(beh_inputdir, sub,  '**','task-social', '**', f'*{bids_string}*.csv'), recursive=True)
+    fname = Path(bids_string).name
+    sub = extract_bids(fname, 'sub')
+    ses = extract_bids(fname, 'ses')
+    run = extract_bids(fname, 'run')
+
     filtered_pain_flist = glob.glob(str(Path(beh_inputdir) / sub / '**' / 'task-social' / '**' / f'*{args.bids_string}*.csv'), recursive=True)
 
     if not filtered_pain_flist:
-        temp_fpath = Path(beh_inputdir) / sub / 'task-social' / ses / f'{sub}_{ses}_task-social_{run}*beh_TEMP.csv'
+        temp_fpath = Path(beh_inputdir) / sub / 'task-social' / ses / f'{sub}_{ses}_task-social_{run}*TEMP*.csv'
         if temp_fpath.is_file():
             filtered_pain_flist = [str(temp_fpath)]
         else:
@@ -529,6 +530,9 @@ if args.bids_string and task_name in args.bids_string:
 else:
     pain_list = glob.glob(join(beh_inputdir,'sub-*', '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
     filtered_pain_flist = [file for file in pain_list if "sub-0001" not in file]
+
+
+
 
 for pain_fpath in sorted(filtered_pain_flist):
 
