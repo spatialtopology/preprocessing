@@ -527,7 +527,7 @@ if args.bids_string: # and task_name in args.bids_string:
         else:
             print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
             filtered_pain_flist = []
-            pain_warning_logger.error("An error occurred while processing the trajectory file: %s", str(e))
+            pain_warning_logger.error(f"An error occurred while processing the trajectory file: {sub}, {ses}, {run}")
 else:
     pain_list = glob.glob(join(beh_inputdir,'sub-*', '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
     filtered_pain_flist = [file for file in pain_list if "sub-0001" not in file]
