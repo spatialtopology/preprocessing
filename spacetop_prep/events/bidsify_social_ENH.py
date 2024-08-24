@@ -281,9 +281,9 @@ if args.bids_string: # and task_name in args.bids_string:
     filtered_cognitive_flist = glob.glob(str(Path(beh_inputdir) / sub / '**' / 'task-social' / '**' / f'*{args.bids_string}*.csv'), recursive=True)
 
     if not filtered_cognitive_flist:
-        temp_fpath = glob.glob(Path(beh_inputdir) / sub / 'task-social' / ses / f'{sub}_{ses}_task-social_{run}*TEMP*.csv')
-        if temp_fpath[0].is_file():
-            filtered_cognitive_flist = [str(temp_fpath[0])]
+        temp_fpath = glob.glob(str(Path(beh_inputdir) / sub / 'task-social' / ses / f'{sub}_{ses}_task-social_{run}*TEMP*.csv'))
+        if temp_fpath:
+            filtered_vicarious_flist = [str(temp_fpath[0])]
         else:
             print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
             filtered_cognitive_flist = []
@@ -522,7 +522,7 @@ if args.bids_string: # and task_name in args.bids_string:
 
     if not filtered_pain_flist:
         temp_fpath = glob.glob(Path(beh_inputdir) / sub / 'task-social' / ses / f'{sub}_{ses}_task-social_{run}*TEMP*.csv')
-        if temp_fpath[0].is_file():
+        if temp_fpath:
             filtered_pain_flist = [str(temp_fpath[0])]
         else:
             print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
@@ -789,10 +789,9 @@ if args.bids_string:
     filtered_vicarious_flist = glob.glob(str(Path(beh_inputdir) / sub / '**' / 'task-social' / '**' / f'*{args.bids_string}*.csv'), recursive=True)
 
     if not filtered_vicarious_flist:
-        
-        temp_fpath = glob.glob(Path(beh_inputdir) / sub / 'task-social' / ses / f'{sub}_{ses}_task-social_{run}*TEMP*.csv')
-        if temp_fpath[0].is_file():
-            filtered_vicarious_flist = [str(temp_fpath[0])]
+        temp_fpath = glob.glob(str(Path(beh_inputdir) / sub / 'task-social' / ses / f'{sub}_{ses}_task-social_{run}*TEMP*.csv'))
+        if temp_fpath:
+            filtered_vicarious_flist = [temp_fpath[0]]   # Get the first matching file
         else:
             print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
             filtered_vicarious_flist = []
