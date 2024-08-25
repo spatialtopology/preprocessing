@@ -173,13 +173,13 @@ def alignvideo_format_to_bids(sub, ses, run, task_name, beh_inputdir, bids_dir):
         # Event 2 through Event 8. Seven Emotion Ratings
         new_beh = pd.concat([
             new_beh,
-            add_rating_event(source_beh, t, t_run_start, 'rating_relevance', 'event02_rating01_onset', 'event02_rating01_RT', 'event02_rating01_rating'),
-            add_rating_event(source_beh, t, t_run_start, 'rating_happy', 'event02_rating02_onset', 'event02_rating02_RT', 'event02_rating02_rating'),
-            add_rating_event(source_beh, t, t_run_start, 'rating_sad', 'event02_rating03_onset', 'event02_rating03_RT', 'event02_rating03_rating'),
-            add_rating_event(source_beh, t, t_run_start, 'rating_afraid', 'event02_rating04_onset', 'event02_rating04_RT', 'event02_rating04_rating'),
-            add_rating_event(source_beh, t, t_run_start, 'rating_disgusted', 'event02_rating05_onset', 'event02_rating05_RT', 'event02_rating05_rating'),
-            add_rating_event(source_beh, t, t_run_start, 'rating_warm', 'event02_rating06_onset', 'event02_rating06_RT', 'event02_rating06_rating'),
-            add_rating_event(source_beh, t, t_run_start, 'rating_engaged', 'event02_rating07_onset', 'event02_rating07_RT', 'event02_rating07_rating')
+            add_rating_event(source_beh, t, t_run_start, 'rating_relevance', 'event02_rating01_displayonset', 'event02_rating01_RT', 'event02_rating01_rating'),
+            add_rating_event(source_beh, t, t_run_start, 'rating_happy', 'event02_rating02_displayonset', 'event02_rating02_RT', 'event02_rating02_rating'),
+            add_rating_event(source_beh, t, t_run_start, 'rating_sad', 'event02_rating03_displayonset', 'event02_rating03_RT', 'event02_rating03_rating'),
+            add_rating_event(source_beh, t, t_run_start, 'rating_afraid', 'event02_rating04_displayonset', 'event02_rating04_RT', 'event02_rating04_rating'),
+            add_rating_event(source_beh, t, t_run_start, 'rating_disgusted', 'event02_rating05_displayonset', 'event02_rating05_RT', 'event02_rating05_rating'),
+            add_rating_event(source_beh, t, t_run_start, 'rating_warm', 'event02_rating06_displayonset', 'event02_rating06_RT', 'event02_rating06_rating'),
+            add_rating_event(source_beh, t, t_run_start, 'rating_engaged', 'event02_rating07_displayonset', 'event02_rating07_RT', 'event02_rating07_rating')
         ], ignore_index=True)
 
     # change precisions
