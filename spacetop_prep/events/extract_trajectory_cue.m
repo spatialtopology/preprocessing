@@ -70,6 +70,7 @@ for i = 1:length(subjectsWithTaskSocial)
             fprintf('run: %s\n', run);
         else
             disp('No matches found.');
+            continue
         end
         
         %% load data
@@ -78,13 +79,18 @@ for i = 1:length(subjectsWithTaskSocial)
             strcat(sub, '_', ses, '_', taskname, '_', run, '*_trajectory.mat')));
         csvFile = dir(fullfile(dataDir, sub, taskname, ses,...
             strcat(sub, '_', ses, '_', taskname, '_', run, '*_beh.csv')));
-        matfile_fname = fullfile(matFile.folder, matFile.name);
-        if ~exist(matfile_fname, 'file')
-            % if there is .csv file but no .mat file
-            % no information can be provided or updated
-            disp('sub exists but no trajectory file')
-            continue
+        
+        if isempty(matFile)
+            disp('sub exists but no trajectory file');
+            continue;
         end
+        matfile_fname = fullfile(matFile.folder, matFile.name);
+        % if ~exist(matfile_fname, 'file')
+        %     % if there is .csv file but no .mat file
+        %     % no information can be provided or updated
+        %     disp('sub exists but no trajectory file')
+        %     continue
+        % end
         % load behavioral and outcome_trajectory data __________________________
         % the early participants had a matfile with rating_trajectory, vs some other had rating_Trajectory
         dataStruct = load(matfile_fname);
@@ -220,10 +226,10 @@ for i = 1:length(subjectsWithTaskSocial)
             {'expectrating_end_x', 'expectrating_end_y','expectRT_adj',...
             'expect_motiononset','expect_motiondur',...
             'outcomerating_end_x', 'outcomerating_end_y', 'outcomeRT_adj', 'outcome_motiononset', 'outcome_motiondur'});
-	save_dir = fullfile(dataDir, sub, newtaskname, ses);
-	if ~exist(save_dir, 'dir')
-		mkdir(save_dir);
-	end
+        save_dir = fullfile(dataDir, sub, newtaskname, ses);
+        if ~exist(save_dir, 'dir')
+            mkdir(save_dir);
+        end
         outputFile = fullfile(save_dir,...
             strcat(sub, '_', ses, '_', newtaskname, '_', run, '_', runtype,'_beh-preproc.csv'));
         writetable(newCsvData, outputFile)
