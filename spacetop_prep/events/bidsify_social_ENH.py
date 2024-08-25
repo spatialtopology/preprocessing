@@ -830,52 +830,98 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
     # 3. load trajectory data and calculate ratings ____________________________
     trajectory_glob = glob.glob(join(beh_inputdir, sub_bids, 'task-social', ses_bids, f"{sub_bids}_{ses_bids}_task-social_{run_bids}_runtype-{runtype}_beh-preproc.csv"))
     
-    try:
-        if trajectory_glob:
+    # try:
+    #     if trajectory_glob:
+    #         trajectory_fname = trajectory_glob[0]
+    #         traj_df = pd.read_csv(trajectory_fname)
+    #     else:
+    #         # If trajectory_glob is empty, raise a custom exception
+    #         raise FileNotFoundError("Trajectory preproc is empty.")
+            
+    # except FileNotFoundError as e:
+    #     vicarious_logger.warning(str(e))
+    #     continue 
+    # except Exception as e:
+    #     # This catches any other exceptions that might occur
+    #     vicarious_logger.error("An error occurred while processing the trajectory file: %s", str(e))
+    #     continue
+
+
+    # # 3-1. calculate degree based on x, y coordinate
+    # traj_df['adjusted_expectangle_degrees'] = calc_adjusted_angle_df(
+    #     traj_df, 'expectrating_end_x', 'expectrating_end_y', trajectory_x, trajectory_y)
+    # traj_df['adjusted_outcomeangle_degrees'] = calc_adjusted_angle_df(
+    #     traj_df, 'outcomerating_end_x', 'outcomerating_end_y', trajectory_x, trajectory_y)
+
+
+
+    # # 3-3. check if the calculated new degree matches the one in beh_df
+    # beh_df['event02_expect_fillna'] = beh_df['event02_expect_angle'].round(2)
+    # beh_df['event02_expect_fillna'].fillna(traj_df['adjusted_expectangle_degrees'].round(2), inplace=True)
+    # comparison_series = ((beh_df['event02_expect_angle'].round(2)) == (traj_df['adjusted_expectangle_degrees'].round(2)))
+    # traj_df['comparison_flag'] = ~comparison_series
+    # expect_overall_flag = traj_df['comparison_flag'].any()
+    # if expect_overall_flag:
+    #     discrepancy_indices = traj_df[traj_df['comparison_flag']].index
+    #     for idx in discrepancy_indices:
+    #         vicarious_logger.info(f"\tExpect Rating {idx}: (traj_df): {traj_df.loc[idx]['adjusted_expectangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event02_expect_fillna']}")
+
+    # beh_df['event04_outcome_fillna'] = beh_df['event04_actual_angle'].round(2)
+    # beh_df['event04_outcome_fillna'].fillna(traj_df['adjusted_outcomeangle_degrees'].round(2), inplace=True)
+    # outcome_comparison_mask = ((beh_df['event04_actual_angle'].round(2)) == (traj_df['adjusted_outcomeangle_degrees'].round(2)))
+    # traj_df['outcome_comparisonflag'] = ~outcome_comparison_mask
+    # outcome_overall_flag = traj_df['outcome_comparisonflag'].any()
+
+    # if outcome_overall_flag:
+    #     discrepancy_indices = traj_df[traj_df['outcome_comparisonflag']].index
+    #     for idx in discrepancy_indices:
+    #         vicarious_logger.info(f"\tOutcome Rating {idx} (traj_df): {traj_df.loc[idx]['adjusted_outcomeangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event04_outcome_fillna']}")
+
+    if trajectory_glob:
+        try:
             trajectory_fname = trajectory_glob[0]
             traj_df = pd.read_csv(trajectory_fname)
+
+            # Step 2: Calculate degrees based on x, y coordinates
+            traj_df['adjusted_expectangle_degrees'] = calc_adjusted_angle_df(
+                traj_df, 'expectrating_end_x', 'expectrating_end_y', trajectory_x, trajectory_y)
+            traj_df['adjusted_outcomeangle_degrees'] = calc_adjusted_angle_df(
+                traj_df, 'outcomerating_end_x', 'outcomerating_end_y', trajectory_x, trajectory_y)
+
+            # Step 3: Check if the calculated new degree matches the one in beh_df
+            beh_df['event02_expect_fillna'] = beh_df['event02_expect_angle'].round(2)
+            beh_df['event02_expect_fillna'].fillna(traj_df['adjusted_expectangle_degrees'].round(2), inplace=True)
+            comparison_series = ((beh_df['event02_expect_angle'].round(2)) == (traj_df['adjusted_expectangle_degrees'].round(2)))
+            traj_df['comparison_flag'] = ~comparison_series
+            expect_overall_flag = traj_df['comparison_flag'].any()
+
+            if expect_overall_flag:
+                discrepancy_indices = traj_df[traj_df['comparison_flag']].index
+                for idx in discrepancy_indices:
+                    vicarious_logger.info(f"\tExpect Rating {idx}: (traj_df): {traj_df.loc[idx]['adjusted_expectangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event02_expect_fillna']}")
+
+            beh_df['event04_outcome_fillna'] = beh_df['event04_actual_angle'].round(2)
+            beh_df['event04_outcome_fillna'].fillna(traj_df['adjusted_outcomeangle_degrees'].round(2), inplace=True)
+            outcome_comparison_mask = ((beh_df['event04_actual_angle'].round(2)) == (traj_df['adjusted_outcomeangle_degrees'].round(2)))
+            traj_df['outcome_comparisonflag'] = ~outcome_comparison_mask
+            outcome_overall_flag = traj_df['outcome_comparisonflag'].any()
+
+            if outcome_overall_flag:
+                discrepancy_indices = traj_df[traj_df['outcome_comparisonflag']].index
+                for idx in discrepancy_indices:
+                    vicarious_logger.info(f"\tOutcome Rating {idx} (traj_df): {traj_df.loc[idx]['adjusted_outcomeangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event04_outcome_fillna']}")
+                    
+        except Exception as e:
+            vicarious_logger.error("An error occurred while processing the trajectory file: %s", str(e))
+    else:
+        if args.bids_string:
+            # Step 2: Handle case where trajectory data is missing but bids_string is provided
+            beh_df['event02_expect_fillna'] = 'n/a'
+            beh_df['event04_outcome_fillna'] = 'n/a'
+            vicarious_logger.info(f"Skipping trajectory processing for {args.bids_string} as no trajectory file exists.")
         else:
-            # If trajectory_glob is empty, raise a custom exception
-            raise FileNotFoundError("Trajectory preproc is empty.")
-            
-    except FileNotFoundError as e:
-        vicarious_logger.warning(str(e))
-        continue 
-    except Exception as e:
-        # This catches any other exceptions that might occur
-        vicarious_logger.error("An error occurred while processing the trajectory file: %s", str(e))
-        continue
-
-
-    # 3-1. calculate degree based on x, y coordinate
-    traj_df['adjusted_expectangle_degrees'] = calc_adjusted_angle_df(
-        traj_df, 'expectrating_end_x', 'expectrating_end_y', trajectory_x, trajectory_y)
-    traj_df['adjusted_outcomeangle_degrees'] = calc_adjusted_angle_df(
-        traj_df, 'outcomerating_end_x', 'outcomerating_end_y', trajectory_x, trajectory_y)
-
-
-
-    # 3-3. check if the calculated new degree matches the one in beh_df
-    beh_df['event02_expect_fillna'] = beh_df['event02_expect_angle'].round(2)
-    beh_df['event02_expect_fillna'].fillna(traj_df['adjusted_expectangle_degrees'].round(2), inplace=True)
-    comparison_series = ((beh_df['event02_expect_angle'].round(2)) == (traj_df['adjusted_expectangle_degrees'].round(2)))
-    traj_df['comparison_flag'] = ~comparison_series
-    expect_overall_flag = traj_df['comparison_flag'].any()
-    if expect_overall_flag:
-        discrepancy_indices = traj_df[traj_df['comparison_flag']].index
-        for idx in discrepancy_indices:
-            vicarious_logger.info(f"\tExpect Rating {idx}: (traj_df): {traj_df.loc[idx]['adjusted_expectangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event02_expect_fillna']}")
-
-    beh_df['event04_outcome_fillna'] = beh_df['event04_actual_angle'].round(2)
-    beh_df['event04_outcome_fillna'].fillna(traj_df['adjusted_outcomeangle_degrees'].round(2), inplace=True)
-    outcome_comparison_mask = ((beh_df['event04_actual_angle'].round(2)) == (traj_df['adjusted_outcomeangle_degrees'].round(2)))
-    traj_df['outcome_comparisonflag'] = ~outcome_comparison_mask
-    outcome_overall_flag = traj_df['outcome_comparisonflag'].any()
-
-    if outcome_overall_flag:
-        discrepancy_indices = traj_df[traj_df['outcome_comparisonflag']].index
-        for idx in discrepancy_indices:
-            vicarious_logger.info(f"\tOutcome Rating {idx} (traj_df): {traj_df.loc[idx]['adjusted_outcomeangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event04_outcome_fillna']}")
+            # Step 3: Flag the issue if neither trajectory data exists nor bids_string is provided
+            vicarious_logger.warning(f"No trajectory data found for {sub_bids}, {ses_bids}, {run_bids}. No BIDS string provided.")
 
 
     # grab the intersection raise warning if dont match
