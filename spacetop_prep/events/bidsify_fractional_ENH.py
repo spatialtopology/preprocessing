@@ -159,6 +159,8 @@ for saxe_fpath in sorted(filtered_saxe_flist):
     # concatenate above dataframes and save in new folder
     events = pd.concat([subset_belief, subset_photo, subset_beliefrating, subset_photorating], ignore_index=True)
     events_sorted = events.sort_values(by='onset')
+    precision_dic = {'onset': 3, 'duration': 3}
+    events_sorted = events_sorted.round(precision_dic)
     events = events.fillna("n/a")
     Path(beh_savedir).mkdir( parents=True, exist_ok=True )
     events.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_events.tsv"), sep='\t', index=False)
@@ -298,6 +300,8 @@ for posner_fpath in sorted(filtered_posner_flist):
     # concatenate above dataframes and save in new folder
     posner_events = pd.concat([subset_valid, subset_invalid, subset_target], ignore_index=True)
     posner_events_sorted = posner_events.sort_values(by='onset')
+    precision_dic = {'onset': 3, 'duration': 3}
+    posner_events_sorted = posner_events_sorted.round(precision_dic)
     posner_events_sorted = posner_events_sorted.fillna("n/a")
     Path(beh_savedir).mkdir( parents=True, exist_ok=True )
     # extract bids info and save as new file
@@ -566,6 +570,8 @@ for memory_dist_fname in memory_dist_flist:
     temp_dist['reaction_time'] = "n/a"
     membids_df = pd.concat([membids_df, temp_dist], ignore_index=True)
 
+precision_dic = {'onset': 3, 'duration': 3}
+membids_df = membids_df.round(precision_dic)
 membids_df = membids_df.fillna("n/a")
 Path(beh_savedir).mkdir( parents=True, exist_ok=True )
 save_fname = f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_events.tsv"
@@ -737,7 +743,8 @@ for spunt_fpath in filtered_spunt_flist:
     block_unique = blockquestion.drop_duplicates()
 
     events = pd.concat([events, block_unique], ignore_index=True)
-
+    precision_dic = {'onset': 3, 'duration': 3}
+    events = events.round(precision_dic)
     events = events.fillna("n/a")
     Path(beh_savedir).mkdir( parents=True, exist_ok=True )
     save_fname = f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_events.tsv"
