@@ -67,7 +67,7 @@ def list_nifti_and_event_files(designated_dir):
     for file in files:
         if 'task-social' in file and file.endswith('.nii.gz'):
             nifti_files.append(file)
-        elif 'task-cue' in file and file.endswith('_events.tsv'):
+        elif 'task-social' in file and file.endswith('_events.tsv'):
             event_files.append(file)
 
     return sorted(nifti_files), sorted(event_files)
@@ -87,7 +87,7 @@ def remove_orphan_nifti_files(nifti_files, event_files):
         nifti_basename = os.path.basename(nifti_file)
         task, run = extract_run_and_task(nifti_basename)
         if task and run:
-            expected_event_filename = f'sub-*_ses-*_task-cue*_run-{run}_desc*_events.tsv'
+            expected_event_filename = f'sub-*_ses-*_task-social*_run-{run}_desc*_events.tsv'
             if not any(re.match(expected_event_filename.replace('*', '.*'), event_filename) for event_filename in event_file_basenames):
                 orphan_files.append(nifti_file)
     
@@ -176,9 +176,9 @@ def extract_bids(filename: str, key: str) -> str:
 
 #     scans_df = pd.read_csv(scan_fname, sep='\t')
 
-#     # NOTE: Step 2: Define the directory containing the task-cue event files
+#     # NOTE: Step 2: Define the directory containing the task-social event files
 #     cue_events_dir = './' + os.path.dirname( scan_fname) + '/func'
-#     cue_event_files = sorted([f for f in os.listdir(cue_events_dir) if 'task-cue' in f and f.endswith('_events.tsv')])
+#     cue_event_files = sorted([f for f in os.listdir(cue_events_dir) if 'task-social' in f and f.endswith('_events.tsv')])
 
 #     # NOTE: Step 3: Function to extract cue metadata and run information from filenames
 #     # Create a dictionary to map run to cue metadata
@@ -217,7 +217,7 @@ def extract_bids(filename: str, key: str) -> str:
 #     for event_fname in cue_event_files:
 #         event_fpath = os.path.join(cue_events_dir, event_fname)
 #         run_command(f"git rm {event_fpath}")
-#         print(f"remove all the task-cue events files {event_fpath}")
+#         print(f"remove all the task-social events files {event_fpath}")
 #     run_command(f"git commit -m 'DEP: delete non-bids compliant events file'")
 #     print("run_command(git commit -m DEP: delete non-bids compliant events file")
 
@@ -269,7 +269,7 @@ labels = [
 # ------------------------------------------------------------------------------
 
 task_name = 'cognitive'
-cognitive_logger = setup_logger('cognitive', 'task-cue_cognitive.log')
+cognitive_logger = setup_logger('cognitive', 'task-social_cognitive.log')
 
 if args.bids_string: # and task_name in args.bids_string:
     fname = Path(bids_string).name
@@ -325,7 +325,7 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
     trigger = beh_df['param_trigger_onset'][0]
 
     # 3. load trajectory data and calculate ratings ____________________________
-    trajectory_glob = glob.glob(join(beh_inputdir, sub_bids, 'task-cue', ses_bids, f"{sub_bids}_{ses_bids}_task-cue_{run_bids}_runtype-{runtype}_beh-preproc.csv"))
+    trajectory_glob = glob.glob(join(beh_inputdir, sub_bids, 'task-social', ses_bids, f"{sub_bids}_{ses_bids}_task-social_{run_bids}_runtype-{runtype}_beh-preproc.csv"))
     
     try:
         if trajectory_glob:
@@ -508,8 +508,8 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
 # ------------------------------------------------------------------------------
 task_name = 'pain'
 
-pain_info_logger = setup_logger('pain_info', 'task-cue_pain_info.log', level=logging.INFO)
-pain_warning_logger = setup_logger('pain_warning', 'task-cue_pain_warning.log', level=logging.WARNING)
+pain_info_logger = setup_logger('pain_info', 'task-social_pain_info.log', level=logging.INFO)
+pain_warning_logger = setup_logger('pain_warning', 'task-social_pain_warning.log', level=logging.WARNING)
 
 
 if args.bids_string: # and task_name in args.bids_string:
@@ -566,8 +566,8 @@ for pain_fpath in sorted(filtered_pain_flist):
     trigger = beh_df['param_trigger_onset'][0]
 
     # 3. load trajectory data and calculate ratings ____________________________
-    trajectory_glob = glob.glob(join(beh_inputdir, sub_bids, 'task-cue', ses_bids, 
-                                     f"{sub_bids}_{ses_bids}_task-cue_{run_bids}_runtype-{runtype}_beh-preproc.csv"))
+    trajectory_glob = glob.glob(join(beh_inputdir, sub_bids, 'task-social', ses_bids, 
+                                     f"{sub_bids}_{ses_bids}_task-social_{run_bids}_runtype-{runtype}_beh-preproc.csv"))
     try:
         if trajectory_glob:
             trajectory_fname = trajectory_glob[0]
@@ -681,7 +681,7 @@ for pain_fpath in sorted(filtered_pain_flist):
     ttldir = '/Volumes/spacetop_projects_cue/data/fmri/fmri01_onset/onset02_SPM'
 
     ttl_glob = glob.glob(join(ttldir, sub_bids, ses_bids, 
-                               f"{sub_bids}_{ses_bids}_task-cue_{run_bids}_runtype-{runtype}_events_ttl.tsv"), recursive=True)
+                               f"{sub_bids}_{ses_bids}_task-social_{run_bids}_runtype-{runtype}_events_ttl.tsv"), recursive=True)
     stimulus_times = {
     'low_stim': {'rampup': 3.502, 'plateau': 5.000, 'rampdown': 3.402},
     'med_stim': {'rampup': 3.758, 'plateau': 5.000, 'rampdown': 3.606},
@@ -778,7 +778,7 @@ for pain_fpath in sorted(filtered_pain_flist):
 #                           3. Vicarious BIDSify
 # ------------------------------------------------------------------------------
 task_name = 'vicarious'
-vicarious_logger = setup_logger('vicarious', 'task-cue_vicarious.log')
+vicarious_logger = setup_logger('vicarious', 'task-social_vicarious.log')
 
 if args.bids_string:
     fname = Path(args.bids_string).name
@@ -828,7 +828,7 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
     trigger = beh_df['param_trigger_onset'][0]
 
     # 3. load trajectory data and calculate ratings ____________________________
-    trajectory_glob = glob.glob(join(beh_inputdir, sub_bids, 'task-cue', ses_bids, f"{sub_bids}_{ses_bids}_task-cue_{run_bids}_runtype-{runtype}_beh-preproc.csv"))
+    trajectory_glob = glob.glob(join(beh_inputdir, sub_bids, 'task-social', ses_bids, f"{sub_bids}_{ses_bids}_task-social_{run_bids}_runtype-{runtype}_beh-preproc.csv"))
     
     try:
         if trajectory_glob:
