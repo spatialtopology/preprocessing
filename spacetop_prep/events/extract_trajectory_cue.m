@@ -37,7 +37,7 @@ for k = 1:length(subjectDirs)
 end
 
 disp(subjectsWithTaskSocial);
-for i = 1:length(subjectsWithTaskSocial)
+for i = 2:length(subjectsWithTaskSocial)
     % for i = 1:endSub
     sub = subjectsWithTaskSocial{i};
     disp(sub);
