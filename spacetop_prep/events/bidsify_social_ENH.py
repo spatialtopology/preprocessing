@@ -72,7 +72,26 @@ def list_nifti_and_event_files(designated_dir):
 
     return sorted(nifti_files), sorted(event_files)
 
+metadata_df = pd.read_csv('spacetop_task-social_run-metadata.csv')
 
+def get_task_type(bids_string, metadata_df):
+    fname = Path(bids_string).name
+    sub = extract_bids(fname, 'sub')
+    ses = extract_bids(fname, 'ses')
+    run_column = extract_bids(fname, 'run')
+    # Create the column name for the run (e.g., 'run-01')
+    # run_column = f'run-{run:02d}'
+    
+    # Filter the DataFrame to match the sub and ses
+    filtered_df = metadata_df[(metadata_df['sub'] == sub) & (metadata_df['ses'] == ses)]
+    
+    # If the filtered DataFrame is not empty, return the task type from the corresponding run column
+    if not filtered_df.empty:
+        return filtered_df[run_column].values[0]
+    else:
+        return None
+    
+    
 def extract_run_and_task(filename):
     match = re.search(r'task-([a-zA-Z0-9]+)_.*_run-([0-9]+)', filename)
     if match:
@@ -277,7 +296,7 @@ labels = [
 task_name = 'cognitive'
 cognitive_logger = setup_logger('cognitive', 'task-social_cognitive.log')
 
-if args.bids_string: # and task_name in args.bids_string:
+if args.bids_string and task_name == get_task_type(args.bids_string, metadata_df): # and task_name in args.bids_string:
     fname = Path(bids_string).name
     sub = extract_bids(fname, 'sub')
     ses = extract_bids(fname, 'ses')
@@ -323,7 +342,8 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
     sub_bids = re.search(r'sub-\d+', cognitive_fname).group(0)
     ses_bids = re.search(r'ses-\d+', cognitive_fname).group(0)
     run_bids = re.search(r'run-\d+', cognitive_fname).group(0)
-    runtype = re.search(r'run-\d+-(\w+?)_', cognitive_fname).group(1)
+    runtype = get_task_type(sub, ses, run, metadata_df)
+    # runtype = re.search(r'run-\d+-(\w+?)_', cognitive_fname).group(1)
 
     cognitive_logger.info(f"_______ {sub_bids} {ses_bids} {run_bids} {runtype} _______")
     beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
@@ -567,7 +587,7 @@ pain_info_logger = setup_logger('pain_info', 'task-social_pain_info.log', level=
 pain_warning_logger = setup_logger('pain_warning', 'task-social_pain_warning.log', level=logging.WARNING)
 
 
-if args.bids_string: # and task_name in args.bids_string:
+if args.bids_string and task_name == get_task_type(args.bids_string, metadata_df): # and task_name in args.bids_string:
     fname = Path(bids_string).name
     sub = extract_bids(fname, 'sub')
     ses = extract_bids(fname, 'ses')
@@ -895,7 +915,7 @@ for pain_fpath in sorted(filtered_pain_flist):
 task_name = 'vicarious'
 vicarious_logger = setup_logger('vicarious', 'task-social_vicarious.log')
 
-if args.bids_string:
+if args.bids_string and task_name == get_task_type(args.bids_string, metadata_df):
     fname = Path(args.bids_string).name
     sub = extract_bids(fname, 'sub')
     ses = extract_bids(fname, 'ses')
