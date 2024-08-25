@@ -98,6 +98,17 @@ def calculate_ttl_values(stimulus_times, ttl_row, beh_df):
     return ttl_row
 
 def categorize_rating(value):
+    # gLMS scale labels for expectation and outcome ratings
+    bins = [0, 1, 3, 10, 29, 64, 98, 180]
+    labels = [
+        "No sensation",
+        "Barely detectable",
+        "Weak",
+        "Moderate",
+        "Strong",
+        "Very Strong",
+        "Strongest sensation of any kind"
+    ]
     if value == "n/a" or pd.isna(value):
         return np.nan
     else:
@@ -116,7 +127,7 @@ def extract_bids(filename: str, key: str) -> str:
     return bids_info_rmext[0]
 
 def get_task_type(bids_string, metadata_df):
-    fname = Path(bids_string).name
+    fname = Path(str(bids_string)).name
     sub = extract_bids(fname, 'sub')
     ses = extract_bids(fname, 'ses')
     run_column = extract_bids(fname, 'run')
@@ -381,9 +392,6 @@ def process_behavioral_data(cue, expect, stim, outcome, beh_df, traj_df, trigger
 
 
 def main():
-
-    trajectory_x = 960
-    trajectory_y = 707
 
     # gLMS scale labels for expectation and outcome ratings
     bins = [0, 1, 3, 10, 29, 64, 98, 180]
