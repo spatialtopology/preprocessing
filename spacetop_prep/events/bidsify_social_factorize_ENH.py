@@ -120,7 +120,7 @@ def get_task_type(bids_string, metadata_df):
     sub = extract_bids(fname, 'sub')
     ses = extract_bids(fname, 'ses')
     run_column = extract_bids(fname, 'run')
-    filtered_df = metadata_df[(metadata_df['sub'] == sub) & (filtered_df['ses'] == ses)]
+    filtered_df = metadata_df[(metadata_df['sub'] == sub) & (metadata_df['ses'] == ses)]
     if not filtered_df.empty:
         return filtered_df[run_column].values[0]
     else:
