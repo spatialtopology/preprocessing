@@ -343,7 +343,9 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
     sub_bids = re.search(r'sub-\d+', cognitive_fname).group(0)
     ses_bids = re.search(r'ses-\d+', cognitive_fname).group(0)
     run_bids = re.search(r'run-\d+', cognitive_fname).group(0)
-    runtype = get_task_type(sub, ses, run, metadata_df)
+    bids_subsesrun = f"{sub_bids}_{ses_bids}_{run_bids}"
+    runtype = get_task_type(bids_subsesrun, metadata_df)
+    # runtype = get_task_type(args.bids_string, metadata_df)
     # runtype = re.search(r'run-\d+-(\w+?)_', cognitive_fname).group(1)
 
     cognitive_logger.info(f"_______ {sub_bids} {ses_bids} {run_bids} {runtype} _______")
@@ -634,7 +636,9 @@ for pain_fpath in sorted(filtered_pain_flist):
     sub_bids = re.search(r'sub-\d+', pain_fname).group(0)
     ses_bids = re.search(r'ses-\d+', pain_fname).group(0)
     run_bids = re.search(r'run-\d+', pain_fname).group(0)
-    runtype = re.search(r'run-\d+-(\w+?)_', pain_fname).group(1)
+    bids_subsesrun = f"{sub_bids}_{ses_bids}_{run_bids}"
+    runtype = get_task_type(bids_subsesrun, metadata_df)
+    # runtype = re.search(r'run-\d+-(\w+?)_', pain_fname).group(1)
 
     pain_info_logger.info(f"_______ {sub_bids} {ses_bids} {run_bids} {runtype} _______")
     beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
@@ -956,7 +960,9 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
     sub_bids = re.search(r'sub-\d+', vicarious_fname).group(0)
     ses_bids = re.search(r'ses-\d+', vicarious_fname).group(0)
     run_bids = re.search(r'run-\d+', vicarious_fname).group(0)
-    runtype = re.search(r'run-\d+-(\w+?)_', vicarious_fname).group(1)
+    bids_subsesrun = f"{sub_bids}_{ses_bids}_{run_bids}"
+    runtype = get_task_type(bids_subsesrun, metadata_df)
+    # runtype = re.search(r'run-\d+-(\w+?)_', vicarious_fname).group(1)
 
     vicarious_logger.info(f"_______ {sub_bids} {ses_bids} {run_bids} {runtype} _______")
     beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
