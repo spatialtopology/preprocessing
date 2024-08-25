@@ -80,13 +80,7 @@ def get_task_type(bids_string, metadata_df):
     sub = extract_bids(fname, 'sub')
     ses = extract_bids(fname, 'ses')
     run_column = extract_bids(fname, 'run')
-    # Create the column name for the run (e.g., 'run-01')
-    # run_column = f'run-{run:02d}'
-    
-    # Filter the DataFrame to match the sub and ses
     filtered_df = metadata_df[(metadata_df['sub'] == sub) & (metadata_df['ses'] == ses)]
-    
-    # If the filtered DataFrame is not empty, return the task type from the corresponding run column
     if not filtered_df.empty:
         return filtered_df[run_column].values[0]
     else:
@@ -297,23 +291,24 @@ labels = [
 task_name = 'cognitive'
 cognitive_logger = setup_logger('cognitive', 'task-social_cognitive.log')
 
-if args.bids_string and task_name == get_task_type(args.bids_string, metadata_df): # and task_name in args.bids_string:
-    fname = Path(bids_string).name
-    sub = extract_bids(fname, 'sub')
-    ses = extract_bids(fname, 'ses')
-    run = extract_bids(fname, 'run')
+if args.bids_string is not None:
+    if task_name == get_task_type(args.bids_string, metadata_df): # and task_name in args.bids_string:
+        fname = Path(bids_string).name
+        sub = extract_bids(fname, 'sub')
+        ses = extract_bids(fname, 'ses')
+        run = extract_bids(fname, 'run')
 
-    # filtered_cognitive_flist = glob.glob(join(beh_inputdir, sub,  '**','task-social', '**', f'*{bids_string}*.csv'), recursive=True)
-    filtered_cognitive_flist = glob.glob(str(Path(beh_inputdir) / sub / '**' / 'task-social' / '**' / f'*{args.bids_string}*.csv'), recursive=True)
+        # filtered_cognitive_flist = glob.glob(join(beh_inputdir, sub,  '**','task-social', '**', f'*{bids_string}*.csv'), recursive=True)
+        filtered_cognitive_flist = glob.glob(str(Path(beh_inputdir) / sub / '**' / 'task-social' / '**' / f'*{args.bids_string}*.csv'), recursive=True)
 
-    if not filtered_cognitive_flist:
-        temp_fpath = glob.glob(str(Path(beh_inputdir) / sub / 'task-social' / ses / f'{sub}_{ses}_task-social_{run}*TEMP*.csv'))
-        if temp_fpath:
-            filtered_vicarious_flist = [str(temp_fpath[0])]
-        else:
-            print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
-            filtered_cognitive_flist = []
-            cognitive_logger.error(f"An error occurred while processing the trajectory file: {sub}, {ses}, {run}")
+        if not filtered_cognitive_flist:
+            temp_fpath = glob.glob(str(Path(beh_inputdir) / sub / 'task-social' / ses / f'{sub}_{ses}_task-social_{run}*TEMP*.csv'))
+            if temp_fpath:
+                filtered_vicarious_flist = [str(temp_fpath[0])]
+            else:
+                print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
+                filtered_cognitive_flist = []
+                cognitive_logger.error(f"An error occurred while processing the trajectory file: {sub}, {ses}, {run}")
 else:
     cognitive_flist = glob.glob(join(beh_inputdir,'sub-*', '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
     filtered_cognitive_flist = [file for file in cognitive_flist if "sub-0001" not in file]
@@ -582,22 +577,23 @@ pain_info_logger = setup_logger('pain_info', 'task-social_pain_info.log', level=
 pain_warning_logger = setup_logger('pain_warning', 'task-social_pain_warning.log', level=logging.WARNING)
 
 
-if args.bids_string and task_name == get_task_type(args.bids_string, metadata_df): # and task_name in args.bids_string:
-    fname = Path(bids_string).name
-    sub = extract_bids(fname, 'sub')
-    ses = extract_bids(fname, 'ses')
-    run = extract_bids(fname, 'run')
+if args.bids_string is not None:
+    if task_name == get_task_type(args.bids_string, metadata_df): # and task_name in args.bids_string:
+        fname = Path(bids_string).name
+        sub = extract_bids(fname, 'sub')
+        ses = extract_bids(fname, 'ses')
+        run = extract_bids(fname, 'run')
 
-    filtered_pain_flist = glob.glob(str(Path(beh_inputdir) / sub / '**' / 'task-social' / '**' / f'*{args.bids_string}*.csv'), recursive=True)
+        filtered_pain_flist = glob.glob(str(Path(beh_inputdir) / sub / '**' / 'task-social' / '**' / f'*{args.bids_string}*.csv'), recursive=True)
 
-    if not filtered_pain_flist:
-        temp_fpath = glob.glob(str(Path(beh_inputdir) / sub / 'task-social' / ses / f'{sub}_{ses}_task-social_{run}*TEMP*.csv'))
-        if temp_fpath:
-            filtered_pain_flist = [str(temp_fpath[0])]
-        else:
-            print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
-            filtered_pain_flist = []
-            pain_warning_logger.error(f"An error occurred while processing the trajectory file: {sub}, {ses}, {run}")
+        if not filtered_pain_flist:
+            temp_fpath = glob.glob(str(Path(beh_inputdir) / sub / 'task-social' / ses / f'{sub}_{ses}_task-social_{run}*TEMP*.csv'))
+            if temp_fpath:
+                filtered_pain_flist = [str(temp_fpath[0])]
+            else:
+                print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
+                filtered_pain_flist = []
+                pain_warning_logger.error(f"An error occurred while processing the trajectory file: {sub}, {ses}, {run}")
 else:
     pain_list = glob.glob(join(beh_inputdir,'sub-*', '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
     filtered_pain_flist = [file for file in pain_list if "sub-0001" not in file]
@@ -899,22 +895,23 @@ for pain_fpath in sorted(filtered_pain_flist):
 task_name = 'vicarious'
 vicarious_logger = setup_logger('vicarious', 'task-social_vicarious.log')
 
-if args.bids_string and task_name == get_task_type(args.bids_string, metadata_df):
-    fname = Path(args.bids_string).name
-    sub = extract_bids(fname, 'sub')
-    ses = extract_bids(fname, 'ses')
-    run = extract_bids(fname, 'run')
-    # filtered_cognitive_flist = glob.glob(join(beh_inputdir, sub,  '**','task-social', '**', f'*{bids_string}*.csv'), recursive=True)
-    filtered_vicarious_flist = glob.glob(str(Path(beh_inputdir) / sub / '**' / 'task-social' / '**' / f'*{args.bids_string}*.csv'), recursive=True)
+if args.bids_string is not None:
+    if task_name == get_task_type(args.bids_string, metadata_df):
+        fname = Path(args.bids_string).name
+        sub = extract_bids(fname, 'sub')
+        ses = extract_bids(fname, 'ses')
+        run = extract_bids(fname, 'run')
+        # filtered_cognitive_flist = glob.glob(join(beh_inputdir, sub,  '**','task-social', '**', f'*{bids_string}*.csv'), recursive=True)
+        filtered_vicarious_flist = glob.glob(str(Path(beh_inputdir) / sub / '**' / 'task-social' / '**' / f'*{args.bids_string}*.csv'), recursive=True)
 
-    if not filtered_vicarious_flist:
-        temp_fpath = glob.glob(str(Path(beh_inputdir) / sub / 'task-social' / ses / f'{sub}_{ses}_task-social_{run}*TEMP*.csv'))
-        if temp_fpath:
-            filtered_vicarious_flist = [temp_fpath[0]]   # Get the first matching file
-        else:
-            print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
-            filtered_vicarious_flist = []
-            vicarious_logger.error(f"No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.")
+        if not filtered_vicarious_flist:
+            temp_fpath = glob.glob(str(Path(beh_inputdir) / sub / 'task-social' / ses / f'{sub}_{ses}_task-social_{run}*TEMP*.csv'))
+            if temp_fpath:
+                filtered_vicarious_flist = [temp_fpath[0]]   # Get the first matching file
+            else:
+                print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
+                filtered_vicarious_flist = []
+                vicarious_logger.error(f"No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.")
 else:
     vicarious_flist = glob.glob(join(beh_inputdir,'sub-*', '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
     filtered_vicarious_flist = [file for file in vicarious_flist if "sub-0001" not in file]
