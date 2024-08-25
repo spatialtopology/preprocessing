@@ -14,7 +14,7 @@
 clear
 
 taskname = 'task-social';
-newtaskname = 'task-cue';
+newtaskname = 'task-social';
 % >>>
 % fill in the top level of your d_beh folder
 dataDir = '/Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh';
