@@ -208,33 +208,34 @@ for i = 2:length(subjectsWithTaskSocial)
                         expectrating_end_y(j) = expect_traj(l, 2);
                     end
                 end
-            else
-                % Handle cases where the 'event04_actual_RT' column does not exist
-                warning('Variable "event04_actual_RT" not found in CSV file for trial %d. Skipping this trial.', j);
-                outcomerating_end_x(j) = NaN;
-                outcomerating_end_y(j) = NaN;
-                outcomeRT_adj(j) = NaN;
-                outcome_motiononset(j) = NaN;
-                outcome_motiondur(j) = NaN;
-            end
-            % find motion onset time and duration
-            for l = 2:size(expect_traj, 1)
-                if (expect_traj(l,1)~=expect_traj(l-1,1)) || (expect_traj(l,2)~=expect_traj(l-1,2))
-                    break
+                
+                % find motion onset time and duration
+                for l = 2:size(expect_traj, 1)
+                    if (expect_traj(l,1)~=expect_traj(l-1,1)) || (expect_traj(l,2)~=expect_traj(l-1,2))
+                        break
+                    end
                 end
-            end
-            if expect_traj(l,1) == expect_traj(1,1) && expect_traj(l,2) == expect_traj(1,2)
-                % mouse didn't move at all
+                if expect_traj(l,1) == expect_traj(1,1) && expect_traj(l,2) == expect_traj(1,2)
+                    % mouse didn't move at all
+                    expect_motiononset(j) = NaN;
+                else
+                    % l is when movement started
+                    expect_motiononset(j) = l/60;
+                end
+                if isnan(csvData.event02_expect_RT(j))
+                    % no response
+                    expect_motiondur(j) = expectRT_adj(j) - expect_motiondur(j);
+                else
+                    expect_motiondur(j) = csvData.event02_expect_RT(j) - expect_motiononset(j);
+                end
+                
+            else
+                warning('Variable "event02_expect_RT" not found in CSV file for trial %d. Skipping this trial.', j);
+                expectrating_end_x(j) = NaN;
+                expectrating_end_y(j) = NaN;
+                expectRT_adj(j) = NaN;
                 expect_motiononset(j) = NaN;
-            else
-                % l is when movement started
-                expect_motiononset(j) = l/60;
-            end
-            if isnan(csvData.event02_expect_RT(j))
-                % no response
-                expect_motiondur(j) = expectRT_adj(j) - expect_motiondur(j);
-            else
-                expect_motiondur(j) = csvData.event02_expect_RT(j) - expect_motiononset(j);
+                expect_motiondur(j) = NaN;
             end
         end
         
