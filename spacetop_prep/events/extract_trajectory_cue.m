@@ -179,7 +179,7 @@ for i = 2:length(subjectsWithTaskSocial)
         for j = 1:trialNum
             expect_traj = rating_Trajectory{j,1};
             
-            if ismember('event02_actual_RT', csvData.Properties.VariableNames)
+            if ismember('event02_expect_RT', csvData.Properties.VariableNames)
                 if ~isnan(csvData.event02_expect_RT(j))
                     % subject made a response in this trial
                     expectrating_end_x(j) = expect_traj(end, 1);
