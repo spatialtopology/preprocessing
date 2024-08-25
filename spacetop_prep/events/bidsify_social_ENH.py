@@ -146,6 +146,12 @@ def calculate_ttl_values(stimulus_times, ttl_row, beh_df):
         ttl_row['TTL4'] = ttl_row['TTL3'] + times['rampdown']
     return ttl_row
 
+def categorize_rating(value):
+    if value == "n/a" or pd.isna(value):
+        return np.nan
+    else:
+        return pd.cut([value], bins=bins, labels=labels, right=True)[0]
+
 
 def is_equivalent(val1, val2, tolerance=1):
     return abs(val1 - val2) <= tolerance
@@ -461,11 +467,13 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
     expect['trial_type'] = 'expectrating'
     expect['trial_index'] =  beh_df.index +1
     expect['rating_value'] =  beh_df['event02_expect_angle'].round(2)
-    expect['rating_glmslabel'] = pd.cut(expect['rating_value'], 
-                                        bins=bins, labels=labels, right=True)
+    expect['rating_glmslabel'] = expect['rating_value'].apply(categorize_rating)
+    # expect['rating_glmslabel'] = pd.cut(expect['rating_value'], 
+    #                                     bins=bins, labels=labels, right=True)
     expect['rating_value_fillna'] = (beh_df['event02_expect_fillna']).round(2)
-    expect['rating_glmslabel_fillna'] = pd.cut(expect['rating_value_fillna'], 
-                                               bins=bins, labels=labels, right=True)
+    # expect['rating_glmslabel_fillna'] = pd.cut(expect['rating_value_fillna'], 
+                                            #    bins=bins, labels=labels, right=True)
+    expect['rating_glmslabel_fillna'] = expect['rating_value_fillna'].apply(categorize_rating)
     expect['rating_mouseonset'] = (traj_df['expect_motiononset']).round(2)
     expect['rating_mousedur'] = (traj_df['expect_motiondur']).round(2)
     expect['cue'] = beh_df['event01_cue_type'] # if same as param_cue_type
@@ -516,11 +524,13 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
     outcome['trial_type'] = 'outcomerating'
     outcome['trial_index'] =  beh_df.index +1
     outcome['rating_value'] =  (beh_df['event04_actual_angle']).round(2)
-    outcome['rating_glmslabel'] = pd.cut(outcome['rating_value'], 
-                                         bins=bins, labels=labels, right=True)
+    # outcome['rating_glmslabel'] = pd.cut(outcome['rating_value'], 
+    #                                      bins=bins, labels=labels, right=True)
+    outcome['rating_glmslabel'] = outcome['rating_value'].apply(categorize_rating)
     outcome['rating_value_fillna'] = beh_df['event04_outcome_fillna']
-    outcome['rating_glmslabel_fillna'] = pd.cut(outcome['rating_value_fillna'], 
-                                                bins=bins, labels=labels, right=True)
+    outcome['rating_glmslabel'] = outcome['rating_value'].apply(categorize_rating)
+    # outcome['rating_glmslabel_fillna'] = pd.cut(outcome['rating_value_fillna'], 
+    #                                             bins=bins, labels=labels, right=True)
     outcome['rating_mouseonset'] = (traj_df['outcome_motiononset']).round(2)
     outcome['rating_mousedur'] = (traj_df['outcome_motiondur']).round(2)
     outcome['cue'] = beh_df['event01_cue_type'] 
@@ -752,11 +762,15 @@ for pain_fpath in sorted(filtered_pain_flist):
     expect['trial_index'] =  beh_df.index +1
 
     expect['rating_value'] =  beh_df['event02_expect_angle'].round(2)
-    expect['rating_glmslabel'] = pd.cut(expect['rating_value'], 
-                                        bins=bins, labels=labels, right=True)
+    # expect['rating_glmslabel'] = pd.cut(expect['rating_value'], 
+    #                                     bins=bins, labels=labels, right=True)
+    
     expect['rating_value_fillna'] = (beh_df['event02_expect_fillna']).round(2)
-    expect['rating_glmslabel_fillna'] = pd.cut(expect['rating_value_fillna'], 
-                                               bins=bins, labels=labels, right=True)
+    # expect['rating_glmslabel_fillna'] = pd.cut(expect['rating_value_fillna'], 
+    #                                            bins=bins, labels=labels, right=True)
+    expect['rating_glmslabel'] = expect['rating_value'].apply(categorize_rating)
+    # outcome['rating_value_fillna'] = beh_df['event04_outcome_fillna']
+    expect['rating_glmslabel'] = expect['rating_value'].apply(categorize_rating)
     expect['rating_mouseonset'] = (traj_df['expect_motiononset']).round(2)
     expect['rating_mousedur'] = (traj_df['expect_motiondur']).round(2)
     expect['cue'] = beh_df['event01_cue_type'] # if same as param_cue_type
@@ -841,11 +855,15 @@ for pain_fpath in sorted(filtered_pain_flist):
     outcome['trial_type'] = 'outcomerating'
     outcome['trial_index'] =  beh_df.index +1
     outcome['rating_value'] =  (beh_df['event04_actual_angle']).round(2)
-    outcome['rating_glmslabel'] = pd.cut(outcome['rating_value'], 
-                                         bins=bins, labels=labels, right=True)
+    # outcome['rating_glmslabel'] = pd.cut(outcome['rating_value'], 
+    #                                      bins=bins, labels=labels, right=True)
     outcome['rating_value_fillna'] = beh_df['event04_outcome_fillna']
-    outcome['rating_glmslabel_fillna'] = pd.cut(outcome['rating_value_fillna'], 
-                                                bins=bins, labels=labels, right=True)
+    # outcome['rating_glmslabel_fillna'] = pd.cut(outcome['rating_value_fillna'], 
+    #                                             bins=bins, labels=labels, right=True)
+
+    outcome['rating_glmslabel'] = outcome['rating_value'].apply(categorize_rating)
+    # outcome['rating_value_fillna'] = beh_df['event04_outcome_fillna']
+    outcome['rating_glmslabel'] = outcome['rating_value'].apply(categorize_rating)
     outcome['rating_mouseonset'] = (traj_df['outcome_motiononset']).round(2)
     outcome['rating_mousedur'] = (traj_df['outcome_motiondur']).round(2)
 
@@ -1062,11 +1080,15 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
     expect['trial_index'] =  beh_df.index +1
 
     expect['rating_value'] =  beh_df['event02_expect_angle'].round(2)
-    expect['rating_glmslabel'] = pd.cut(expect['rating_value'], 
-                                        bins=bins, labels=labels, right=True)
+    # expect['rating_glmslabel'] = pd.cut(expect['rating_value'], 
+    #                                     bins=bins, labels=labels, right=True)
     expect['rating_value_fillna'] = (beh_df['event02_expect_fillna']).round(2)
-    expect['rating_glmslabel_fillna'] = pd.cut(expect['rating_value_fillna'], 
-                                               bins=bins, labels=labels, right=True)
+    # expect['rating_glmslabel_fillna'] = pd.cut(expect['rating_value_fillna'], 
+    #                                            bins=bins, labels=labels, right=True)
+    
+    expect['rating_glmslabel'] = expect['rating_value'].apply(categorize_rating)
+    # outcome['rating_value_fillna'] = beh_df['event04_outcome_fillna']
+    expect['rating_glmslabel'] = expect['rating_value'].apply(categorize_rating)
     expect['rating_mouseonset'] = (traj_df['expect_motiononset']).round(2)
     expect['rating_mousedur'] = (traj_df['expect_motiondur']).round(2)
     expect['cue'] = beh_df['event01_cue_type'] # if same as param_cue_type
@@ -1114,11 +1136,15 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
     outcome['trial_type'] = 'outcomerating'
     outcome['trial_index'] =  beh_df.index +1
     outcome['rating_value'] =  (beh_df['event04_actual_angle']).round(2)
-    outcome['rating_glmslabel'] = pd.cut(outcome['rating_value'], 
-                                         bins=bins, labels=labels, right=True)
+    # outcome['rating_glmslabel'] = pd.cut(outcome['rating_value'], 
+    #                                      bins=bins, labels=labels, right=True)
     outcome['rating_value_fillna'] = beh_df['event04_outcome_fillna']
-    outcome['rating_glmslabel_fillna'] = pd.cut(outcome['rating_value_fillna'], 
-                                                bins=bins, labels=labels, right=True)
+    # outcome['rating_glmslabel_fillna'] = pd.cut(outcome['rating_value_fillna'], 
+    #                                             bins=bins, labels=labels, right=True)
+    
+    outcome['rating_glmslabel'] = outcome['rating_value'].apply(categorize_rating)
+    # outcome['rating_value_fillna'] = beh_df['event04_outcome_fillna']
+    outcome['rating_glmslabel'] = outcome['rating_value'].apply(categorize_rating)
     outcome['rating_mouseonset'] = (traj_df['outcome_motiononset']).round(2)
     outcome['rating_mousedur'] = (traj_df['outcome_motiondur']).round(2)
     outcome['cue'] = beh_df['event01_cue_type'] 
