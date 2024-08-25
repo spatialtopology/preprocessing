@@ -71,8 +71,9 @@ def list_nifti_and_event_files(designated_dir):
             event_files.append(file)
 
     return sorted(nifti_files), sorted(event_files)
-
-metadata_df = pd.read_csv('./spacetop_task-social_run-metadata.csv')
+# /Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/events/spacetop_task-social_run-metadata.csv
+code_dir = Path(__file__).resolve().parent
+metadata_df = pd.read_csv(join(code_dir, 'events', 'spacetop_task-social_run-metadata.csv'))
 
 def get_task_type(bids_string, metadata_df):
     fname = Path(bids_string).name
