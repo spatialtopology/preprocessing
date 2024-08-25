@@ -285,7 +285,7 @@ labels = [
 
 
 # %% ---------------------------------------------------------------------------
-#                           3. Cognitive BIDSify
+#                           1. Cognitive BIDSify
 # ------------------------------------------------------------------------------
 
 task_name = 'cognitive'
@@ -309,6 +309,8 @@ if args.bids_string is not None:
                 print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
                 filtered_cognitive_flist = []
                 cognitive_logger.error(f"An error occurred while processing the trajectory file: {sub}, {ses}, {run}")
+    else:
+        continue # continue to next task
 else:
     cognitive_flist = glob.glob(join(beh_inputdir,'sub-*', '**','task-social', '**', f'*{task_name}*.csv'), recursive=True)
     filtered_cognitive_flist = [file for file in cognitive_flist if "sub-0001" not in file]
@@ -350,55 +352,7 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
 
     # 3. load trajectory data and calculate ratings ____________________________
     trajectory_glob = glob.glob(join(beh_inputdir, sub_bids, 'task-social', ses_bids, f"{sub_bids}_{ses_bids}_task-social_{run_bids}_runtype-{runtype}_beh-preproc.csv"))
-    
-    # try:
-    #     if trajectory_glob:
-    #         trajectory_fname = trajectory_glob[0]
-    #         traj_df = pd.read_csv(trajectory_fname)
-    #     else:
-    #         # If trajectory_glob is empty, raise a custom exception
-    #         raise FileNotFoundError("Trajectory preproc DOES NOT exist")
-            
-    # except FileNotFoundError as e:
-    #     cognitive_logger.warning(str(e))
-    #     continue 
-    # except Exception as e:
-    #     # This catches any other exceptions that might occur
-    #     cognitive_logger.error("An error occurred while processing the trajectory file: %s", str(e))
-    #     continue
 
-
-    # # 3-1. calculate degree based on x, y coordinate
-
-
-    # # 3-2. Calculate the angle in radians and then convert to degrees 
-    # traj_df['adjusted_expectangle_degrees'] = calc_adjusted_angle_df(
-    #     traj_df, 'expectrating_end_x', 'expectrating_end_y', trajectory_x, trajectory_y)
-    # traj_df['adjusted_outcomeangle_degrees'] = calc_adjusted_angle_df(
-    #     traj_df, 'outcomerating_end_x', 'outcomerating_end_y', trajectory_x, trajectory_y)
-
-
-    # # 3-3. check if the calculated new degree matches the one in beh_df
-    # beh_df['event02_expect_fillna'] = beh_df['event02_expect_angle'].round(2)
-    # beh_df['event02_expect_fillna'].fillna(traj_df['adjusted_expectangle_degrees'].round(2), inplace=True)
-    # comparison_series = (beh_df['event02_expect_fillna'].round(2) == traj_df['adjusted_expectangle_degrees'].round(2))
-    # traj_df['comparison_flag'] = ~comparison_series
-    # expect_overall_flag = traj_df['comparison_flag'].any()
-    # if expect_overall_flag:
-    #     discrepancy_indices = traj_df[traj_df['comparison_flag']].index
-    #     for idx in discrepancy_indices:
-    #         cognitive_logger.info(f"\tExpect Rating {idx}: (traj_df): {traj_df.loc[idx]['adjusted_expectangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event02_expect_fillna']}")
-
-    # beh_df['event04_outcome_fillna'] = beh_df['event04_actual_angle'].round(2)
-    # beh_df['event04_outcome_fillna'].fillna(traj_df['adjusted_outcomeangle_degrees'].round(2), inplace=True)
-    # outcome_comparison_mask = (beh_df['event04_actual_angle'].round(2) == traj_df['adjusted_outcomeangle_degrees'].round(2))
-    # traj_df['outcome_comparisonflag'] = ~outcome_comparison_mask
-    # outcome_overall_flag = traj_df['outcome_comparisonflag'].any()
-
-    # if outcome_overall_flag:
-    #     discrepancy_indices = traj_df[traj_df['outcome_comparisonflag']].index
-    #     for idx in discrepancy_indices:
-    #         cognitive_logger.info(f"\tOutcome Rating {idx} (traj_df): {traj_df.loc[idx]['adjusted_outcomeangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event04_outcome_fillna']}")
     if trajectory_glob:
         try:
             trajectory_fname = trajectory_glob[0]
@@ -465,8 +419,9 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
         cognitive_logger.error(f"4-1. cue parameter does not match")
         continue
     cue['stimulusintensity'] =  "n/a"
-    # cue['stim_file'] = beh_df["event01_cue_filename"]
-
+    cue['stim_file'] = beh_df["event01_cue_filename"].apply(
+        lambda x: f'task-social/cue/runtype-{task_name}/{"sch/" if x.startswith("h") else "scl/"}' + x
+    )
 
     cue['pain_onset_ttl1'] = "n/a"
     cue['pain_onset_ttl2'] = "n/a"
@@ -569,7 +524,7 @@ for cognitive_fpath in sorted(filtered_cognitive_flist):
 
 
 # %% ---------------------------------------------------------------------------
-#                           3. Pain BIDSify
+#                           2. Pain BIDSify
 # ------------------------------------------------------------------------------
 task_name = 'pain'
 
@@ -636,52 +591,6 @@ for pain_fpath in sorted(filtered_pain_flist):
     # 3. load trajectory data and calculate ratings ____________________________
     trajectory_glob = glob.glob(join(beh_inputdir, sub_bids, 'task-social', ses_bids, 
                                      f"{sub_bids}_{ses_bids}_task-social_{run_bids}_runtype-{runtype}_beh-preproc.csv"))
-    # try:
-    #     if trajectory_glob:
-    #         trajectory_fname = trajectory_glob[0]
-    #         traj_df = pd.read_csv(trajectory_fname)
-    #     else:
-    #         # If trajectory_glob is empty, raise a custom exception
-    #         raise FileNotFoundError("Trajectory preproc DOES NOT EXIST")
-            
-    # except FileNotFoundError as e:
-    #     pain_warning_logger.warning(str(e))
-    #     pain_warning_logger.warning("Trajectory preproc DOES NOT EXIST")
-    #     continue 
-    # except Exception as e:
-    #     # This catches any other exceptions that might occur
-    #     pain_warning_logger.error("An error occurred while processing the trajectory file: %s", str(e))
-    #     continue
-
-
-    # # 3-1. calculate degree based on x, y coordinate
-    # # 3-2. Calculate the angle in radians and then convert to degrees 
-    # traj_df['adjusted_expectangle_degrees'] = calc_adjusted_angle_df(
-    #     traj_df, 'expectrating_end_x', 'expectrating_end_y', trajectory_x, trajectory_y)
-    # traj_df['adjusted_outcomeangle_degrees'] = calc_adjusted_angle_df(
-    #     traj_df, 'outcomerating_end_x', 'outcomerating_end_y', trajectory_x, trajectory_y)
-
-    # # 3-3. check if the calculated new degree matches the one in beh_df
-    # beh_df['event02_expect_fillna'] = beh_df['event02_expect_angle'].round(2)
-    # beh_df['event02_expect_fillna'].fillna(traj_df['adjusted_expectangle_degrees'].round(2), inplace=True)
-    # comparison_series = (beh_df['event02_expect_fillna'].round(2) == traj_df['adjusted_expectangle_degrees'].round(2))
-    # traj_df['comparison_flag'] = ~comparison_series
-    # expect_overall_flag = traj_df['comparison_flag'].any()
-    # if expect_overall_flag:
-    #     discrepancy_indices = traj_df[traj_df['comparison_flag']].index
-    #     for idx in discrepancy_indices:
-    #         pain_info_logger.info(f"\tExpect Rating {idx}: (traj_df): {traj_df.loc[idx]['adjusted_expectangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event02_expect_fillna']}")
-
-    # beh_df['event04_outcome_fillna'] = beh_df['event04_actual_angle'].round(2)
-    # beh_df['event04_outcome_fillna'].fillna(traj_df['adjusted_outcomeangle_degrees'].round(2), inplace=True)
-    # outcome_comparison_mask = (beh_df['event04_actual_angle'].round(2) == traj_df['adjusted_outcomeangle_degrees'].round(2))
-    # traj_df['outcome_comparisonflag'] = ~outcome_comparison_mask
-    # outcome_overall_flag = traj_df['outcome_comparisonflag'].any()
-
-    # if outcome_overall_flag:
-    #     discrepancy_indices = traj_df[traj_df['outcome_comparisonflag']].index
-    #     for idx in discrepancy_indices:
-    #         pain_info_logger.info(f"\tOutcome Rating {idx} (traj_df): {traj_df.loc[idx]['adjusted_outcomeangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event04_outcome_fillna']}")
 
     try:
         # Check if trajectory file exists
@@ -948,53 +857,6 @@ for vicarious_fpath in sorted(filtered_vicarious_flist):
     # 3. load trajectory data and calculate ratings ____________________________
     trajectory_glob = glob.glob(join(beh_inputdir, sub_bids, 'task-social', ses_bids, f"{sub_bids}_{ses_bids}_task-social_{run_bids}_runtype-{runtype}_beh-preproc.csv"))
     
-    # try:
-    #     if trajectory_glob:
-    #         trajectory_fname = trajectory_glob[0]
-    #         traj_df = pd.read_csv(trajectory_fname)
-    #     else:
-    #         # If trajectory_glob is empty, raise a custom exception
-    #         raise FileNotFoundError("Trajectory preproc is empty.")
-            
-    # except FileNotFoundError as e:
-    #     vicarious_logger.warning(str(e))
-    #     continue 
-    # except Exception as e:
-    #     # This catches any other exceptions that might occur
-    #     vicarious_logger.error("An error occurred while processing the trajectory file: %s", str(e))
-    #     continue
-
-
-    # # 3-1. calculate degree based on x, y coordinate
-    # traj_df['adjusted_expectangle_degrees'] = calc_adjusted_angle_df(
-    #     traj_df, 'expectrating_end_x', 'expectrating_end_y', trajectory_x, trajectory_y)
-    # traj_df['adjusted_outcomeangle_degrees'] = calc_adjusted_angle_df(
-    #     traj_df, 'outcomerating_end_x', 'outcomerating_end_y', trajectory_x, trajectory_y)
-
-
-
-    # # 3-3. check if the calculated new degree matches the one in beh_df
-    # beh_df['event02_expect_fillna'] = beh_df['event02_expect_angle'].round(2)
-    # beh_df['event02_expect_fillna'].fillna(traj_df['adjusted_expectangle_degrees'].round(2), inplace=True)
-    # comparison_series = ((beh_df['event02_expect_angle'].round(2)) == (traj_df['adjusted_expectangle_degrees'].round(2)))
-    # traj_df['comparison_flag'] = ~comparison_series
-    # expect_overall_flag = traj_df['comparison_flag'].any()
-    # if expect_overall_flag:
-    #     discrepancy_indices = traj_df[traj_df['comparison_flag']].index
-    #     for idx in discrepancy_indices:
-    #         vicarious_logger.info(f"\tExpect Rating {idx}: (traj_df): {traj_df.loc[idx]['adjusted_expectangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event02_expect_fillna']}")
-
-    # beh_df['event04_outcome_fillna'] = beh_df['event04_actual_angle'].round(2)
-    # beh_df['event04_outcome_fillna'].fillna(traj_df['adjusted_outcomeangle_degrees'].round(2), inplace=True)
-    # outcome_comparison_mask = ((beh_df['event04_actual_angle'].round(2)) == (traj_df['adjusted_outcomeangle_degrees'].round(2)))
-    # traj_df['outcome_comparisonflag'] = ~outcome_comparison_mask
-    # outcome_overall_flag = traj_df['outcome_comparisonflag'].any()
-
-    # if outcome_overall_flag:
-    #     discrepancy_indices = traj_df[traj_df['outcome_comparisonflag']].index
-    #     for idx in discrepancy_indices:
-    #         vicarious_logger.info(f"\tOutcome Rating {idx} (traj_df): {traj_df.loc[idx]['adjusted_outcomeangle_degrees'].round(2)} \t(beh_df): {beh_df.loc[idx]['event04_outcome_fillna']}")
-
     if trajectory_glob:
         try:
             trajectory_fname = trajectory_glob[0]
