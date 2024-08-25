@@ -33,7 +33,47 @@ def extract_bids(filename: str, key: str) -> str:
     bids_info = [match for match in filename.split('_') if key in match][0]
     bids_info_rmext = bids_info.split(os.extsep, 1)
     return bids_info_rmext[0]
-# argparse
+
+
+code_dir = Path(__file__).resolve().parent
+metadata_df = pd.read_csv(join(code_dir,  'spacetop_task-fractional_run-metadata.csv'))
+
+def get_task_name(bids_string, metadata_df):
+    """
+    Retrieve the task name based on subject ID and run ID (run-01 or run-02).
+    
+    Parameters:
+        subject_id (str): The subject ID in the form 'sub-0006'.
+        run_id (str): The run ID, either 'run-01' or 'run-02'.
+    
+    Returns:
+        str: The task name or an error message if the input is invalid.
+    """
+    # Convert subject_id to integer by removing the 'sub-' prefix
+    sub = extract_bids(bids_string, 'sub')
+    run = extract_bids(bids_string, 'run')
+    subject_number = int(sub.replace('sub-', ''))
+    
+    # Map run_id to task1 or task2
+    run_map = {
+        'run-01': 'task1',
+        'run-02': 'task2'
+    }
+    
+    if run not in run_map:
+        return "Error: run_id should be either 'run-01' or 'run-02'"
+    
+    # Find the row with the matching subject ID
+    subject_row = metadata_df[metadata_df['subject'] == subject_number]
+    
+    if subject_row.empty:
+        return f"Error: No data found for subject ID {sub}"
+    
+    # Retrieve the task name for the specified run ID
+    task_column = run_map[run]
+    task_name = subject_row[task_column].values[0]
+    return task_name
+    
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Process behavioral files for specific subjects or all subjects.")
@@ -81,25 +121,29 @@ beh_inputdir = join(source_dir, 'd_beh')
 # 'event04_RT','accuracy'
 
 task_name = "tomsaxe"
-# current_path = Path.cwd()
-# main_dir = current_path.parent.parent 
-# %%
 
-if args.bids_string and 'tomsaxe' in extract_bids(args.bids_string, 'task'):
-    sub = extract_bids(Path(args.bids_string).name, 'sub')
-    saxe_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*.csv'))
-    
-    if not saxe_flist:
-        # Attempt to find a TEMP file
-        temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*TEMP*.csv'))
+if args.bids_string:
+    # Retrieve the task name from the bids_string using the provided metadata DataFrame
+    task_name = get_task_name(args.bids_string, metadata_df)
+    if 'tomsaxe' in task_name:
+        # Extract the subject identifier from the bids_string
+        sub = extract_bids(Path(args.bids_string).name, 'sub')
+        saxe_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*.csv')) # Search for the CSV file corresponding to the bids_string within the specified directory
         
-        if temp_flist:
-            filtered_saxe_flist = temp_flist
+        if not saxe_flist:
+            # If no standard file is found, attempt to find a TEMP file as a fallback
+            temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*TEMP*.csv'))
+            
+            if temp_flist:
+                # Use the TEMP file if found
+                filtered_saxe_flist = temp_flist 
+            else:
+                # If neither standard nor TEMP files are found, log a message and return an empty list
+                print(f'No behavior data file found for {args.bids_string}. Checked both standard and temporary filenames.')
+                filtered_saxe_flist = []
         else:
-            print(f'No behavior data file found for {args.bids_string}. Checked both standard and temporary filenames.')
-            filtered_saxe_flist = []
-    else:
-        filtered_saxe_flist = saxe_flist
+            # If standard files are found, use them
+            filtered_saxe_flist = saxe_flist
 else:
     # Get a list of all relevant files, excluding specific subjects
     saxe_flist = list(Path(beh_inputdir).rglob(f'**/{task_name}*.csv'))
@@ -114,7 +158,9 @@ for saxe_fpath in sorted(filtered_saxe_flist):
     sub_bids = extract_bids(saxe_fname, 'sub') # re.search(r'sub-\d+', saxe_fname).group(0)
     ses_bids = extract_bids(saxe_fname, 'ses') # re.search(r'ses-\d+', saxe_fname).group(0)
     run_bids = extract_bids(saxe_fname, 'run') # re.search(r'run-\d+', saxe_fname).group(0)
-    task_name = re.search(r'run-\d+-(\w+)_beh', saxe_fname).group(1)
+    bids_name= f"{sub_bids} {ses_bids} {run_bids}"
+    task_name = get_task_name(bids_name, metadata_df)
+    # task_name = re.search(r'run-\d+-(\w+)_beh', saxe_fname).group(1)
     print(f"{sub_bids} {ses_bids} {run_bids} {task_name}")
     beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
     beh_df = pd.read_csv(saxe_fpath)
@@ -236,25 +282,62 @@ with open(json_fname, 'w') as file:
 #                       posner
 # -------------------------------------------------
 task_name = "posner"
-# current_path = Path.cwd()
-# main_dir = current_path.parent.parent 
-if args.bids_string and task_name in extract_bids(bids_string, 'task'):
-    sub = extract_bids(Path(args.bids_string).name, 'sub')
-    # sub = extract_bids(bids_string, 'sub')
-    filtered_posner_flist = glob.glob(join(beh_inputdir, sub,  '**','task-fractional', '**', f'*{bids_string}*.csv'), recursive=True)
-else:
-    # scans_list = sorted(glob.glob('sub-*/**/*ses-04*scans*.tsv', recursive=True))
-    posner_flist = glob.glob(join(beh_inputdir, '**', f'*{task_name}*.csv'), recursive=True)
-    filtered_posner_flist = [file for file in posner_flist if "sub-0001" not in file]
+# # current_path = Path.cwd()
+# # main_dir = current_path.parent.parent 
+# if args.bids_string: # and task_name in extract_bids(bids_string, 'task'):
+#     task_name = get_task_name(args.bids_string, metadata_df)
+#     if 'posner' in task_name:
+#         # Extract the subject identifier from the bids_string
+#         sub = extract_bids(Path(args.bids_string).name, 'sub')
+#         filtered_posner_flist = glob.glob(join(beh_inputdir, sub,  '**','task-fractional', '**', f'*{bids_string}*.csv'), recursive=True)
+#     else:
+#         # scans_list = sorted(glob.glob('sub-*/**/*ses-04*scans*.tsv', recursive=True))
+#         posner_flist = glob.glob(join(beh_inputdir, '**', f'*{task_name}*.csv'), recursive=True)
+#         filtered_posner_flist = [file for file in posner_flist if "sub-0001" not in file]
 
-# posner_flist = glob.glob(join(beh_inputdir, '**', f'*{task_name}*.csv'), recursive=True)
+
+if args.bids_string:
+    # Retrieve the task name from the bids_string using the provided metadata DataFrame
+    task_name = get_task_name(args.bids_string, metadata_df)
+    
+    if 'posner' in task_name:
+        # Extract the subject identifier from the bids_string
+        sub = extract_bids(Path(args.bids_string).name, 'sub')
+        
+        # Search for the CSV file corresponding to the bids_string within the specified directory
+        posner_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*.csv'))
+        
+        if not posner_flist:
+            # If no standard file is found, attempt to find a TEMP file as a fallback
+            temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*TEMP*.csv'))
+            
+            if temp_flist:
+                # Use the TEMP file if found
+                filtered_posner_flist = temp_flist
+            else:
+                # If neither standard nor TEMP files are found, log a message and return an empty list
+                print(f'No behavior data file found for {args.bids_string}. Checked both standard and temporary filenames.')
+                filtered_posner_flist = []
+        else:
+            # If standard files are found, use them
+            filtered_posner_flist = posner_flist
+else:
+    # If no bids_string is provided, search for all relevant files excluding specific subjects
+    posner_flist = list(Path(beh_inputdir).rglob(f'**/{task_name}*.csv'))
+    
+    # Filter out files belonging to the excluded subject (e.g., "sub-0001")
+    filtered_posner_flist = [file for file in posner_flist if "sub-0001" not in str(file)]
+
+
 
 for posner_fpath in sorted(filtered_posner_flist):
     posner_fname = os.path.basename(posner_fpath)
     sub_bids = re.search(r'sub-\d+', posner_fname).group(0)
     ses_bids = re.search(r'ses-\d+', posner_fname).group(0)
     run_bids = re.search(r'run-\d+', posner_fname).group(0)
-    task_name = re.search(r'run-\d+-(\w+)_beh', posner_fname).group(1)
+    bids_name= f"{sub_bids} {ses_bids} {run_bids}"
+    task_name = get_task_name(bids_name, metadata_df)
+    # task_name = re.search(r'run-\d+-(\w+)_beh', posner_fname).group(1)
     print(f"{sub_bids} {ses_bids} {run_bids} {task_name}")
     beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
     beh_df = pd.read_csv(posner_fpath)
@@ -489,25 +572,48 @@ pmod_accuracy
 
 """
 task_name = "memory"
-# current_path = Path.cwd()
-# memory_flist = sorted(glob.glob(join(beh_inputdir, '**', f'*{task_name}_beh.csv'), recursive=True))
 
-if args.bids_string and task_name in extract_bids(bids_string, 'task'):
-    sub = extract_bids(Path(args.bids_string).name, 'sub')
-    # sub = extract_bids(bids_string, 'sub')
-    filtered_memory_flist = glob.glob(join(beh_inputdir, sub,  '**','task-fractional', '**', f'*{bids_string}*.csv'), recursive=True)
+
+if args.bids_string:
+    # Retrieve the task name from the bids_string using the provided metadata DataFrame
+    task_name = get_task_name(args.bids_string, metadata_df)
+    
+    if 'memory' in task_name:
+        # Extract the subject identifier from the bids_string
+        sub = extract_bids(Path(args.bids_string).name, 'sub')
+        
+        # Search for the CSV file corresponding to the bids_string within the specified directory
+        memory_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*.csv'))
+        
+        if not memory_flist:
+            # If no standard file is found, attempt to find a TEMP file as a fallback
+            temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*TEMP*.csv'))
+            
+            if temp_flist:
+                # Use the TEMP file if found
+                filtered_memory_flist = temp_flist
+            else:
+                # If neither standard nor TEMP files are found, log a message and return an empty list
+                print(f'No behavior data file found for {args.bids_string}. Checked both standard and temporary filenames.')
+                filtered_memory_flist = []
+        else:
+            # If standard files are found, use them
+            filtered_memory_flist = memory_flist
 else:
-    # scans_list = sorted(glob.glob('sub-*/**/*ses-04*scans*.tsv', recursive=True))
-    memory_flist = glob.glob(join(beh_inputdir, '**', f'*{task_name}*.csv'), recursive=True)
-    filtered_memory_flist = [file for file in memory_flist if "sub-0001" not in file]
-
+    # If no bids_string is provided, search for all relevant files excluding specific subjects
+    memory_flist = list(Path(beh_inputdir).rglob(f'**/{task_name}*.csv'))
+    
+    # Filter out files belonging to the excluded subject (e.g., "sub-0001")
+    filtered_memory_flist = [file for file in memory_flist if "sub-0001" not in str(file)]
 
 for memory_fpath in filtered_memory_flist:
     memory_fname = os.path.basename(memory_fpath)
-    sub_bids = re.search(r'sub-\d+', memory_fname).group(0)
-    ses_bids = re.search(r'ses-\d+', memory_fname).group(0)
-    run_bids = re.search(r'run-\d+', memory_fname).group(0)
-    task_name = re.search(r'run-\d+-(\w+)_beh', memory_fname).group(1)
+    sub_bids = extract_bids(memory_fname, 'sub') ##re.search(r'sub-\d+', memory_fname).group(0)
+    ses_bids = extract_bids(memory_fname, 'ses') ##re.search(r'ses-\d+', memory_fname).group(0)
+    run_bids = extract_bids(memory_fname, 'run') ##re.search(r'run-\d+', memory_fname).group(0)
+    bids_name= f"{sub_bids} {ses_bids} {run_bids}"
+    task_name = get_task_name(bids_name, metadata_df)
+    # task_name = re.search(r'run-\d+-(\w+)_beh', memory_fname).group(1)
     print(f"{sub_bids} {ses_bids} {run_bids} {task_name}")
     beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
     membids_df = pd.DataFrame(columns=['onset', 'duration', 'subtask_type', 'event_type', 'value', 'response_accuracy', 'stim_file', 'button_press'])
@@ -695,22 +801,57 @@ task_name = "tomspunt"
 # current_path = Path.cwd()
 # spunt_flist = sorted(glob.glob(join(beh_inputdir, '**', f'*{task_name}_beh.csv'), recursive=True))
 
-if args.bids_string and task_name in extract_bids(bids_string, 'task') :
-    sub = extract_bids(Path(args.bids_string).name, 'sub')
-    # sub = extract_bids(bids_string, 'sub')
-    filtered_spunt_flist = glob.glob(join(beh_inputdir, sub,  '**','task-fractional', '**', f'*{bids_string}*.csv'), recursive=True)
-else:
-    # scans_list = sorted(glob.glob('sub-*/**/*ses-04*scans*.tsv', recursive=True))
-    spunt_flist = glob.glob(join(beh_inputdir, '**', f'*{task_name}*.csv'), recursive=True)
-    filtered_spunt_flist = [file for file in spunt_flist if "sub-0001" not in file]
+# if args.bids_string and task_name in extract_bids(bids_string, 'task') :
+#     sub = extract_bids(Path(args.bids_string).name, 'sub')
+#     # sub = extract_bids(bids_string, 'sub')
+#     filtered_spunt_flist = glob.glob(join(beh_inputdir, sub,  '**','task-fractional', '**', f'*{bids_string}*.csv'), recursive=True)
+# else:
+#     # scans_list = sorted(glob.glob('sub-*/**/*ses-04*scans*.tsv', recursive=True))
+#     spunt_flist = glob.glob(join(beh_inputdir, '**', f'*{task_name}*.csv'), recursive=True)
+#     filtered_spunt_flist = [file for file in spunt_flist if "sub-0001" not in file]
 
+
+if args.bids_string:
+    # Retrieve the task name from the bids_string using the provided metadata DataFrame
+    task_name = get_task_name(args.bids_string, metadata_df)
+    
+    if 'tomspunt' in task_name:
+        # Extract the subject identifier from the bids_string
+        sub = extract_bids(Path(args.bids_string).name, 'sub')
+        
+        # Search for the CSV file corresponding to the bids_string within the specified directory
+        spunt_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*.csv'))
+        
+        if not spunt_flist:
+            # If no standard file is found, attempt to find a TEMP file as a fallback
+            temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*TEMP*.csv'))
+            
+            if temp_flist:
+                # Use the TEMP file if found
+                filtered_spunt_flist = temp_flist
+            else:
+                # If neither standard nor TEMP files are found, log a message and return an empty list
+                print(f'No behavior data file found for {args.bids_string}. Checked both standard and temporary filenames.')
+                filtered_spunt_flist = []
+        else:
+            # If standard files are found, use them
+            filtered_spunt_flist = spunt_flist
+else:
+    # If no bids_string is provided, search for all relevant files excluding specific subjects
+    spunt_flist = list(Path(beh_inputdir).rglob(f'**/{task_name}*.csv'))
+    
+    # Filter out files belonging to the excluded subject (e.g., "sub-0001")
+    filtered_spunt_flist = [file for file in spunt_flist if "sub-0001" not in str(file)]
 
 for spunt_fpath in filtered_spunt_flist:
     spunt_fname = os.path.basename(spunt_fpath)
     sub_bids = re.search(r'sub-\d+', spunt_fname).group(0)
     ses_bids = re.search(r'ses-\d+', spunt_fname).group(0)
     run_bids = re.search(r'run-\d+', spunt_fname).group(0)
-    task_name = re.search(r'run-\d+-(\w+)_beh', spunt_fname).group(1)
+    bids_name= f"{sub_bids} {ses_bids} {run_bids}"
+    task_name = get_task_name(bids_name, metadata_df)
+    # task_name = re.search(r'run-\d+-(\w+)_beh', spunt_fname).group(1)
+    
     print(f"{sub_bids} {ses_bids} {run_bids} {task_name}")
     beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
 
