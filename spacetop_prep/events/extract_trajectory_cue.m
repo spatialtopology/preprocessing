@@ -114,91 +114,109 @@ for i = 1:length(subjectsWithTaskSocial)
         %% trajectory
         for j = 1:trialNum
             outcome_traj = rating_Trajectory{j, 2};
-            % if ~isnan(csvData.event03_rating_RT(j))
-            if ~isnan(csvData.event04_actual_RT(j))
-                % subject made a response in this trial
-                outcomerating_end_x(j) = outcome_traj(end,1);
-                outcomerating_end_y(j) = outcome_traj(end,2);
-                outcomeRT_adj(j) = NaN;
-            else
-                % there was no response in this trial
-                % infer RT_adjusted by finding the last time mouse position changed
-                % but keep RT as nan
-                % disp(['Trial ' num2str(j) ' had no response'])  % for test
-                for l = size(outcome_traj, 1):-1:2
+            if ismember('event04_actual_RT', csvData.Properties.VariableNames)
+                % if ~isnan(csvData.event03_rating_RT(j))
+                if ~isnan(csvData.event04_actual_RT(j))
+                    % subject made a response in this trial
+                    outcomerating_end_x(j) = outcome_traj(end,1);
+                    outcomerating_end_y(j) = outcome_traj(end,2);
+                    outcomeRT_adj(j) = NaN;
+                else
+                    % there was no response in this trial
+                    % infer RT_adjusted by finding the last time mouse position changed
+                    % but keep RT as nan
+                    % disp(['Trial ' num2str(j) ' had no response'])  % for test
+                    for l = size(outcome_traj, 1):-1:2
+                        if (outcome_traj(l,1)~=outcome_traj(l-1,1)) || (outcome_traj(l,2)~=outcome_traj(l-1,2))
+                            break
+                        end
+                    end
+                    if l == 2 && (outcome_traj(2,1) == outcome_traj(1,1))...
+                            && (outcome_traj(2,2) == outcome_traj(1,2))
+                        % No movement at all
+                        outcomeRT_adj(j) = NaN;
+                        outcomerating_end_x(j) = NaN;
+                        outcomerating_end_y(j) = NaN;
+                    else
+                        % l-1 is when the last movement happened
+                        outcomeRT_adj(j) = (l-1)/60;
+                        outcomerating_end_x(j) = outcome_traj(l, 1);
+                        outcomerating_end_y(j) = outcome_traj(l, 2);
+                    end
+                end
+                
+                % find motion onset time and duration
+                for l = 2:size(outcome_traj, 1)
                     if (outcome_traj(l,1)~=outcome_traj(l-1,1)) || (outcome_traj(l,2)~=outcome_traj(l-1,2))
                         break
                     end
                 end
-                if l == 2 && (outcome_traj(2,1) == outcome_traj(1,1))...
-                        && (outcome_traj(2,2) == outcome_traj(1,2))
-                    % No movement at all
-                    outcomeRT_adj(j) = NaN;
-                    outcomerating_end_x(j) = NaN;
-                    outcomerating_end_y(j) = NaN;
+                if outcome_traj(l,1) == outcome_traj(1,1) && outcome_traj(l,2) == outcome_traj(1,2)
+                    % mouse didn't move at all
+                    outcome_motiononset(j) = NaN;
                 else
-                    % l-1 is when the last movement happened
-                    outcomeRT_adj(j) = (l-1)/60;
-                    outcomerating_end_x(j) = outcome_traj(l, 1);
-                    outcomerating_end_y(j) = outcome_traj(l, 2);
+                    % l is when movement started
+                    outcome_motiononset(j) = l/60;
                 end
-            end
-            
-            % find motion onset time and duration
-            for l = 2:size(outcome_traj, 1)
-                if (outcome_traj(l,1)~=outcome_traj(l-1,1)) || (outcome_traj(l,2)~=outcome_traj(l-1,2))
-                    break
+                if isnan(csvData.event04_actual_RT(j))
+                    % no response
+                    outcome_motiondur(j) = outcomeRT_adj(j) - outcome_motiononset(j);
+                else
+                    outcome_motiondur(j) = csvData.event04_actual_RT(j) - outcome_motiononset(j);
                 end
-            end
-            if outcome_traj(l,1) == outcome_traj(1,1) && outcome_traj(l,2) == outcome_traj(1,2)
-                % mouse didn't move at all
+            else
+                % Handle cases where the 'event04_actual_RT' column does not exist
+                warning('Variable "event04_actual_RT" not found in CSV file for trial %d. Skipping this trial.', j);
+                outcomerating_end_x(j) = NaN;
+                outcomerating_end_y(j) = NaN;
+                outcomeRT_adj(j) = NaN;
                 outcome_motiononset(j) = NaN;
-            else
-                % l is when movement started
-                outcome_motiononset(j) = l/60;
-            end
-            if isnan(csvData.event04_actual_RT(j))
-                % no response
-                outcome_motiondur(j) = outcomeRT_adj(j) - outcome_motiononset(j);
-            else
-                outcome_motiondur(j) = csvData.event04_actual_RT(j) - outcome_motiononset(j);
+                outcome_motiondur(j) = NaN;
             end
         end
         
         
-        
         for j = 1:trialNum
             expect_traj = rating_Trajectory{j,1};
-            % if ~isnan(csvData.event03_rating_RT(j))
-            if ~isnan(csvData.event02_expect_RT(j))
-                % subject made a response in this trial
-                expectrating_end_x(j) = expect_traj(end, 1);
-                expectrating_end_y(j) = expect_traj(end, 2);
-                expectRT_adj(j) = NaN;
-            else
-                % there was no response in this trial
-                % infer RT_adjusted by finding the last time mouse position changed
-                % but keep RT as nan
-                % disp(['Trial ' num2str(j) ' had no response'])  % for test
-                for l = size(expect_traj, 1):-1:2
-                    if (expect_traj(l,1)~=expect_traj(l-1,1)) || (expect_traj(l,2)~=expect_traj(l-1,2))
-                        break
+            
+            if ismember('event02_actual_RT', csvData.Properties.VariableNames)
+                if ~isnan(csvData.event02_expect_RT(j))
+                    % subject made a response in this trial
+                    expectrating_end_x(j) = expect_traj(end, 1);
+                    expectrating_end_y(j) = expect_traj(end, 2);
+                    expectRT_adj(j) = NaN;
+                else
+                    % there was no response in this trial
+                    % infer RT_adjusted by finding the last time mouse position changed
+                    % but keep RT as nan
+                    % disp(['Trial ' num2str(j) ' had no response'])  % for test
+                    for l = size(expect_traj, 1):-1:2
+                        if (expect_traj(l,1)~=expect_traj(l-1,1)) || (expect_traj(l,2)~=expect_traj(l-1,2))
+                            break
+                        end
+                    end
+                    if l == 2 && (expect_traj(2,1) == expect_traj(1,1))...
+                            && (expect_traj(2,2) == expect_traj(1,2))
+                        % No movement at all
+                        expectRT_adj(j) = NaN;
+                        expectrating_end_x(j) = NaN;
+                        expectrating_end_y(j) = NaN;
+                    else
+                        % l-1 is when the last movement happened
+                        expectRT_adj(j) = (l-1)/60;
+                        expectrating_end_x(j) = expect_traj(l, 1);
+                        expectrating_end_y(j) = expect_traj(l, 2);
                     end
                 end
-                if l == 2 && (expect_traj(2,1) == expect_traj(1,1))...
-                        && (expect_traj(2,2) == expect_traj(1,2))
-                    % No movement at all
-                    expectRT_adj(j) = NaN;
-                    expectrating_end_x(j) = NaN;
-                    expectrating_end_y(j) = NaN;
-                else
-                    % l-1 is when the last movement happened
-                    expectRT_adj(j) = (l-1)/60;
-                    expectrating_end_x(j) = expect_traj(l, 1);
-                    expectrating_end_y(j) = expect_traj(l, 2);
-                end
+            else
+                % Handle cases where the 'event04_actual_RT' column does not exist
+                warning('Variable "event04_actual_RT" not found in CSV file for trial %d. Skipping this trial.', j);
+                outcomerating_end_x(j) = NaN;
+                outcomerating_end_y(j) = NaN;
+                outcomeRT_adj(j) = NaN;
+                outcome_motiononset(j) = NaN;
+                outcome_motiondur(j) = NaN;
             end
-            
             % find motion onset time and duration
             for l = 2:size(expect_traj, 1)
                 if (expect_traj(l,1)~=expect_traj(l-1,1)) || (expect_traj(l,2)~=expect_traj(l-1,2))
