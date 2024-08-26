@@ -186,6 +186,7 @@ def alignvideo_format_to_bids(sub, ses, run, task_name, beh_inputdir, bids_dir):
     precision_dic = {'onset': 3, 'duration': 3, 'response_value': 2}
     new_beh = new_beh.round(precision_dic)
     new_beh = new_beh.replace(np.nan, 'n/a') # replace nan with "n/a" in BIDS way
+    new_beh.loc[new_beh['onset'] < 0, 'onset'] = 'n/a'
     # Save new events file
     try:
         new_fname = Path(bids_dir) / sub / ses / 'func' / f'{sub}_{ses}_{task_name}_acq-mb8_{run}_events.tsv'
