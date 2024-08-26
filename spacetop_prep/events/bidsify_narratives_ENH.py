@@ -10,6 +10,7 @@ import numpy as np
 import traceback
 import argparse
 from pathlib import Path
+import requests
 
 def extract_bids(filename: str, key: str) -> str:
     """
@@ -42,8 +43,17 @@ def create_event_row(onset, duration, trial_type, modality, stim_file, situation
         "stim_file": stim_file
     }, index=[0])
 
-from pathlib import Path
-import pandas as pd
+def download_counterbalance_file(data_dir):
+    url = 'https://raw.githubusercontent.com/spatialtopology/task-narratives/master/design/task-narratives_counterbalance_ver-01.csv'
+    counterbalance_filename = os.path.join(data_dir, 'task-narratives_counterbalance_ver-01.csv')
+
+    response = requests.get(url)
+    with open(counterbalance_filename, 'wb') as file:
+        file.write(response.content)
+
+    DesignTable = pd.read_csv(counterbalance_filename)
+    return DesignTable
+
 
 def find_behavior_file(beh_inputdir, sub, ses, run):
     beh_fname = Path(beh_inputdir) / sub / 'task-narratives' / f'{sub}_{ses}_task-narratives_{run}.csv'
@@ -151,13 +161,9 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
     #         print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
     #         return None
     # Construct the expected file path
-
-
-import glob
-from pathlib import Path
-import pandas as pd
-
-def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
+    DesignTable = download_counterbalance_file(beh_inputdir)
+    narratives = [[7, 8], [5, 6], [3, 4], [1, 2]]  # narrative presented in each run
+    
     # Initial file search with wildcards
     beh_fname_pattern = str(Path(beh_inputdir) / sub / 'task-narratives' / f'{sub}_{ses}_task-narratives_{run}*preproc.csv')
     matching_files = glob.glob(beh_fname_pattern)
@@ -203,7 +209,26 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
     modality = 'Audio' if run in ['01', '02'] else 'Text'
     t_run_start = source_beh.loc[0, 'param_trigger_onset']    # start time of this run; all onsets calibrated by this
 
-    for t in range(len(source_beh)):    # each trial
+    trial_num = len(source_beh)
+    situation = [None] * trial_num
+    context = [None] * trial_num
+
+    for t in range(trial_num):    # each trial
+
+        # Situation and context
+        r = int(run) - 1  # Adjust the run number to be zero-based
+        
+        if t < 9:
+            situation_chunk = DesignTable['Situation'][DesignTable['Narrative'] == narratives[r][t % 2]]
+            context_chunk = DesignTable['Context'][DesignTable['Narrative'] == narratives[r][t % 2]]
+        else:
+            situation_chunk = DesignTable['Situation'][DesignTable['Narrative'] == narratives[r][1 - (t % 2)]]
+            context_chunk = DesignTable['Context'][DesignTable['Narrative'] == narratives[r][1 - (t % 2)]]
+        
+        situation[t] = situation_chunk.iloc[t % len(situation_chunk)]
+        context[t] = context_chunk.iloc[t % len(context_chunk)]
+
+
         # Event 1. narrative presentation
         onset = source_beh.loc[t, 'event02_administer_onset'] - t_run_start
         duration = source_beh.loc[t, 'event03_feel_displayonset'] - source_beh.loc[t, 'event02_administer_onset']
