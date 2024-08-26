@@ -411,7 +411,8 @@ def main():
     task_names = ['cognitive', 'pain', 'vicarious']
     logger_dict = {task: setup_logger(task, f'task-social_{task}.log') for task in task_names}
     code_dir = Path(__file__).resolve().parent
-    metadata_df = pd.read_csv(join(code_dir,  'spacetop_task-social_run-metadata.csv'))
+    print(code_dir)
+    metadata_df = pd.read_csv(join(code_dir, 'spacetop_task-social_run-metadata.csv'))
 
     if args.bids_string is not None:
         task_name = get_task_type(args.bids_string, metadata_df)
