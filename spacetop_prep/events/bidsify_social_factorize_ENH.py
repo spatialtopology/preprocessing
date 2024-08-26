@@ -400,7 +400,18 @@ def process_behavioral_data(cue, expect, stim, outcome, beh_df, traj_df, trigger
     events = pd.concat([cue, expect, stim, outcome], ignore_index=True)
     events_sorted = events.sort_values(by='onset')
     if task_name == 'pain':
-        events_sorted = events_sorted[events_sorted['pain_stimulus_delivery_success'].notna()]
+        # Identify trial indices where 'pain_stimulus_delivery_success' is 'fail'
+        failed_trials = events_sorted[events_sorted['pain_stimulus_delivery_success'] == 'fail']['trial_index'].unique()
+
+        # Remove all rows that have the corresponding trial_index
+        events_sorted = events_sorted[~events_sorted['trial_index'].isin(failed_trials)]
+
+    # if task_name == 'pain'
+    # if there are rows that have column value 'pain_stimulus_delivery_success' == 'fail'
+    # identify rows in trial_index
+    # remove all rows that have the corresponding trial_index
+    # if task_name == 'pain':
+    #     events_sorted = events_sorted[events_sorted['pain_stimulus_delivery_success'].notna()]
     events_sorted.fillna('n/a', inplace=True)
 
 
