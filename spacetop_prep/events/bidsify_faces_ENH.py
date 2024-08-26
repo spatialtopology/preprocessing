@@ -20,7 +20,7 @@ def extract_bids(filename: str, key: str) -> str:
     return bids_info_rmext[0]
 
 def load_data_file(sub, ses, taskname, run, rating_type, beh_inputdir):
-    beh_fname_pattern = str(beh_inputdir / sub / taskname / f'{sub}_{ses}_{taskname}_{run}-{rating_type}_beh-preproc.csv')
+    beh_fname_pattern = str(Path(beh_inputdir) / sub / taskname / f'{sub}_{ses}_{taskname}_{run}-{rating_type}_beh-preproc.csv')
     matching_files = glob.glob(beh_fname_pattern)
     
     if matching_files:
@@ -29,6 +29,8 @@ def load_data_file(sub, ses, taskname, run, rating_type, beh_inputdir):
         # Check for the non-preproc file
         beh_fname = Path(beh_inputdir) / sub / taskname / f'{sub}_{ses}_{taskname}_{run}-{rating_type}_beh.csv'
         
+        # beh_fname = str(Path(beh_inputdir) / sub / taskname / f'{sub}_{ses}_{taskname}_{run}-{rating_type}_beh.csv')
+        # matching_files = glob.glob(beh_fname)
         if not beh_fname.is_file():
             # Attempt to find a temporary or alternative file
             temp_pattern = str(Path(beh_inputdir) / sub / taskname / ses / f'{sub}_{ses}_{taskname}*{run}*TEMP*.csv')
@@ -39,7 +41,11 @@ def load_data_file(sub, ses, taskname, run, rating_type, beh_inputdir):
             else:
                 print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
                 return None
-    return pd.read_csv(beh_fname)
+    try:
+        return pd.read_csv(beh_fname)
+    except Exception as e:
+        print(f'Error reading the behavior data file {beh_fname}: {e}')
+        return None
     
 
 def process_trial_data(source_beh, run, rating_type):
