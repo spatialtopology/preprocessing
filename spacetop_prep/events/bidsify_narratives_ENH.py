@@ -150,8 +150,35 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
     #     else:
     #         print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
     #         return None
-    beh_fname = find_behavior_file(beh_inputdir, sub, ses, run)
-    source_beh = pd.read_csv(beh_fname)
+    # Construct the expected file path
+    beh_fname = Path(beh_inputdir) / sub / 'task-narratives' / f'{sub}_{ses}_task-narratives_{run}.csv'
+
+    # Check if the main file exists
+    if not beh_fname.is_file():
+        # Attempt to find a temporary or alternative file
+        temp_fpath = Path(beh_inputdir) / sub / 'task-narratives' / f'{sub}_{ses}_task-narratives_{run}*TEMP*.csv'
+        
+        if temp_fpath.is_file():
+            beh_fname = temp_fpath
+        else:
+            print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
+            return None
+
+    # At this point, beh_fname should be a valid file path
+    print(f"Using behavior file: {beh_fname}")
+    
+    try:
+        # Load the behavioral data
+        source_beh = pd.read_csv(beh_fname)
+        if source_beh.empty:
+            print(f"The file {beh_fname} is empty.")
+            return None
+    except Exception as e:
+        print(f"Failed to read the file {beh_fname}: {e}")
+        return None
+    
+    # beh_fname = find_behavior_file(beh_inputdir, sub, ses, run)
+    # source_beh = pd.read_csv(beh_fname)
     new_beh = pd.DataFrame(columns=["onset", "duration", "trial_type", 
                             "response_x", "response_y",
                             "situation", "context", "modality", "stim_file"])    # new events to store
