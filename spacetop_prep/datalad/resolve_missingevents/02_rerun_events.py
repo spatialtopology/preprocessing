@@ -32,7 +32,7 @@ def run_subprocess(command: list):
         print(f"Error occurred: {e.stderr}")
 
 code_dir = '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep'
-log_file_path = Path(code_dir) / 'datalad' / 'resolve_missingevents' / 'output_log_file.log'  # Update this path to your desired log file location
+log_file_path = Path(code_dir) / 'datalad' / 'resolve_missingevents' / 'rerun_bidsify_events.log'  # Update this path to your desired log file location
 with open(log_file_path, 'w') as log_file:
     sys.stdout = log_file
     sys.stderr = log_file
@@ -52,13 +52,12 @@ with open(log_file_path, 'w') as log_file:
             continue
         # Determine the script to run based on the task name
         script_map = {
-            'task-alignvideos': 'bidsify_alignvideos_ENH.py',
-            'task-alignvideo': 'bidsify_alignvideos_ENH.py',
-            'task-social': 'bidsify_social_factorize_ENH.py',
-            'task-faces': 'bidsify_faces_ENH.py',
-            'task-fractional': 'bidsify_fractional_combine.py',
-            'task-fractional': 'bidsify_fractional_subtask.py',
-            'task-narratives': 'bidsify_narratives_ENH.py'
+            'task-alignvideos': ['bidsify_alignvideos_ENH.py'],
+            'task-alignvideo': ['bidsify_alignvideos_ENH.py'],
+            'task-social': ['bidsify_social_factorize_ENH.py'],
+            'task-faces': ['bidsify_faces_ENH.py'],
+            'task-fractional': ['bidsify_fractional_combine.py', 'bidsify_fractional_subtask.py'],
+            'task-narratives': ['bidsify_narratives_ENH.py']
         }
 
         scripts_to_run = script_map.get(taskname)
