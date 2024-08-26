@@ -92,7 +92,9 @@ def format_behavioral_data(source_beh, trial_index, t_runstart, rating_type):
     elif 'RT_adj' in source_beh.columns and pd.notna(source_beh.loc[trial_index, 'RT_adj']):
         duration = source_beh.loc[trial_index, 'RT_adj']
     else:
-        duration = "n/a"
+        duration = 'n/a'
+        print("no duration information for rating values")
+    
     if 'rating_converted' in source_beh.columns:
         response_value = source_beh.loc[trial_index, 'rating_converted']
     else:
@@ -126,6 +128,7 @@ def save_events_file(new_beh, bids_dir, sub, ses, taskname, run):
     new_fname = Path(bids_dir) / sub / ses / 'func' / f'{sub}_{ses}_{taskname}_acq-mb8_{run}_events.tsv'
     try:
         new_beh.to_csv(new_fname, sep='\t', index=False)
+        print(f"file saved {new_fname}")
     except Exception as e:
         print(f"Error saving file {new_fname}: {e}")
 
@@ -163,7 +166,7 @@ def main():
         faces_format2bids(sub, ses, taskname, run, rating_type, beh_inputdir, bids_dir)
     else:
 
-        faces_flist = glob.glob(str(beh_inputdir / '**' / f'*task-faces*.csv'), recursive=True)
+        faces_flist = glob.glob(str(beh_inputdir / '**' / f'*task-faces*preproc.csv'), recursive=True)
         filtered_faces_flist = [file for file in faces_flist if "sub-0001" not in file]
         
         for fpath in sorted(filtered_faces_flist):
