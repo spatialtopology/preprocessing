@@ -27,7 +27,7 @@ def load_data_file(sub, ses, taskname, run, rating_type, beh_inputdir):
         beh_fname = Path(matching_files[0])
     else:
         # Check for the non-preproc file
-        beh_fname = Path(beh_inputdir) / sub / taskname / f'{sub}_{ses}_{taskname}_{run}_beh.csv'
+        beh_fname = Path(beh_inputdir) / sub / taskname / f'{sub}_{ses}_{taskname}_{run}-{rating_type}_beh.csv'
         
         if not beh_fname.is_file():
             # Attempt to find a temporary or alternative file
