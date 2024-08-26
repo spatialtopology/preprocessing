@@ -306,7 +306,7 @@ def process_behavioral_data(cue, expect, stim, outcome, beh_df, traj_df, trigger
         ttldir = '/Volumes/spacetop_projects_cue/data/fmri/fmri01_onset/onset02_SPM'
 
         ttl_glob = glob.glob(join(ttldir, sub_bids, ses_bids, 
-                                f"{sub_bids}_{ses_bids}_task-social_{run_bids}_runtype-{runtype}_events_ttl.tsv"), recursive=True)
+                                f"{sub_bids}_{ses_bids}_task-social_{run_bids}_runtype-{task_name}_events_ttl.tsv"), recursive=True)
         stimulus_times = {
         'low_stim': {'rampup': 3.502, 'plateau': 5.000, 'rampdown': 3.402},
         'med_stim': {'rampup': 3.758, 'plateau': 5.000, 'rampdown': 3.606},
