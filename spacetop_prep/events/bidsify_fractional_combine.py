@@ -122,7 +122,7 @@ beh_inputdir = join(source_dir, 'd_beh')
 # 'event04_RT','accuracy'
 
 task_name = "tomsaxe"
-
+filtered_saxe_flist = None
 if args.bids_string:
     # Retrieve the task name from the bids_string using the provided metadata DataFrame
     task_name = get_task_name(args.bids_string, metadata_df)
@@ -284,7 +284,7 @@ with open(json_fname, 'w') as file:
 #                       posner
 # -------------------------------------------------
 task_name = "posner"
-
+filtered_posner_flist = None
 if args.bids_string:
     # Retrieve the task name from the bids_string using the provided metadata DataFrame
     task_name = get_task_name(args.bids_string, metadata_df)
@@ -563,7 +563,7 @@ pmod_accuracy
 
 """
 task_name = "memory"
-
+filtered_memory_flist = None
 
 if args.bids_string:
     # Retrieve the task name from the bids_string using the provided metadata DataFrame
@@ -793,19 +793,7 @@ event03_response_key: 1,3 -> convert to 1,2
 Yes = 1, No =2
 """
 task_name = "tomspunt"
-# current_path = Path.cwd()
-# spunt_flist = sorted(glob.glob(join(beh_inputdir, '**', f'*{task_name}_beh.csv'), recursive=True))
-
-# if args.bids_string and task_name in extract_bids(bids_string, 'task') :
-#     sub = extract_bids(Path(args.bids_string).name, 'sub')
-#     # sub = extract_bids(bids_string, 'sub')
-#     filtered_spunt_flist = glob.glob(join(beh_inputdir, sub,  '**','task-fractional', '**', f'*{bids_string}*.csv'), recursive=True)
-# else:
-#     # scans_list = sorted(glob.glob('sub-*/**/*ses-04*scans*.tsv', recursive=True))
-#     spunt_flist = glob.glob(join(beh_inputdir, '**', f'*{task_name}*.csv'), recursive=True)
-#     filtered_spunt_flist = [file for file in spunt_flist if "sub-0001" not in file]
-
-
+filtered_spunt_flist = None
 if args.bids_string:
     # Retrieve the task name from the bids_string using the provided metadata DataFrame
     task_name = get_task_name(args.bids_string, metadata_df)

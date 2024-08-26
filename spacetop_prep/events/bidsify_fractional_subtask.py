@@ -110,7 +110,7 @@ beh_inputdir = join(source_dir, 'd_beh')
 # 'event04_RT','accuracy'
 
 task_name = "tomsaxe"
-
+filtered_saxe_flist = None
 if args.bids_string:
     # Retrieve the task name from the bids_string using the provided metadata DataFrame
     task_name = get_task_name(args.bids_string, metadata_df)
@@ -273,7 +273,7 @@ with open(json_fname, 'w') as file:
 #                       posner
 # -------------------------------------------------
 task_name = "posner"
-
+filtered_posner_flist = None
 if args.bids_string:
     # Retrieve the task name from the bids_string using the provided metadata DataFrame
     task_name = get_task_name(args.bids_string, metadata_df)
@@ -496,7 +496,7 @@ pmod_accuracy
 
 """
 task_name = "memory"
-
+filtered_memory_flist = None
 
 if args.bids_string:
     # Retrieve the task name from the bids_string using the provided metadata DataFrame
@@ -714,7 +714,7 @@ event03_response_key: 1,3 -> convert to 1,2
 Yes = 1, No =2
 """
 task_name = "tomspunt"
-
+filtered_spunt_flist = None
 if args.bids_string:
     # Retrieve the task name from the bids_string using the provided metadata DataFrame
     task_name = get_task_name(args.bids_string, metadata_df)
