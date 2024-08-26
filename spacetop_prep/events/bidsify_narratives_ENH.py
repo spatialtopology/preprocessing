@@ -103,7 +103,7 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
 
     if not beh_fname.is_file():
     # Attempt to find a temporary or alternative file
-        temp_fpath = Path(beh_inputdir) / sub / 'task-narratives' / ses / f'{sub}_{ses}_task-narratives_{run}_beh_TEMP.csv'
+        temp_fpath = Path(beh_inputdir) / sub / 'task-narratives' / f'{sub}_{ses}_task-narratives_{run}*TEMP*.csv'
         
         if temp_fpath.is_file():
             beh_fname = temp_fpath
