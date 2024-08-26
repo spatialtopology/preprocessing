@@ -29,8 +29,6 @@ def load_data_file(sub, ses, taskname, run, rating_type, beh_inputdir):
         # Check for the non-preproc file
         beh_fname = Path(beh_inputdir) / sub / taskname / f'{sub}_{ses}_{taskname}_{run}-{rating_type}_beh.csv'
         
-        # beh_fname = str(Path(beh_inputdir) / sub / taskname / f'{sub}_{ses}_{taskname}_{run}-{rating_type}_beh.csv')
-        # matching_files = glob.glob(beh_fname)
         if not beh_fname.is_file():
             # Attempt to find a temporary or alternative file
             temp_pattern = str(Path(beh_inputdir) / sub / taskname / f'{sub}_{ses}_{taskname}*{run}*TEMP*.csv')
@@ -38,17 +36,15 @@ def load_data_file(sub, ses, taskname, run, rating_type, beh_inputdir):
             
             if temp_files:
                 beh_fname = Path(temp_files[0])
+                print(f'\t* found TEMP file. processing {sub}, {ses}, {run}')
             else:
                 print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
                 return None
-    try:
-        # return pd.read_csv(beh_fname)
-        source_beh = pd.read_csv(beh_fname)
-        if source_beh.empty:
-            print(f"The file {beh_fname} is empty.")
-            return None
-    except Exception as e:
-        print(f'Error reading the behavior data file {beh_fname}: {e}')
+
+    if beh_fname.is_file():
+        return beh_fname
+    else:
+        print(f'Error: The file {beh_fname} could not be found or is empty.')
         return None
     
 
@@ -133,7 +129,8 @@ def save_events_file(new_beh, bids_dir, sub, ses, taskname, run):
         print(f"Error saving file {new_fname}: {e}")
 
 def faces_format2bids(sub, ses, taskname, run, rating_type, beh_inputdir, bids_dir):
-    source_beh = load_data_file(sub, ses, taskname, run, rating_type, beh_inputdir)
+    beh_fname = load_data_file(sub, ses, taskname, run, rating_type, beh_inputdir)
+    source_beh = pd.read_csv(beh_fname)
     if source_beh is not None:
         new_beh = process_trial_data(source_beh, run, rating_type) 
         save_events_file(new_beh, bids_dir, sub, ses, taskname, run)
