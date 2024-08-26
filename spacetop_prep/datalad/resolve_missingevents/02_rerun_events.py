@@ -56,24 +56,28 @@ with open(log_file_path, 'w') as log_file:
             'task-alignvideo': 'bidsify_alignvideos_ENH.py',
             'task-social': 'bidsify_social_factorize_ENH.py',
             'task-faces': 'bidsify_faces_ENH.py',
-            'task-fractional': 'bidsify_fractional_ENH.py',
+            'task-fractional': 'bidsify_fractional_combine.py',
+            'task-fractional': 'bidsify_fractional_subtask.py',
             'task-narratives': 'bidsify_narratives_ENH.py'
         }
-        script_name = script_map.get(taskname)
-        if script_name is None:
+
+        scripts_to_run = script_map.get(taskname)
+        if scripts_to_run is None:
             print(f"Unknown task: {taskname}. Skipping index {index} {bids_string}\n")
             continue
 
-        script_path = Path(code_dir) / 'events' / script_name
-        # Verify the script path exists
-        if not script_path.is_file():
-            print(f"Script {script_path} not found. Skipping index {index} {bids_string}\n")
-            continue
+        # Execute each script in the list for the given task
+        for script_name in scripts_to_run:
+            script_path = Path(code_dir) / 'events' / script_name
+            # Verify the script path exists
+            if not script_path.is_file():
+                print(f"Script {script_path} not found. Skipping index {index} {bids_string}\n")
+                continue
 
-        command = ['python', str(script_path), '--bids_string', bids_string,  ]
-        print(f"Running command for index {index}: {bids_string} {command}")
-        run_subprocess(command)
-        print(f"Complete\n")
+            command = ['python', str(script_path), '--bids_string', bids_string]
+            print(f"Running command for index {index}: {bids_string} {command}")
+            run_subprocess(command)
+            print(f"Complete\n")
 
     # Reset stdout and stderr back to default
     sys.stdout = sys.__stdout__
