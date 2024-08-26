@@ -151,24 +151,38 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
     #         print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
     #         return None
     # Construct the expected file path
-    beh_fname = Path(beh_inputdir) / sub / 'task-narratives' / f'{sub}_{ses}_task-narratives_{run}.csv'
 
-    # Check if the main file exists
-    if not beh_fname.is_file():
-        # Attempt to find a temporary or alternative file
-        temp_fpath = Path(beh_inputdir) / sub / 'task-narratives' / f'{sub}_{ses}_task-narratives_{run}*TEMP*.csv'
+
+import glob
+from pathlib import Path
+import pandas as pd
+
+def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
+    # Initial file search with wildcards
+    beh_fname_pattern = str(Path(beh_inputdir) / sub / 'task-narratives' / f'{sub}_{ses}_task-narratives_{run}*preproc.csv')
+    matching_files = glob.glob(beh_fname_pattern)
+    
+    if matching_files:
+        beh_fname = Path(matching_files[0])
+    else:
+        # Check for the non-preproc file
+        beh_fname = Path(beh_inputdir) / sub / 'task-narratives' / f'{sub}_{ses}_task-narratives_{run}_beh.csv'
         
-        if temp_fpath.is_file():
-            beh_fname = temp_fpath
-        else:
-            print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
-            return None
-
-    # At this point, beh_fname should be a valid file path
+        if not beh_fname.is_file():
+            # Attempt to find a temporary or alternative file
+            temp_pattern = str(Path(beh_inputdir) / sub / 'task-narratives' / f'{sub}_{ses}_task-narratives_{run}*TEMP*.csv')
+            temp_files = glob.glob(temp_pattern)
+            
+            if temp_files:
+                beh_fname = Path(temp_files[0])
+            else:
+                print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
+                return None
+    
+    # If a file is found, proceed to load it
     print(f"Using behavior file: {beh_fname}")
     
     try:
-        # Load the behavioral data
         source_beh = pd.read_csv(beh_fname)
         if source_beh.empty:
             print(f"The file {beh_fname} is empty.")
