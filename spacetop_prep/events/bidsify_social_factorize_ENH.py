@@ -268,7 +268,7 @@ def process_task(task_name, filtered_file_list, logger, metadata_df):
 
 
 def process_behavioral_data(cue, expect, stim, outcome, beh_df, traj_df, trigger, task_name, beh_savedir, sub_bids, ses_bids, run_bids, logger):
-    # Cue
+    # Cue ______________________________________________________________________
     cue['onset'] = (beh_df['event01_cue_onset'] - trigger).round(2)
     cue['duration'] = (beh_df['ISI01_onset'] - beh_df['event01_cue_onset']).round(2)
     cue['run_type'] = task_name
@@ -278,7 +278,7 @@ def process_behavioral_data(cue, expect, stim, outcome, beh_df, traj_df, trigger
     cue['stim_file'] = beh_df["event01_cue_filename"].apply(
         lambda x: f'task-social/cue/runtype-{task_name}/{"sch/" if x.startswith("h") else "scl/"}' + x
     )
-    # Expect
+    # Expect ___________________________________________________________________
     expect['onset'] = (beh_df['event02_expect_displayonset'] - trigger).round(2)
     expect['duration'] = (beh_df['event02_expect_RT']).round(2)
     expect['run_type'] = task_name
@@ -288,8 +288,14 @@ def process_behavioral_data(cue, expect, stim, outcome, beh_df, traj_df, trigger
     expect['rating_value_fillna'] = beh_df['event02_expect_fillna'].round(2)
     expect['rating_glmslabel'] = expect['rating_value'].apply(categorize_rating)
     expect['rating_glmslabel_fillna'] = expect['rating_value_fillna'].apply(categorize_rating)
-    expect['rating_mouseonset'] = (traj_df['expect_motiononset']).round(2)
-    expect['rating_mousedur'] = (traj_df['expect_motiondur']).round(2)
+
+    if traj_df is not None:
+        expect['rating_mouseonset'] = (traj_df['expect_motiononset']).round(2)
+        expect['rating_mousedur'] = (traj_df['expect_motiondur']).round(2)
+    else:
+        expect['rating_mouseonset'] = 'n/a'
+        expect['rating_mousedur'] = 'n/a'
+        
     expect['cue'] = beh_df['event01_cue_type']
     expect['stim_file'] = beh_df["event01_cue_filename"].apply(
         lambda x: f'task-social/cue/runtype-{task_name}/{"sch/" if x.startswith("h") else "scl/"}' + x
@@ -359,7 +365,7 @@ def process_behavioral_data(cue, expect, stim, outcome, beh_df, traj_df, trigger
         stim['cognitive_participant_response'] = beh_df['event03_stimulusC_responsekeyname'].map({'right':'same', 'left':'diff'})
         stim['cognitive_response_accuracy'] = stim['cognitive_correct_response'] == stim['cognitive_participant_response']
 
-    # Outcome
+    # Outcome __________________________________________________________________
     outcome['onset'] = (beh_df['event04_actual_displayonset'] - trigger).round(2)
     outcome['duration'] = beh_df['event04_actual_RT'].round(2)
     outcome['run_type'] = task_name
@@ -369,8 +375,15 @@ def process_behavioral_data(cue, expect, stim, outcome, beh_df, traj_df, trigger
     outcome['rating_value_fillna'] = beh_df['event04_outcome_fillna']
     outcome['rating_glmslabel'] = outcome['rating_value'].apply(categorize_rating)
     outcome['rating_glmslabel_fillna'] = outcome['rating_value_fillna'].apply(categorize_rating)
-    outcome['rating_mouseonset'] = (traj_df['outcome_motiononset']).round(2)
-    outcome['rating_mousedur'] = (traj_df['outcome_motiondur']).round(2)
+
+    if traj_df is not None:
+        outcome['rating_mouseonset'] = (traj_df['expect_motiononset']).round(2)
+        outcome['rating_mousedur'] = (traj_df['expect_motiondur']).round(2)
+    else:
+        outcome['rating_mouseonset'] = 'n/a'
+        outcome['rating_mousedur'] = 'n/a'
+    # outcome['rating_mouseonset'] = (traj_df['outcome_motiononset']).round(2)
+    # outcome['rating_mousedur'] = (traj_df['outcome_motiondur']).round(2)
 
     outcome['cue'] = beh_df['event01_cue_type'] 
     outcome['stimulusintensity'] =  beh_df['event03_stimulus_type']
@@ -412,7 +425,7 @@ def main():
     logger_dict = {task: setup_logger(task, f'task-social_{task}.log') for task in task_names}
     code_dir = Path(__file__).resolve().parent
     print(code_dir)
-    metadata_df = pd.read_csv(join(code_dir, 'spacetop_task-social_run-metadata.csv'))
+    metadata_df = pd.read_csv(join(code_dir, 'spacetop_task-social_run-metadata_parameter.csv'))
 
     if args.bids_string is not None:
         task_name = get_task_type(args.bids_string, metadata_df)
