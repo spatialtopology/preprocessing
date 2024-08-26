@@ -40,12 +40,12 @@ def process_trial_data(source_beh, run, rating_type):
     t_runstart = source_beh.loc[0, 'param_trigger_onset']
     
     for t in range(len(source_beh)):
-        trial_data = create_trial_data(source_beh, t, t_runstart, rating_type) #run_dict[run])
+        trial_data = faces_format_to_bids(source_beh, t, t_runstart, rating_type) #run_dict[run])
         new_beh = pd.concat([new_beh, trial_data], ignore_index=True)
 
     return new_beh
 
-def create_trial_data(source_beh, trial_index, t_runstart, rating_type):
+def faces_format_to_bids(source_beh, trial_index, t_runstart, rating_type):
     new_beh = pd.DataFrame()
 
     # Extract common data
@@ -71,15 +71,25 @@ def create_trial_data(source_beh, trial_index, t_runstart, rating_type):
     duration = source_beh.loc[trial_index, 'event03_rating_RT'] if pd.notna(source_beh.loc[trial_index, 'event03_rating_RT']) else source_beh.loc[trial_index, 'RT_adj']
 
     trial_type = 'rating'
-    response_value = source_beh.loc[trial_index, 'rating_converted']
+    if 'rating_converted' in source_beh.columns:
+        response_value = source_beh.loc[trial_index, 'rating_converted']
+    else:
+        response_value = 'n/a'
     newRow = pd.DataFrame({"onset": onset, "duration": duration, "trial_type": trial_type,
                            "response_value": response_value, "rating_type": rating_type,
                            'expression': expression, 'sex': sex, "race": race, "age": age}, index=[0])
     new_beh = pd.concat([new_beh, newRow], ignore_index=True)
 
     # Event 3. rating mouse trajectory
-    onset += source_beh.loc[trial_index, 'motion_onset']
-    duration = source_beh.loc[trial_index, 'motion_dur']
+    if 'motion_onset' in source_beh.columns:
+        onset += source_beh.loc[trial_index, 'motion_onset']
+        duration = source_beh.loc[trial_index, 'motion_dur']
+    else:
+        onset = 'n/a'
+        duration = 'n/a'  # Or some default value if neither column exists
+
+    # onset += source_beh.loc[trial_index, 'motion_onset']
+    # duration = source_beh.loc[trial_index, 'motion_dur']
     trial_type = 'rating_mouse_trajectory'
     newRow = pd.DataFrame({"onset": onset, "duration": duration, "trial_type": trial_type,
                            "response_value": response_value, "rating_type": rating_type,
