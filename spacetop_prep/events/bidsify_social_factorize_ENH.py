@@ -396,9 +396,13 @@ def process_behavioral_data(cue, expect, stim, outcome, beh_df, traj_df, trigger
 
 
 
+
     events = pd.concat([cue, expect, stim, outcome], ignore_index=True)
     events_sorted = events.sort_values(by='onset')
     events_sorted.fillna('n/a', inplace=True)
+    if task_name == 'pain':
+        events_sorted = events_sorted[events_sorted['pain_stimulus_delivery_success'].notna()]
+
     if os.path.exists(beh_savedir) and os.path.isdir(beh_savedir):
         events_sorted.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-social_acq-mb8_{run_bids}_events.tsv"), sep='\t', index=False)
     else:
