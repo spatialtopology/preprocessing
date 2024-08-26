@@ -216,7 +216,7 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
     for t in range(trial_num):    # each trial
 
         # Situation and context
-        r = int(run) - 1  # Adjust the run number to be zero-based
+        r = int(run.split('-')[1]) - 1   # Adjust the run number to be zero-based
         
         if t < 9:
             situation_chunk = DesignTable['Situation'][DesignTable['Narrative'] == narratives[r][t % 2]]
