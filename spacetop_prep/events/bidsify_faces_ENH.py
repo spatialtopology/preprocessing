@@ -82,7 +82,16 @@ def format_behavioral_data(source_beh, trial_index, t_runstart, rating_type):
     # Event 2. rating
     onset = source_beh.loc[trial_index, 'event03_rating_displayonset'] - t_runstart
     # duration = source_beh.loc[trial_index, 'event03_rating_RT'] if ~np.isnan(source_beh.loc[trial_index, 'event03_rating_RT']) else source_beh.loc[trial_index, 'RT_adj']
-    duration = source_beh.loc[trial_index, 'event03_rating_RT'] if pd.notna(source_beh.loc[trial_index, 'event03_rating_RT']) else source_beh.loc[trial_index, 'RT_adj']
+    # duration = source_beh.loc[trial_index, 'event03_rating_RT'] if pd.notna(source_beh.loc[trial_index, 'event03_rating_RT']) else source_beh.loc[trial_index, 'RT_adj']
+
+    if 'event03_rating_RT' in source_beh.columns and pd.notna(source_beh.loc[trial_index, 'event03_rating_RT']):
+        duration = source_beh.loc[trial_index, 'event03_rating_RT']
+    elif 'RT_adj' in source_beh.columns and pd.notna(source_beh.loc[trial_index, 'RT_adj']):
+        duration = source_beh.loc[trial_index, 'RT_adj']
+    else:
+        duration = "n/a"
+
+
 
     trial_type = 'rating'
     if 'rating_converted' in source_beh.columns:
