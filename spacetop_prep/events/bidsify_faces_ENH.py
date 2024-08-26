@@ -33,7 +33,7 @@ def load_data_file(sub, ses, taskname, run, rating_type, beh_inputdir):
         # matching_files = glob.glob(beh_fname)
         if not beh_fname.is_file():
             # Attempt to find a temporary or alternative file
-            temp_pattern = str(Path(beh_inputdir) / sub / taskname / ses / f'{sub}_{ses}_{taskname}*{run}*TEMP*.csv')
+            temp_pattern = str(Path(beh_inputdir) / sub / taskname / f'{sub}_{ses}_{taskname}*{run}*TEMP*.csv')
             temp_files = glob.glob(temp_pattern)
             
             if temp_files:
@@ -42,7 +42,11 @@ def load_data_file(sub, ses, taskname, run, rating_type, beh_inputdir):
                 print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
                 return None
     try:
-        return pd.read_csv(beh_fname)
+        # return pd.read_csv(beh_fname)
+        source_beh = pd.read_csv(beh_fname)
+        if source_beh.empty:
+            print(f"The file {beh_fname} is empty.")
+            return None
     except Exception as e:
         print(f'Error reading the behavior data file {beh_fname}: {e}')
         return None
@@ -56,7 +60,6 @@ def process_trial_data(source_beh, run, rating_type):
     for t in range(len(source_beh)):
         trial_data = format_behavioral_data(source_beh, t, t_runstart, rating_type) #run_dict[run])
         new_beh = pd.concat([new_beh, trial_data], ignore_index=True)
-
     return new_beh
 
 def format_behavioral_data(source_beh, trial_index, t_runstart, rating_type):
@@ -69,7 +72,7 @@ def format_behavioral_data(source_beh, trial_index, t_runstart, rating_type):
     race = conditions[3][1:]
     age = conditions[4][1:-4].lower()
 
-    # Event 1. face video playing
+    # Event 1. face video playing ______________________________________________
     onset = source_beh.loc[trial_index, 'event02_face_onset'] - t_runstart
     duration = source_beh.loc[trial_index, 'event03_rating_displayonset'] - source_beh.loc[trial_index, 'event02_face_onset']
     trial_type = 'face'
@@ -79,21 +82,17 @@ def format_behavioral_data(source_beh, trial_index, t_runstart, rating_type):
                            "race": race, "age": age, 'stim_file': stim_file}, index=[0])
     new_beh = pd.concat([new_beh, newRow], ignore_index=True)
 
-    # Event 2. rating
+    # Event 2. rating __________________________________________________________
+    trial_type = 'rating'
     onset = source_beh.loc[trial_index, 'event03_rating_displayonset'] - t_runstart
     # duration = source_beh.loc[trial_index, 'event03_rating_RT'] if ~np.isnan(source_beh.loc[trial_index, 'event03_rating_RT']) else source_beh.loc[trial_index, 'RT_adj']
     # duration = source_beh.loc[trial_index, 'event03_rating_RT'] if pd.notna(source_beh.loc[trial_index, 'event03_rating_RT']) else source_beh.loc[trial_index, 'RT_adj']
-
     if 'event03_rating_RT' in source_beh.columns and pd.notna(source_beh.loc[trial_index, 'event03_rating_RT']):
         duration = source_beh.loc[trial_index, 'event03_rating_RT']
     elif 'RT_adj' in source_beh.columns and pd.notna(source_beh.loc[trial_index, 'RT_adj']):
         duration = source_beh.loc[trial_index, 'RT_adj']
     else:
         duration = "n/a"
-
-
-
-    trial_type = 'rating'
     if 'rating_converted' in source_beh.columns:
         response_value = source_beh.loc[trial_index, 'rating_converted']
     else:
@@ -103,22 +102,20 @@ def format_behavioral_data(source_beh, trial_index, t_runstart, rating_type):
                            'expression': expression, 'sex': sex, "race": race, "age": age}, index=[0])
     new_beh = pd.concat([new_beh, newRow], ignore_index=True)
 
-    # Event 3. rating mouse trajectory
+    # Event 3. rating mouse trajectory _________________________________________
+    trial_type = 'rating_mouse_trajectory'
     if 'motion_onset' in source_beh.columns:
         onset += source_beh.loc[trial_index, 'motion_onset']
         duration = source_beh.loc[trial_index, 'motion_dur']
     else:
         onset = 'n/a'
         duration = 'n/a'  # Or some default value if neither column exists
-
     # onset += source_beh.loc[trial_index, 'motion_onset']
     # duration = source_beh.loc[trial_index, 'motion_dur']
-    trial_type = 'rating_mouse_trajectory'
     newRow = pd.DataFrame({"onset": onset, "duration": duration, "trial_type": trial_type,
                            "response_value": response_value, "rating_type": rating_type,
                            'expression': expression, 'sex': sex, "race": race, "age": age}, index=[0])
     new_beh = pd.concat([new_beh, newRow], ignore_index=True)
-
     return new_beh
 
 def save_events_file(new_beh, bids_dir, sub, ses, taskname, run):
@@ -135,7 +132,7 @@ def save_events_file(new_beh, bids_dir, sub, ses, taskname, run):
 def faces_format2bids(sub, ses, taskname, run, rating_type, beh_inputdir, bids_dir):
     source_beh = load_data_file(sub, ses, taskname, run, rating_type, beh_inputdir)
     if source_beh is not None:
-        new_beh = process_trial_data(source_beh, run, rating_type) #def process_trial_data(source_beh, run, rating_type):
+        new_beh = process_trial_data(source_beh, run, rating_type) 
         save_events_file(new_beh, bids_dir, sub, ses, taskname, run)
 
 
