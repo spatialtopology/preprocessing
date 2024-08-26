@@ -1,0 +1,618 @@
+Running command for index 0: sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_alignvideos_ENH.py', '--bids_string', 'sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-01_events.tsv']
+No behavior data file found for sub-0001, ses-01, run-01. Checked both standard and temporary filenames.
+
+Complete
+
+Running command for index 1: sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_alignvideos_ENH.py', '--bids_string', 'sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-02_events.tsv']
+No behavior data file found for sub-0001, ses-01, run-02. Checked both standard and temporary filenames.
+
+Complete
+
+Running command for index 2: sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_alignvideos_ENH.py', '--bids_string', 'sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-03_events.tsv']
+No behavior data file found for sub-0001, ses-01, run-03. Checked both standard and temporary filenames.
+
+Complete
+
+Running command for index 3: sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-04_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_alignvideos_ENH.py', '--bids_string', 'sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-04_events.tsv']
+No behavior data file found for sub-0001, ses-01, run-04. Checked both standard and temporary filenames.
+
+Complete
+
+Running command for index 4: sub-0001/ses-02/func/sub-0001_ses-02_task-faces_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_faces_ENH.py', '--bids_string', 'sub-0001/ses-02/func/sub-0001_ses-02_task-faces_acq-mb8_run-01_events.tsv']
+no duration information for rating values
+no duration information for rating values
+file saved /Users/h/Documents/projects_local/1076_spacetop/sub-0001/ses-02/func/sub-0001_ses-02_task-faces_acq-mb8_run-01_events.tsv
+
+Complete
+
+Running command for index 5: sub-0001/ses-02/func/sub-0001_ses-02_task-faces_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_faces_ENH.py', '--bids_string', 'sub-0001/ses-02/func/sub-0001_ses-02_task-faces_acq-mb8_run-02_events.tsv']
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+file saved /Users/h/Documents/projects_local/1076_spacetop/sub-0001/ses-02/func/sub-0001_ses-02_task-faces_acq-mb8_run-02_events.tsv
+
+Complete
+
+Running command for index 6: sub-0001/ses-02/func/sub-0001_ses-02_task-faces_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_faces_ENH.py', '--bids_string', 'sub-0001/ses-02/func/sub-0001_ses-02_task-faces_acq-mb8_run-03_events.tsv']
+no duration information for rating values
+file saved /Users/h/Documents/projects_local/1076_spacetop/sub-0001/ses-02/func/sub-0001_ses-02_task-faces_acq-mb8_run-03_events.tsv
+
+Complete
+
+Running command for index 7: sub-0001/ses-04/func/sub-0001_ses-04_task-fractional_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_fractional_combine.py', '--bids_string', 'sub-0001/ses-04/func/sub-0001_ses-04_task-fractional_acq-mb8_run-01_events.tsv']
+No behavior data file found for sub-0001/ses-04/func/sub-0001_ses-04_task-fractional_acq-mb8_run-01_events.tsv. Checked both standard and temporary filenames.
+No behavior data file found for sub-0001/ses-04/func/sub-0001_ses-04_task-fractional_acq-mb8_run-01_events.tsv. Skipping to next task.
+No behavior data file found for sub-0001/ses-04/func/sub-0001_ses-04_task-fractional_acq-mb8_run-01_events.tsv. Skipping to next task.
+No behavior data file found for sub-0001/ses-04/func/sub-0001_ses-04_task-fractional_acq-mb8_run-01_events.tsv. Skipping to next task.
+
+Complete
+
+Running command for index 7: sub-0001/ses-04/func/sub-0001_ses-04_task-fractional_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_fractional_subtask.py', '--bids_string', 'sub-0001/ses-04/func/sub-0001_ses-04_task-fractional_acq-mb8_run-01_events.tsv']
+No behavior data file found for sub-0001/ses-04/func/sub-0001_ses-04_task-fractional_acq-mb8_run-01_events.tsv. Checked both standard and temporary filenames.
+
+Complete
+
+Running command for index 8: sub-0001/ses-04/func/sub-0001_ses-04_task-social_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0001/ses-04/func/sub-0001_ses-04_task-social_acq-mb8_run-01_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+Task nan is not recognized. Skipping...
+
+Complete
+
+Running command for index 9: sub-0001/ses-04/func/sub-0001_ses-04_task-social_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0001/ses-04/func/sub-0001_ses-04_task-social_acq-mb8_run-02_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+Task nan is not recognized. Skipping...
+
+Complete
+
+Running command for index 10: sub-0001/ses-04/func/sub-0001_ses-04_task-social_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0001/ses-04/func/sub-0001_ses-04_task-social_acq-mb8_run-03_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+Task nan is not recognized. Skipping...
+
+Complete
+
+Running command for index 11: sub-0003/ses-02/func/sub-0003_ses-02_task-faces_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_faces_ENH.py', '--bids_string', 'sub-0003/ses-02/func/sub-0003_ses-02_task-faces_acq-mb8_run-01_events.tsv']
+file saved /Users/h/Documents/projects_local/1076_spacetop/sub-0003/ses-02/func/sub-0003_ses-02_task-faces_acq-mb8_run-01_events.tsv
+
+Complete
+
+Running command for index 12: sub-0003/ses-02/func/sub-0003_ses-02_task-faces_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_faces_ENH.py', '--bids_string', 'sub-0003/ses-02/func/sub-0003_ses-02_task-faces_acq-mb8_run-02_events.tsv']
+file saved /Users/h/Documents/projects_local/1076_spacetop/sub-0003/ses-02/func/sub-0003_ses-02_task-faces_acq-mb8_run-02_events.tsv
+
+Complete
+
+Running command for index 13: sub-0003/ses-02/func/sub-0003_ses-02_task-faces_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_faces_ENH.py', '--bids_string', 'sub-0003/ses-02/func/sub-0003_ses-02_task-faces_acq-mb8_run-03_events.tsv']
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+file saved /Users/h/Documents/projects_local/1076_spacetop/sub-0003/ses-02/func/sub-0003_ses-02_task-faces_acq-mb8_run-03_events.tsv
+
+Complete
+
+Running command for index 14: sub-0004/ses-02/func/sub-0004_ses-02_task-faces_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_faces_ENH.py', '--bids_string', 'sub-0004/ses-02/func/sub-0004_ses-02_task-faces_acq-mb8_run-01_events.tsv']
+file saved /Users/h/Documents/projects_local/1076_spacetop/sub-0004/ses-02/func/sub-0004_ses-02_task-faces_acq-mb8_run-01_events.tsv
+
+Complete
+
+Running command for index 15: sub-0004/ses-02/func/sub-0004_ses-02_task-faces_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_faces_ENH.py', '--bids_string', 'sub-0004/ses-02/func/sub-0004_ses-02_task-faces_acq-mb8_run-02_events.tsv']
+file saved /Users/h/Documents/projects_local/1076_spacetop/sub-0004/ses-02/func/sub-0004_ses-02_task-faces_acq-mb8_run-02_events.tsv
+
+Complete
+
+Running command for index 16: sub-0004/ses-02/func/sub-0004_ses-02_task-faces_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_faces_ENH.py', '--bids_string', 'sub-0004/ses-02/func/sub-0004_ses-02_task-faces_acq-mb8_run-03_events.tsv']
+file saved /Users/h/Documents/projects_local/1076_spacetop/sub-0004/ses-02/func/sub-0004_ses-02_task-faces_acq-mb8_run-03_events.tsv
+
+Complete
+
+Running command for index 17: sub-0005/ses-02/func/sub-0005_ses-02_task-faces_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_faces_ENH.py', '--bids_string', 'sub-0005/ses-02/func/sub-0005_ses-02_task-faces_acq-mb8_run-01_events.tsv']
+file saved /Users/h/Documents/projects_local/1076_spacetop/sub-0005/ses-02/func/sub-0005_ses-02_task-faces_acq-mb8_run-01_events.tsv
+
+Complete
+
+Running command for index 18: sub-0005/ses-02/func/sub-0005_ses-02_task-faces_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_faces_ENH.py', '--bids_string', 'sub-0005/ses-02/func/sub-0005_ses-02_task-faces_acq-mb8_run-02_events.tsv']
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+file saved /Users/h/Documents/projects_local/1076_spacetop/sub-0005/ses-02/func/sub-0005_ses-02_task-faces_acq-mb8_run-02_events.tsv
+
+Complete
+
+Running command for index 19: sub-0005/ses-02/func/sub-0005_ses-02_task-faces_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_faces_ENH.py', '--bids_string', 'sub-0005/ses-02/func/sub-0005_ses-02_task-faces_acq-mb8_run-03_events.tsv']
+Error occurred: Traceback (most recent call last):
+  File "/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_faces_ENH.py", line 179, in <module>
+    main()
+  File "/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_faces_ENH.py", line 163, in main
+    faces_format2bids(sub, ses, taskname, run, rating_type, beh_inputdir, bids_dir)
+  File "/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_faces_ENH.py", line 133, in faces_format2bids
+    source_beh = pd.read_csv(beh_fname)
+                 ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/h/miniconda3/envs/spacetop/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/h/miniconda3/envs/spacetop/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/h/miniconda3/envs/spacetop/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/h/miniconda3/envs/spacetop/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1880, in _make_engine
+    self.handles = get_handle(
+                   ^^^^^^^^^^^
+  File "/Users/h/miniconda3/envs/spacetop/lib/python3.11/site-packages/pandas/io/common.py", line 728, in get_handle
+    ioargs = _get_filepath_or_buffer(
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/h/miniconda3/envs/spacetop/lib/python3.11/site-packages/pandas/io/common.py", line 472, in _get_filepath_or_buffer
+    raise ValueError(msg)
+ValueError: Invalid file path or buffer object type: <class 'NoneType'>
+
+Complete
+
+Running command for index 20: sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_fractional_combine.py', '--bids_string', 'sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-01_events.tsv']
+No behavior data file found for sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-01_events.tsv. Skipping to next task.
+No behavior data file found for sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-01_events.tsv. Skipping to next task.
+No behavior data file found for sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-01_events.tsv. Skipping to next task.
+No behavior data file found for sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-01_events.tsv. Checked both standard and temporary filenames.
+
+Complete
+
+Running command for index 20: sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_fractional_subtask.py', '--bids_string', 'sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-01_events.tsv']
+No behavior data file found for sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-01_events.tsv. Skipping to next task.
+No behavior data file found for sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-01_events.tsv. Checked both standard and temporary filenames.
+
+Complete
+
+Running command for index 21: sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_fractional_combine.py', '--bids_string', 'sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-02_events.tsv']
+No behavior data file found for sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-02_events.tsv. Skipping to next task.
+No behavior data file found for sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-02_events.tsv. Checked both standard and temporary filenames.
+No behavior data file found for sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-02_events.tsv. Skipping to next task.
+No behavior data file found for sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-02_events.tsv. Skipping to next task.
+
+Complete
+
+Running command for index 21: sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_fractional_subtask.py', '--bids_string', 'sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-02_events.tsv']
+No behavior data file found for sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-02_events.tsv. Skipping to next task.
+No behavior data file found for sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-02_events.tsv. Checked both standard and temporary filenames.
+
+Complete
+
+Running command for index 22: sub-0007/ses-03/func/sub-0007_ses-03_task-social_acq-mb8_run-06_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0007/ses-03/func/sub-0007_ses-03_task-social_acq-mb8_run-06_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+No behavior data file found for sub-0007, ses-03, run-06.
+
+Complete
+
+Running command for index 23: sub-0008/ses-02/func/sub-0008_ses-02_task-faces_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_faces_ENH.py', '--bids_string', 'sub-0008/ses-02/func/sub-0008_ses-02_task-faces_acq-mb8_run-01_events.tsv']
+file saved /Users/h/Documents/projects_local/1076_spacetop/sub-0008/ses-02/func/sub-0008_ses-02_task-faces_acq-mb8_run-01_events.tsv
+
+Complete
+
+Running command for index 24: sub-0008/ses-02/func/sub-0008_ses-02_task-faces_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_faces_ENH.py', '--bids_string', 'sub-0008/ses-02/func/sub-0008_ses-02_task-faces_acq-mb8_run-02_events.tsv']
+no duration information for rating values
+file saved /Users/h/Documents/projects_local/1076_spacetop/sub-0008/ses-02/func/sub-0008_ses-02_task-faces_acq-mb8_run-02_events.tsv
+
+Complete
+
+Running command for index 25: sub-0008/ses-02/func/sub-0008_ses-02_task-faces_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_faces_ENH.py', '--bids_string', 'sub-0008/ses-02/func/sub-0008_ses-02_task-faces_acq-mb8_run-03_events.tsv']
+no duration information for rating values
+no duration information for rating values
+file saved /Users/h/Documents/projects_local/1076_spacetop/sub-0008/ses-02/func/sub-0008_ses-02_task-faces_acq-mb8_run-03_events.tsv
+
+Complete
+
+Running command for index 26: sub-0008/ses-04/func/sub-0008_ses-04_task-social_acq-mb8_run-05_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0008/ses-04/func/sub-0008_ses-04_task-social_acq-mb8_run-05_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+
+Complete
+
+Running command for index 27: sub-0009/ses-02/func/sub-0009_ses-02_task-narratives_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0009/ses-02/func/sub-0009_ses-02_task-narratives_acq-mb8_run-01_events.tsv']
+No behavior data file found for sub-0009, ses-02, run-01. Checked both standard and temporary filenames.
+
+Complete
+
+Running command for index 28: sub-0009/ses-02/func/sub-0009_ses-02_task-narratives_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0009/ses-02/func/sub-0009_ses-02_task-narratives_acq-mb8_run-02_events.tsv']
+No behavior data file found for sub-0009, ses-02, run-02. Checked both standard and temporary filenames.
+
+Complete
+
+Running command for index 29: sub-0009/ses-02/func/sub-0009_ses-02_task-narratives_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0009/ses-02/func/sub-0009_ses-02_task-narratives_acq-mb8_run-03_events.tsv']
+No behavior data file found for sub-0009, ses-02, run-03. Checked both standard and temporary filenames.
+
+Complete
+
+Running command for index 30: sub-0009/ses-02/func/sub-0009_ses-02_task-narratives_acq-mb8_run-04_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0009/ses-02/func/sub-0009_ses-02_task-narratives_acq-mb8_run-04_events.tsv']
+No behavior data file found for sub-0009, ses-02, run-04. Checked both standard and temporary filenames.
+
+Complete
+
+Running command for index 31: sub-0011/ses-02/func/sub-0011_ses-02_task-narratives_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0011/ses-02/func/sub-0011_ses-02_task-narratives_acq-mb8_run-02_events.tsv']
+Using behavior file: /Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh/sub-0011/task-narratives/sub-0011_ses-02_task-narratives_run-02_beh_TEMP.csv
+
+Complete
+
+Running command for index 32: sub-0011/ses-03/func/sub-0011_ses-03_task-social_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0011/ses-03/func/sub-0011_ses-03_task-social_acq-mb8_run-02_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+
+Complete
+
+Running command for index 33: sub-0011/ses-04/func/sub-0011_ses-04_task-social_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0011/ses-04/func/sub-0011_ses-04_task-social_acq-mb8_run-01_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+
+Complete
+
+Running command for index 34: sub-0013/ses-01/func/sub-0013_ses-01_task-social_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0013/ses-01/func/sub-0013_ses-01_task-social_acq-mb8_run-03_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+
+Complete
+
+Running command for index 35: sub-0014/ses-01/func/sub-0014_ses-01_task-social_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0014/ses-01/func/sub-0014_ses-01_task-social_acq-mb8_run-02_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+
+Complete
+
+Running command for index 36: sub-0014/ses-02/func/sub-0014_ses-02_task-narratives_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0014/ses-02/func/sub-0014_ses-02_task-narratives_acq-mb8_run-01_events.tsv']
+No behavior data file found for sub-0014, ses-02, run-01. Checked both standard and temporary filenames.
+
+Complete
+
+Running command for index 37: sub-0016/ses-04/func/sub-0016_ses-04_task-alignvideo_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_alignvideos_ENH.py', '--bids_string', 'sub-0016/ses-04/func/sub-0016_ses-04_task-alignvideo_acq-mb8_run-01_events.tsv']
+
+Complete
+
+Running command for index 38: sub-0016/ses-04/func/sub-0016_ses-04_task-alignvideo_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_alignvideos_ENH.py', '--bids_string', 'sub-0016/ses-04/func/sub-0016_ses-04_task-alignvideo_acq-mb8_run-02_events.tsv']
+
+Complete
+
+Running command for index 39: sub-0016/ses-04/func/sub-0016_ses-04_task-social_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0016/ses-04/func/sub-0016_ses-04_task-social_acq-mb8_run-03_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+
+Complete
+
+Running command for index 40: sub-0017/ses-01/func/sub-0017_ses-01_task-alignvideo_acq-mb8_run-04_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_alignvideos_ENH.py', '--bids_string', 'sub-0017/ses-01/func/sub-0017_ses-01_task-alignvideo_acq-mb8_run-04_events.tsv']
+
+Complete
+
+Running command for index 41: sub-0017/ses-02/func/sub-0017_ses-02_task-alignvideo_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_alignvideos_ENH.py', '--bids_string', 'sub-0017/ses-02/func/sub-0017_ses-02_task-alignvideo_acq-mb8_run-01_events.tsv']
+
+Complete
+
+Running command for index 42: sub-0019/ses-03/func/sub-0019_ses-03_task-social_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0019/ses-03/func/sub-0019_ses-03_task-social_acq-mb8_run-02_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+
+Complete
+
+Running command for index 43: sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_fractional_combine.py', '--bids_string', 'sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-01_events.tsv']
+No behavior data file found for sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-01_events.tsv. Skipping to next task.
+No behavior data file found for sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-01_events.tsv. Skipping to next task.
+No behavior data file found for sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-01_events.tsv. Skipping to next task.
+No behavior data file found for sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-01_events.tsv. Checked both standard and temporary filenames.
+
+Complete
+
+Running command for index 43: sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_fractional_subtask.py', '--bids_string', 'sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-01_events.tsv']
+No behavior data file found for sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-01_events.tsv. Skipping to next task.
+No behavior data file found for sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-01_events.tsv. Checked both standard and temporary filenames.
+
+Complete
+
+Running command for index 44: sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_fractional_combine.py', '--bids_string', 'sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-02_events.tsv']
+No behavior data file found for sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-02_events.tsv. Skipping to next task.
+No behavior data file found for sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-02_events.tsv. Checked both standard and temporary filenames.
+No behavior data file found for sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-02_events.tsv. Skipping to next task.
+No behavior data file found for sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-02_events.tsv. Skipping to next task.
+
+Complete
+
+Running command for index 44: sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_fractional_subtask.py', '--bids_string', 'sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-02_events.tsv']
+No behavior data file found for sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-02_events.tsv. Skipping to next task.
+No behavior data file found for sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-02_events.tsv. Checked both standard and temporary filenames.
+
+Complete
+
+Running command for index 45: sub-0020/ses-04/func/sub-0020_ses-04_task-social_acq-mb8_run-06_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0020/ses-04/func/sub-0020_ses-04_task-social_acq-mb8_run-06_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+
+Complete
+
+Running command for index 46: sub-0021/ses-01/func/sub-0021_ses-01_task-alignvideo_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_alignvideos_ENH.py', '--bids_string', 'sub-0021/ses-01/func/sub-0021_ses-01_task-alignvideo_acq-mb8_run-03_events.tsv']
+
+Complete
+
+Running command for index 47: sub-0021/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0021/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-01_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+No behavior data file found for sub-0021, ses-01, run-01.
+
+Complete
+
+Running command for index 48: sub-0021/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0021/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-02_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+No behavior data file found for sub-0021, ses-01, run-02.
+
+Complete
+
+Running command for index 49: sub-0021/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0021/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-03_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+No behavior data file found for sub-0021, ses-01, run-03.
+
+Complete
+
+Running command for index 50: sub-0021/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-04_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0021/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-04_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+No behavior data file found for sub-0021, ses-01, run-04.
+
+Complete
+
+Running command for index 51: sub-0021/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-05_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0021/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-05_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+No behavior data file found for sub-0021, ses-01, run-05.
+
+Complete
+
+Running command for index 52: sub-0023/ses-04/func/sub-0023_ses-04_task-social_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0023/ses-04/func/sub-0023_ses-04_task-social_acq-mb8_run-02_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+
+Complete
+
+Running command for index 53: sub-0024/ses-03/func/sub-0024_ses-03_task-social_acq-mb8_run-05_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0024/ses-03/func/sub-0024_ses-03_task-social_acq-mb8_run-05_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+
+Complete
+
+Running command for index 54: sub-0038/ses-02/func/sub-0038_ses-02_task-narratives_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0038/ses-02/func/sub-0038_ses-02_task-narratives_acq-mb8_run-03_events.tsv']
+Using behavior file: /Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh/sub-0038/task-narratives/sub-0038_ses-02_task-narratives_run-03_beh_TEMP.csv
+
+Complete
+
+Running command for index 55: sub-0041/ses-02/func/sub-0041_ses-02_task-narratives_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0041/ses-02/func/sub-0041_ses-02_task-narratives_acq-mb8_run-01_events.tsv']
+Using behavior file: /Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh/sub-0041/task-narratives/sub-0041_ses-02_task-narratives_run-01_beh-preproc.csv
+
+Complete
+
+Running command for index 56: sub-0041/ses-02/func/sub-0041_ses-02_task-narratives_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0041/ses-02/func/sub-0041_ses-02_task-narratives_acq-mb8_run-02_events.tsv']
+Using behavior file: /Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh/sub-0041/task-narratives/sub-0041_ses-02_task-narratives_run-02_beh-preproc.csv
+
+Complete
+
+Running command for index 57: sub-0041/ses-02/func/sub-0041_ses-02_task-narratives_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0041/ses-02/func/sub-0041_ses-02_task-narratives_acq-mb8_run-03_events.tsv']
+Using behavior file: /Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh/sub-0041/task-narratives/sub-0041_ses-02_task-narratives_run-03_beh-preproc.csv
+
+Complete
+
+Running command for index 58: sub-0041/ses-02/func/sub-0041_ses-02_task-narratives_acq-mb8_run-04_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0041/ses-02/func/sub-0041_ses-02_task-narratives_acq-mb8_run-04_events.tsv']
+Using behavior file: /Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh/sub-0041/task-narratives/sub-0041_ses-02_task-narratives_run-04_beh-preproc.csv
+
+Complete
+
+Running command for index 59: sub-0064/ses-02/func/sub-0064_ses-02_task-narratives_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0064/ses-02/func/sub-0064_ses-02_task-narratives_acq-mb8_run-01_events.tsv']
+Using behavior file: /Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh/sub-0064/task-narratives/sub-0064_ses-02_task-narratives_run-01_beh-preproc.csv
+
+Complete
+
+Running command for index 60: sub-0064/ses-02/func/sub-0064_ses-02_task-narratives_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0064/ses-02/func/sub-0064_ses-02_task-narratives_acq-mb8_run-02_events.tsv']
+Using behavior file: /Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh/sub-0064/task-narratives/sub-0064_ses-02_task-narratives_run-02_beh-preproc.csv
+
+Complete
+
+Running command for index 61: sub-0064/ses-02/func/sub-0064_ses-02_task-narratives_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0064/ses-02/func/sub-0064_ses-02_task-narratives_acq-mb8_run-03_events.tsv']
+Using behavior file: /Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh/sub-0064/task-narratives/sub-0064_ses-02_task-narratives_run-03_beh-preproc.csv
+
+Complete
+
+Running command for index 62: sub-0064/ses-02/func/sub-0064_ses-02_task-narratives_acq-mb8_run-04_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0064/ses-02/func/sub-0064_ses-02_task-narratives_acq-mb8_run-04_events.tsv']
+Using behavior file: /Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh/sub-0064/task-narratives/sub-0064_ses-02_task-narratives_run-04_beh-preproc.csv
+
+Complete
+
+Running command for index 63: sub-0065/ses-04/func/sub-0065_ses-04_task-alignvideo_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_alignvideos_ENH.py', '--bids_string', 'sub-0065/ses-04/func/sub-0065_ses-04_task-alignvideo_acq-mb8_run-02_events.tsv']
+
+Complete
+
+Running command for index 64: sub-0066/ses-04/func/sub-0066_ses-04_task-social_acq-mb8_run-06_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0066/ses-04/func/sub-0066_ses-04_task-social_acq-mb8_run-06_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+
+Complete
+
+Running command for index 65: sub-0069/ses-02/func/sub-0069_ses-02_task-alignvideo_acq-mb8_run-04_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_alignvideos_ENH.py', '--bids_string', 'sub-0069/ses-02/func/sub-0069_ses-02_task-alignvideo_acq-mb8_run-04_events.tsv']
+
+Complete
+
+Running command for index 66: sub-0069/ses-02/func/sub-0069_ses-02_task-narratives_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0069/ses-02/func/sub-0069_ses-02_task-narratives_acq-mb8_run-03_events.tsv']
+Using behavior file: /Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh/sub-0069/task-narratives/sub-0069_ses-02_task-narratives_run-03_beh_TEMP.csv
+
+Complete
+
+Running command for index 67: sub-0075/ses-01/func/sub-0075_ses-01_task-social_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0075/ses-01/func/sub-0075_ses-01_task-social_acq-mb8_run-01_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+Task nan is not recognized. Skipping...
+
+Complete
+
+Running command for index 68: sub-0076/ses-02/func/sub-0076_ses-02_task-faces_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_faces_ENH.py', '--bids_string', 'sub-0076/ses-02/func/sub-0076_ses-02_task-faces_acq-mb8_run-03_events.tsv']
+	* found TEMP file. processing sub-0076, ses-02, run-03
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+no duration information for rating values
+file saved /Users/h/Documents/projects_local/1076_spacetop/sub-0076/ses-02/func/sub-0076_ses-02_task-faces_acq-mb8_run-03_events.tsv
+
+Complete
+
+Running command for index 69: sub-0083/ses-04/func/sub-0083_ses-04_task-social_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0083/ses-04/func/sub-0083_ses-04_task-social_acq-mb8_run-02_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+
+Complete
+
+Running command for index 70: sub-0084/ses-03/func/sub-0084_ses-03_task-alignvideo_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_alignvideos_ENH.py', '--bids_string', 'sub-0084/ses-03/func/sub-0084_ses-03_task-alignvideo_acq-mb8_run-01_events.tsv']
+
+Complete
+
+Running command for index 71: sub-0087/ses-01/func/sub-0087_ses-01_task-alignvideo_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_alignvideos_ENH.py', '--bids_string', 'sub-0087/ses-01/func/sub-0087_ses-01_task-alignvideo_acq-mb8_run-01_events.tsv']
+
+Complete
+
+Running command for index 72: sub-0088/ses-03/func/sub-0088_ses-03_task-social_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0088/ses-03/func/sub-0088_ses-03_task-social_acq-mb8_run-03_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+
+Complete
+
+Running command for index 73: sub-0089/ses-01/func/sub-0089_ses-01_task-social_acq-mb8_run-04_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0089/ses-01/func/sub-0089_ses-01_task-social_acq-mb8_run-04_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+
+Complete
+
+Running command for index 74: sub-0094/ses-02/func/sub-0094_ses-02_task-narratives_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0094/ses-02/func/sub-0094_ses-02_task-narratives_acq-mb8_run-01_events.tsv']
+Using behavior file: /Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh/sub-0094/task-narratives/sub-0094_ses-02_task-narratives_run-01_beh-preproc.csv
+
+Complete
+
+Running command for index 75: sub-0094/ses-02/func/sub-0094_ses-02_task-narratives_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0094/ses-02/func/sub-0094_ses-02_task-narratives_acq-mb8_run-02_events.tsv']
+Using behavior file: /Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh/sub-0094/task-narratives/sub-0094_ses-02_task-narratives_run-02_beh-preproc.csv
+
+Complete
+
+Running command for index 76: sub-0094/ses-02/func/sub-0094_ses-02_task-narratives_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0094/ses-02/func/sub-0094_ses-02_task-narratives_acq-mb8_run-03_events.tsv']
+Using behavior file: /Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh/sub-0094/task-narratives/sub-0094_ses-02_task-narratives_run-03_beh-preproc.csv
+
+Complete
+
+Running command for index 77: sub-0094/ses-02/func/sub-0094_ses-02_task-narratives_acq-mb8_run-04_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0094/ses-02/func/sub-0094_ses-02_task-narratives_acq-mb8_run-04_events.tsv']
+Using behavior file: /Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh/sub-0094/task-narratives/sub-0094_ses-02_task-narratives_run-04_beh-preproc.csv
+
+Complete
+
+Running command for index 78: sub-0094/ses-04/func/sub-0094_ses-04_task-alignvideo_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_alignvideos_ENH.py', '--bids_string', 'sub-0094/ses-04/func/sub-0094_ses-04_task-alignvideo_acq-mb8_run-01_events.tsv']
+
+Complete
+
+Running command for index 79: sub-0103/ses-02/func/sub-0103_ses-02_task-narratives_acq-mb8_run-01_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0103/ses-02/func/sub-0103_ses-02_task-narratives_acq-mb8_run-01_events.tsv']
+Using behavior file: /Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh/sub-0103/task-narratives/sub-0103_ses-02_task-narratives_run-01_beh-preproc.csv
+
+Complete
+
+Running command for index 80: sub-0103/ses-02/func/sub-0103_ses-02_task-narratives_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0103/ses-02/func/sub-0103_ses-02_task-narratives_acq-mb8_run-02_events.tsv']
+Using behavior file: /Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh/sub-0103/task-narratives/sub-0103_ses-02_task-narratives_run-02_beh-preproc.csv
+
+Complete
+
+Running command for index 81: sub-0103/ses-02/func/sub-0103_ses-02_task-narratives_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0103/ses-02/func/sub-0103_ses-02_task-narratives_acq-mb8_run-03_events.tsv']
+Using behavior file: /Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh/sub-0103/task-narratives/sub-0103_ses-02_task-narratives_run-03_beh-preproc.csv
+
+Complete
+
+Running command for index 82: sub-0103/ses-02/func/sub-0103_ses-02_task-narratives_acq-mb8_run-04_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_narratives_ENH.py', '--bids_string', 'sub-0103/ses-02/func/sub-0103_ses-02_task-narratives_acq-mb8_run-04_events.tsv']
+Using behavior file: /Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh/sub-0103/task-narratives/sub-0103_ses-02_task-narratives_run-04_beh-preproc.csv
+
+Complete
+
+Running command for index 83: sub-0105/ses-02/func/sub-0105_ses-02_task-alignvideo_acq-mb8_run-02_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_alignvideos_ENH.py', '--bids_string', 'sub-0105/ses-02/func/sub-0105_ses-02_task-alignvideo_acq-mb8_run-02_events.tsv']
+
+Complete
+
+Running command for index 84: sub-0112/ses-04/func/sub-0112_ses-04_task-social_acq-mb8_run-03_events.tsv ['python', '/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events/bidsify_social_factorize_ENH.py', '--bids_string', 'sub-0112/ses-04/func/sub-0112_ses-04_task-social_acq-mb8_run-03_events.tsv']
+/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/events
+
+Complete
+
