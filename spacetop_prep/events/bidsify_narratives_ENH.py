@@ -242,7 +242,14 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
 
         # Event 2. feeling rating
         onset = source_beh.loc[t, 'event03_feel_displayonset'] - t_run_start
-        duration = source_beh.loc[t, 'RT_feeling'] if pd.notna(source_beh.loc[t, 'RT_feeling']) else source_beh.loc[t, 'RT_feeling_adj']
+        # duration = source_beh.loc[t, 'RT_feeling'] if pd.notna(source_beh.loc[t, 'RT_feeling']) else source_beh.loc[t, 'RT_feeling_adj']
+        if 'RT_feeling' in source_beh.columns:
+            duration = source_beh.loc[t, 'RT_feeling'] if pd.notna(source_beh.loc[t, 'RT_feeling']) else source_beh.loc[t, 'RT_feeling_adj']
+        elif 'RT_feeling_adj' in source_beh.columns:
+            duration = source_beh.loc[t, 'RT_feeling_adj']
+        else:
+            duration = 'n/a'  # Or some default value if neither column exists
+
         trial_type = 'rating_feeling'
         response_x = get_column_value(source_beh, 'feeling_end_x')
         response_y = get_column_value(source_beh, 'feeling_end_y')
@@ -250,15 +257,27 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
         new_beh = pd.concat([new_beh, new_row], ignore_index=True)
         
         # Event 3. feeling mouse trajectory
-        onset += source_beh.loc[t, 'motion_onset_feeling']
-        duration = source_beh.loc[t, 'motion_dur_feeling']
+        # onset += source_beh.loc[t, 'motion_onset_feeling']
+        # duration = source_beh.loc[t, 'motion_dur_feeling']
+        if 'motion_onset_feeling' in source_beh.columns:
+            onset += source_beh.loc[t, 'motion_onset_feeling']
+            duration = source_beh.loc[t, 'motion_dur_feeling']
+        else:
+            onset = 'n/a'
+            duration = 'n/a'
         trial_type = 'feeling_mouse_trajectory'
         new_row = create_event_row(onset, duration, trial_type, modality, stim_file, situation, context, response_x, response_y)
         new_beh = pd.concat([new_beh, new_row], ignore_index=True)
 
         # Event 4. expectation rating
         onset = source_beh.loc[t, 'event04_expect_displayonset'] - t_run_start
-        duration = source_beh.loc[t, 'RT_expectation'] if pd.notna(source_beh.loc[t, 'RT_expectation']) else source_beh.loc[t, 'RT_expectation_adj']
+        # duration = source_beh.loc[t, 'RT_expectation'] if pd.notna(source_beh.loc[t, 'RT_expectation']) else source_beh.loc[t, 'RT_expectation_adj']
+        if 'RT_expectation' in source_beh.columns:
+            duration = source_beh.loc[t, 'RT_expectation'] if pd.notna(source_beh.loc[t, 'RT_expectation']) else source_beh.loc[t, 'RT_expectation_adj']
+        elif 'RT_expectation_adj' in source_beh.columns:
+            duration = source_beh.loc[t, 'RT_expectation_adj']
+        else:
+            duration = 'n/a'  # Or some default value if neither column exists
         trial_type = 'rating_expectation'
         response_x = get_column_value(source_beh, 'expectation_end_x')
         response_y = get_column_value(source_beh, 'expectation_end_y')
@@ -266,8 +285,12 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
         new_beh = pd.concat([new_beh, new_row], ignore_index=True)
 
         # Event 5. expectation mouse trajectory
-        onset += source_beh.loc[t, 'motion_onset_expectation']
-        duration = source_beh.loc[t, 'motion_dur_expectation']
+        if 'motion_onset_expectation' in source_beh.columns:
+            onset += source_beh.loc[t, 'motion_onset_expectation']
+            duration = source_beh.loc[t, 'motion_dur_expectation']
+        else:
+            onset = 'n/a'
+            duration = 'n/a'
         trial_type = 'expectation_mouse_trajectory'
         new_row = create_event_row(onset, duration, trial_type, modality, stim_file, situation, context, response_x, response_y)
         new_beh = pd.concat([new_beh, new_row], ignore_index=True)
