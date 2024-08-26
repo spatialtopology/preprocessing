@@ -219,6 +219,7 @@ def process_task(task_name, filtered_file_list, logger, metadata_df):
         # Load trajectory data and calculate ratings
         trajectory_glob = glob.glob(join(beh_inputdir, sub_bids, 'task-social', ses_bids,
                                          f"{sub_bids}_{ses_bids}_task-social_{run_bids}_runtype-{runtype}_beh-preproc.csv"))
+        traj_df = None
 
         if trajectory_glob:
             try:
@@ -295,7 +296,7 @@ def process_behavioral_data(cue, expect, stim, outcome, beh_df, traj_df, trigger
     else:
         expect['rating_mouseonset'] = 'n/a'
         expect['rating_mousedur'] = 'n/a'
-        
+
     expect['cue'] = beh_df['event01_cue_type']
     expect['stim_file'] = beh_df["event01_cue_filename"].apply(
         lambda x: f'task-social/cue/runtype-{task_name}/{"sch/" if x.startswith("h") else "scl/"}' + x
