@@ -114,7 +114,7 @@ sys.stdout = open('output.log', 'w')
 
 
 # Load the TSV file into a DataFrame
-df = pd.read_csv('/Users/h/Documents/projects_local/s1076/code/spacetop-prep/spacetop_prep/datalad/resolve_missingevents/missing_events_manual_inspection.tsv', sep='\t')
+df = pd.read_csv('/Users/h/Documents/projects_local/1076_spacetop/code/spacetop-prep/spacetop_prep/datalad/resolve_missingevents/missing_events_manual_inspection.tsv', sep='\t')
 
 # Define a dictionary for repo2task mapping
 repo2task_dict = {
