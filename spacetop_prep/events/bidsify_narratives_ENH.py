@@ -212,23 +212,24 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
     trial_num = len(source_beh)
     situation = [None] * trial_num
     context = [None] * trial_num
-
+    r = int(run.split('-')[1]) - 1   # Adjust the run number to be zero-based
     for t in range(trial_num):    # each trial
 
-        # Situation and context
-        r = int(run.split('-')[1]) - 1   # Adjust the run number to be zero-based
-        
+        # Situation and context     
         if t < 9:
-            situation_chunk = DesignTable['Situation'][DesignTable['Narrative'] == narratives[r][t % 2]]
-            context_chunk = DesignTable['Context'][DesignTable['Narrative'] == narratives[r][t % 2]]
+            situation_chunk = DesignTable.Situation[DesignTable.Narrative == narratives[r][t % 2]]
+            situation[t] = situation_chunk.iloc[t]
+            context_chunk = DesignTable.Context[DesignTable.Narrative == narratives[r][t % 2]]
+            context[t] = context_chunk.iloc[t]
         else:
-            situation_chunk = DesignTable['Situation'][DesignTable['Narrative'] == narratives[r][1 - (t % 2)]]
-            context_chunk = DesignTable['Context'][DesignTable['Narrative'] == narratives[r][1 - (t % 2)]]
-        
-        situation[t] = situation_chunk.iloc[t % len(situation_chunk)]
-        context[t] = context_chunk.iloc[t % len(context_chunk)]
+            situation_chunk = DesignTable.Situation[DesignTable.Narrative == narratives[r][1 - (t % 2)]]
+            situation[t] = situation_chunk.iloc[t - 9]
+            context_chunk = DesignTable.Context[DesignTable.Narrative == narratives[r][1 - (t % 2)]]
+            context[t] = context_chunk.iloc[t - 9]
+        source_beh['situation'] = situation
+        source_beh['context'] = context
 
-
+    for t in range(trial_num):    # each trial
         # Event 1. narrative presentation
         onset = source_beh.loc[t, 'event02_administer_onset'] - t_run_start
         duration = source_beh.loc[t, 'event03_feel_displayonset'] - source_beh.loc[t, 'event02_administer_onset']
