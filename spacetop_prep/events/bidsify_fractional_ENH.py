@@ -50,8 +50,9 @@ def get_task_name(bids_string, metadata_df):
         str: The task name or an error message if the input is invalid.
     """
     # Convert subject_id to integer by removing the 'sub-' prefix
-    sub = extract_bids(bids_string, 'sub')
-    run = extract_bids(bids_string, 'run')
+    fname = Path(bids_string).name
+    sub = extract_bids(fname, 'sub')
+    run = extract_bids(fname, 'run')
     subject_number = int(sub.replace('sub-', ''))
     
     # Map run_id to task1 or task2

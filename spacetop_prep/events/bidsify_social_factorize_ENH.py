@@ -415,12 +415,13 @@ def main():
 
     if args.bids_string is not None:
         task_name = get_task_type(args.bids_string, metadata_df)
+        fname = Path(args.bids_string).name
         if task_name not in task_names:
             print(f"Task {task_name} is not recognized. Skipping...")
         else:
-            sub = extract_bids(args.bids_string, 'sub')
-            ses = extract_bids(args.bids_string, 'ses')
-            run = extract_bids(args.bids_string, 'run')
+            sub = extract_bids(fname, 'sub')
+            ses = extract_bids(fname, 'ses')
+            run = extract_bids(fname, 'run')
 
             filtered_file_list = glob.glob(
                 str(Path(beh_inputdir) / sub / '**' / 'task-social' / '**' / f'*{args.bids_string}*.csv'),
