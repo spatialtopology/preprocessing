@@ -42,6 +42,46 @@ def create_event_row(onset, duration, trial_type, modality, stim_file, situation
         "stim_file": stim_file
     }, index=[0])
 
+from pathlib import Path
+import pandas as pd
+
+def find_behavior_file(beh_inputdir, sub, ses, run):
+    beh_fname = Path(beh_inputdir) / sub / 'task-narratives' / f'{sub}_{ses}_task-narratives_{run}.csv'
+    
+    # Check if the file exists and has data
+    if beh_fname.is_file():
+        # Try to read the file and check if it contains data
+        try:
+            beh_df = pd.read_csv(beh_fname)
+            if not beh_df.empty:
+                return beh_fname
+            else:
+                print(f"File {beh_fname} is empty. Attempting to find an alternative.")
+        except pd.errors.EmptyDataError:
+            print(f"File {beh_fname} exists but is empty. Attempting to find an alternative.")
+        except Exception as e:
+            print(f"Error reading file {beh_fname}: {e}. Attempting to find an alternative.")
+    else:
+        print(f"File {beh_fname} does not exist. Attempting to find an alternative.")
+
+    # Attempt to find a temporary or alternative file
+    temp_fpath = Path(beh_inputdir) / sub / 'task-narratives' / f'{sub}_{ses}_task-narratives_{run}*TEMP*.csv'
+    
+    if temp_fpath.is_file():
+        try:
+            beh_df = pd.read_csv(temp_fpath)
+            if not beh_df.empty:
+                return temp_fpath
+            else:
+                print(f"Temporary file {temp_fpath} is empty.")
+        except pd.errors.EmptyDataError:
+            print(f"Temporary file {temp_fpath} exists but is empty.")
+        except Exception as e:
+            print(f"Error reading temporary file {temp_fpath}: {e}")
+    else:
+        print(f"No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.")
+    
+    return None
 
 def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
     """
@@ -99,18 +139,18 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
     #     print(f'No behavior data file for {sub}_run-{run}')
     #     return
     
-    beh_fname = Path(beh_inputdir) / sub / taskname / f'{sub}_{ses}_{taskname}_{run}_beh-preproc.csv'
+    # beh_fname = Path(beh_inputdir) / sub / taskname / f'{sub}_{ses}_{taskname}_{run}_beh-preproc.csv'
 
-    if not beh_fname.is_file():
-    # Attempt to find a temporary or alternative file
-        temp_fpath = Path(beh_inputdir) / sub / 'task-narratives' / f'{sub}_{ses}_task-narratives_{run}*TEMP*.csv'
+    # if not beh_fname.is_file():
+    # # Attempt to find a temporary or alternative file
+    #     temp_fpath = Path(beh_inputdir) / sub / 'task-narratives' / f'{sub}_{ses}_task-narratives_{run}*TEMP*.csv'
         
-        if temp_fpath.is_file():
-            beh_fname = temp_fpath
-        else:
-            print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
-            return None
-
+    #     if temp_fpath.is_file():
+    #         beh_fname = temp_fpath
+    #     else:
+    #         print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
+    #         return None
+    beh_fname = find_behavior_file(beh_inputdir, sub, ses, run)
     source_beh = pd.read_csv(beh_fname)
     new_beh = pd.DataFrame(columns=["onset", "duration", "trial_type", 
                             "response_x", "response_y",
