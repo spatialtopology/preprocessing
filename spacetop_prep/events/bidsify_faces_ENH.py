@@ -20,17 +20,25 @@ def extract_bids(filename: str, key: str) -> str:
     return bids_info_rmext[0]
 
 def load_data_file(sub, ses, taskname, run, rating_type, beh_inputdir):
-    beh_fname = beh_inputdir / sub / taskname / f'{sub}_{ses}_{taskname}_{run}-{rating_type}_beh-preproc.csv'
-
-    if not beh_fname.is_file():
-    # Attempt to find a temporary or alternative file
-        temp_fpath = Path(beh_inputdir) / sub / 'task-faces' / ses / f'{sub}_{ses}_task-faces*{run}*TEMP*.csv'
+    beh_fname_pattern = str(beh_inputdir / sub / taskname / f'{sub}_{ses}_{taskname}_{run}-{rating_type}_beh-preproc.csv')
+    matching_files = glob.glob(beh_fname_pattern)
+    
+    if matching_files:
+        beh_fname = Path(matching_files[0])
+    else:
+        # Check for the non-preproc file
+        beh_fname = Path(beh_inputdir) / sub / taskname / f'{sub}_{ses}_{taskname}_{run}_beh.csv'
         
-        if temp_fpath.is_file():
-            beh_fname = temp_fpath
-        else:
-            print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
-            return None
+        if not beh_fname.is_file():
+            # Attempt to find a temporary or alternative file
+            temp_pattern = str(Path(beh_inputdir) / sub / taskname / ses / f'{sub}_{ses}_{taskname}*{run}*TEMP*.csv')
+            temp_files = glob.glob(temp_pattern)
+            
+            if temp_files:
+                beh_fname = Path(temp_files[0])
+            else:
+                print(f'No behavior data file found for {sub}, {ses}, {run}. Checked both standard and temporary filenames.')
+                return None
     return pd.read_csv(beh_fname)
     
 
@@ -40,12 +48,12 @@ def process_trial_data(source_beh, run, rating_type):
     t_runstart = source_beh.loc[0, 'param_trigger_onset']
     
     for t in range(len(source_beh)):
-        trial_data = faces_format_to_bids(source_beh, t, t_runstart, rating_type) #run_dict[run])
+        trial_data = format_behavioral_data(source_beh, t, t_runstart, rating_type) #run_dict[run])
         new_beh = pd.concat([new_beh, trial_data], ignore_index=True)
 
     return new_beh
 
-def faces_format_to_bids(source_beh, trial_index, t_runstart, rating_type):
+def format_behavioral_data(source_beh, trial_index, t_runstart, rating_type):
     new_beh = pd.DataFrame()
 
     # Extract common data
