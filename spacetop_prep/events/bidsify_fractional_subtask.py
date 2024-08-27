@@ -138,7 +138,7 @@ if bids_string:
             # If standard files are found, use them
             filtered_saxe_flist = saxe_flist
     else:
-        print(f'No behavior data file found for {sub} {ses} {run}. Skipping to next task.')
+        print(f'No behavior data file found for {bids_string}. Skipping to next task.')
 else:
     # Get a list of all relevant files, excluding specific subjects
     saxe_flist = list(Path(beh_inputdir).rglob(f'**/*{task_name}*.csv'))
