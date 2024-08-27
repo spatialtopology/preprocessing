@@ -37,8 +37,6 @@ def extract_bids(filename: str, key: str) -> str:
     return bids_info_rmext[0]
 
 
-code_dir = Path(__file__).resolve().parent
-metadata_df = pd.read_csv(join(code_dir,  'spacetop_task-fractional_run-metadata.csv'))
 
 def get_task_name(bids_string, metadata_df):
     """
@@ -92,6 +90,9 @@ bids_dir = args.bids_dir
 code_dir = args.code_dir
 source_dir = args.source_dir
 beh_inputdir = join(source_dir, 'd_beh')
+# code_dir = Path(__file__).resolve().parent
+metadata_df = pd.read_csv(join(code_dir,  'spacetop_task-fractional_run-metadata.csv'))
+
 # %% ---------------------------------------------------------------------------
 #  1. add task-fractional runtype metadata & 2. harmonize scans tsv and nifti files
 # ------------------------------------------------------------------------------
