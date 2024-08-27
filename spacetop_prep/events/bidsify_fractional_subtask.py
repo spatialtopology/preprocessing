@@ -153,7 +153,7 @@ if filtered_saxe_flist:
         sub_bids = extract_bids(saxe_fname, 'sub') # re.search(r'sub-\d+', saxe_fname).group(0)
         ses_bids = extract_bids(saxe_fname, 'ses') # re.search(r'ses-\d+', saxe_fname).group(0)
         run_bids = extract_bids(saxe_fname, 'run') # re.search(r'run-\d+', saxe_fname).group(0)
-        bids_name= f"{sub_bids} {ses_bids} {run_bids}"
+        bids_name= f"{sub_bids}_{ses_bids}_{run_bids}"
         task_name = get_task_name(bids_name, metadata_df)
         # task_name = re.search(r'run-\d+-(\w+)_beh', saxe_fname).group(1)
         print(f"{sub_bids} {ses_bids} {run_bids} {task_name}")
@@ -318,7 +318,7 @@ if filtered_posner_flist:
         sub_bids = re.search(r'sub-\d+', posner_fname).group(0)
         ses_bids = re.search(r'ses-\d+', posner_fname).group(0)
         run_bids = re.search(r'run-\d+', posner_fname).group(0)
-        bids_name= f"{sub_bids} {ses_bids} {run_bids}"
+        bids_name= f"{sub_bids}_{ses_bids}_{run_bids}"
         task_name = get_task_name(bids_name, metadata_df)
         print(f"{sub_bids} {ses_bids} {run_bids} {task_name}")
         beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
@@ -543,7 +543,7 @@ if filtered_memory_flist:
         sub_bids = extract_bids(memory_fname, 'sub') 
         ses_bids = extract_bids(memory_fname, 'ses') 
         run_bids = extract_bids(memory_fname, 'run') 
-        bids_name= f"{sub_bids} {ses_bids} {run_bids}"
+        bids_name= f"{sub_bids}_{ses_bids}_{run_bids}"
         task_name = get_task_name(bids_name, metadata_df)
         print(f"{sub_bids} {ses_bids} {run_bids} {task_name}")
         beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
@@ -765,7 +765,7 @@ if filtered_spunt_flist:
         sub_bids = re.search(r'sub-\d+', spunt_fname).group(0)
         ses_bids = re.search(r'ses-\d+', spunt_fname).group(0)
         run_bids = re.search(r'run-\d+', spunt_fname).group(0)
-        bids_name= f"{sub_bids} {ses_bids} {run_bids}"
+        bids_name= f"{sub_bids}_{ses_bids}_{run_bids}"
         task_name = get_task_name(bids_name, metadata_df)
         # task_name = re.search(r'run-\d+-(\w+)_beh', spunt_fname).group(1)
         
