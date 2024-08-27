@@ -126,15 +126,16 @@ task_name = "tomsaxe"
 filtered_saxe_flist = None
 if args.bids_string:
     # Retrieve the task name from the bids_string using the provided metadata DataFrame
-    task_name = get_task_name(args.bids_string, metadata_df)
-    if 'tomsaxe' in task_name:
+    extract_task_name = get_task_name(args.bids_string, metadata_df)
+    print(extract_task_name)
+    if 'tomsaxe' in extract_task_name:
         # Extract the subject identifier from the bids_string
         sub = extract_bids(Path(args.bids_string).name, 'sub')
-        saxe_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*.csv')) # Search for the CSV file corresponding to the bids_string within the specified directory
+        saxe_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{args.bids_string}*.csv')) # Search for the CSV file corresponding to the bids_string within the specified directory
         
         if not saxe_flist:
             # If no standard file is found, attempt to find a TEMP file as a fallback
-            temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*TEMP*.csv'))
+            temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/**/*{args.bids_string}*TEMP*.csv'))
             
             if temp_flist:
                 # Use the TEMP file if found
@@ -295,11 +296,11 @@ if args.bids_string:
         sub = extract_bids(Path(args.bids_string).name, 'sub')
         
         # Search for the CSV file corresponding to the bids_string within the specified directory
-        posner_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*.csv'))
+        posner_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{args.bids_string}*.csv'))
         
         if not posner_flist:
             # If no standard file is found, attempt to find a TEMP file as a fallback
-            temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*TEMP*.csv'))
+            temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{args.bids_string}*TEMP*.csv'))
             
             if temp_flist:
                 # Use the TEMP file if found
@@ -575,11 +576,11 @@ if args.bids_string:
         sub = extract_bids(Path(args.bids_string).name, 'sub')
         
         # Search for the CSV file corresponding to the bids_string within the specified directory
-        memory_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*.csv'))
+        memory_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{args.bids_string}*.csv'))
         
         if not memory_flist:
             # If no standard file is found, attempt to find a TEMP file as a fallback
-            temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*TEMP*.csv'))
+            temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{args.bids_string}*TEMP*.csv'))
             
             if temp_flist:
                 # Use the TEMP file if found
@@ -804,11 +805,11 @@ if args.bids_string:
         sub = extract_bids(Path(args.bids_string).name, 'sub')
         
         # Search for the CSV file corresponding to the bids_string within the specified directory
-        spunt_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*.csv'))
+        spunt_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{args.bids_string}*.csv'))
         
         if not spunt_flist:
             # If no standard file is found, attempt to find a TEMP file as a fallback
-            temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/{args.bids_string}*TEMP*.csv'))
+            temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{args.bids_string}*TEMP*.csv'))
             
             if temp_flist:
                 # Use the TEMP file if found
