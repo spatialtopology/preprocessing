@@ -124,31 +124,35 @@ metadata_df = pd.read_csv(join(code_dir,  'spacetop_task-fractional_run-metadata
 
 task_name = "tomsaxe"
 filtered_saxe_flist = None
-if args.bids_string:
+if bids_string:
     # Retrieve the task name from the bids_string using the provided metadata DataFrame
-    extract_task_name = get_task_name(args.bids_string, metadata_df)
+    extract_task_name = get_task_name(bids_string, metadata_df)
     print(extract_task_name)
+    basename = Path(bids_string).stem
     if 'tomsaxe' in extract_task_name:
         # Extract the subject identifier from the bids_string
-        sub = extract_bids(Path(args.bids_string).name, 'sub')
-        saxe_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{args.bids_string}*.csv')) # Search for the CSV file corresponding to the bids_string within the specified directory
+
+        sub = extract_bids(basename, 'sub')
+        ses = extract_bids(basename, 'ses')
+        run = extract_bids(basename, 'run')
+        saxe_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{sub}*{ses}*task-fractional*{run}*.csv')) # Search for the CSV file corresponding to the bids_string within the specified directory
         
         if not saxe_flist:
-            # If no standard file is found, attempt to find a TEMP file as a fallback
-            temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/**/*{args.bids_string}*TEMP*.csv'))
+            # If no standard file is found, attempt to find a TEMP file as a fallback 
+            temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/**/*{sub}*{ses}*task-fractional*{run}*TEMP*.csv'))
             
             if temp_flist:
                 # Use the TEMP file if found
                 filtered_saxe_flist = temp_flist 
             else:
                 # If neither standard nor TEMP files are found, log a message and return an empty list
-                print(f'No behavior data file found for {args.bids_string}. Checked both standard and temporary filenames.')
+                print(f'No behavior data file found for {bids_string}. Checked both standard and temporary filenames.')
                 filtered_saxe_flist = None
         else:
             # If standard files are found, use them
             filtered_saxe_flist = saxe_flist
     else:
-        print(f'No behavior data file found for {args.bids_string}. Skipping to next task.')
+        print(f'No behavior data file found for {bids_string}. Skipping to next task.')
 else:
     # Get a list of all relevant files, excluding specific subjects
     saxe_flist = list(Path(beh_inputdir).rglob(f'**/{task_name}*.csv'))
@@ -289,18 +293,18 @@ task_name = "posner"
 filtered_posner_flist = None
 if args.bids_string:
     # Retrieve the task name from the bids_string using the provided metadata DataFrame
-    task_name = get_task_name(args.bids_string, metadata_df)
-    
-    if 'posner' in task_name:
-        # Extract the subject identifier from the bids_string
-        sub = extract_bids(Path(args.bids_string).name, 'sub')
-        
+    extract_task_name = get_task_name(args.bids_string, metadata_df)
+    basename = Path(bids_string).stem
+    if 'posner' in extract_task_name:
+        sub = extract_bids(basename, 'sub')
+        ses = extract_bids(basename, 'ses')
+        run = extract_bids(basename, 'run')
         # Search for the CSV file corresponding to the bids_string within the specified directory
-        posner_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{args.bids_string}*.csv'))
+        posner_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{sub}*{ses}*task-fractional*{run}*.csv'))
         
         if not posner_flist:
             # If no standard file is found, attempt to find a TEMP file as a fallback
-            temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{args.bids_string}*TEMP*.csv'))
+            temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{sub}*{ses}*task-fractional*{run}*TEMP*.csv'))
             
             if temp_flist:
                 # Use the TEMP file if found
@@ -316,7 +320,7 @@ if args.bids_string:
         print(f'No behavior data file found for {args.bids_string}. Skipping to next task.')
 else:
     # If no bids_string is provided, search for all relevant files excluding specific subjects
-    posner_flist = list(Path(beh_inputdir).rglob(f'**/{task_name}*.csv'))
+    posner_flist = list(Path(beh_inputdir).rglob(f'**/{extract_task_name}*.csv'))
     
     # Filter out files belonging to the excluded subject (e.g., "sub-0001")
     filtered_posner_flist = [file for file in posner_flist if "sub-0001" not in str(file)]
@@ -570,17 +574,18 @@ filtered_memory_flist = None
 if args.bids_string:
     # Retrieve the task name from the bids_string using the provided metadata DataFrame
     task_name = get_task_name(args.bids_string, metadata_df)
-    
+    basename = Path(bids_string).stem
     if 'memory' in task_name:
-        # Extract the subject identifier from the bids_string
-        sub = extract_bids(Path(args.bids_string).name, 'sub')
+        sub = extract_bids(basename, 'sub')
+        ses = extract_bids(basename, 'ses')
+        run = extract_bids(basename, 'run')
         
         # Search for the CSV file corresponding to the bids_string within the specified directory
-        memory_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{args.bids_string}*.csv'))
+        memory_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{sub}*{ses}*task-fractional*{run}*.csv'))
         
         if not memory_flist:
             # If no standard file is found, attempt to find a TEMP file as a fallback
-            temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{args.bids_string}*TEMP*.csv'))
+            temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{sub}*{ses}*task-fractional*{run}*TEMP*.csv'))
             
             if temp_flist:
                 # Use the TEMP file if found
@@ -796,33 +801,35 @@ Yes = 1, No =2
 """
 task_name = "tomspunt"
 filtered_spunt_flist = None
-if args.bids_string:
+if bids_string:
     # Retrieve the task name from the bids_string using the provided metadata DataFrame
-    task_name = get_task_name(args.bids_string, metadata_df)
-    
-    if 'tomspunt' in task_name:
+    extract_task_name = get_task_name(bids_string, metadata_df)
+    print(f"extracted task is {extract_task_name}")
+    basename = Path(bids_string).stem
+    if 'tomspunt' in extract_task_name:
         # Extract the subject identifier from the bids_string
-        sub = extract_bids(Path(args.bids_string).name, 'sub')
-        
+        sub = extract_bids(basename, 'sub')
+        ses = extract_bids(basename, 'ses')
+        run = extract_bids(basename, 'run')
         # Search for the CSV file corresponding to the bids_string within the specified directory
-        spunt_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{args.bids_string}*.csv'))
+        spunt_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{sub}*{ses}*task-fractional*{run}*.csv'))
         
         if not spunt_flist:
             # If no standard file is found, attempt to find a TEMP file as a fallback
-            temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{args.bids_string}*TEMP*.csv'))
+            temp_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{sub}*{ses}*task-fractional*{run}*TEMP*.csv'))
             
             if temp_flist:
                 # Use the TEMP file if found
                 filtered_spunt_flist = temp_flist
             else:
                 # If neither standard nor TEMP files are found, log a message and return an empty list
-                print(f'No behavior data file found for {args.bids_string}. Checked both standard and temporary filenames.')
+                print(f'No behavior data file found for {bids_string}. Checked both standard and temporary filenames.')
                 filtered_spunt_flist = None
         else:
             # If standard files are found, use them
             filtered_spunt_flist = spunt_flist
     else:
-        print(f'No behavior data file found for {args.bids_string}. Skipping to next task.')
+        print(f'No behavior data file found for {bids_string}. Skipping to next task.')
 else:
     # If no bids_string is provided, search for all relevant files excluding specific subjects
     spunt_flist = list(Path(beh_inputdir).rglob(f'**/{task_name}*.csv'))
