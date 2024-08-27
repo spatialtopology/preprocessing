@@ -112,9 +112,9 @@ metadata_df = pd.read_csv(join(code_dir,  'spacetop_task-fractional_run-metadata
 
 task_name = "tomsaxe"
 filtered_saxe_flist = None
-if args.bids_string:
+if bids_string:
     # Retrieve the task name from the bids_string using the provided metadata DataFrame
-    task_name = get_task_name(args.bids_string, metadata_df)
+    task_name = get_task_name(bids_string, metadata_df)
     basename = Path(bids_string).stem
     if 'tomsaxe' in task_name:
         # Extract the subject identifier from the bids_string
@@ -132,13 +132,13 @@ if args.bids_string:
                 filtered_saxe_flist = temp_flist 
             else:
                 # If neither standard nor TEMP files are found, log a message and return an empty list
-                print(f'No behavior data file found for {args.bids_string}. Checked both standard and temporary filenames.')
+                print(f'No behavior data file found for {sub} {ses} {run}. Checked both standard and temporary filenames.')
                 filtered_saxe_flist = None
         else:
             # If standard files are found, use them
             filtered_saxe_flist = saxe_flist
     else:
-        print(f'No behavior data file found for {args.bids_string}. Skipping to next task.')
+        print(f'No behavior data file found for {sub} {ses} {run}. Skipping to next task.')
 else:
     # Get a list of all relevant files, excluding specific subjects
     saxe_flist = list(Path(beh_inputdir).rglob(f'**/*{task_name}*.csv'))
@@ -278,10 +278,10 @@ with open(json_fname, 'w') as file:
 # -------------------------------------------------
 task_name = "posner"
 filtered_posner_flist = None
-if args.bids_string:
+if bids_string:
     # Retrieve the task name from the bids_string using the provided metadata DataFrame
-    extract_task_name = get_task_name(args.bids_string, metadata_df)
-    basename = Path(args.bids_string).stem
+    extract_task_name = get_task_name(bids_string, metadata_df)
+    basename = Path(bids_string).stem
     if 'posner' in extract_task_name:
         sub = extract_bids(basename, 'sub')
         ses = extract_bids(basename, 'ses')
@@ -298,7 +298,7 @@ if args.bids_string:
                 filtered_posner_flist = temp_flist
             else:
                 # If neither standard nor TEMP files are found, log a message and return an empty list
-                print(f'No behavior data file found for {args.bids_string}. Checked both standard and temporary filenames.')
+                print(f'No behavior data file found for {sub} {ses} {run} {extract_task_name}. Checked both standard and temporary filenames.')
                 filtered_posner_flist = None
         else:
             # If standard files are found, use them
@@ -504,9 +504,9 @@ pmod_accuracy
 task_name = "memory"
 filtered_memory_flist = None
 
-if args.bids_string:
+if bids_string:
     # Retrieve the task name from the bids_string using the provided metadata DataFrame
-    extract_task_name = get_task_name(args.bids_string, metadata_df)
+    extract_task_name = get_task_name(bids_string, metadata_df)
     basename = Path(bids_string).stem
     if 'memory' in extract_task_name:
         sub = extract_bids(basename, 'sub')
@@ -723,10 +723,10 @@ Yes = 1, No =2
 """
 task_name = "tomspunt"
 filtered_spunt_flist = None
-if args.bids_string:
+if bids_string:
     # Retrieve the task name from the bids_string using the provided metadata DataFrame
-    task_name = get_task_name(args.bids_string, metadata_df)
-    basename = Path(args.bids_string).stem
+    task_name = get_task_name(bids_string, metadata_df)
+    basename = Path(bids_string).stem
     if 'tomspunt' in task_name:
         # Extract the subject identifier from the bids_string
         sub = extract_bids(basename, 'sub')
@@ -746,7 +746,7 @@ if args.bids_string:
                 filtered_spunt_flist = temp_flist
             else:
                 # If neither standard nor TEMP files are found, log a message and return an empty list
-                print(f'No behavior data file found for {args.bids_string}. Checked both standard and temporary filenames.')
+                print(f'No behavior data file found for {sub} {ses} {run} {extract_task_name}. Checked both standard and temporary filenames.')
                 filtered_spunt_flist = None
         else:
             # If standard files are found, use them
