@@ -155,7 +155,7 @@ if bids_string:
         print(f'No behavior data file found for {bids_string}. Skipping to next task.')
 else:
     # Get a list of all relevant files, excluding specific subjects
-    saxe_flist = list(Path(beh_inputdir).rglob(f'**/{task_name}*.csv'))
+    saxe_flist = list(Path(beh_inputdir).rglob(f'**/*{task_name}*.csv'))
     filtered_saxe_flist = [file for file in saxe_flist if "sub-0001" not in str(file)]
 
 if filtered_saxe_flist:
@@ -320,7 +320,7 @@ if args.bids_string:
         print(f'No behavior data file found for {args.bids_string}. Skipping to next task.')
 else:
     # If no bids_string is provided, search for all relevant files excluding specific subjects
-    posner_flist = list(Path(beh_inputdir).rglob(f'**/{extract_task_name}*.csv'))
+    posner_flist = list(Path(beh_inputdir).rglob(f'**/*{extract_task_name}*.csv'))
     
     # Filter out files belonging to the excluded subject (e.g., "sub-0001")
     filtered_posner_flist = [file for file in posner_flist if "sub-0001" not in str(file)]
@@ -601,7 +601,7 @@ if args.bids_string:
         print(f'No behavior data file found for {args.bids_string}. Skipping to next task.')
 else:
     # If no bids_string is provided, search for all relevant files excluding specific subjects
-    memory_flist = list(Path(beh_inputdir).rglob(f'**/{task_name}*.csv'))
+    memory_flist = list(Path(beh_inputdir).rglob(f'**/*{task_name}*.csv'))
     
     # Filter out files belonging to the excluded subject (e.g., "sub-0001")
     filtered_memory_flist = [file for file in memory_flist if "sub-0001" not in str(file)]
@@ -832,7 +832,7 @@ if bids_string:
         print(f'No behavior data file found for {bids_string}. Skipping to next task.')
 else:
     # If no bids_string is provided, search for all relevant files excluding specific subjects
-    spunt_flist = list(Path(beh_inputdir).rglob(f'**/{task_name}*.csv'))
+    spunt_flist = list(Path(beh_inputdir).rglob(f'**/*{task_name}*.csv'))
     
     # Filter out files belonging to the excluded subject (e.g., "sub-0001")
     filtered_spunt_flist = [file for file in spunt_flist if "sub-0001" not in str(file)]

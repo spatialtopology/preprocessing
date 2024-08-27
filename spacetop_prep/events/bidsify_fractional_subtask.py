@@ -141,7 +141,7 @@ if args.bids_string:
         print(f'No behavior data file found for {args.bids_string}. Skipping to next task.')
 else:
     # Get a list of all relevant files, excluding specific subjects
-    saxe_flist = list(Path(beh_inputdir).rglob(f'**/{task_name}*.csv'))
+    saxe_flist = list(Path(beh_inputdir).rglob(f'**/*{task_name}*.csv'))
     filtered_saxe_flist = [file for file in saxe_flist if "sub-0001" not in str(file)]
 
 
@@ -306,7 +306,7 @@ if args.bids_string:
             print(f'standard beh file exists')
 else:
     # If no bids_string is provided, search for all relevant files excluding specific subjects
-    posner_flist = list(Path(beh_inputdir).rglob(f'**/{task_name}*.csv'))
+    posner_flist = list(Path(beh_inputdir).rglob(f'**/*{task_name}*.csv'))
     
     # Filter out files belonging to the excluded subject (e.g., "sub-0001")
     filtered_posner_flist = [file for file in posner_flist if "sub-0001" not in str(file)]
@@ -525,14 +525,14 @@ if args.bids_string:
                 filtered_memory_flist = temp_flist
             else:
                 # If neither standard nor TEMP files are found, log a message and return an empty list
-                print(f'No behavior data file found for {args.bids_string}. Checked both standard and temporary filenames.')
+                print(f'No behavior data file found for {sub}*{ses}*task-fractional*{run}. Checked both standard and temporary filenames.')
                 filtered_memory_flist = None
         else:
             # If standard files are found, use them
             filtered_memory_flist = memory_flist
 else:
     # If no bids_string is provided, search for all relevant files excluding specific subjects
-    memory_flist = list(Path(beh_inputdir).rglob(f'**/{task_name}*.csv'))
+    memory_flist = list(Path(beh_inputdir).rglob(f'**/*{task_name}*.csv'))
     
     # Filter out files belonging to the excluded subject (e.g., "sub-0001")
     filtered_memory_flist = [file for file in memory_flist if "sub-0001" not in str(file)]
@@ -753,7 +753,7 @@ if args.bids_string:
             filtered_spunt_flist = spunt_flist
 else:
     # If no bids_string is provided, search for all relevant files excluding specific subjects
-    spunt_flist = list(Path(beh_inputdir).rglob(f'**/{task_name}*.csv'))
+    spunt_flist = list(Path(beh_inputdir).rglob(f'**/*{task_name}*.csv'))
     
     # Filter out files belonging to the excluded subject (e.g., "sub-0001")
     filtered_spunt_flist = [file for file in spunt_flist if "sub-0001" not in str(file)]
