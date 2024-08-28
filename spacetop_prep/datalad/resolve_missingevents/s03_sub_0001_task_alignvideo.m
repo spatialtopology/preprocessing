@@ -1,3 +1,4 @@
+function s03_sub_0001_task_alignvideo()
 % Define the run ranges and maximum rows per run
 run_ranges = {1:4, 5:8, 9:12, 13:14};
 max_rows_per_run = [4, 4, 4, 2];  % Specify the number of rows for each run
@@ -57,7 +58,7 @@ for run_num = 1:4
     num_rows = size(rating_onset, 1); % Number of rows (4 in your case)
     
     % Initialize the cell array for column names
-    col_names = cell(1, num_items * 3);
+    col_names = cell(1, num_items * 5);
     
     % Populate the column names
     for i = 1:num_items
@@ -66,9 +67,7 @@ for run_num = 1:4
         col_names{2*num_items + i} = sprintf('event02_rating0%d_RT', i);
         col_names{3*num_items + i} = sprintf('event02_rating0%d_biopac_displayonset', i);
         col_names{4*num_items + i} = sprintf('event02_rating0%d_biopac_response', i);
-        
     end
-    
     % Concatenate the data into one matrix in the correct order
     data_matrix = [rating_onset, rating_value, rating_RT, biopac_displayonset, biopac_response];
     
@@ -107,5 +106,6 @@ for run_num = 1:4
     % Save the table to a file
     filename = sprintf('/Users/h/Documents/projects_local/1076_spacetop/sourcedata/d_beh/sub-0001/task-alignvideos/ses-01/sub-0001_ses-01_task-alignvideos_run-%02d_beh.csv', run_num);
     writetable(T_reordered, filename);
+end
 end
 %%%%%%%
