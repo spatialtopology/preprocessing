@@ -327,7 +327,8 @@ if bids_string:
     fname = Path(bids_string).name
     sub = extract_bids(fname, 'sub')
     ses = extract_bids(fname, 'ses')
-    run = extract_bids(fname, 'run')
+    run = re.search(r'run-\d+', fname).group(0)
+    # run = extract_bids(fname, 'run')
     narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir)
 else:
     # If no bids_string is provided, loop through the entire directory
@@ -336,6 +337,7 @@ else:
         fname = Path(fpath).name
         sub = extract_bids(fname, 'sub')
         ses = extract_bids(fname, 'ses')
-        run = extract_bids(fname, 'run')
+        # run = extract_bids(fname, 'run')
+        run = re.search(r'run-\d+', fname).group(0)
         narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir)
 
