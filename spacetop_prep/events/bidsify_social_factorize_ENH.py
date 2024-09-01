@@ -257,12 +257,12 @@ def process_task(task_name, filtered_file_list, logger, metadata_df):
             except Exception as e:
                 logger.error(f"An error occurred while processing the trajectory file: {e}")
         else:
-            if args.bids_string:
-                beh_df['event02_expect_fillna'] = 'n/a'
-                beh_df['event04_outcome_fillna'] = 'n/a'
-                logger.info(f"Skipping trajectory processing for {args.bids_string} as no trajectory file exists.")
-            else:
-                logger.warning(f"No trajectory data found for {sub_bids}, {ses_bids}, {run_bids}. No BIDS string provided.")
+            # if args.bids_string:
+            beh_df['event02_expect_fillna'] = 'n/a'
+            beh_df['event04_outcome_fillna'] = 'n/a'
+            # logger.info(f"Skipping trajectory processing for {args.bids_string} as no trajectory file exists.")
+            # else:
+            logger.warning(f"No trajectory data found for {sub_bids}, {ses_bids}, {run_bids}. No BIDS string provided.")
 
         # Process cue, expect, stim, outcome, and save to CSV
         process_behavioral_data(cue, expect, stim, outcome, beh_df, traj_df, trigger, task_name, beh_savedir, sub_bids, ses_bids, run_bids, logger)
@@ -455,7 +455,7 @@ def main():
             run = extract_bids(fname, 'run')
 
             filtered_file_list = glob.glob(
-                str(Path(beh_inputdir) / sub / '**' / 'task-social' / '**' / f'*{args.bids_string}*.csv'),
+                str(Path(beh_inputdir) / sub / '**' / 'task-social' / '**' / f'*{sub}*{ses}*task-social*{run}*.csv'),
                 recursive=True)
 
             if not filtered_file_list:
