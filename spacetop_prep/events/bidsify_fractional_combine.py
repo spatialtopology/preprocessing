@@ -167,7 +167,8 @@ if filtered_saxe_flist:
         
         sub_bids = extract_bids(saxe_fname, 'sub') # re.search(r'sub-\d+', saxe_fname).group(0)
         ses_bids = extract_bids(saxe_fname, 'ses') # re.search(r'ses-\d+', saxe_fname).group(0)
-        run_bids = extract_bids(saxe_fname, 'run') # re.search(r'run-\d+', saxe_fname).group(0)
+        run_bids = re.search(r'run-\d+', saxe_fname).group(0)
+        # run_bids = extract_bids(saxe_fname, 'run') # re.search(r'run-\d+', saxe_fname).group(0)
         bids_name= f"{sub_bids}_{ses_bids}_{run_bids}"
         task_name = get_task_name(bids_name, metadata_df)
         # task_name = re.search(r'run-\d+-(\w+)_beh', saxe_fname).group(1)
@@ -580,7 +581,8 @@ if args.bids_string:
     if 'memory' in task_name:
         sub = extract_bids(basename, 'sub')
         ses = extract_bids(basename, 'ses')
-        run = extract_bids(basename, 'run')
+        run = re.search(r'run-\d+', basename).group(0)
+        # run = extract_bids(basename, 'run')
         
         # Search for the CSV file corresponding to the bids_string within the specified directory
         memory_flist = list(Path(beh_inputdir).rglob(f'{sub}/task-fractional/*{sub}*{ses}*task-fractional*{run}*.csv'))
@@ -614,7 +616,8 @@ if filtered_memory_flist:
         memory_fname = os.path.basename(memory_fpath)
         sub_bids = extract_bids(memory_fname, 'sub') ##re.search(r'sub-\d+', memory_fname).group(0)
         ses_bids = extract_bids(memory_fname, 'ses') ##re.search(r'ses-\d+', memory_fname).group(0)
-        run_bids = extract_bids(memory_fname, 'run') ##re.search(r'run-\d+', memory_fname).group(0)
+        run_bids = re.search(r'run-\d+', memory_fname).group(0)
+        # run_bids = extract_bids(memory_fname, 'run') ##re.search(r'run-\d+', memory_fname).group(0)
         bids_name= f"{sub_bids}_{ses_bids}_{run_bids}"
         task_name = get_task_name(bids_name, metadata_df)
         # task_name = re.search(r'run-\d+-(\w+)_beh', memory_fname).group(1)
