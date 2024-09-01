@@ -52,7 +52,8 @@ def get_task_name(bids_string, metadata_df):
     # Convert subject_id to integer by removing the 'sub-' prefix
     fname = Path(bids_string).stem
     sub = extract_bids(fname, 'sub')
-    run = extract_bids(fname, 'run')
+    run = re.search(r'run-\d+', fname).group(0)
+    # run = extract_bids(fname, 'run')
     subject_number = int(sub.replace('sub-', ''))
     
     # Map run_id to task1 or task2
@@ -120,7 +121,8 @@ if bids_string:
         # Extract the subject identifier from the bids_string
         sub = extract_bids(basename, 'sub')
         ses = extract_bids(basename, 'ses')
-        run = extract_bids(basename, 'run')
+        run = re.search(r'run-\d+', basename).group(0)
+        # run = extract_bids(basename, 'run')
         saxe_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/*{sub}*{ses}*task-fractional*{run}*.csv')) # Search for the CSV file corresponding to the bids_string within the specified directory
         
         if not saxe_flist:
@@ -152,7 +154,7 @@ if filtered_saxe_flist:
         
         sub_bids = extract_bids(saxe_fname, 'sub') # re.search(r'sub-\d+', saxe_fname).group(0)
         ses_bids = extract_bids(saxe_fname, 'ses') # re.search(r'ses-\d+', saxe_fname).group(0)
-        run_bids = extract_bids(saxe_fname, 'run') # re.search(r'run-\d+', saxe_fname).group(0)
+        run_bids = re.search(r'run-\d+', saxe_fname).group(0)
         bids_name= f"{sub_bids}_{ses_bids}_{run_bids}"
         task_name = get_task_name(bids_name, metadata_df)
         # task_name = re.search(r'run-\d+-(\w+)_beh', saxe_fname).group(1)
@@ -285,7 +287,8 @@ if bids_string:
     if 'posner' in extract_task_name:
         sub = extract_bids(basename, 'sub')
         ses = extract_bids(basename, 'ses')
-        run = extract_bids(basename, 'run')
+        run = re.search(r'run-\d+', basename).group(0)
+        # run = extract_bids(basename, 'run')
         # Search for the CSV file corresponding to the bids_string within the specified directory
         posner_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/*{sub}*{ses}*task-fractional*{run}*.csv'))
         
@@ -511,7 +514,8 @@ if bids_string:
     if 'memory' in extract_task_name:
         sub = extract_bids(basename, 'sub')
         ses = extract_bids(basename, 'ses')
-        run = extract_bids(basename, 'run')
+        run = re.search(r'run-\d+', basename).group(0)
+        # run = extract_bids(basename, 'run')
         
         # Search for the CSV file corresponding to the bids_string within the specified directory
         memory_flist = list(Path(beh_inputdir).rglob(f'{sub}/**/task-fractional/**/*{sub}*{ses}*task-fractional*{run}*.csv'))
@@ -542,7 +546,8 @@ if filtered_memory_flist:
         memory_fname = os.path.basename(memory_fpath)
         sub_bids = extract_bids(memory_fname, 'sub') 
         ses_bids = extract_bids(memory_fname, 'ses') 
-        run_bids = extract_bids(memory_fname, 'run') 
+        run_bids = re.search(r'run-\d+', memory_fname).group(0)
+        # run_bids = extract_bids(memory_fname, 'run') 
         bids_name= f"{sub_bids}_{ses_bids}_{run_bids}"
         task_name = get_task_name(bids_name, metadata_df)
         print(f"{sub_bids} {ses_bids} {run_bids} {task_name}")
@@ -731,7 +736,8 @@ if bids_string:
         # Extract the subject identifier from the bids_string
         sub = extract_bids(basename, 'sub')
         ses = extract_bids(basename, 'ses')
-        run = extract_bids(basename, 'run')
+        run = re.search(r'run-\d+', basename).group(0)
+        # run = extract_bids(basename, 'run')
         
         
         # Search for the CSV file corresponding to the bids_string within the specified directory
