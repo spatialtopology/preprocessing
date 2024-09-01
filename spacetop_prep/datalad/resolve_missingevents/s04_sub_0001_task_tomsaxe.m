@@ -1,5 +1,5 @@
 % download https://github.com/spatialtopology/task-fractional/blob/DBIC/task-tomsaxe/answer_key.csv
-url = 'https://github.com/spatialtopology/task-fractional/blob/DBIC/task-tomsaxe/answer_key.csv?raw=true';
+url = 'https://raw.githubusercontent.com/spatialtopology/task-fractional/DBIC/task-tomsaxe/answer_key.csv?token=GHSAT0AAAAAACV2UHC5PPWMDHRIW6RKIJWAZWUZB2A';
 answer_filename = 'answer_key.csv';
 outfilename = websave(answer_filename, url);
 
