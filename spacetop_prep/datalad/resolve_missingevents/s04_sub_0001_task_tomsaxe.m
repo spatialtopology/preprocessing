@@ -13,3 +13,4 @@ accuracy_freq = sum(Ttotal.accuracy);
 %% __________________________ save parameter ___________________________________
 % events_fname = fullfile(sub_save_dir,[bids_string, '_beh.csv' ]);
 writetable(Ttotal,events_fname);
+
