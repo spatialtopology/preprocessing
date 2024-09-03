@@ -54,5 +54,5 @@ for file in files:
     subprocess.run(["git", "annex", "unlock", file])
     scans_df = pd.read_csv(file)
     scans_df.fillna("n/a")
-    scans_df.to_csv(file, sep='\t', header=False, index=False)
+    scans_df.to_csv(file, sep='\t', header=True, index=False)
     subprocess.run(["git", "annex", "lock", file])
