@@ -130,7 +130,7 @@ def save_events_file(new_beh, bids_dir, sub, ses, taskname, run):
 
 def faces_format2bids(sub, ses, taskname, run, rating_type, beh_inputdir, bids_dir):
     beh_fname = load_data_file(sub, ses, taskname, run, rating_type, beh_inputdir)
-    source_beh = pd.read_csv(beh_fname)
+    source_beh = pd.read_csv(beh_fname) 
     if source_beh is not None:
         new_beh = process_trial_data(source_beh, run, rating_type) 
         save_events_file(new_beh, bids_dir, sub, ses, taskname, run)
