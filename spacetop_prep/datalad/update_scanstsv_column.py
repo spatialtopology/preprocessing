@@ -16,7 +16,10 @@ for session in sessions:
         subprocess.run(["git", "annex", "unlock", file])
         with open(file, 'r+') as f:
             data = json.load(f)
-            data["task-social_runtype"] = "Runtype of task-social runs. Options: ['pain', 'vicarious', 'cognitive']"
+            data["task-social_runtype"] = {
+                "LongName": "Runtype of task-social runs",
+                "Description": "Runtype of task-social runs. Options: ['pain', 'vicarious', 'cognitive']"
+            }
             f.seek(0)
             json.dump(data, f, indent=4)
             f.truncate()
@@ -31,8 +34,13 @@ for file in files:
     subprocess.run(["git", "annex", "unlock", file])
     with open(file, 'r+') as f:
         data = json.load(f)
-        data["task-social_runtype"] = "Runtype of task-social runs. Options: ['pain', 'vicarious', 'cognitive']"
-        data["task-fractional_runtype"] = "Runtype of task-fractional runs. Options: ['tomsaxe', 'tomspunt', 'memory', 'posner']"
+        data["task-social_runtype"] = data["task-social_runtype"] = {
+                "LongName": "Runtype of task-social runs",
+                "Description": "Runtype of task-social runs. Options: ['pain', 'vicarious', 'cognitive']"
+            }
+        data["task-fractional_runtype"] = {
+                "LongName": "Runtype of task-social runs",
+                "Description": "Runtype of task-fractional runs. Options: ['tomsaxe', 'tomspunt', 'memory', 'posner']"}
         f.seek(0)
         json.dump(data, f, indent=4)
         f.truncate()
