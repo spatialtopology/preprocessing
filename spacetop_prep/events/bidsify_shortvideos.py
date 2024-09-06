@@ -85,7 +85,7 @@ for sub in sublist:
         duration = oriData.loc[t, 'event02_video_stop'] - oriData.loc[t, 'event02_video_onset']
         trial_type = 'video'
         stim_file = oriData.loc[t, 'event02_video_filename']
-        stim_file = taskname + '/' + stim_file
+        stim_file = 'task-shortvideo/' + stim_file
         newRow = pd.DataFrame({"onset": onset, "duration": duration, "trial_type": trial_type, \
                             "block_condition": block_condition, "mentalizing_level": mentalizing_level, "stim_file": stim_file}, index=[0])
         newData = pd.concat([newData, newRow], ignore_index=True)

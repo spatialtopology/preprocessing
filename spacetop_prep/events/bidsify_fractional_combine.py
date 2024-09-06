@@ -639,7 +639,7 @@ if filtered_memory_flist:
         temp_study['subtask_type'] = task_name
         temp_study['event_type'] = df_memstudy['event02_dummy_stimuli_type'].replace({0: 'dummy', 1: 'study'})
         temp_study['value'] = temp_study['event_type'].replace({'dummy': 'study_dummy', 'study':'study'})
-        temp_study['stim_file'] = task_name + '/' + df_memstudy['event02_image_filename']
+        temp_study['stim_file'] = 'task-' + task_name + '/' + df_memstudy['event02_image_filename']
         temp_study['response_accuracy'] = "n/a" #np.nan TODO: reverse inference and go back 
         temp_study['button_press'] = "n/a"
         temp_study['reaction_time'] = "n/a"
@@ -657,7 +657,7 @@ if filtered_memory_flist:
         temp_test['subtask_type'] = task_name
         temp_test['event_type'] = 'test'
         temp_test['value'] =  df_memtest['param_answer'].replace({0: 'test_new', 1:'test_old'})
-        temp_test['stim_file'] = task_name + '/' + df_memtest['event02_image_filename']
+        temp_test['stim_file'] = 'task-' + task_name + '/' + df_memtest['event02_image_filename']
         df_memtest['event03_response_key'] = df_memtest['event03_response_key'].fillna(0)
         temp_test['response_accuracy'] = (df_memtest['param_answer'] == df_memtest['event03_response_key']).astype(int).replace({0: 'incorrect', 1:'correct'})
         temp_test['button_press'] = df_memtest.event03_response_keyname.replace({'right': 'new', 'left':'old', 'NaN': 'n/a', 'nan': 'n/a'})
@@ -887,7 +887,7 @@ if filtered_spunt_flist:
         events = pd.concat([events, block_unique], ignore_index=True)
         precision_dic = {'onset': 3, 'duration': 3}
         events = events.round(precision_dic)
-        events = events.fillna("n/a")
+        events.fillna('n/a', inplace=True)
         Path(beh_savedir).mkdir( parents=True, exist_ok=True )
         save_fname = f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_events.tsv"
         events.to_csv(join(beh_savedir, save_fname), sep='\t', index=False)
