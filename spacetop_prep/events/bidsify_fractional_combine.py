@@ -218,7 +218,7 @@ if filtered_saxe_flist:
         events_sorted = events.sort_values(by='onset')
         precision_dic = {'onset': 3, 'duration': 3}
         events_sorted = events_sorted.round(precision_dic)
-        events = events.fillna("n/a")
+        events = events_sorted.fillna("n/a")
         Path(beh_savedir).mkdir( parents=True, exist_ok=True )
         events.to_csv(join(beh_savedir, f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_events.tsv"), sep='\t', index=False)
 
