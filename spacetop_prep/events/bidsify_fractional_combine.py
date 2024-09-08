@@ -323,7 +323,7 @@ if args.bids_string:
         print(f'No behavior data file found for {args.bids_string}. Skipping to next task.')
 else:
     # If no bids_string is provided, search for all relevant files excluding specific subjects
-    posner_flist = list(Path(beh_inputdir).rglob(f'**/*{extract_task_name}*.csv'))
+    posner_flist = list(Path(beh_inputdir).rglob(f'**/*{task_name}*.csv'))
     
     # Filter out files belonging to the excluded subject (e.g., "sub-0001")
     filtered_posner_flist = [file for file in posner_flist if "sub-0001" not in str(file)]
