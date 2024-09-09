@@ -888,6 +888,7 @@ if filtered_spunt_flist:
         events = pd.concat([events, block_unique], ignore_index=True)
         precision_dic = {'onset': 3, 'duration': 3}
         events = events.round(precision_dic)
+        events = events.astype('object') 
         events.fillna('n/a', inplace=True)
         Path(beh_savedir).mkdir( parents=True, exist_ok=True )
         save_fname = f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_events.tsv"
