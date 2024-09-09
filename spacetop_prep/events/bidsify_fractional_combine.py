@@ -890,6 +890,7 @@ if filtered_spunt_flist:
         events = events.round(precision_dic)
         events = events.astype('object') 
         events.fillna('n/a', inplace=True)
+        events = events.infer_objects(copy=False)
         Path(beh_savedir).mkdir( parents=True, exist_ok=True )
         save_fname = f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_events.tsv"
         events.to_csv(join(beh_savedir, save_fname), sep='\t', index=False)
