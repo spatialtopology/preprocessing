@@ -612,13 +612,14 @@ else:
 
 
 if filtered_memory_flist:
-    for memory_fpath in filtered_memory_flist:
+    for memory_fpath in sorted(filtered_memory_flist):
         memory_fname = os.path.basename(memory_fpath)
         sub_bids = extract_bids(memory_fname, 'sub') ##re.search(r'sub-\d+', memory_fname).group(0)
         ses_bids = extract_bids(memory_fname, 'ses') ##re.search(r'ses-\d+', memory_fname).group(0)
         run_bids = re.search(r'run-\d+', memory_fname).group(0)
         # run_bids = extract_bids(memory_fname, 'run') ##re.search(r'run-\d+', memory_fname).group(0)
         bids_name= f"{sub_bids}_{ses_bids}_{run_bids}"
+        print(bids_name)
         task_name = get_task_name(bids_name, metadata_df)
         # task_name = re.search(r'run-\d+-(\w+)_beh', memory_fname).group(1)
         print(f"{sub_bids} {ses_bids} {run_bids} {task_name}")
@@ -844,7 +845,7 @@ else:
     filtered_spunt_flist = [file for file in spunt_flist if "sub-0001" not in str(file)]
 
 if filtered_spunt_flist:
-    for spunt_fpath in filtered_spunt_flist:
+    for spunt_fpath in sorted(filtered_spunt_flist):
         spunt_fname = os.path.basename(spunt_fpath)
         sub_bids = re.search(r'sub-\d+', spunt_fname).group(0)
         ses_bids = re.search(r'ses-\d+', spunt_fname).group(0)
