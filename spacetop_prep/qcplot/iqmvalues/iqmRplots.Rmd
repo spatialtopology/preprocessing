@@ -1,10 +1,13 @@
 ---
-title: "Untitled"
+title: "IQM measures"
 author: "Heejung Jung"
 date: "`r Sys.Date()`"
 output: html_document
 ---
-iqm
+
+Here, we plot the FD means, DVARs and tSNR from spacetop individual tasks.
+For FD means, we also plot the UKB task FD values.
+
 ```{r include=FALSE}
 library(ggplot2)
 library(raincloudplots)
@@ -24,6 +27,357 @@ file.sources = list.files(c("/Users/h/Documents/projects_local/cue_expectancy/sc
 sapply(file.sources,source,.GlobalEnv)
 
 ```
+
+## functions for plots
+
+```{r}
+calculate_factor_range <- function(data, factor_column, border_levels) {
+    if (is.null(border_levels) || length(border_levels) == 0) {
+        return(NULL)
+    }
+
+    levels_to_include <- as.character(border_levels)
+    factor_levels <- levels(factor(data[[factor_column]]))
+    positions <- which(factor_levels %in% levels_to_include)
+
+    if (length(positions) == 0) {
+        return(NULL)
+    }
+
+    # Adjust xmin and xmax based on position in the factor levels
+    n_levels <- length(factor_levels)
+    padding <- 0.5
+    xmin_range <- ifelse(min(positions) == 1, min(positions) - padding, min(positions) - padding / 2)
+    xmax_range <- ifelse(max(positions) == n_levels, max(positions) + padding, max(positions) + padding / 2)
+
+    return(list(xmin = xmin_range, xmax = xmax_range))
+}
+
+```
+
+### plot function half rainclouds boxplot
+
+
+```{r}
+plot_halfrainclouds_onefactor <- function(subjectwise,
+                                          groupwise,
+                                          iv,
+                                          subjectwise_mean,
+                                          group_mean,
+                                          se,
+                                          subject,
+                                          ggtitle,
+                                          title,
+                                          xlab,
+                                          ylab,
+                                          taskname,
+                                          ylim,
+                                          w,
+                                          h,
+                                          dv_keyword,
+                                          color,
+                                          border_levels=NULL, 
+                                          border_color=NULL,
+                                          save_fname) {
+  
+  # ----------------------------------------------------------------------------
+  #  initialize ggplot
+  # ----------------------------------------------------------------------------
+  
+  g <- ggplot(data = subjectwise,
+              aes(
+                y = .data[[subjectwise_mean]],
+                x = factor(.data[[iv]]),
+                fill = factor(.data[[iv]])
+              )) +
+    coord_cartesian(ylim = ylim, expand = TRUE) + 
+    scale_x_discrete() # since x is a factor, we'll indicate it as discrete
+  # ----------------------------------------------------------------------------
+  #  rectangle around specific levels (UKB data)
+  # ----------------------------------------------------------------------------
+      if (!is.null(border_levels)) {
+    levels_to_include <- as.character(border_levels)
+    factor_levels <- levels(factor(subjectwise[[iv]]))
+    positions <- which(factor_levels %in% levels_to_include)
+
+    # Calculate the range
+    if (length(positions) == 1) {
+        # For a single level, return the exact position
+        xmin_range <- positions - 0.5
+        xmax_range <- positions + 0.5
+    } else {
+        # For multiple levels, return the min and max positions
+        xmin_range <- min(positions) - 0.5
+        xmax_range <- max(positions) + 0.5
+    }
+
+  # Adding a rectangle annotation covering the range
+  g <- g +
+    annotate(
+      "rect",
+      xmin = as.numeric(xmin_range), xmax = as.numeric(xmax_range),
+      ymin = -Inf, ymax = Inf,
+      fill = border_color, alpha = 0.1
+    ) +
+    geom_vline(
+      xintercept = xmax_range,
+      linetype = "dashed", color = border_color, size = .5
+    )
+    }
+  # ----------------------------------------------------------------------------
+  #  violin plots
+  # ----------------------------------------------------------------------------
+  g <- g +  geom_half_violin(
+    data = subjectwise,
+    aes(fill = factor(.data[[iv]])),
+    side = 'r',
+    position = 'dodge',
+    adjust = 1.5,
+    trim = FALSE,
+    alpha = .9,
+    colour = NA,
+    width = 1.5
+  ) +
+    
+    geom_point(
+      aes(
+        # group = .data[[subject]],
+        x = as.numeric(as.factor(.data[[iv]])) - .2 ,
+        y = .data[[subjectwise_mean]],
+        color = factor(.data[[iv]])
+      ),
+      position = position_jitter(width = .05),
+      size = .1,
+      alpha = 0.2,
+    ) +
+    
+    geom_boxplot(
+      data = subjectwise,
+      aes(x = .data[[iv]],
+          y = .data[[subjectwise_mean]],
+          fill = .data[[iv]]),
+      side = "r",
+      outlier.shape = NA,
+      alpha = 0.8,
+      width = .1,
+      notch = FALSE,
+      notchwidth = 0,
+      varwidth = FALSE,
+      colour = "black",
+      errorbar.draw = FALSE
+    ) +
+    
+  # ----------------------------------------------------------------------------
+  #  legend stuff
+  # ----------------------------------------------------------------------------
+    expand_limits(x = 2.8) +
+    guides(color = "none") +
+    guides(fill = guide_legend(title = title)) +
+    scale_fill_manual(values = color) +
+    scale_color_manual(values = color) +
+    ggtitle(ggtitle) +
+    xlab(xlab) +
+    ylab(ylab) +
+    theme_bw()
+  
+  ggsave(save_fname, width = w, height = h)
+  return(g)
+}
+
+```
+
+
+### plot pointrange function half rainclouds pointrange
+```{r}
+plot_halfrainclouds_pointrange <- function(subjectwise, groupwise, iv,
+                                      subjectwise_mean, group_mean, se, subject,
+                                      ggtitle, title, xlab, ylab, taskname, ylim,
+                                      w, h, dv_keyword, color,border_levels=NULL, border_color=NULL, save_fname) {
+  print(names(subjectwise))
+  print(names(groupwise))
+  g <- ggplot(
+    data = subjectwise,
+    aes(
+      y = .data[[subjectwise_mean]],
+      x = factor(.data[[iv]]),
+      fill = factor(.data[[iv]])
+    )
+  ) +
+    
+    coord_cartesian(ylim = ylim, expand = TRUE) + scale_x_discrete()
+
+  # ----------------------------------------------------------------------------
+  #  rectangle around UKB data
+  # ----------------------------------------------------------------------------
+    # factor_levels <- levels(factor(subjectwise[[iv]]))
+    # position_ukb_faces <- which(factor_levels == "UKB faces")
+    # position_ukb_rest <- which(factor_levels == "UKB rest")
+    # xmin_range <- min(position_ukb_faces, position_ukb_rest) - 0.5
+    # xmax_range <- max(position_ukb_faces, position_ukb_rest) + 0.5
+    # Ensure the input levels are a character vector
+      if (!is.null(border_levels)) {
+    levels_to_include <- as.character(border_levels)
+    factor_levels <- levels(factor(subjectwise[[iv]]))
+    positions <- which(factor_levels %in% levels_to_include)
+
+    # Calculate the range
+    if (length(positions) == 1) {
+        # For a single level, return the exact position
+        xmin_range <- positions - 0.5
+        xmax_range <- positions + 0.5
+    } else {
+        # For multiple levels, return the min and max positions
+        xmin_range <- min(positions) - 0.5
+        xmax_range <- max(positions) + 0.5
+    }
+
+  # Adding a rectangle annotation covering the range
+  g <- g +
+    annotate(
+      "rect",
+      xmin = as.numeric(xmin_range), xmax = as.numeric(xmax_range),
+      ymin = -Inf, ymax = Inf,
+      fill = border_color, alpha = 0.1
+    ) +
+    geom_vline(
+      xintercept = xmax_range,
+      linetype = "dashed", color = border_color, size = .5
+    )
+      }
+
+# ----------------------------------------------------------------------------
+#  violin plot
+# ----------------------------------------------------------------------------  
+   g <- g+ geom_half_violin(
+      aes(fill = factor(.data[[iv]])),
+      side = 'r',
+      position = 'dodge',
+      adjust = 1.5,
+      trim = FALSE,
+      alpha = .9,
+      colour = NA,
+      width=1.5
+    ) +
+
+  geom_point(
+    data = subjectwise, 
+    aes(
+      
+      x = as.numeric(as.factor(.data[[iv]])) - .15 ,
+      y = .data[[subjectwise_mean]],
+      color = factor(.data[[iv]])
+    ),
+    position = position_jitter(width = .05),
+    size = .1,
+    alpha = 0.7,
+  ) + 
+
+    
+    geom_pointrange(data = groupwise,
+                    aes(fill = factor(.data[[iv]]),
+                        # group = factor(.data[[iv]]),
+                        y = .data[[group_mean]],
+                        x = factor(.data[[iv]]),
+                        ymin = (.data[[group_mean]] - .data[[se]]),
+                        ymax = (.data[[group_mean]] + .data[[se]])
+                        ),
+                   position = position_dodge(width = 0.1),
+                   size = 0.1
+                   
+                    ) + 
+
+# ----------------------------------------------------------------------------
+#  legend
+# ----------------------------------------------------------------------------
+    expand_limits(x = 2.8) +
+    #guides(fill = "none") +
+    guides(color = "none") +
+    guides(fill = guide_legend(title = title)) +
+    scale_fill_manual(values = color) +
+    scale_color_manual(values = color) +
+    ggtitle(ggtitle) +
+    xlab(xlab) +
+    ylab(ylab) +
+    theme_bw() 
+
+  # ggsave(save_fname, width = w, height = h)
+  return(g)
+}
+
+```
+
+```{r}
+plot_violin_onefactor <- function(subjectwise, groupwise, iv,
+                                      subjectwise_mean, group_mean, se, subject,
+                                      ggtitle, title, xlab, ylab, taskname, ylim,
+                                      w, h, dv_keyword, color, save_fname) {
+  g <- ggplot(
+    data = subjectwise,
+    aes(
+      y = .data[[subjectwise_mean]],
+      x = factor(.data[[iv]]),
+      fill = factor(.data[[iv]])
+    )
+  ) +
+    coord_cartesian(ylim = ylim, expand = TRUE) +
+
+    geom_violin(
+      aes(fill = factor(.data[[iv]])),
+      side = 'r',
+      position = 'dodge',
+      adjust = 1.5,
+      trim = FALSE,
+      alpha = .3,
+      colour = NA
+    ) +
+
+  geom_point(
+    aes(
+      # group = .data[[subject]],
+      x = as.numeric(as.factor(.data[[iv]])) - .15 ,
+      y = .data[[subjectwise_mean]],
+      color = factor(.data[[iv]])
+    ),
+    position = position_jitter(width = .05),
+    size = 2,
+    alpha = 0.7,
+  ) +
+
+    geom_boxplot(
+      data = subjectwise,
+      aes(x = .data[[iv]],
+          y = .data[[subjectwise_mean]],
+          fill = .data[[iv]]),
+      side = "r",
+      outlier.shape = NA,
+      alpha = 0.8,
+      width = .1,
+      notch = FALSE,
+      notchwidth = 0,
+      varwidth = FALSE,
+      colour = "black",
+      # errorbar.draw = FALSE
+    ) +
+
+
+    # legend stuff ________________________________________________________ # nolint
+    expand_limits(x = 2.8) +
+    #guides(fill = "none") +
+    guides(color = "none") +
+    guides(fill = guide_legend(title = title)) +
+    scale_fill_manual(values = color) +
+    scale_color_manual(values = color) +
+    ggtitle(ggtitle) +
+    xlab(xlab) +
+    ylab(ylab) +
+    theme_bw() 
+
+  ggsave(save_fname, width = w, height = h)
+  return(g)
+}
+
+```
+
 
 ## load data
 ```{r}
@@ -62,7 +416,7 @@ colnames(groupwise_all)
 library(dplyr)
 # groupwise_all <- groupwise_all %>% rename("task_factor" = ".id")
 colnames(groupwise_all)[1] <- "task_factor"
-groupwise_all$task_factor <- "all"
+groupwise_all$task_factor <- "all tasks"
 
 # Find common columns
 group_common_columns <- intersect(names(groupwise), names(groupwise_all))
@@ -76,194 +430,411 @@ groupwise_combined <- rbind(df1_common, df2_common)
 subjectwise_combined <- rbind(subjectwise, subjectwise_all)
 
 ```
-
-
-
-```{r}
-plot_halfrainclouds_onefactor <- function(subjectwise, groupwise, iv,
-                                      subjectwise_mean, group_mean, se, subject,
-                                      ggtitle, title, xlab, ylab, taskname, ylim,
-                                      w, h, dv_keyword, color, save_fname) {
-  g <- ggplot(
-    data = subjectwise,
-    aes(
-      y = .data[[subjectwise_mean]],
-      x = factor(.data[[iv]]),
-      fill = factor(.data[[iv]])
-    )
-  ) +
-    coord_cartesian(ylim = ylim, expand = TRUE) +
-
-    geom_half_violin(
-      aes(fill = factor(.data[[iv]])),
-      side = 'r',
-      position = 'dodge',
-      adjust = 1.5,
-      trim = FALSE,
-      alpha = .3,
-      colour = NA
-    ) +
-
-  geom_point(
-    aes(
-      # group = .data[[subject]],
-      x = as.numeric(as.factor(.data[[iv]])) - .15 ,
-      y = .data[[subjectwise_mean]],
-      color = factor(.data[[iv]])
-    ),
-    position = position_jitter(width = .05),
-    size = 2,
-    alpha = 0.7,
-  ) + 
-
-    geom_boxplot(
-      data = subjectwise,
-      aes(x = .data[[iv]],
-          y = .data[[subjectwise_mean]],
-          fill = .data[[iv]]),
-      side = "r",
-      outlier.shape = NA,
-      alpha = 0.8,
-      width = .1,
-      notch = FALSE,
-      notchwidth = 0,
-      varwidth = FALSE,
-      colour = "black",
-      errorbar.draw = FALSE
-    ) +
-
-
-    # legend stuff ________________________________________________________ # nolint
-    expand_limits(x = 2.8) +
-    #guides(fill = "none") +
-    guides(color = "none") +
-    guides(fill = guide_legend(title = title)) +
-    scale_fill_manual(values = color) +
-    scale_color_manual(values = color) +
-    ggtitle(ggtitle) +
-    xlab(xlab) +
-    ylab(ylab) +
-    theme_bw()
-  ggsave(save_fname, width = w, height = h)
-  return(g)
-}
-
-```
+## UKbiobank FDmean
 
 ```{r}
+ukb <- read.csv("/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/qcplot/iqmvalues/fd-mean_ukb.csv")
 
+ukb$task_factor[ukb$task == "faces"] <- "UKB faces"
+ukb$task_factor[ukb$task == "rest"] <- "UKB rest"
+ukb$task_factor <- factor(ukb$task_factor)
+subject <- "sub"
+model_iv <- "task_factor"
+dv <- "fd_mean"
+ukb_subjectwise <- meanSummary(ukb, c(subject, model_iv), dv)
+
+
+ukb_groupwise <- summarySE(
+  data=ukb_subjectwise,
+  measurevar = "mean_per_sub",
+  groupvars = c("task_factor"),
+  na.rm=TRUE
+  # na.rm = na.rm
+  # betweenvars = "subject",
+  # withinvars = c(model_iv),
+  # idvar = subject
+)
+colnames(ukb_groupwise)[1] <- "task_factor"
 g <- plot_halfrainclouds_onefactor(
-  subjectwise_combined,
-  groupwise_combined,
+  ukb_subjectwise,
+  ukb_groupwise,
   iv="task_factor",
   subjectwise_mean = "mean_per_sub",
   group_mean = "mean_per_sub_mean",
   se = "se",
   subject = "sub",
-  ggtitle = "Framewise displacement across tasks",
+  ggtitle = "UKB and Spacetop FDmean across tasks",
   title="title",
-  xlab="FD",
+  xlab="fd mean",
   ylab="task",
   taskname="spacetop",
-  ylim=c(-1, 3),
+  ylim=c(0,.9),
   w=5,
-  h=3,
+  h=.5,
   dv_keyword="iqm",
-  color=c("#6496BF","#3A7F7E","#996666","#E6A74B","#D85038", "#5A0B4D", "black"),
+  color=c("#6496BF","#3A7F7E","#996666","#E6A74B","#D85038", "#5A0B4D", "black", "navy", "purple"),
   save_fname="./iqm.png"
 )
 g + coord_flip() + 
-  ylim(0, .9) + theme_classic() + ylab("Framewise displacement (FD)") + xlab("task")
-```
-
-
-
-
-## entire FDmean
-```{r}
-# Assuming 'subjectwise_all' is your subject-level data and has a column 'subject'
-# Replicate the single row in 'groupwise_all' to match the number of subjects
-groupwise_replicated <- groupwise_all[rep(1, nrow(subjectwise_all)), ]
-dodge_width <- 0.2
-# Now, use 'groupwise_replicated' for plotting the error bars
-g <-ggplot(subjectwise_all, aes(x = factor(subject), y = mean_per_sub)) +
-  coord_cartesian(ylim = ylim, expand = TRUE) +
-  geom_half_violin(
-    aes(x = factor(subject), y = mean_per_sub),
-    side = 'r',
-    adjust = 1.5,
-    trim = FALSE, 
-    alpha = 0.3, 
-    fill = 'gray',
-    # position = position_nudge(x = dodge_width/2)
+  ylim(0,.9) + theme_classic()+ ylab("Framewise displacement (FD)") + xlab("task") +
+theme(
+      plot.title = element_text(size = 20), # Adjust plot title size
+      axis.title = element_text(size = 20), # Adjust axis titles size
+      axis.text = element_text(size = 15),  # Adjust axis text size
+      legend.title = element_text(size = 15), # Adjust legend title size
+      legend.text = element_text(size = 10)  # Adjust legend text size
+      
     ) +
+theme(text = element_text(size = 20))
 
-  geom_point(
-    # aes(x = factor(subject), y = mean_per_sub),
-    position = position_jitter(.1),
-                                    # width = .05),
-      # jitter.width = 0.05, dodge.width = 0.2),
-             size = 2, alpha = 0.7) +
-  geom_boxplot(outlier.shape = NA, alpha = 0.8, width = .1, colour = "black", 
-               position = position_dodge(.8),
-                     # errorbar.draw = FALSE
-               ) +
-  # geom_errorbar(data = groupwise_all, aes(x = factor(subject), ymin = mean_per_sub_mean - se, ymax = mean_per_sub_mean + se), width = .1, position = position_dodge(0.8)) +
-  ggtitle(ggtitle) +
-  xlab("Subject") +
-  ylab("Mean per Subject") +
-  theme_classic()
-  # error bar
-  # geom_errorbar(
-  #   data = groupwise_replicated,
-  #   aes(x = factor(subject), y = mean_per_sub_mean, ymin = mean_per_sub_mean - se, ymax = mean_per_sub_mean + se
-  #   ), width = .5, position = position_dodge(0.8)
-  # ) 
-
-
-g + coord_flip()
-
+ggsave(save_fname, width = w, height = h)
 ```
+
+## Fig 0. ukbiobank + spacetop combined
+
+
 ```{r}
-# Adjusting positions
-dodge_width <- 0.8 # Adjust this to control the horizontal spread of the points
+# ----------------------------------------------------------------------------
+#  Find common columns across dataframes for merging
+# ----------------------------------------------------------------------------
+fd.group.commoncolumn <- intersect(names(ukb_groupwise),
+          names(groupwise_combined)
+)
 
-# Rest of your code ...
+fd.subject.commoncolumn <- intersect(names(ukb_subjectwise),
+          names(subjectwise_combined)
+)
+ukb.groupwise.common <- ukb_groupwise[fd.group.commoncolumn]
+st.groupwise.common <- groupwise_combined[fd.group.commoncolumn]
 
-g <- ggplot(subjectwise_all, aes(x = factor(subject), y = mean_per_sub)) +
-  coord_cartesian(ylim = ylim, expand = TRUE) +
-  geom_half_violin(
-    aes(x = factor(subject), y = mean_per_sub),
-    side = 'r',
-    adjust = 1.5,
-    trim = FALSE, 
-    alpha = 0.3, 
-    fill = 'gray'
-  ) +
-  geom_point(
-    aes(group = factor(subject)), # This is the key addition
-    position = position_jitter(width = .2),
-    size = 2, 
-    alpha = 0.7
-  ) +
-  geom_boxplot(
-    outlier.shape = NA, 
-    alpha = 0.8, 
-    width = .1, 
-    colour = "black", 
-    position = position_dodge(dodge_width)
-  ) +
-  ggtitle(ggtitle) +
-  xlab("Subject") +
-  ylab("Mean per Subject") +
-  theme_classic()
+ukb.subjectwise.common <- ukb_subjectwise[fd.subject.commoncolumn]
+st.subjectwise.common <- subjectwise_combined[fd.subject.commoncolumn]
 
-# ... [rest of your plot code] ...
 
-g + coord_flip() # if you want to flip the coordinates
+# ----------------------------------------------------------------------------
+#  rstack dataframes across spacetop and ukbiobank
+# ----------------------------------------------------------------------------
+fd.groupwise.ukbst<- rbind(ukb.groupwise.common, st.groupwise.common)
+fd.subjectwise.ukbst <- rbind(ukb.subjectwise.common, st.subjectwise.common)
+fd.subjectwise.ukbst$task_ordered <- factor(fd.subjectwise.ukbst$task_factor, 
+                             levels = c(  "UKB rest", "UKB faces", "all tasks","social","shortvideo", "narratives","fractional","faces", "alignvideo"))
+fd.groupwise.ukbst$task_ordered <- factor(fd.groupwise.ukbst$task_factor, 
+                             levels = c(  "UKB rest", "UKB faces", "all tasks","social","shortvideo", "narratives","fractional","faces", "alignvideo"))
 
+# ----------------------------------------------------------------------------
+#  plot
+# ----------------------------------------------------------------------------
+g <- plot_halfrainclouds_onefactor(
+  fd.subjectwise.ukbst,
+  fd.groupwise.ukbst,
+  iv="task_ordered",
+  subjectwise_mean = "mean_per_sub",
+  group_mean = "mean_per_sub_mean",
+  se = "se",
+  subject = "sub",
+  ggtitle = "UKB and Spacetop FDmean across tasks",
+  title="title",
+  xlab="Framewise displacement (FD)",
+  ylab="Task",
+  taskname="spacetop",
+  ylim=c(0,.9),
+  w=5,
+  h=5,
+  dv_keyword="iqm",
+  color=c("gray", "gray","#333333", "#6496BF", "#4f8b9e", "#3A7F7E", 
+              # "#6a7272",
+              "#996666","#c08658","#e6a74b", "#E18745", "#5A0B4D" ),
+  border_color = "gray", 
+  border_level = c("UKB faces", "UKB rest"),
+  save_fname="./fd_ukb_spacetop.png"
+)
+
+
+# ----------------------------------------------------------------------------
+#  color palettes
+# ----------------------------------------------------------------------------
+# color = c("black","gray", "#6496BF","#3A7F7E","#996666","#E6A74B","#D85038", "#5A0B4D" )
+# batlow
+
+
+# ----------------------------------------------------------------------------
+#  plot vertically and make transparent
+# ----------------------------------------------------------------------------
+g <- g + coord_flip() + 
+  ylim(0,.9) + theme_classic()+ ylab("Framewise displacement (FD)") + xlab("Task") +
+theme(
+      plot.title = element_text(size = 15), # Adjust plot title size
+      axis.title = element_text(size = 15), # Adjust axis titles size
+      axis.text = element_text(size = 12),  # Adjust axis text size
+      legend.title = element_text(size = 15), # Adjust legend title size
+      legend.text = element_text(size = 10)  # Adjust legend text size
+      
+    ) +
+theme(text = element_text(size = 20)) + 
+  theme(
+    panel.background = element_rect(fill='transparent'), #transparent panel bg
+    plot.background = element_rect(fill='transparent', color=NA), #transparent plot bg
+    panel.grid.major = element_blank(), #remove major gridlines
+    panel.grid.minor = element_blank(), #remove minor gridlines
+    legend.background = element_rect(fill='transparent'), #transparent legend bg
+    legend.box.background = element_rect(fill='transparent') #transparent legend panel
+  )   
+
+g
+# ggsave(save_fname, g, width = w, height = h)
+ggsave("/Users/h/Dropbox/projects_adobe/spacetop_datapaper/iqm_fd.png", plot = g, width = 8, height = 5, dpi = 600)
 ```
 
+
+
+
+## UKbiobank FDmean
+
+```{r}
+ukb.concat <- read.csv("/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/qcplot/iqmvalues/fd-mean_ukb.csv")
+
+ukb.concat$task_factor[ukb.concat$task == "faces"] <- "UKB"
+ukb.concat$task_factor[ukb.concat$task == "rest"] <- "UKB"
+ukb.concat$task_factor <- factor(ukb.concat$task_factor)
+subject <- "sub"
+model_iv <- "task_factor"
+dv <- "fd_mean"
+ukb_subjectwise <- meanSummary(ukb.concat, c(subject, model_iv), dv)
+
+
+ukb_groupwise <- summarySE(
+  data=ukb_subjectwise,
+  measurevar = "mean_per_sub",
+  groupvars = c("task_factor"),
+  na.rm=TRUE
+  # na.rm = na.rm
+  # betweenvars = "subject",
+  # withinvars = c(model_iv),
+  # idvar = subject
+)
+colnames(ukb_groupwise)[1] <- "task_factor"
+g <- plot_halfrainclouds_onefactor(
+  ukb_subjectwise,
+  ukb_groupwise,
+  iv="task_factor",
+  subjectwise_mean = "mean_per_sub",
+  group_mean = "mean_per_sub_mean",
+  se = "se",
+  subject = "sub",
+  ggtitle = "UKB and Spacetop FDmean across tasks",
+  title="title",
+  xlab="fd mean",
+  ylab="task",
+  taskname="spacetop",
+  ylim=c(0,.9),
+  w=5,
+  h=.5,
+  dv_keyword="iqm",
+  color=c("#6496BF","#3A7F7E","#996666","#E6A74B","#D85038", "#5A0B4D", "black", "navy", "purple"),
+  save_fname="./iqm.png"
+)
+g + coord_flip() + 
+  ylim(0,.9) + theme_classic()+ ylab("Framewise displacement (FD)") + xlab("task") +
+theme(
+      plot.title = element_text(size = 20), # Adjust plot title size
+      axis.title = element_text(size = 20), # Adjust axis titles size
+      axis.text = element_text(size = 15),  # Adjust axis text size
+      legend.title = element_text(size = 15), # Adjust legend title size
+      legend.text = element_text(size = 10)  # Adjust legend text size
+      
+    ) +
+theme(text = element_text(size = 20))
+
+# ggsave(save_fname, width = w, height = h)
+```
+
+## Fig 1. ukbiobank + spacetop combined
+
+
+```{r}
+# ----------------------------------------------------------------------------
+#  Find common columns across dataframes for merging
+# ----------------------------------------------------------------------------
+fd.group.commoncolumn <- intersect(names(ukb_groupwise),
+          names(groupwise_combined)
+)
+
+fd.subject.commoncolumn <- intersect(names(ukb_subjectwise),
+          names(subjectwise_combined)
+)
+ukb.groupwise.common <- ukb_groupwise[fd.group.commoncolumn]
+st.groupwise.common <- groupwise_combined[fd.group.commoncolumn]
+
+ukb.subjectwise.common <- ukb_subjectwise[fd.subject.commoncolumn]
+st.subjectwise.common <- subjectwise_combined[fd.subject.commoncolumn]
+
+
+# ----------------------------------------------------------------------------
+#  rstack dataframes across spacetop and ukbiobank
+# ----------------------------------------------------------------------------
+fd.groupwise.ukbst<- rbind(ukb.groupwise.common, st.groupwise.common)
+fd.subjectwise.ukbst <- rbind(ukb.subjectwise.common, st.subjectwise.common)
+fd.subjectwise.ukbst$task_ordered <- factor(fd.subjectwise.ukbst$task_factor, 
+                             levels = c(  "UKB", "all tasks","social","shortvideo", "narratives","fractional","faces", "alignvideo"))
+fd.groupwise.ukbst$task_ordered <- factor(fd.groupwise.ukbst$task_factor, 
+                             levels = c( "UKB", "all tasks","social","shortvideo", "narratives","fractional","faces", "alignvideo" ))
+
+# ----------------------------------------------------------------------------
+#  plot
+# ----------------------------------------------------------------------------
+g <- plot_halfrainclouds_onefactor(
+  fd.subjectwise.ukbst,
+  fd.groupwise.ukbst,
+  iv="task_ordered",
+  subjectwise_mean = "mean_per_sub",
+  group_mean = "mean_per_sub_mean",
+  se = "se",
+  subject = "sub",
+  ggtitle = "UKB and Spacetop FDmean across tasks",
+  title="title",
+  xlab="Framewise displacement (FD)",
+  ylab="Task",
+  taskname="spacetop",
+  ylim=c(0,.9),
+  w=5,
+  h=5,
+  dv_keyword="iqm",
+  color=c("#333333", "#9300ff", "#6496BF", "#4f8b9e", "#3A7F7E", 
+              # "#6a7272",
+              "#996666","#c08658","#e6a74b", "#E18745", "#5A0B4D" ),
+  border_levels = c("UKB"),
+  border_color = "#920717",
+  save_fname="./fd_ukb_spacetop.png"
+)
+
+
+# ----------------------------------------------------------------------------
+#  color palettes
+# ----------------------------------------------------------------------------
+# color = c("black","gray", "#6496BF","#3A7F7E","#996666","#E6A74B","#D85038", "#5A0B4D" )
+# batlow
+
+
+# ----------------------------------------------------------------------------
+#  plot vertically and make transparent
+# ----------------------------------------------------------------------------
+g <- g + coord_flip() +
+  ylim(0, .9) + theme_classic() + ylab("Framewise displacement (FD)") + xlab("Task") +
+  theme(
+    plot.title = element_text(size = 15),      # Adjust plot title size
+    axis.title = element_text(size = 15),      # Adjust axis titles size
+    axis.text = element_text(size = 12),       # Adjust axis text size
+    legend.title = element_text(size = 15),    # Adjust legend title size
+    legend.text = element_text(size = 10)      # Adjust legend text size
+    
+  ) +
+  theme(text = element_text(size = 20)) +
+  theme(
+    panel.background = element_rect(fill = 'transparent'),     # transparent panel bg
+    plot.background = element_rect(fill = 'transparent', color = NA),    # transparent plot bg
+    panel.grid.major = element_blank(),                        # remove major gridlines
+    panel.grid.minor = element_blank(),                        # remove minor gridlines
+    legend.background = element_rect(fill = 'transparent'),    # transparent legend bg
+    legend.box.background = element_rect(fill = 'transparent') # transparent legend panel
+  )   
+
+g
+# ggsave(save_fname, g, width = w, height = h)
+```
+
+
+
+### point range
+```{r}
+# ----------------------------------------------------------------------------
+#  Find common columns across dataframes for merging
+# ----------------------------------------------------------------------------
+fd.group.commoncolumn <- intersect(names(ukb_groupwise),
+          names(groupwise_combined)
+)
+
+fd.subject.commoncolumn <- intersect(names(ukb_subjectwise),
+          names(subjectwise_combined)
+)
+ukb.groupwise.common <- ukb_groupwise[fd.group.commoncolumn]
+st.groupwise.common <- groupwise_combined[fd.group.commoncolumn]
+
+ukb.subjectwise.common <- ukb_subjectwise[fd.subject.commoncolumn]
+st.subjectwise.common <- subjectwise_combined[fd.subject.commoncolumn]
+
+
+# ----------------------------------------------------------------------------
+#  rstack dataframes across spacetop and ukbiobank
+# ----------------------------------------------------------------------------
+fd.groupwise.ukbst<- rbind(ukb.groupwise.common, st.groupwise.common)
+fd.subjectwise.ukbst <- rbind(ukb.subjectwise.common, st.subjectwise.common)
+fd.subjectwise.ukbst$task_ordered <- factor(fd.subjectwise.ukbst$task_factor, 
+                             levels = c(  "UKB", "all tasks","social","shortvideo", "narratives","fractional","faces", "alignvideo"))
+fd.groupwise.ukbst$task_ordered <- factor(fd.groupwise.ukbst$task_factor, 
+                             levels = c(  "UKB", "all tasks","social","shortvideo", "narratives","fractional","faces", "alignvideo"))
+
+# ----------------------------------------------------------------------------
+#  plot
+# ----------------------------------------------------------------------------
+g <- plot_halfrainclouds_pointrange(
+  fd.subjectwise.ukbst,
+  fd.groupwise.ukbst,
+  iv="task_ordered",
+  subjectwise_mean = "mean_per_sub",
+  group_mean = "mean_per_sub_mean",
+  se = "ci",
+  subject = "sub",
+  ggtitle = "UKB and Spacetop FDmean across tasks",
+  title="title",
+  xlab="Framewise displacement (FD)",
+  ylab="Task",
+  taskname="spacetop",
+  ylim=c(0,.9),
+  w=5,
+  h=5,
+  dv_keyword="iqm",
+  color=c("#333333", "#9300ff", "#6496BF", "#4f8b9e", "#3A7F7E", 
+              # "#6a7272",
+              "#996666","#c08658","#e6a74b", "#E18745", "#5A0B4D" ),
+  border_levels = c("UKB"),
+  border_color = "gray",
+  save_fname="./fd_ukb_spacetop.png"
+)
+
+
+# ----------------------------------------------------------------------------
+#  color palettes
+# ----------------------------------------------------------------------------
+# color = c("black","gray", "#6496BF","#3A7F7E","#996666","#E6A74B","#D85038", "#5A0B4D" )
+# batlow
+
+
+# ----------------------------------------------------------------------------
+#  plot vertically and make transparent
+# ----------------------------------------------------------------------------
+g <- g + coord_flip() +
+  ylim(0, .9) + theme_classic() + ylab("Framewise displacement (FD)") + xlab("Task") +
+  theme(
+    plot.title = element_text(size = 15),      # Adjust plot title size
+    axis.title = element_text(size = 15),      # Adjust axis titles size
+    axis.text = element_text(size = 12),       # Adjust axis text size
+    legend.title = element_text(size = 15),    # Adjust legend title size
+    legend.text = element_text(size = 10)      # Adjust legend text size
+    
+  ) +
+  theme(text = element_text(size = 20)) +
+  theme(
+    panel.background = element_rect(fill = 'transparent'),     # transparent panel bg
+    plot.background = element_rect(fill = 'transparent', color = NA),    # transparent plot bg
+    panel.grid.major = element_blank(),                        # remove major gridlines
+    panel.grid.minor = element_blank(),                        # remove minor gridlines
+    legend.background = element_rect(fill = 'transparent'),    # transparent legend bg
+    legend.box.background = element_rect(fill = 'transparent') # transparent legend panel
+  )   
+
+g
+# ggsave(save_fname, g, width = w, height = h)
+```
 
 ## Dvars
 ```{r}
@@ -332,7 +903,7 @@ g <- plot_halfrainclouds_onefactor(
   taskname="spacetop",
   ylim=c(20, 60),
   w=5,
-  h=3,
+  h=1,
   dv_keyword="iqm",
   color=c("#6496BF","#3A7F7E","#996666","#E6A74B","#D85038", "#5A0B4D", "black"),
   save_fname="./iqm.png"
@@ -342,4 +913,193 @@ g + coord_flip() +
 ```
 
 
+
+
+## tsnr values
+
+```{r}
+tsnr <- read.csv("/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/qcplot/iqmvalues/tsnr_persub.csv")
+```
+
+```{r}
+# ----------------------------------------------------------------------------
+# summary stats for tasks (Non short video)
+# ----------------------------------------------------------------------------
+tsnr$task_factor <- factor(tsnr$task)
+subject <- "sub"
+model_iv <- "task_factor"
+dv <- "median_value"
+other.df <- tsnr[!tsnr$task_factor == "shortvideo",]
+tsnr.subjectwise <- meanSummary(other.df,c(subject, model_iv), dv)
+
+tsnr.groupwise <- summarySEwithin(
+  data=tsnr.subjectwise,
+  measurevar = "mean_per_sub",
+  withinvars = c(model_iv),
+  idvar = subject
+)
+
+# ----------------------------------------------------------------------------
+# summary stats for short video
+# ----------------------------------------------------------------------------
+# only one value for short videos, summary stats between
+shortvid.df <- tsnr[tsnr$task_factor == "shortvideo",]
+tsnr.subjectwise.shortvideo  <- meanSummary(shortvid.df,c(subject), dv)
+tsnr.subjectwise.shortvideo$sd <- sd(tsnr.subjectwise.shortvideo$mean_per_sub)
+tsnr.subjectwise.shortvideo$task_factor <- "shortvideo"
+tsnr.groupwise.shortvideo <- summarySE(
+  data=tsnr.subjectwise.shortvideo,
+  measurevar = "mean_per_sub",
+  na.rm = TRUE
+)
+colnames(tsnr.groupwise.shortvideo)[1] <- "task_factor"
+tsnr.groupwise.shortvideo$task_factor <- "shortvideo"
+
+# ----------------------------------------------------------------------------
+# summary stats for all tasks collapsed into one value
+# ----------------------------------------------------------------------------
+tsnr.subjectwise.all <- meanSummary(tsnr,c(subject), dv)
+tsnr.subjectwise.all$task_factor <- "all tasks"
+
+tsnr.groupwise.all <- summarySE(
+  data=tsnr.subjectwise.all,
+  measurevar = "mean_per_sub",
+  # withinvars = subject,
+  na.rm = TRUE
+)
+colnames(tsnr.groupwise.all)
+library(dplyr)
+colnames(tsnr.groupwise.all)[1] <- "task_factor"
+tsnr.groupwise.all$task_factor <- "all tasks"
+
+
+# ----------------------------------------------------------------------------
+# Find common columns
+# ----------------------------------------------------------------------------
+group_common_columns <- intersect(
+  intersect(names(tsnr.groupwise), names(tsnr.groupwise.all)),
+  names(tsnr.groupwise.shortvideo)
+)
+
+# Subset both data frames to only the common columns
+groupwise.common <- tsnr.groupwise[group_common_columns]
+groupwisesv.common <- tsnr.groupwise.shortvideo[group_common_columns]
+groupwise_all.common <- tsnr.groupwise.all[group_common_columns]
+
+group_common_columns <- intersect(names(tsnr.subjectwise),
+                                  names(tsnr.subjectwise.shortvideo))
+subjectwise.tsnr.common <- tsnr.subjectwise[group_common_columns]
+tsnr.subjectwise.shortvideo.common <- tsnr.subjectwise.shortvideo[group_common_columns]
+##################################################
+# Row-bind the subsets
+groupwise_combined.tsnr <- rbind(groupwise.common, groupwisesv.common, groupwise_all.common)
+subjectwise_combined.tsnr <- rbind(subjectwise.tsnr.common, tsnr.subjectwise.shortvideo.common, tsnr.subjectwise.all)
+subjectwise_combined.tsnr$task_ordered <- factor(subjectwise_combined.tsnr$task_factor, 
+                             levels = c( "all tasks", "social", "shortvideo", "narratives","fractional","faces", "alignvideo" ))
+groupwise_combined.tsnr$task_ordered <- factor(groupwise_combined.tsnr$task_factor, 
+                             levels = c( "all tasks", "social", "shortvideo", "narratives","fractional","faces", "alignvideo" ))
+```
+### boxplot
+```{r}
+g <- plot_halfrainclouds_onefactor(
+  subjectwise_combined.tsnr,
+  groupwise_combined.tsnr,
+  iv="task_ordered",
+  subjectwise_mean = "mean_per_sub",
+  group_mean = "mean_per_sub_mean",
+  se = "se",
+  subject = "sub",
+  ggtitle = "tSNR across tasks",
+  title="title",
+  xlab="tSNR",
+  ylab="Task",
+  taskname="spacetop",
+  ylim=c(-300,300),
+  w=5,
+  h=5,
+  dv_keyword="iqm",
+  color=c( "#9300ff", "#6496BF", "#4f8b9e", "#3A7F7E", "#996666","#c08658","#e6a74b", "gray"),
+ # color=c( "#6496BF", "#4f8b9e", "#3A7F7E", "#6a7272", "#996666","#c08658", "#E6A74B","#D85038", "#5A0B4D" ),
+ border_levels = "all tasks",
+ border_color = "purple",
+  save_fname="./iqm.png"
+  
+)
+#  "#6496bf"
+# "#4f8b9e"
+# "#3a7f7e"
+# "#6a7272"
+# "#996666"
+# "#c08658"
+# "#e6a74b"
+g + coord_flip() + 
+  ylim(0, 140) + theme_classic() + ylab("tSNR") + xlab("task") +
+theme(
+      plot.title = element_text(size = 20), # Adjust plot title size
+      axis.title = element_text(size = 20), # Adjust axis titles size
+      axis.text = element_text(size = 15),  # Adjust axis text size
+      legend.title = element_text(size = 15), # Adjust legend title size
+      legend.text = element_text(size = 10)  # Adjust legend text size
+      
+    ) +
+theme(text = element_text(size = 20))
+```
+
+
+## Fig 2. pointrange tsnr
+```{r}
+
+ # "all tasks","social",
+# levels = c( "all tasks", "social", "shortvideo", "narratives","fractional","faces", "alignvideo"))
+g <- plot_halfrainclouds_pointrange(
+  subjectwise_combined.tsnr,
+  groupwise_combined.tsnr,
+  iv="task_ordered",
+  subjectwise_mean = "mean_per_sub",
+  group_mean = "mean_per_sub_median",
+  se = "ci",
+  subject = "sub",
+  ggtitle = "tSNR across tasks",
+  title="title",
+  xlab="tSNR",
+  ylab="Task",
+  taskname="spacetop",
+  ylim=c(20,80),
+  w=5,
+  h=5,
+  dv_keyword="iqm",
+  # color = c("#333333","#66c2a5","#fc8d62","#8da0cb","#e78ac3","#a6d854","#ffd92f","#e5c494" ),
+  color=c( "#333333", "#6496BF", "#4f8b9e", "#3A7F7E", "#996666","#c08658","#e6a74b", "gray"),
+  # color=c("black", "#6496BF","#3A7F7E","#996666","#E6A74B","#D85038", "#5A0B4D" ),
+  # border_levels = "all tasks", 
+  # border_color = "gray",
+  save_fname="./iqm.png"
+)
+# new_colors <- c("#6A9AC4", "#527D89", "#3A7F7E", "#996666", "#c08658", "#e6a74b")
+# new_colors <- c("#6496BF", "#3A7F7E", "#5AAE61", "#996666", "#c08658", "#e6a74b")
+# new_colors <- c("#5B9BD5", "#4682B4", "#8FBC8F", "#BC8F8F", "#DAA520", "#CD853F")
+new_colors <- c("#5B9BD5", "#3A7F7E", "#8FBC8F", "#BC8F8F", "#DAA520", "#CD853F")
+color=c( "#333333",  "#7DAFED"  "#3A7F7E","#6C9A75", "#996666","#c08658","#e6a74b", "gray")
+g <- g + coord_flip() + 
+  ylim(20,80) + theme_classic() + ylab("tSNR") + xlab("Task") +
+  theme(
+    plot.title = element_text(size = 15),      # Adjust plot title size
+    axis.title = element_text(size = 15),      # Adjust axis titles size
+    axis.text = element_text(size = 12),       # Adjust axis text size
+    legend.title = element_text(size = 15),    # Adjust legend title size
+    legend.text = element_text(size = 10)      # Adjust legend text size
+    
+  ) +
+  theme(text = element_text(size = 20)) +
+  theme(
+    panel.background = element_rect(fill = 'transparent'),     # transparent panel bg
+    plot.background = element_rect(fill = 'transparent', color = NA),    # transparent plot bg
+    panel.grid.major = element_blank(),                        # remove major gridlines
+    panel.grid.minor = element_blank(),                        # remove minor gridlines
+    legend.background = element_rect(fill = 'transparent'),    # transparent legend bg
+    legend.box.background = element_rect(fill = 'transparent') # transparent legend panel
+  )  
+g
+ggsave("/Users/h/Dropbox/projects_adobe/spacetop_datapaper/iqm_tsnr.png", plot = g, width = 5, height = 4, dpi = 600)
+```
 

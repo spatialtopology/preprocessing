@@ -1,0 +1,86 @@
+BIDS_string	case	scannotes	HJ_notes	C3_typo	confirm
+sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-01_events.tsv					
+sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-02_events.tsv					
+sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-03_events.tsv					
+sub-0001/ses-01/func/sub-0001_ses-01_task-alignvideo_acq-mb8_run-04_events.tsv					
+sub-0001/ses-02/func/sub-0001_ses-02_task-faces_acq-mb8_run-01_events.tsv					
+sub-0001/ses-02/func/sub-0001_ses-02_task-faces_acq-mb8_run-02_events.tsv					
+sub-0001/ses-02/func/sub-0001_ses-02_task-faces_acq-mb8_run-03_events.tsv					
+sub-0001/ses-04/func/sub-0001_ses-04_task-fractional_acq-mb8_run-01_events.tsv					
+sub-0001/ses-04/func/sub-0001_ses-04_task-social_acq-mb8_run-01_events.tsv	exclude				
+sub-0001/ses-04/func/sub-0001_ses-04_task-social_acq-mb8_run-02_events.tsv	exclude				
+sub-0001/ses-04/func/sub-0001_ses-04_task-social_acq-mb8_run-03_events.tsv	exclude				
+sub-0003/ses-02/func/sub-0003_ses-02_task-faces_acq-mb8_run-01_events.tsv	C2		not converted. Check column.		
+sub-0003/ses-02/func/sub-0003_ses-02_task-faces_acq-mb8_run-02_events.tsv	C2		not converted. Check column.		
+sub-0003/ses-02/func/sub-0003_ses-02_task-faces_acq-mb8_run-03_events.tsv	C2		not converted. Check column.		
+sub-0004/ses-02/func/sub-0004_ses-02_task-faces_acq-mb8_run-01_events.tsv	C2		not converted. Check column.		
+sub-0004/ses-02/func/sub-0004_ses-02_task-faces_acq-mb8_run-02_events.tsv	C2		not converted. Check column.		
+sub-0004/ses-02/func/sub-0004_ses-02_task-faces_acq-mb8_run-03_events.tsv	C2		not converted. Check column.		
+sub-0005/ses-02/func/sub-0005_ses-02_task-faces_acq-mb8_run-01_events.tsv	C3		file exists under sub-005		
+sub-0005/ses-02/func/sub-0005_ses-02_task-faces_acq-mb8_run-02_events.tsv	C3		file exists under sub-005		
+sub-0005/ses-02/func/sub-0005_ses-02_task-faces_acq-mb8_run-03_events.tsv	C3		file exists under sub-005		
+sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-01_events.tsv	"Missing func. In rolando, not in datalad"				
+sub-0006/ses-04/func/sub-0006_ses-04_task-fractional_acq-mb8_run-02_events.tsv	"Missing func. In rolando, not in datalad"				
+sub-0007/ses-03/func/sub-0007_ses-03_task-social_acq-mb8_run-06_events.tsv	C4		No TEMP data		
+sub-0008/ses-02/func/sub-0008_ses-02_task-faces_acq-mb8_run-01_events.tsv	C1		TEMP_beh exists		TRUE
+sub-0008/ses-02/func/sub-0008_ses-02_task-faces_acq-mb8_run-02_events.tsv	C1		TEMP_beh exists		TRUE
+sub-0008/ses-02/func/sub-0008_ses-02_task-faces_acq-mb8_run-03_events.tsv	C1		TEMP_beh exists		TRUE
+sub-0008/ses-04/func/sub-0008_ses-04_task-social_acq-mb8_run-05_events.tsv	C1		TEMP_beh exists		TRUE
+sub-0009/ses-02/func/sub-0009_ses-02_task-narratives_acq-mb8_run-01_events.tsv	C4				
+sub-0009/ses-02/func/sub-0009_ses-02_task-narratives_acq-mb8_run-02_events.tsv	C4				
+sub-0009/ses-02/func/sub-0009_ses-02_task-narratives_acq-mb8_run-03_events.tsv	C4				
+sub-0009/ses-02/func/sub-0009_ses-02_task-narratives_acq-mb8_run-04_events.tsv	C4				
+sub-0011/ses-02/func/sub-0011_ses-02_task-narratives_acq-mb8_run-02_events.tsv	C1		TEMP_beh exists		TRUE
+sub-0011/ses-03/func/sub-0011_ses-03_task-social_acq-mb8_run-02_events.tsv	C1		TEMP_beh exists		TRUE
+sub-0011/ses-04/func/sub-0011_ses-04_task-social_acq-mb8_run-01_events.tsv	C1		TEMP_beh exists		TRUE
+sub-0013/ses-01/func/sub-0013_ses-01_task-social_acq-mb8_run-03_events.tsv	C1		TEMP_beh exists		TRUE
+sub-0014/ses-01/func/sub-0014_ses-01_task-social_acq-mb8_run-02_events.tsv	C1		TEMP_beh exists		TRUE
+sub-0014/ses-02/func/sub-0014_ses-02_task-narratives_acq-mb8_run-01_events.tsv	C4		No TEMP data		FALSE
+sub-0016/ses-04/func/sub-0016_ses-04_task-alignvideo_acq-mb8_run-01_events.tsv	C3		change 156 to 16		TRUE
+sub-0016/ses-04/func/sub-0016_ses-04_task-alignvideo_acq-mb8_run-02_events.tsv	C3		change 156 to 16		TRUE
+sub-0016/ses-04/func/sub-0016_ses-04_task-social_acq-mb8_run-03_events.tsv	C1		TEMP_beh exists		TRUE
+sub-0017/ses-01/func/sub-0017_ses-01_task-alignvideo_acq-mb8_run-04_events.tsv	C1		TEMP_beh exists		TRUE
+sub-0017/ses-02/func/sub-0017_ses-02_task-alignvideo_acq-mb8_run-01_events.tsv	C1		TEMP_beh exists		TRUE
+sub-0019/ses-03/func/sub-0019_ses-03_task-social_acq-mb8_run-02_events.tsv	C1		TEMP_beh exists		TRUE
+sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-01_events.tsv	C3		"file exists, but session number is wrong"		TRUE
+sub-0019/ses-04/func/sub-0019_ses-04_task-fractional_acq-mb8_run-02_events.tsv	C3		"file exists, but session number is wrong"		
+sub-0020/ses-04/func/sub-0020_ses-04_task-social_acq-mb8_run-06_events.tsv	C1		TEMP_beh exists		TRUE
+sub-0021/ses-01/func/sub-0021_ses-01_task-alignvideo_acq-mb8_run-03_events.tsv	C1		TEMP_beh exists		TRUE
+sub-0021/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-01_events.tsv	C3		"TEMP_beh exists, but under sub-0098. CHANGE ID. https://github.com/spatialtopology/d_beh/tree/master/sub-0021/task-social/ses-01"		TRUE
+sub-0021/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-02_events.tsv	C3		"TEMP_beh exists, but under sub-0098. CHANGE ID. https://github.com/spatialtopology/d_beh/tree/master/sub-0021/task-social/ses-01"		TRUE
+sub-0021/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-03_events.tsv	C3		"TEMP_beh exists, but under sub-0098. CHANGE ID. https://github.com/spatialtopology/d_beh/tree/master/sub-0021/task-social/ses-01"		TRUE
+sub-0021/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-04_events.tsv	C3		"TEMP_beh exists, but under sub-0098. CHANGE ID. https://github.com/spatialtopology/d_beh/tree/master/sub-0021/task-social/ses-01"		TRUE
+sub-0021/ses-01/func/sub-0021_ses-01_task-social_acq-mb8_run-05_events.tsv	C3		"TEMP_beh exists, but under sub-0098. CHANGE ID. https://github.com/spatialtopology/d_beh/tree/master/sub-0021/task-social/ses-01"		TRUE
+sub-0023/ses-04/func/sub-0023_ses-04_task-social_acq-mb8_run-02_events.tsv	C1		TEMP_beh exists		TRUE
+sub-0024/ses-03/func/sub-0024_ses-03_task-social_acq-mb8_run-05_events.tsv	C1		TEMP_beh exists		TRUE
+sub-0038/ses-02/func/sub-0038_ses-02_task-narratives_acq-mb8_run-03_events.tsv	C1		TEMP_beh exists		TRUE
+sub-0041/ses-02/func/sub-0041_ses-02_task-narratives_acq-mb8_run-01_events.tsv	C2				
+sub-0041/ses-02/func/sub-0041_ses-02_task-narratives_acq-mb8_run-02_events.tsv	C2				
+sub-0041/ses-02/func/sub-0041_ses-02_task-narratives_acq-mb8_run-03_events.tsv	C2				
+sub-0041/ses-02/func/sub-0041_ses-02_task-narratives_acq-mb8_run-04_events.tsv	C2				
+sub-0064/ses-02/func/sub-0064_ses-02_task-narratives_acq-mb8_run-01_events.tsv	C2				
+sub-0064/ses-02/func/sub-0064_ses-02_task-narratives_acq-mb8_run-02_events.tsv	C2				
+sub-0064/ses-02/func/sub-0064_ses-02_task-narratives_acq-mb8_run-03_events.tsv	C2				
+sub-0064/ses-02/func/sub-0064_ses-02_task-narratives_acq-mb8_run-04_events.tsv	C2				
+sub-0065/ses-04/func/sub-0065_ses-04_task-alignvideo_acq-mb8_run-02_events.tsv	C1		TEMP_beh		TRUE
+sub-0066/ses-04/func/sub-0066_ses-04_task-social_acq-mb8_run-06_events.tsv	C1		TEMP_beh		TRUE
+sub-0069/ses-02/func/sub-0069_ses-02_task-alignvideo_acq-mb8_run-04_events.tsv	C1		TEMP_beh		TRUE
+sub-0069/ses-02/func/sub-0069_ses-02_task-narratives_acq-mb8_run-03_events.tsv	C1		participant had to discontinue run 3 because of issue with glasses. Partial data collected. TEMP_beh exists. 		TRUE
+sub-0075/ses-01/func/sub-0075_ses-01_task-social_acq-mb8_run-01_events.tsv	NEED TO RENAME FILE FIRST				
+sub-0076/ses-02/func/sub-0076_ses-02_task-faces_acq-mb8_run-03_events.tsv	C1		TEMP_beh exists. Partial data		TRUE
+sub-0083/ses-04/func/sub-0083_ses-04_task-social_acq-mb8_run-02_events.tsv	C1		"TEMP_beh exists. The paradigm froze late into the run on one of the screens that shows other ratings. Not sure how many were missed, but it was under a minute when that happened."		TRUE
+sub-0084/ses-03/func/sub-0084_ses-03_task-alignvideo_acq-mb8_run-01_events.tsv	C1		TEMP_beh exists. For one trial. Still usable if just simply hyperaligning. 		TRUE
+sub-0087/ses-01/func/sub-0087_ses-01_task-alignvideo_acq-mb8_run-01_events.tsv	C1		TEMP_beh		TRUE
+sub-0088/ses-03/func/sub-0088_ses-03_task-social_acq-mb8_run-03_events.tsv	C1		TEMP_beh		TRUE
+sub-0089/ses-01/func/sub-0089_ses-01_task-social_acq-mb8_run-04_events.tsv	C1		TEMP_beh		TRUE
+sub-0094/ses-02/func/sub-0094_ses-02_task-narratives_acq-mb8_run-01_events.tsv	C2		Files exist. Why did it not convert?		
+sub-0094/ses-02/func/sub-0094_ses-02_task-narratives_acq-mb8_run-02_events.tsv	C2		Files exist. Why did it not convert?		
+sub-0094/ses-02/func/sub-0094_ses-02_task-narratives_acq-mb8_run-03_events.tsv	C2		Files exist. Why did it not convert?		
+sub-0094/ses-02/func/sub-0094_ses-02_task-narratives_acq-mb8_run-04_events.tsv	C2		Files exist. Why did it not convert?		
+sub-0094/ses-04/func/sub-0094_ses-04_task-alignvideo_acq-mb8_run-01_events.tsv	C1		TEMP_beh exists		TRUE
+sub-0103/ses-02/func/sub-0103_ses-02_task-narratives_acq-mb8_run-01_events.tsv	C2		Files exist. Why did it not convert?		
+sub-0103/ses-02/func/sub-0103_ses-02_task-narratives_acq-mb8_run-02_events.tsv	C2		Files exist. Why did it not convert?		
+sub-0103/ses-02/func/sub-0103_ses-02_task-narratives_acq-mb8_run-03_events.tsv	C2		Files exist. Why did it not convert?		
+sub-0103/ses-02/func/sub-0103_ses-02_task-narratives_acq-mb8_run-04_events.tsv	C2		Files exist. Why did it not convert?		
+sub-0105/ses-02/func/sub-0105_ses-02_task-alignvideo_acq-mb8_run-02_events.tsv	C1		TEMP_beh exists. Convert. 		TRUE
+sub-0112/ses-04/func/sub-0112_ses-04_task-social_acq-mb8_run-03_events.tsv	C1		TEMP_beh exists. Convert. 		TRUE

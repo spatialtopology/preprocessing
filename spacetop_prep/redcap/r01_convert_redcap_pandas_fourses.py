@@ -37,7 +37,7 @@ __status__ = "Development"
 # TODO: Dear user, change csv_fname to your filename
 current_dir = os.getcwd()
 main_dir = Path(current_dir).parents[0]
-csv_fname = os.path.join(main_dir, 'redcap', 'IndividualizedSpatia_DATA_LABELS_2022-07-11_1618.csv') # NOTE: CHANGE THIS TO YOUR OWN FILENAME
+csv_fname = os.path.join(main_dir, 'redcap', 'IndividualizedSpatia-ClinicalTrials_DATA_LABELS_2023-08-18_1734.csv') # NOTE: CHANGE THIS TO YOUR OWN FILENAME
 df = pd.read_csv(csv_fname)
 
 # create empty dataframe with ethnicity, gender, and race  ___________________________________________________________________________
@@ -102,7 +102,7 @@ sub_i = filter_sub.set_index('Record ID').copy()
 # %%
 sub_consent = sub_i[sub_i['Event Name'].str.contains('Consent')]
 sub_screen = sub_i[sub_i['Event Name'].str.contains('Screening')]
-df_consent = sub_screen.loc[list(sub_consent.index) ]
+df_consent = sub_screen.loc[list(sub_screen.index) ]
 df_ier = df_consent[['Sex:', 'Race', 'Ethnicity']]
 
 # pivot and calculate frequency of race/ethnicity/sex _____________________________________________

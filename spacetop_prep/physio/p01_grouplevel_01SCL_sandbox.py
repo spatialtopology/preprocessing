@@ -272,6 +272,9 @@ def main():
                 'label': np.array(np.arange(event_num), dtype='<U21'),
                 'condition': beh_df['param_stimulus_type'].values.tolist()
             }
+            event_num = len(dict_onset[event_name]['start'])
+            event_length = np.mean(event_stimuli['duration'])
+
 
 
     # ======= NOTE: 7. save dict_onset ===============================================================

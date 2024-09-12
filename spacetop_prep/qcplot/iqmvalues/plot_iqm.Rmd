@@ -1,0 +1,345 @@
+---
+title: "Untitled"
+author: "Heejung Jung"
+date: "`r Sys.Date()`"
+output: html_document
+---
+iqm
+```{r include=FALSE}
+library(ggplot2)
+library(raincloudplots)
+library(gghalves)
+library(plyr); library(dplyr)
+
+# source("/Users/h/Documents/projects_local/RainCloudPlots/tutorial_R/R_rainclouds.R")
+# source("/Users/h/Documents/projects_local/RainCloudPlots/tutorial_R/summarySE.R")
+# source("/Users/h/Documents/projects_local/RainCloudPlots/tutorial_R/simulateData.R")
+source("https://gist.githubusercontent.com/benmarwick/2a1bb0133ff568cbe28d/raw/fb53bd97121f7f9ce947837ef1a4c65a73bffb3f/geom_flat_violin.R")
+
+library(r2mlm)
+file.sources = list.files(c("/Users/h/Documents/projects_local/cue_expectancy/scripts/step02_R/utils"),
+                          pattern="*.R", 
+                          full.names=TRUE, 
+                          ignore.case=TRUE)
+sapply(file.sources,source,.GlobalEnv)
+
+```
+
+## load data
+```{r}
+df <- read.csv("/Users/h/Documents/projects_local/spacetop-prep/spacetop_prep/qcplot/iqmvalues/iqmvalues.csv")
+```
+
+## FDmean
+```{r}
+df$task_factor <- factor(df$task)
+subject <- "sub"
+model_iv <- "task_factor"
+dv <- "fd_mean"
+subjectwise <- meanSummary(df,c(subject, model_iv), dv)
+
+groupwise <- summarySEwithin(
+  data=subjectwise,
+  measurevar = "mean_per_sub",
+  withinvars = c(model_iv),
+  idvar = subject
+)
+
+df$task_factor <- factor(df$task)
+subject <- "sub"
+# model_iv <- "task_factor"
+dv <- "fd_mean"
+subjectwise_all <- meanSummary(df,c(subject), dv)
+subjectwise_all$task_factor <- "all tasks"
+
+groupwise_all <- summarySE(
+  data=subjectwise_all,
+  measurevar = "mean_per_sub",
+  # withinvars = subject,
+  # groupvars = subject
+)
+colnames(groupwise_all)
+library(dplyr)
+# groupwise_all <- groupwise_all %>% rename("task_factor" = ".id")
+colnames(groupwise_all)[1] <- "task_factor"
+groupwise_all$task_factor <- "all"
+
+# Find common columns
+group_common_columns <- intersect(names(groupwise), names(groupwise_all))
+
+# Subset both data frames to only the common columns
+df1_common <- groupwise[group_common_columns]
+df2_common <- groupwise_all[group_common_columns]
+
+# Row-bind the subsets
+groupwise_combined <- rbind(df1_common, df2_common)
+subjectwise_combined <- rbind(subjectwise, subjectwise_all)
+
+```
+
+
+
+```{r}
+plot_halfrainclouds_onefactor <- function(subjectwise, groupwise, iv,
+                                      subjectwise_mean, group_mean, se, subject,
+                                      ggtitle, title, xlab, ylab, taskname, ylim,
+                                      w, h, dv_keyword, color, save_fname) {
+  g <- ggplot(
+    data = subjectwise,
+    aes(
+      y = .data[[subjectwise_mean]],
+      x = factor(.data[[iv]]),
+      fill = factor(.data[[iv]])
+    )
+  ) +
+    coord_cartesian(ylim = ylim, expand = TRUE) +
+
+    geom_half_violin(
+      aes(fill = factor(.data[[iv]])),
+      side = 'r',
+      position = 'dodge',
+      adjust = 1.5,
+      trim = FALSE,
+      alpha = .3,
+      colour = NA
+    ) +
+
+  geom_point(
+    aes(
+      # group = .data[[subject]],
+      x = as.numeric(as.factor(.data[[iv]])) - .15 ,
+      y = .data[[subjectwise_mean]],
+      color = factor(.data[[iv]])
+    ),
+    position = position_jitter(width = .05),
+    size = 2,
+    alpha = 0.7,
+  ) + 
+
+    geom_boxplot(
+      data = subjectwise,
+      aes(x = .data[[iv]],
+          y = .data[[subjectwise_mean]],
+          fill = .data[[iv]]),
+      side = "r",
+      outlier.shape = NA,
+      alpha = 0.8,
+      width = .1,
+      notch = FALSE,
+      notchwidth = 0,
+      varwidth = FALSE,
+      colour = "black",
+      errorbar.draw = FALSE
+    ) +
+
+
+    # legend stuff ________________________________________________________ # nolint
+    expand_limits(x = 2.8) +
+    #guides(fill = "none") +
+    guides(color = "none") +
+    guides(fill = guide_legend(title = title)) +
+    scale_fill_manual(values = color) +
+    scale_color_manual(values = color) +
+    ggtitle(ggtitle) +
+    xlab(xlab) +
+    ylab(ylab) +
+    theme_bw()
+  ggsave(save_fname, width = w, height = h)
+  return(g)
+}
+
+```
+
+```{r}
+
+g <- plot_halfrainclouds_onefactor(
+  subjectwise_combined,
+  groupwise_combined,
+  iv="task_factor",
+  subjectwise_mean = "mean_per_sub",
+  group_mean = "mean_per_sub_mean",
+  se = "se",
+  subject = "sub",
+  ggtitle = "Framewise displacement across tasks",
+  title="title",
+  xlab="FD",
+  ylab="task",
+  taskname="spacetop",
+  ylim=c(-1, 3),
+  w=5,
+  h=3,
+  dv_keyword="iqm",
+  color=c("#6496BF","#3A7F7E","#996666","#E6A74B","#D85038", "#5A0B4D", "black"),
+  save_fname="./iqm.png"
+)
+g + coord_flip() + 
+  ylim(0, .9) + theme_classic() + ylab("Framewise displacement (FD)") + xlab("task")
+```
+
+
+
+
+## entire FDmean
+```{r}
+# Assuming 'subjectwise_all' is your subject-level data and has a column 'subject'
+# Replicate the single row in 'groupwise_all' to match the number of subjects
+groupwise_replicated <- groupwise_all[rep(1, nrow(subjectwise_all)), ]
+dodge_width <- 0.2
+# Now, use 'groupwise_replicated' for plotting the error bars
+g <-ggplot(subjectwise_all, aes(x = factor(subject), y = mean_per_sub)) +
+  coord_cartesian(ylim = ylim, expand = TRUE) +
+  geom_half_violin(
+    aes(x = factor(subject), y = mean_per_sub),
+    side = 'r',
+    adjust = 1.5,
+    trim = FALSE, 
+    alpha = 0.3, 
+    fill = 'gray',
+    # position = position_nudge(x = dodge_width/2)
+    ) +
+
+  geom_point(
+    # aes(x = factor(subject), y = mean_per_sub),
+    position = position_jitter(.1),
+                                    # width = .05),
+      # jitter.width = 0.05, dodge.width = 0.2),
+             size = 2, alpha = 0.7) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.8, width = .1, colour = "black", 
+               position = position_dodge(.8),
+                     # errorbar.draw = FALSE
+               ) +
+  # geom_errorbar(data = groupwise_all, aes(x = factor(subject), ymin = mean_per_sub_mean - se, ymax = mean_per_sub_mean + se), width = .1, position = position_dodge(0.8)) +
+  ggtitle(ggtitle) +
+  xlab("Subject") +
+  ylab("Mean per Subject") +
+  theme_classic()
+  # error bar
+  # geom_errorbar(
+  #   data = groupwise_replicated,
+  #   aes(x = factor(subject), y = mean_per_sub_mean, ymin = mean_per_sub_mean - se, ymax = mean_per_sub_mean + se
+  #   ), width = .5, position = position_dodge(0.8)
+  # ) 
+
+
+g + coord_flip()
+
+```
+```{r}
+# Adjusting positions
+dodge_width <- 0.8 # Adjust this to control the horizontal spread of the points
+
+# Rest of your code ...
+
+g <- ggplot(subjectwise_all, aes(x = factor(subject), y = mean_per_sub)) +
+  coord_cartesian(ylim = ylim, expand = TRUE) +
+  geom_half_violin(
+    aes(x = factor(subject), y = mean_per_sub),
+    side = 'r',
+    adjust = 1.5,
+    trim = FALSE, 
+    alpha = 0.3, 
+    fill = 'gray'
+  ) +
+  geom_point(
+    aes(group = factor(subject)), # This is the key addition
+    position = position_jitter(width = .2),
+    size = 2, 
+    alpha = 0.7
+  ) +
+  geom_boxplot(
+    outlier.shape = NA, 
+    alpha = 0.8, 
+    width = .1, 
+    colour = "black", 
+    position = position_dodge(dodge_width)
+  ) +
+  ggtitle(ggtitle) +
+  xlab("Subject") +
+  ylab("Mean per Subject") +
+  theme_classic()
+
+# ... [rest of your plot code] ...
+
+g + coord_flip() # if you want to flip the coordinates
+
+```
+
+
+## Dvars
+```{r}
+df$task_factor <- factor(df$task)
+subject <- "sub"
+model_iv <- "task_factor"
+dv <- "dvars_mean"
+subjectwise <- meanSummary(df,c(subject, model_iv), dv)
+
+groupwise <- summarySEwithin(
+  data=subjectwise,
+  measurevar = "mean_per_sub",
+  withinvars = c(model_iv),
+  idvar = subject
+)
+
+df$task_factor <- factor(df$task)
+subject <- "sub"
+# model_iv <- "task_factor"
+dv <- "dvars_mean"
+subjectwise_all <- meanSummary(df,c(subject), dv)
+subjectwise_all$task_factor <- "all tasks"
+
+groupwise_all <- summarySE(
+  data=subjectwise_all,
+  measurevar = "mean_per_sub",
+  # withinvars = subject,
+  # groupvars = subject
+)
+colnames(groupwise_all)
+library(dplyr)
+# groupwise_all <- groupwise_all %>% rename("task_factor" = ".id")
+colnames(groupwise_all)[1] <- "task_factor"
+groupwise_all$task_factor <- "all"
+
+# Find common columns
+group_common_columns <- intersect(names(groupwise), names(groupwise_all))
+
+# Subset both data frames to only the common columns
+df1_common <- groupwise[group_common_columns]
+df2_common <- groupwise_all[group_common_columns]
+
+# Row-bind the subsets
+groupwise_combined <- rbind(df1_common, df2_common)
+subjectwise_combined <- rbind(subjectwise, subjectwise_all)
+
+```
+
+
+
+
+```{r}
+
+g <- plot_halfrainclouds_onefactor(
+  subjectwise_combined,
+  groupwise_combined,
+  iv="task_factor",
+  subjectwise_mean = "mean_per_sub",
+  group_mean = "mean_per_sub_mean",
+  se = "se",
+  subject = "sub",
+  ggtitle = "DVARS across tasks",
+  title="title",
+  xlab="DVARS",
+  ylab="task",
+  taskname="spacetop",
+  ylim=c(20, 60),
+  w=5,
+  h=3,
+  dv_keyword="iqm",
+  color=c("#6496BF","#3A7F7E","#996666","#E6A74B","#D85038", "#5A0B4D", "black"),
+  save_fname="./iqm.png"
+)
+g + coord_flip() + 
+  ylim(20, 60) + theme_classic() + ylab("DVARS") + xlab("task")
+```
+
+
+

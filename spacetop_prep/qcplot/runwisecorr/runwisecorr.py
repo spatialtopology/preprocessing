@@ -31,7 +31,7 @@ parser.add_argument("--canlabdir",
                     type=str, help="the directory where you want to save your files")
 parser.add_argument("--task", 
                     type=str, help="the directory where you want to save your files")
-# TODO: task paramter
+# TODO: task parameter
 # --task
 args = parser.parse_args()
 slurm_id = args.slurm_id

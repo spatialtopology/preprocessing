@@ -54,7 +54,7 @@ interview = pd.read_csv(join(main_dir, 'nda', 'PRIVATE_spacetop_interviewdate.cs
 df_subsetlong = df_subset.loc[df_subset.index.repeat(4)] # 1) repeat each row 4 times
 df_subsetlong['session_id']  = np.tile(['ses-01', 'ses-02', 'ses-03', 'ses-04'], len(df_subset)) # 2) create session_id column and repeat session sequence
 
-# a) convert dataframe wide-to-long -> merge outputs based on resetted index
+# a) convert dataframe wide-to-long -> merge outputs based on reset index
 # also add src_subject_id, repeating it 4 times for the 4 sessions
 ses_list = ['ses-01_Date', 'ses-02_Date', 'ses-03_Date', 'ses-04_Date']
 age_list = ['Age_ses-01', 'Age_ses-02', 'Age_ses-03', 'Age_ses-04']
