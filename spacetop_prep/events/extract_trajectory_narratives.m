@@ -120,11 +120,19 @@ for i = 1:endSub
                 motion_onset_feeling(k) = NaN;
                 motion_dur_feeling(k) = NaN;
             else
-                motion_onset_feeling(k) = (l-1)/60;
-                if isnan(feelRT)
-                    % no response
+                if ~isnan(feelRT) && feelRT <= (l-1)/60
+                    % mouse moved, but only moved after a response was
+                    % given (erroneously recorded after 3.5s)
+                    % in this case there was not a valid mouse trajectory
+                    motion_onset_feeling(k) = NaN;
+                    motion_dur_feeling(k) = NaN;
+                elseif isnan(feelRT)
+                    % mouse moved and no response
+                    motion_onset_feeling(k) = (l-1)/60;
                     motion_dur_feeling(k) = RT_feeling_adj(k) - motion_onset_feeling(k);
                 else
+                    % mouse first moved before response
+                    motion_onset_feeling(k) = (l-1)/60;
                     motion_dur_feeling(k) = RT_feeling(k) - motion_onset_feeling(k);
                 end
             end
@@ -181,11 +189,19 @@ for i = 1:endSub
                 motion_onset_expectation(k) = NaN;
                 motion_dur_expectation(k) = NaN;
             else
-                motion_onset_expectation(k) = (l-1)/60;
-                if isnan(expectRT)
-                    % no response
+                if ~isnan(expectRT) && expectRT <= (l-1)/60
+                    % mouse moved, but only moved after a response was
+                    % given (erroneously recorded after 3.5s)
+                    % in this case there was not a valid mouse trajectory
+                    motion_onset_expectation(k) = NaN;
+                    motion_dur_expectation(k) = NaN;
+                elseif isnan(expectRT)
+                    % mouse moved and no response
+                    motion_onset_expectation(k) = (l-1)/60;
                     motion_dur_expectation(k) = RT_expectation_adj(k) - motion_onset_expectation(k);
                 else
+                    % mouse first moved before response
+                    motion_onset_expectation(k) = (l-1)/60;
                     motion_dur_expectation(k) = RT_expectation(k) - motion_onset_expectation(k);
                 end
             end
