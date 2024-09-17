@@ -157,7 +157,7 @@ if bids_string:
         print(f'No behavior data file found for {bids_string}. Skipping to next task.')
 else:
     # Get a list of all relevant files, excluding specific subjects
-    saxe_flist = list(Path(beh_inputdir).rglob(f'**/*{task_name}*.csv'))
+    saxe_flist = list(Path(beh_inputdir).rglob(f'**/*tomsaxe*.csv'))
     filtered_saxe_flist = [file for file in saxe_flist if "sub-0001" not in str(file)]
 
 if filtered_saxe_flist:
@@ -480,7 +480,7 @@ events_json = {"onset": description_onset,
                 "response_accuracy":description_accuracy,
                 "cue_location":description_cuelocation,
                 "target_location":description_targetlocation,
-                "button_press":description_buttonpress,
+                "participant_response":description_buttonpress,
                 "trial_index":description_trialind,
                 }  
 
@@ -686,10 +686,11 @@ if filtered_memory_flist:
 
     precision_dic = {'onset': 3, 'duration': 3}
     membids_df = membids_df.round(precision_dic)
-    membids_df = membids_df.fillna("n/a")
+    membids_sorted = membids_df.sort_values(by='onset')
+    membids_na = membids_sorted.fillna("n/a")
     Path(beh_savedir).mkdir( parents=True, exist_ok=True )
     save_fname = f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_events.tsv"
-    membids_df.to_csv(join(beh_savedir, save_fname), sep='\t', index=False)
+    membids_na.to_csv(join(beh_savedir, save_fname), sep='\t', index=False)
 
 
 description_onset = {
@@ -759,7 +760,7 @@ description_stimfile =  {
 
 description_buttonpress =  {
         "LongName": "Key press",
-        "Description": "Given text file encompasses test that is displayed on screen. Filename is designated as {digit}{belief_or_photo}_{story_or_question}.txt. Digit indicates the number of stimulus that was presented. b or p indicates whether stimulus was false belief or false photo event. Story or question indicates which event was presented on screen.",
+        "Description": "Participant response in relation to studied items and old vs. new",
         "Levels": {
             "old": "Participant presses old button to indicate they saw the item during the study phase. Old option is presented on the left side of the screen", 
             "new": "Participant presses new button to indicate they did not see the item during the study phase. New option is presented on the right side of the screen"},
@@ -780,7 +781,7 @@ events_json = {"onset": description_onset,
                 "value":description_value,
                 "response_accuracy":description_accuracy,
                 "stim_file": description_stimfile,
-                "button_press":description_buttonpress,
+                "participant_response":description_buttonpress,
                 "reaction_time":description_rt,
                 }  
 
@@ -888,6 +889,7 @@ if filtered_spunt_flist:
         events = pd.concat([events, block_unique], ignore_index=True)
         precision_dic = {'onset': 3, 'duration': 3}
         events = events.round(precision_dic)
+        events = events.sort_values(by='onset')
         events = events.astype('object') 
         events.fillna('n/a', inplace=True)
         events = events.infer_objects(copy=False)
