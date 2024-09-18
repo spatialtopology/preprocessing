@@ -31,6 +31,20 @@ standard_values = {
     "ses-04_task-alignvideo_acq-mb8_run-02": 926,
 }
 
+# def check_dcmmeta_shape(file_path, task_run_combination):
+#     # Read the JSON file
+#     with open(file_path, 'r') as f:
+#         data = json.load(f)
+    
+#     # Extract the fourth value from 'dcmmeta_shape'
+#     dcmmeta_shape = data.get("dcmmeta_shape", [])
+#     if len(dcmmeta_shape) == 4:
+#         tr_value = dcmmeta_shape[3]
+#         # Compare against the standard
+#         if task_run_combination in standard_values:
+#             if tr_value < standard_values[task_run_combination]:
+#                 return True, tr_value
+#     return False, None
 def check_dcmmeta_shape(file_path, task_run_combination):
     # Read the JSON file
     with open(file_path, 'r') as f:
@@ -42,15 +56,22 @@ def check_dcmmeta_shape(file_path, task_run_combination):
         tr_value = dcmmeta_shape[3]
         # Compare against the standard
         if task_run_combination in standard_values:
-            if tr_value < standard_values[task_run_combination]:
-                return True, tr_value
-    return False, None
+            standard_tr_value = standard_values[task_run_combination]
+            # Check if TR is either shorter or longer than the standard
+            if tr_value < standard_tr_value:
+                return "shorter", tr_value
+            elif tr_value > standard_tr_value:
+                return "longer", tr_value
+            else:
+                return "equal", tr_value
+    return "not valid", None
 
 # Directory where your JSON files are located
 json_dir = '/Users/h/Documents/projects_local/1076_spacetop'
 
 json_files = sorted(glob.glob(os.path.join(json_dir, 'sub-*/ses-*/func/*_bold.json')))
-
+shorter_files = []
+longer_files = []
 # Loop through the found files and check each one
 for file_path in json_files:
     filename = os.path.basename(file_path)
@@ -66,7 +87,22 @@ for file_path in json_files:
     # Full path to the JSON file
     file_path = os.path.join(json_dir, sub, ses, 'func', filename)
     
-    # Check the JSON file and get the result
-    is_shorter, tr_value = check_dcmmeta_shape(file_path, task_run_combination)
-    if is_shorter:
-        print(f"{filename} has a dcmmeta_shape shorter than the standard. Value: {tr_value}")
+    is_shorter_or_longer, tr_value = check_dcmmeta_shape(file_path, task_run_combination)
+    if is_shorter_or_longer == "shorter":
+        shorter_files.append(f"{filename} (TR Value: {tr_value})")
+    elif is_shorter_or_longer == "longer":
+        longer_files.append(f"{filename} (TR Value: {tr_value})")
+
+# After processing all files, print the results
+if shorter_files:
+    print("Files with shorter dcmmeta_shape:\n")
+    for file in shorter_files:
+        print(file)
+
+if longer_files:
+    print("Files with longer dcmmeta_shape:\n")
+    for file in longer_files:
+        print(file)
+
+if not shorter_files and not longer_files:
+    print("No files with shorter or longer dcmmeta_shape found.")
