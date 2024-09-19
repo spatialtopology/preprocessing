@@ -95,12 +95,12 @@ for file_path in json_files:
 
 # After processing all files, print the results
 if shorter_files:
-    print("Files with shorter dcmmeta_shape:\n")
+    print("\nFiles with shorter dcmmeta_shape:")
     for file in shorter_files:
         print(file)
 
 if longer_files:
-    print("Files with longer dcmmeta_shape:\n")
+    print("\nFiles with longer dcmmeta_shape:")
     for file in longer_files:
         print(file)
 
