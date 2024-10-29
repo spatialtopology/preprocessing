@@ -1,0 +1,154 @@
+{
+  "onset": {
+    "LongName": "Onset time of event",
+    "Description": "Marks the start of an ongoing event of temporal extent.",
+    "Units": "s"
+  },
+
+  "duration": {
+    "LongName": "The period of time during which an event occurs. Refers to Image duration or response time after stimulus depending on event_type",
+    "Description": "a. For falsebelief and falsephoto trial types, duration refers to the image presentations of falsebelief and falsephoto stories. b. For rating_falsebelief and rating_falsephoto, duration refers to the response time to answer true false questions, followed by falsebelief or flasephoto stimulu",
+    "Units": "s"
+  },
+  "subtask_type": {
+    "LongName": "Type of task. Options are task-tomsaxe, task-tomspunt, task-posner, and task-memory",
+    "Description": "Spell out the name of each task"
+  },
+  "response_accuracy": {
+    "LongName": "Correct or Incorrect response",
+    "Description": "Correct or Incorrect response in regards to question presented on screen; Options are True or False, presented on screen, underneath question. Participants are prompted to respond with MR-compatible button box",
+    "Levels": {
+      "correct": "Correct response in regards to question",
+      "incorrect": "Incorrect response in regards to question"
+    },
+    "HED": {
+      "correct": "Task-action-type/Correct-action",
+      "incorrect": "Task-action-type/Incorrect-action"
+    }
+  },
+  "event_type": {
+    "LongName": "Event category",
+    "Description": "Categorical variable of event types within run",
+    "Levels": {
+      "dummy": "Study phase items, but intended to be excluded from analysis due to primacy or recency effects. These items are presented in the first three or last three orders",
+      "study": "Study phase items: Participants are shown items (e.g., images) to memorize for subsequent testing. This phase aims to encode the items into participants' memory.",
+      "test": "Test phase items: Participants are asked to identify previously studied items ('old') and distinguish them from new, unstudied items ('new'), assessing recall and recognition abilities.",
+      "distraction_math": "Simple math problems are presented to participants, serving to temporarily divert attention from the study-test sequence. This task is designed to mitigate rehearsal and reduce potential carry-over effects between the study and test phases.",
+      "valid_cue": "A cue that accurately predicts the location of the upcoming target stimulus.",
+      "invalid_cue": "A cue that inaccurately predicts the location of the upcoming target stimulus.",
+      "target_response": "The stimulus that participants are instructed to respond to, following the presentation of a cue. Participants are prompted to respond left or right as to where the target location is.",
+      "stimulus": "A text-based story is presented on screen",
+      "response": "A question related to text-based story is presented; Participants are prompted to respond True or False to presented question",
+      "howhand": "Question related to explicit physical attributes of hand related actions, e.g. Is this person reaching?",
+      "whyhand": "Questions related to inferring the implicit mental states focusing on hand related actions, e.g. Is the person helping someone?",
+      "whyface": "Questions related to inferring the implicit mental states, focusing on face related observations, e.g. Is the person proud of themselves",
+      "howface": "Question related to explicit physical attributes of face observations",
+      "block_question_presentation": "Prior to eight blocks of trials, the question of interest is presented on screen. For example, 'Is the person admiring someone?' or 'Is the person lifting something?'"
+    },
+    "HED": {
+      "dummy": "Action/Think/Encode",
+      "study": "Action/Think/Encode",
+      "test": "Action/Think/Recall",
+      "distraction_math": "Action/Think/Count",
+      "valid_cue": "Task-stimulus-role/Cue, Data-value/Categorical-value/Categorical-class-value/valid",
+      "invalid_cue": "Task-stimulus-role/Cue, Data-value/Categorical-value/Categorical-class-value/invalid",
+      "target_response": "Task-stimulus-role/Target, Task-event-role/Participant-response",
+      "stimulus": "Sensory-event, Experimental-stimulus, Visual-presentation, Item/Language-item/Textblock",
+      "response": "Task-event-role/Participant-response, Action/Think/Judge",
+      "howhand": "Action/Think/Judge",
+      "whyhand": "Action/Think/Judge",
+      "whyface": "Action/Think/Judge",
+      "howface": "Action/Think/Judge",
+      "block_question_presentation": "Action/Perform/Read"
+    }
+  },
+  "stim_file": {
+    "LongName": "Stimulus filename which is presented on screen",
+    "Description": "task-memory: cliparts are presented as stimuli. task-posner: Not applicable \n task-saxe: text derived from txt files are presented as stimuli. \n task-spunt: images are presented as stimuli",
+    "HED": "(Textblock, Pathname/#)"
+  },
+  "participant_response": {
+    "LongName": "Key press",
+    "Description": "For task-posner, button_press indicates a participant's response in relation to target location. For task-memory, button_press indicates a participant; response in relation to studied items vs new items, i.e. old vs. new",
+    "Levels": {
+      "right": "Participant pressed right, indicating that target was presented on the right side of the screen.",
+      "left": "Participant pressed left, indicating thattarget was presented on the left side of the screen.",
+      "old": "Participant presses old button to indicate they saw the item during the study phase. Old option is presented on the left side of the screen",
+      "new": "Participant presses new button to indicate they did not see the item during the study phase. New option is presented on the right side of the screen",
+      "yes": "Participant presses yes button to indicate the image matches the question",
+      "no": "Participant presses no button to indicate the image does NOT match the question"
+    },
+    "HED": {
+      "right": "Action/Move/Move-body-part/Move-upper-extremity/Press, Relation/Spatial-relation/Right-side-of",
+      "left": "Action/Move/Move-body-part/Move-upper-extremity/Press, Relation/Spatial-relation/Left-side-of",
+      "old": "Action/Move/Move-body-part/Move-upper-extremity/Press",
+      "new": "Action/Move/Move-body-part/Move-upper-extremity/Press",
+      "yes": "Data-value/Categorical-value/Categorical-class-value/True",
+      "no": "Data-value/Categorical-value/Categorical-class-value/False"
+    }
+  },
+  "normative_response": {
+    "LongName": "Normative response",
+    "Description": "For task-tomspunt, represents group responses based on identical trial",
+    "Levels": {
+      "yes": "Group responded yes, to indicate the image matches the question",
+      "no": "Group responded no indicate the image does NOT match the question"
+    },
+    "HED": {
+      "yes": "Data-value/Categorical-value/Categorical-class-value/True",
+      "no": "Data-value/Categorical-value/Categorical-class-value/False"
+    }
+  },
+  "value": {
+    "LongName": "For task-memory, the levels of study items and test items",
+    "Description": "",
+    "Levels": {
+      "study_dummy": "Presentation of items to study - the first and the last three items are discarded due to primary/recency effects, indicated as dummy.",
+      "study": "Presentation of items to study",
+      "test_old": "Test phase items: items that were presented during study phase",
+      "test_new": "Test phase items: items that were not presented during study phase; new items presented to participant during test phase",
+      "math": "Simple math problems presented during math phase"
+    },
+    "HED": {
+      "study_dummy": "Action/Perform/Read",
+      "study": "Action/Think/Encode",
+      "test_old": "Action/Think/Recall",
+      "test_new": "Action/Think/Recall",
+      "math": "Action/Think/Count"
+    }
+  },
+  "reaction_time": {
+    "LongName": "For task-memory, refers to reaction time of responding to test items",
+    "Description": "Reaction time is measure as the time of button press minus the time of test item presentation",
+    "HED": ""
+  },
+  "cue_location": {
+    "LongName": "For task-posner, refers to location of Cue",
+    "Description": "The cue was presented as a clearly defined green box. Prior to the cue presentation, two boxes were presented on screen with a gray outline. The green colored cue selectively highlights either the right or left box on the display screen.",
+    "Levels": {
+      "right": "The cue, highlighted in green, is presented on the right side of the screen.",
+      "left": "The cue, highlighted in green, is presented on the left side of the screen."
+    },
+    "HED": {
+      "right": "Relation/Spatial-relation/Right-side-of",
+      "left": "Relation/Spatial-relation/Left-side-of"
+    }
+  },
+  "target_location": {
+    "LongName": "For task-posner, refers to location of Target",
+    "Description": "The target was presented as a clearly defined green circle, either appearing inside the right or left box, already present on screen.",
+    "Levels": {
+      "right": "The target, a green circle, is presented inside the right box of the screen.",
+      "left": "The target, a green circle, is presented inside the left box of the screen."
+    },
+    "HED": {
+      "right": "Relation/Spatial-relation/Right-side-of",
+      "left": "Relation/Spatial-relation/Left-side-of"
+    }
+  },
+  "trial_index": {
+    "LongName": "Trial Index",
+    "Description": "Index of trial, which encompasses cue and target events",
+    "HED": "Data-value/Quantitative-value/Item-index"
+  }
+}
