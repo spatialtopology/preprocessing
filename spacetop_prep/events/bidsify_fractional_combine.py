@@ -159,7 +159,7 @@ if filtered_saxe_flist:
         print(f"{sub_bids} {ses_bids} {run_bids} {task_name}")
         beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
         beh_df = pd.read_csv(saxe_fpath)
-        beh_df['trial_index'] = beh_df.index
+        beh_df['trial_index'] = beh_df.index + 1
         beh_df['response_accuracy'] = beh_df['accuracy'].replace({1: 'correct', 0: 'incorrect'})
 
         subset_beh = beh_df[['event02_filetype', 'event02_story_onset','event03_question_onset', 'event04_response_onset','event04_RT','response_accuracy', 'event02_filename']]
@@ -283,7 +283,7 @@ if filtered_posner_flist:
         subset_valid['response_accuracy'] = subset_beh.loc[subset_beh.param_valid_type == 'valid', 'response_accuracy']
         subset_valid['cue_location'] = subset_beh.loc[subset_beh.param_valid_type == 'valid', 'param_cue_location']
         subset_valid['target_location'] = "n/a" 
-        subset_valid['button_press'] = "n/a" 
+        subset_valid['participant_response'] = "n/a" 
         subset_valid['trial_index'] = subset_beh.loc[subset_beh.param_valid_type == 'valid', 'index']
 
         subset_invalid['onset'] = subset_beh.loc[subset_beh.param_valid_type == 'invalid', 'event02_cue_onset']
@@ -293,7 +293,7 @@ if filtered_posner_flist:
         subset_invalid['response_accuracy'] = subset_beh.loc[subset_beh.param_valid_type == 'invalid', 'response_accuracy']
         subset_invalid['cue_location'] = subset_beh.loc[subset_beh.param_valid_type == 'invalid', 'param_cue_location']
         subset_invalid['target_location'] = "n/a" 
-        subset_invalid['button_press'] = "n/a" 
+        subset_invalid['participant_response'] = "n/a" 
         subset_invalid['trial_index'] = subset_beh.loc[subset_beh.param_valid_type == 'invalid', 'index']
 
 
@@ -304,7 +304,7 @@ if filtered_posner_flist:
         subset_target['response_accuracy'] = subset_beh.response_accuracy
         subset_target['cue_location'] = subset_beh.param_cue_location
         subset_target['target_location'] = subset_beh.param_target_location
-        subset_target['button_press'] = subset_beh.event04_response_keyname
+        subset_target['participant_response'] = subset_beh.event04_response_keyname
         subset_target['trial_index'] = subset_beh.index + 1
 
 
@@ -409,19 +409,17 @@ if filtered_memory_flist:
         # task_name = re.search(r'run-\d+-(\w+)_beh', memory_fname).group(1)
         print(f"{sub_bids} {ses_bids} {run_bids} {task_name}")
         beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
-        membids_df = pd.DataFrame(columns=['onset', 'duration', 'subtask_type', 'event_type', 'value', 'response_accuracy', 'stim_file', 'button_press'])
+        membids_df = pd.DataFrame(columns=['onset', 'duration', 'subtask_type', 'event_type', 'value', 'response_accuracy', 'stim_file', 'participant_response'])
 
         df_memmain = pd.read_csv(memory_fpath)
         trigger = df_memmain['param_trigger_onset'].values[0]
     # -> << study >>
         memory_study_flist = sorted(glob.glob(join(beh_inputdir, sub_bids,'task-fractional', f'{sub_bids}_ses-04_task-fractional_{run_bids}_memory_study*_beh.csv' )))
-        print(beh_inputdir)
-        print(memory_study_flist)
         for memory_study_fname in memory_study_flist:
             print(os.path.basename(memory_study_fname))
             df_memstudy = pd.read_csv(memory_study_fname)
-            df_memstudy['trial_index'] = df_memstudy.index
-            temp_study = pd.DataFrame(columns=['onset', 'duration', 'event_type', 'value', 'response_accuracy', 'stim_file', 'button_press', 'reaction_time'])
+            df_memstudy['trial_index'] = df_memstudy.index + 1
+            temp_study = pd.DataFrame(columns=['onset', 'duration', 'event_type', 'value', 'response_accuracy', 'stim_file', 'participant_response', 'reaction_time'])
             temp_study['onset'] = df_memstudy['RAW_event02_image_onset'] - trigger
             temp_study['duration'] = df_memstudy['RAW_event03_isi_onset'] - df_memstudy['RAW_event02_image_onset']
             temp_study['subtask_type'] = "memory"
@@ -429,7 +427,7 @@ if filtered_memory_flist:
             temp_study['value'] = temp_study['event_type'].replace({'dummy': 'study_dummy', 'study':'study'})
             temp_study['stim_file'] = 'task-' + task_name + '/' + df_memstudy['event02_image_filename']
             temp_study['response_accuracy'] = "n/a" #np.nan TODO: reverse inference and go back 
-            temp_study['button_press'] = "n/a"
+            temp_study['participant_response'] = "n/a"
             temp_study['reaction_time'] = "n/a"
             membids_df = pd.concat([membids_df, temp_study], ignore_index=True)
 
@@ -438,7 +436,7 @@ if filtered_memory_flist:
         for memory_test_fname in memory_test_flist:
             print(os.path.basename(memory_test_fname))
             df_memtest = pd.read_csv(memory_test_fname)
-            temp_test = pd.DataFrame(columns=['onset', 'duration', 'event_type', 'value', 'response_accuracy', 'stim_file', 'button_press', 'reaction_time']) 
+            temp_test = pd.DataFrame(columns=['onset', 'duration', 'event_type', 'value', 'response_accuracy', 'stim_file', 'participant_response', 'reaction_time']) 
             temp_test['onset'] = df_memtest['RAW_event02_image_onset'] - trigger
             temp_test['duration'] = df_memtest['RAW_event03_response_onset'] - df_memtest['RAW_event02_image_onset']
             temp_test['duration'] = temp_test['duration'].fillna(2) # if duration is na, fill with 2
@@ -448,7 +446,7 @@ if filtered_memory_flist:
             temp_test['stim_file'] = 'task-' + task_name + '/' + df_memtest['event02_image_filename']
             df_memtest['event03_response_key'] = df_memtest['event03_response_key'].fillna(0)
             temp_test['response_accuracy'] = (df_memtest['param_answer'] == df_memtest['event03_response_key']).astype(int).replace({0: 'incorrect', 1:'correct'})
-            temp_test['button_press'] = df_memtest.event03_response_keyname.replace({'right': 'new', 'left':'old', 'NaN': 'n/a', 'nan': 'n/a'})
+            temp_test['participant_response'] = df_memtest.event03_response_keyname.replace({'right': 'new', 'left':'old', 'NaN': 'n/a', 'nan': 'n/a'})
             temp_test['reaction_time'] = "n/a"
             membids_df = pd.concat([membids_df, temp_test], ignore_index=True)
         # % ` param_answer ` 1 = old, 0 = new
@@ -459,7 +457,7 @@ if filtered_memory_flist:
         for memory_dist_fname in memory_dist_flist:
             print(os.path.basename(memory_dist_fname))
             df_memdist = pd.read_csv(memory_dist_fname)
-            temp_dist = pd.DataFrame(columns=['onset', 'duration', 'event_type', 'value', 'response_accuracy', 'stim_file',  'button_press', 'reaction_time']) 
+            temp_dist = pd.DataFrame(columns=['onset', 'duration', 'event_type', 'value', 'response_accuracy', 'stim_file',  'participant_response', 'reaction_time']) 
             temp_dist['onset'] = df_memdist['p2_operation'] - trigger
             temp_dist['duration'] = 25 
             temp_dist['subtask_type'] = "memory"
@@ -467,7 +465,7 @@ if filtered_memory_flist:
             temp_dist['value'] = 'math'
             temp_dist['stim_file'] = "n/a"
             temp_dist['response_accuracy'] = "n/a"
-            temp_dist['button_press'] = "n/a"
+            temp_dist['participant_response'] = "n/a"
             temp_dist['reaction_time'] = "n/a"
             membids_df = pd.concat([membids_df, temp_dist], ignore_index=True)
 
@@ -477,8 +475,6 @@ if filtered_memory_flist:
         membids_na = membids_sorted.fillna("n/a")
         Path(beh_savedir).mkdir( parents=True, exist_ok=True )
         save_fname = f"{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_events.tsv"
-        print("Save directory:", beh_savedir)
-        print("Save filename:", save_fname)
 
         membids_na.to_csv(join(beh_savedir, save_fname), sep='\t', index=False)
 
@@ -494,7 +490,7 @@ param_trigger_onset
 onset: [event02_image_onset] [RAW_e2_image_onset] - param_trigger_onset
 duration: [event02_image_dur] [RAW_e3_response_onset] - [RAW_e2_image_onset] 
 event_type:
-button_press: [RAW_e3_response_onset] - [param_trigger_onset]
+participant_response: [RAW_e3_response_onset] - [param_trigger_onset]
 pmod_accuracy: [accuracy]
 
 param_normative_response: 1, 2
