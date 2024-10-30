@@ -17,7 +17,6 @@ import pandas as pd
 # file list is identified via Yarik Halchenco. 
 # check out description in issue #110 in spatialtopology spacetop-prep
 flist = ['sub-0013/ses-04/func/sub-0013_ses-04_task-fractional_acq-mb8_run-01_bold.nii.gz',
-         'sub-0017/ses-02/func/sub-0017_ses-02_task-alignvideo_acq-mb8_run-01_bold.nii.gz',
          'sub-0017/ses-04/func/sub-0017_ses-04_task-social_acq-mb8_run-04_bold.nii.gz',
          'sub-0035/ses-01/func/sub-0035_ses-01_task-alignvideo_acq-mb8_run-02_bold.nii.gz',
          'sub-0055/ses-02/func/sub-0055_ses-02_task-narratives_acq-mb8_run-04_bold.nii.gz',
