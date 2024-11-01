@@ -568,19 +568,21 @@ if filtered_spunt_flist:
         df_spunt['reponse_subject'] = df_spunt['event03_response_key'].replace(3, 2)
         events_spunt['response_accuracy'] = (events_spunt['participant_response'] == events_spunt['normative_response']).astype(int).replace({1: 'correct', 0: 'incorrect'})
         events_spunt['trial_index'] = df_spunt['trial_index']
-        blockquestion['onset'] = df_spunt['event01_blockquestion_onset']
-        blockquestion['duration'] = df_spunt['event01_blockquestion_dur']
+
+        block_key = df_spunt.drop_duplicates(subset=['event01_blockquestion_onset'])
+        blockquestion['onset'] = block_key['event01_blockquestion_onset']
+        blockquestion['duration'] = block_key['event01_blockquestion_dur']
         blockquestion['subtask_type'] = 'tomspunt'
-        blockquestion['question'] = df_spunt['param_ques_type_string']
+        blockquestion['question'] = block_key['param_ques_type_string']
         blockquestion['event_type'] = 'block_question_presentation'
         blockquestion['participant_response'] = 'n/a'
         blockquestion['normative_response'] = 'n/a'
         blockquestion['stim_file'] = 'n/a'
         blockquestion['response_accuracy'] = 'n/a'
-        blockquestion['trial_index'] = df_spunt['trial_index']
-        block_unique = blockquestion.drop_duplicates()
+        blockquestion['trial_index'] = block_key['trial_index']
+        # block_unique = blockquestion.drop_duplicates()
 
-        events_spunt = pd.concat([events_spunt, block_unique], ignore_index=True)
+        events_spunt = pd.concat([events_spunt, block_question], ignore_index=True)
         precision_dic = {'onset': 3, 'duration': 3}
         events_spunt = events_spunt.round(precision_dic)
         # events_spunt = events_spunt.sort_values(by='onset')
