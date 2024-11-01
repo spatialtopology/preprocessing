@@ -61,7 +61,7 @@ def get_task_name(bids_string, metadata_df):
     }
     
     if run not in run_map:
-        return 'Error: run_id should be either 'run-01' or 'run-02''
+        return 'Error: run_id should be either \'run-01\' or \'run-02\''
     
     # Find the row with the matching subject ID
     subject_row = metadata_df[metadata_df['subject'] == subject_number]
