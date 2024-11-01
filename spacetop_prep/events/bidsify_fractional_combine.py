@@ -582,7 +582,7 @@ if filtered_spunt_flist:
         blockquestion['trial_index'] = block_key['trial_index']
         # block_unique = blockquestion.drop_duplicates()
 
-        events_spunt = pd.concat([events_spunt, block_question], ignore_index=True)
+        events_spunt = pd.concat([events_spunt, blockquestion], ignore_index=True)
         precision_dic = {'onset': 3, 'duration': 3}
         events_spunt = events_spunt.round(precision_dic)
         # events_spunt = events_spunt.sort_values(by='onset')
