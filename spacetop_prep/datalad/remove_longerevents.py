@@ -58,7 +58,6 @@ for fpath in flist:
 
     filtered_events_df = events_df.iloc[:first_invalid_index]
     rows_removed = len(events_df) - len(filtered_events_df)
-    import pdb; pdb.set_trace()
     print(f"The events.tsv for {basename} has last event {(events_df['onset'].iloc[-1])} and is {len(events_df)} long.\n The expected last event should be <= {max_scan_time}. We'll shave off {rows_removed} rows to match expected length")
     # save file
     filtered_events_df.to_csv(events_path, sep='\t', index=False, na_rep='n/a')
