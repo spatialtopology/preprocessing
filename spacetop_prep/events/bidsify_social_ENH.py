@@ -757,7 +757,7 @@ for pain_fpath in sorted(filtered_pain_flist):
         stim['pain_onset_ttl2'] = (stim['pain_onset_ttl1'] + beh_df['event03_stimulus_type'].apply(lambda x: stimulus_times[x]['rampup'])).round(2)
         stim['pain_onset_ttl3'] = (stim['pain_onset_ttl2'] + beh_df['event03_stimulus_type'].apply(lambda x: stimulus_times[x]['plateau'])).round(2)
         stim['pain_onset_ttl4'] = (stim['pain_onset_ttl3'] + beh_df['event03_stimulus_type'].apply(lambda x: stimulus_times[x]['rampdown'])).round(2)
-    stim['pain_stimulus_delivery_success'] = beh_df['event03_stimulus_P_trigger'].apply(lambda x: "success" if x == "Command Recieved: TRIGGER_AND_Response: RESULT_OK" else "fail")
+    stim['pain_stimulus_delivery_success'] = beh_df['event03_stimulus_P_trigger'].apply(lambda x: "success" if x == "Command Received: TRIGGER_AND_Response: RESULT_OK" else "fail")
     stim['cognitive_correct_response'] = "n/a"
     stim['cognitive_participant_response'] = "n/a"
     stim['cognitive_response_accuracy'] = "n/a"
@@ -783,7 +783,7 @@ for pain_fpath in sorted(filtered_pain_flist):
     outcome['pain_onset_ttl2'] = "n/a"
     outcome['pain_onset_ttl3'] = "n/a"
     outcome['pain_onset_ttl4'] = "n/a"
-    outcome['pain_stimulus_delivery_success'] = beh_df['event03_stimulus_P_trigger'].apply(lambda x: "success" if x == "Command Recieved: TRIGGER_AND_Response: RESULT_OK" else "fail")
+    outcome['pain_stimulus_delivery_success'] = beh_df['event03_stimulus_P_trigger'].apply(lambda x: "success" if x == "Command Received: TRIGGER_AND_Response: RESULT_OK" else "fail")
     outcome['cognitive_correct_response'] = "n/a"
     outcome['cognitive_participant_response'] = "n/a"
     outcome['cognitive_response_accuracy'] = "n/a"

@@ -7,7 +7,7 @@ but when the stimulus PC continued to collect data while scan operator was troub
 Examples: participant squeeze emergency ball towards the end of the run, reporting equipment failure. 
 Scan was aborted 41 seconds earlier than expected. Stimulu PC behavioral data was collected entirely
 
-This code will remove the extra rows from the events.tsv file , which will match the legnth of the bOLD data
+This code will remove the extra rows from the events.tsv file , which will match the length of the bOLD data
 and resolve the bids-validator errors of "SUSPICIOUSLY_LONG_EVENT_DESIGN"
 """
 
