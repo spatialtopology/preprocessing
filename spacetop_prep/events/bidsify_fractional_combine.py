@@ -552,7 +552,7 @@ if filtered_spunt_flist:
         beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
 
         df_spunt = pd.read_csv(spunt_fpath)
-        df_spunt['trial_index'] = df_spunt.index
+        df_spunt['trial_index'] = df_spunt.index + 1
 
         events_spunt = pd.DataFrame(columns=['onset', 'duration', 'subtask_type', 'question', 'event_type','participant_response', 'normative_response', 'response_accuracy', 'stim_file']) 
         blockquestion = pd.DataFrame(columns=['onset', 'duration', 'subtask_type', 'question', 'event_type','participant_response', 'normative_response', 'response_accuracy', 'stim_file']) 
