@@ -159,6 +159,7 @@ if filtered_saxe_flist:
         print(f'{sub_bids} {ses_bids} {run_bids} {task_name}')
         beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
         beh_df = pd.read_csv(saxe_fpath)
+        trigger = beh_df['param_trigger_onset']
         beh_df['trial_index'] = beh_df.index + 1
         beh_df['response_accuracy'] = beh_df['accuracy'].replace({1: 'correct', 0: 'incorrect'})
 
@@ -167,7 +168,7 @@ if filtered_saxe_flist:
         # belief, photo, rating, accuracy as covariate
         subset_belief = pd.DataFrame(); subset_photo = pd.DataFrame(); subset_beliefrating = pd.DataFrame(); subset_photorating = pd.DataFrame()
 
-        subset_belief['onset'] = subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'event02_story_onset']
+        subset_belief['onset'] = subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'RAW_e2_story_onset'] - trigger #subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'event02_story_onset']
         subset_belief['duration'] = 11
         subset_belief['subtask_type'] = 'tomsaxe'
         subset_belief['event_type'] = 'stimulus' 
@@ -175,7 +176,7 @@ if filtered_saxe_flist:
         subset_belief['response_accuracy'] = 'n/a' 
         subset_belief['stim_file'] = 'task-tomsaxe/' + subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'event02_filename']
 
-        subset_photo['onset'] = subset_beh.loc[subset_beh.event02_filetype == 'false_photo', 'event02_story_onset']
+        subset_photo['onset'] = subset_beh.loc[subset_beh.event02_filetype == 'false_photo', 'RAW_e2_story_onset'] - trigger #subset_beh.loc[subset_beh.event02_filetype == 'false_photo', 'event02_story_onset']
         subset_photo['duration'] = 11
         subset_photo['subtask_type'] = 'tomsaxe'
         subset_photo['event_type'] = 'stimulus'
@@ -183,7 +184,7 @@ if filtered_saxe_flist:
         subset_photo['response_accuracy'] = 'n/a' 
         subset_photo['stim_file'] =  'task-tomsaxe/'+ subset_beh.loc[subset_beh.event02_filetype == 'false_photo', 'event02_filename']
 
-        subset_beliefrating['onset'] = subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'event03_question_onset']
+        subset_beliefrating['onset'] = subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'RAW_e3_question_onset'] - trigger #subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'event03_question_onset']
         subset_beliefrating['duration'] = subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'event04_RT'] 
         subset_beliefrating['subtask_type'] = 'tomsaxe'
         subset_beliefrating['event_type'] = 'response' 
@@ -191,7 +192,7 @@ if filtered_saxe_flist:
         subset_beliefrating['response_accuracy'] = subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'response_accuracy']
         subset_beliefrating['stim_file'] = 'task-tomsaxe/' + subset_beh.loc[subset_beh.event02_filetype == 'false_belief', 'event02_filename'].str.replace('story', 'question')
 
-        subset_photorating['onset'] = subset_beh.loc[subset_beh.event02_filetype == 'false_photo', 'event03_question_onset']
+        subset_photorating['onset'] = subset_beh.loc[subset_beh.event02_filetype == 'false_photo', 'RAW_e3_question_onset'] - trigger #subset_beh.loc[subset_beh.event02_filetype == 'false_photo', 'event03_question_onset']
         subset_photorating['duration'] = subset_beh.loc[subset_beh.event02_filetype == 'false_photo', 'event04_RT']
         subset_photorating['subtask_type'] = 'tomsaxe'
         subset_photorating['event_type'] = 'response' 
