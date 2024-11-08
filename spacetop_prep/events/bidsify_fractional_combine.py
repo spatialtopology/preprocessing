@@ -250,7 +250,7 @@ if args.bids_string:
         print(f'No behavior data file found for {args.bids_string}. Skipping to next task.')
 else:
     # If no bids_string is provided, search for all relevant files excluding specific subjects
-    posner_flist = list(Path(beh_inputdir).rglob(f'**/*{task_name}*.csv'))
+    posner_flist = list(Path(beh_inputdir).rglob(f'**/*posner*.csv'))
     
     # Filter out files belonging to the excluded subject (e.g., 'sub-0001')
     filtered_posner_flist = [file for file in posner_flist if 'sub-0001' not in str(file)]
@@ -444,7 +444,7 @@ if filtered_memory_flist:
             temp_test['subtask_type'] = 'memory'
             temp_test['event_type'] = 'test'
             temp_test['value'] =  df_memtest['param_answer'].replace({0: 'test_new', 1:'test_old'})
-            temp_test['stim_file'] = 'task-' + task_name + '/' + df_memtest['event02_image_filename']
+            temp_test['stim_file'] = 'task-memory/' + df_memtest['event02_image_filename']
             df_memtest['event03_response_key'] = df_memtest['event03_response_key'].fillna(0)
             temp_test['response_accuracy'] = (df_memtest['param_answer'] == df_memtest['event03_response_key']).astype(int).replace({0: 'incorrect', 1:'correct'})
             temp_test['participant_response'] = df_memtest.event03_response_keyname.replace({'right': 'new', 'left':'old', 'NaN': 'n/a', 'nan': 'n/a'})
@@ -532,7 +532,7 @@ if bids_string:
         print(f'No behavior data file found for {bids_string}. Skipping to next task.')
 else:
     # If no bids_string is provided, search for all relevant files excluding specific subjects
-    spunt_flist = list(Path(beh_inputdir).rglob(f'**/*{task_name}*.csv'))
+    spunt_flist = list(Path(beh_inputdir).rglob(f'**/*tomspunt*.csv'))
     
     # Filter out files belonging to the excluded subject (e.g., 'sub-0001')
     filtered_spunt_flist = [file for file in spunt_flist if 'sub-0001' not in str(file)]
