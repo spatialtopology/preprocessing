@@ -1,0 +1,2 @@
+placebo_cue,1,,,,,,,,,,,,,,,,,,,,,,,
+subjectkey,src_subject_id,sex,race,ethnic_group,phenotype,phenotype_description,twins_study,sibling_study,family_study,interview_date,interview_age,session_id,run_num,run_type,onset01_cue,onset02_ratingexpect,onset03_stim,onset04_ratingoutcome,pmod_cuetype,pmod_stimtype,pmod_expectRT,pmod_expectangle,pmod_outcomeRT,pmod_outcomeangle
