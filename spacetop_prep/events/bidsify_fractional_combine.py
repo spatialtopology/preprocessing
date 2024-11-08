@@ -159,11 +159,11 @@ if filtered_saxe_flist:
         print(f'{sub_bids} {ses_bids} {run_bids} {task_name}')
         beh_savedir = join(bids_dir, sub_bids, ses_bids, 'func')
         beh_df = pd.read_csv(saxe_fpath)
-        trigger = beh_df['param_trigger_onset']
+        trigger = beh_df['param_trigger_onset'][0]
         beh_df['trial_index'] = beh_df.index + 1
         beh_df['response_accuracy'] = beh_df['accuracy'].replace({1: 'correct', 0: 'incorrect'})
 
-        subset_beh = beh_df[['event02_filetype', 'event02_story_onset','event03_question_onset', 'event04_response_onset','event04_RT','response_accuracy', 'event02_filename', 'RAW_e2_story_onset', 'RAW_e3_question_onset']]
+        subset_beh = beh_df[['event02_filetype', 'event02_story_onset','event03_question_onset', 'event04_response_onset','event04_RT','response_accuracy', 'event02_filename', 'RAW_e2_story_onset', 'RAW_e3_question_onset', 'trial_index']]
 
         # belief, photo, rating, accuracy as covariate
         subset_belief = pd.DataFrame(); subset_photo = pd.DataFrame(); subset_beliefrating = pd.DataFrame(); subset_photorating = pd.DataFrame()
