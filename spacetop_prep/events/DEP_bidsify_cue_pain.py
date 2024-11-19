@@ -319,7 +319,7 @@ for pain_fpath in sorted(filtered_pain_flist):
         stim['onset_ttl4'] = (stim['onset_ttl3'] + beh_df['event03_stimulus_type'].apply(lambda x: stimulus_times[x]['rampdown'])).round(2)
 
     stim['stim_file'] = beh_df['event03_stimulus_type'].map(temperature_map) 
-    stim['stimulus_delivery_success'] = beh_df['event03_stimulus_P_trigger'].apply(lambda x: "success" if x == "Command Recieved: TRIGGER_AND_Response: RESULT_OK" else "fail")
+    stim['stimulus_delivery_success'] = beh_df['event03_stimulus_P_trigger'].apply(lambda x: "success" if x == "Command Received: TRIGGER_AND_Response: RESULT_OK" else "fail")
 
 
     # outcome __________________________________________________________________
@@ -343,7 +343,7 @@ for pain_fpath in sorted(filtered_pain_flist):
     outcome['onset_ttl3'] =  "n/a"
     outcome['onset_ttl4'] =  "n/a"
     outcome['stim_file'] = 'task-pain_scale.png'
-    outcome['stimulus_delivery_success'] = beh_df['event03_stimulus_P_trigger'].apply(lambda x: "success" if x == "Command Recieved: TRIGGER_AND_Response: RESULT_OK" else "fail")
+    outcome['stimulus_delivery_success'] = beh_df['event03_stimulus_P_trigger'].apply(lambda x: "success" if x == "Command Received: TRIGGER_AND_Response: RESULT_OK" else "fail")
 
     events = pd.concat([cue, expect, stim, outcome], ignore_index=True)
     events_sorted = events.sort_values(by='onset')

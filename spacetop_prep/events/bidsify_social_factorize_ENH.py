@@ -359,7 +359,7 @@ def process_behavioral_data(cue, expect, stim, outcome, beh_df, traj_df, trigger
             stim['pain_onset_ttl2'] = (stim['pain_onset_ttl1'] + beh_df['event03_stimulus_type'].apply(lambda x: stimulus_times[x]['rampup'])).round(2)
             stim['pain_onset_ttl3'] = (stim['pain_onset_ttl2'] + beh_df['event03_stimulus_type'].apply(lambda x: stimulus_times[x]['plateau'])).round(2)
             stim['pain_onset_ttl4'] = (stim['pain_onset_ttl3'] + beh_df['event03_stimulus_type'].apply(lambda x: stimulus_times[x]['rampdown'])).round(2)
-        stim['pain_stimulus_delivery_success'] = beh_df['event03_stimulus_P_trigger'].apply(lambda x: "success" if x == "Command Recieved: TRIGGER_AND_Response: RESULT_OK" else "fail")
+        stim['pain_stimulus_delivery_success'] = beh_df['event03_stimulus_P_trigger'].apply(lambda x: "success" if x == "Command Received: TRIGGER_AND_Response: RESULT_OK" else "fail")
 
     if task_name == 'cognitive':
         stim['cognitive_correct_response'] = beh_df['event03_C_stim_match']
@@ -390,7 +390,7 @@ def process_behavioral_data(cue, expect, stim, outcome, beh_df, traj_df, trigger
     outcome['stimulusintensity'] =  beh_df['event03_stimulus_type']
     outcome['stim_file'] = f'task-social/outcomerating/task-{task_name}_scale.png'
     if task_name == "pain":
-        outcome['pain_stimulus_delivery_success'] = beh_df['event03_stimulus_P_trigger'].apply(lambda x: "success" if x == "Command Recieved: TRIGGER_AND_Response: RESULT_OK" else "fail")
+        outcome['pain_stimulus_delivery_success'] = beh_df['event03_stimulus_P_trigger'].apply(lambda x: "success" if x == "Command Received: TRIGGER_AND_Response: RESULT_OK" else "fail")
     else:
         outcome['pain_stimulus_delivery_success'] = "n/a"  
 
