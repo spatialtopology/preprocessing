@@ -184,6 +184,8 @@ def alignvideo_format_to_bids(sub, ses, run, task_name, beh_inputdir, bids_dir):
         ], ignore_index=True)
 
     # change precisions
+        # Ensure stim_file is 'n/a' for all rating events before saving
+    new_beh.loc[new_beh['trial_type'].str.startswith('rating'), 'stim_file'] = 'n/a'
     precision_dic = {'onset': 3, 'duration': 3, 'response_value': 2}
     new_beh = new_beh.round(precision_dic)
     new_beh = new_beh.replace(np.nan, 'n/a') # replace nan with "n/a" in BIDS way
