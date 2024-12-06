@@ -236,7 +236,8 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
         trial_type = "narrative_presentation"
         situation = source_beh.loc[t, 'situation']
         context = source_beh.loc[t, 'context']
-        stim_file = f'task-narratives/{source_beh.loc[t, "param_stimulus_filename"][:20] + (".mp3" if run in ["01", "02"] else ".txt")}'
+        run_number = re.search(r'run-(\d+)', run).group(1)
+        stim_file = f'task-narratives/{source_beh.loc[t, "param_stimulus_filename"][:20] + (".mp3" if run_number in ["01", "02"] else ".txt")}'
         new_row = create_event_row(onset, duration, trial_type, modality, stim_file, situation, context)
         new_beh = pd.concat([new_beh, new_row], ignore_index=True)
 
