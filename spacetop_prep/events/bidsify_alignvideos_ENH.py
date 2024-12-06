@@ -154,7 +154,8 @@ def alignvideo_format_to_bids(sub, ses, run, task_name, beh_inputdir, bids_dir):
         source_beh = pd.read_csv(fpath)
     else:
         print(f'File found, but it is not a valid file: {fpath}')
-        return        
+        return   
+    print(f'{sub}, {ses}, {run}')     
     source_beh = pd.read_csv(fpath)
     new_beh = pd.DataFrame(columns=["onset", "duration", "trial_type", 
                             "response_value", "stim_file"])    # new events to store
