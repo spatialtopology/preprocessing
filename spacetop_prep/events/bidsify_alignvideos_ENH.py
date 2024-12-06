@@ -17,7 +17,7 @@ def extract_bids(filename: str, key: str) -> str:
     bids_info = [match for match in filename.split('_') if key in match][0]
     bids_info_rmext = bids_info.split(os.extsep, 1)
     return bids_info_rmext[0]
-def add_rating_event(source_beh, t, t_run_start, rating_type, event_onset, event_rt, response_value_column):
+def add_rating_event(source_beh, t, t_run_start, rating_type, event_onset_options, event_rt, response_value_column):
     """
     Adds a rating event to the new BIDS-compliant DataFrame.
 
@@ -43,7 +43,8 @@ def add_rating_event(source_beh, t, t_run_start, rating_type, event_onset, event
     DataFrame
         A DataFrame containing the formatted event.
     """
-    onset = source_beh.loc[t, event_onset] - t_run_start
+    onset = get_column_value(source_beh, t, event_onset_options) - t_run_start
+    # onset = source_beh.loc[t, event_onset] - t_run_start
     duration = source_beh.loc[t, event_rt]
     response_value = source_beh.loc[t, response_value_column]
     if duration == 0:
@@ -54,6 +55,29 @@ def add_rating_event(source_beh, t, t_run_start, rating_type, event_onset, event
         "response_value": response_value, "stim_file": "n/a" 
         # source_beh.loc[t, 'param_video_filename']
     }, index=[0])
+
+def get_column_value(df, row_index, possible_columns):
+    """
+    Returns the value from the first matching column in the DataFrame.
+
+    Parameters:
+    -----------
+    df : DataFrame
+        The DataFrame to search.
+    row_index : int
+        The index of the row to retrieve.
+    possible_columns : list
+        A list of possible column names to check.
+
+    Returns:
+    --------
+    Value from the first matching column, or np.nan if no match is found.
+    """
+    for col in possible_columns:
+        if col in df.columns:
+            return df.loc[row_index, col]
+    return np.nan
+
 
 def alignvideo_format_to_bids(sub, ses, run, task_name, beh_inputdir, bids_dir):
     """
@@ -175,13 +199,14 @@ def alignvideo_format_to_bids(sub, ses, run, task_name, beh_inputdir, bids_dir):
         # Event 2 through Event 8. Seven Emotion Ratings
         new_beh = pd.concat([
             new_beh,
-            add_rating_event(source_beh, t, t_run_start, 'rating_relevance', 'event02_rating01_onset', 'event02_rating01_RT', 'event02_rating01_rating'),
-            add_rating_event(source_beh, t, t_run_start, 'rating_happy', 'event02_rating02_onset', 'event02_rating02_RT', 'event02_rating02_rating'),
-            add_rating_event(source_beh, t, t_run_start, 'rating_sad', 'event02_rating03_onset', 'event02_rating03_RT', 'event02_rating03_rating'),
-            add_rating_event(source_beh, t, t_run_start, 'rating_afraid', 'event02_rating04_onset', 'event02_rating04_RT', 'event02_rating04_rating'),
-            add_rating_event(source_beh, t, t_run_start, 'rating_disgusted', 'event02_rating05_onset', 'event02_rating05_RT', 'event02_rating05_rating'),
-            add_rating_event(source_beh, t, t_run_start, 'rating_warm', 'event02_rating06_onset', 'event02_rating06_RT', 'event02_rating06_rating'),
-            add_rating_event(source_beh, t, t_run_start, 'rating_engaged', 'event02_rating07_onset', 'event02_rating07_RT', 'event02_rating07_rating')
+            add_rating_event(source_beh, t, t_run_start, 'rating_relevance', ['event02_rating01_onset', 'event02_rating01_displayonset'], 'event02_rating01_RT', 'event02_rating01_rating'),
+            add_rating_event(source_beh, t, t_run_start, 'rating_happy', ['event02_rating02_onset', 'event02_rating02_displayonset'], 'event02_rating02_RT', 'event02_rating02_rating'),
+            add_rating_event(source_beh, t, t_run_start, 'rating_sad', 
+            ['event02_rating03_onset', 'event02_rating03_displayonset'], 'event02_rating03_RT', 'event02_rating03_rating'),
+            add_rating_event(source_beh, t, t_run_start, 'rating_afraid', ['event02_rating04_onset', 'event02_rating04_displayonset'], 'event02_rating04_RT', 'event02_rating04_rating'),
+            add_rating_event(source_beh, t, t_run_start, 'rating_disgusted', ['event02_rating05_onset', 'event02_rating05_displayonset'], 'event02_rating05_RT', 'event02_rating05_rating'),
+            add_rating_event(source_beh, t, t_run_start, 'rating_warm',['event02_rating06_onset', 'event02_rating06_displayonset'], 'event02_rating06_RT', 'event02_rating06_rating'),
+            add_rating_event(source_beh, t, t_run_start, 'rating_engaged', ['event02_rating07_onset', 'event02_rating07_displayonset'], 'event02_rating07_RT', 'event02_rating07_rating')
         ], ignore_index=True)
 
     # change precisions
