@@ -206,12 +206,14 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
     #     modality = 'Audio'
     # else:
     #     modality = 'Text'
-    modality = 'Audio' if run in ['01', '02'] else 'Text'
+    modality = 'Audio' if run_number in ['01', '02'] else 'Text'
+
     t_run_start = source_beh.loc[0, 'param_trigger_onset']    # start time of this run; all onsets calibrated by this
 
     trial_num = len(source_beh)
     situation = [None] * trial_num
     context = [None] * trial_num
+    run_number = re.search(r'run-(\d+)', run).group(1)
     r = int(run.split('-')[1]) - 1   # Adjust the run number to be zero-based
     for t in range(trial_num):    # each trial
 
@@ -236,7 +238,7 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
         trial_type = "narrative_presentation"
         situation = source_beh.loc[t, 'situation']
         context = source_beh.loc[t, 'context']
-        run_number = re.search(r'run-(\d+)', run).group(1)
+        
         stim_file = f'task-narratives/{source_beh.loc[t, "param_stimulus_filename"][:20] + (".mp3" if run_number in ["01", "02"] else ".txt")}'
         new_row = create_event_row(onset, duration, trial_type, modality, stim_file, situation, context)
         new_beh = pd.concat([new_beh, new_row], ignore_index=True)
