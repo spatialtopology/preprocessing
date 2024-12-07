@@ -206,6 +206,7 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
     #     modality = 'Audio'
     # else:
     #     modality = 'Text'
+    run_number = re.search(r'run-(\d+)', run).group(1)
     modality = 'Audio' if run_number in ['01', '02'] else 'Text'
 
     t_run_start = source_beh.loc[0, 'param_trigger_onset']    # start time of this run; all onsets calibrated by this
@@ -213,7 +214,7 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
     trial_num = len(source_beh)
     situation = [None] * trial_num
     context = [None] * trial_num
-    run_number = re.search(r'run-(\d+)', run).group(1)
+    
     r = int(run.split('-')[1]) - 1   # Adjust the run number to be zero-based
     for t in range(trial_num):    # each trial
 
