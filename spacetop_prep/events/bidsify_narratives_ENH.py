@@ -25,11 +25,37 @@ def extract_bids(filename: str, key: str) -> str:
     bids_info_rmext = bids_info.split(os.extsep, 1)
     return bids_info_rmext[0]
 
-def get_column_value(df, column_name, default_value=''):
+# def get_column_value(df, column_name, default_value='n/a'):
+#     """
+#     Safely get the value from a DataFrame column, returns default_value if column does not exist.
+#     """
+#     return df[column_name] if column_name in df else default_value
+
+def get_column_value(df, column_name, row_index=None, default_value='n/a'):
     """
-    Safely get the value from a DataFrame column, returns default_value if column does not exist.
+    Safely get the value from a DataFrame column. If a row_index is provided, returns the value at
+    the specific row and column. Returns default_value if column or row does not exist.
+    
+    Parameters:
+    - df: DataFrame to access.
+    - column_name: Name of the column to retrieve.
+    - row_index: Optional row index to fetch value from.
+    - default_value: Value to return if column or row does not exist.
+    
+    Returns:
+    - The value from the specified column and row, or default_value if column/row is not found.
     """
-    return df[column_name] if column_name in df else default_value
+    if column_name not in df:
+        return default_value
+    if row_index is not None:
+        # Check if the row index is valid
+        if row_index < 0 or row_index >= len(df):
+            return default_value
+        # Return the value at the specific row and column
+        return df.loc[row_index, column_name] if pd.notna(df.loc[row_index, column_name]) else default_value
+    # If no row_index is provided, return the entire column
+    return df[column_name]
+
 
 def create_event_row(onset, duration, trial_type, modality, stim_file, situation=None, context=None, response_x=None, response_y=None):
     """
@@ -261,9 +287,11 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
             duration = 'n/a'  # Or some default value if neither column exists
 
         trial_type = 'rating_feeling'
-        response_x = get_column_value(source_beh, 'feeling_end_x')
-        response_y = get_column_value(source_beh, 'feeling_end_y')
-        new_row = create_event_row(onset, duration, trial_type, modality, stim_file='n/a', situation=situation, context=context, response_x=response_x, response_y=response_y)
+        feeling_response_x = 'n/a'
+        feeling_response_y = 'n/a'
+        feeling_response_x = get_column_value(source_beh, 'feeling_end_x', row_index=t)
+        feeling_response_y = get_column_value(source_beh, 'feeling_end_y', row_index=t)
+        new_row = create_event_row(onset, duration, trial_type, modality, stim_file='n/a', situation=situation, context=context, response_x=feeling_response_x, response_y=feeling_response_y)
         new_beh = pd.concat([new_beh, new_row], ignore_index=True)
         
         # Event 3. feeling mouse trajectory ________________________________
@@ -274,7 +302,7 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
             onset = 'n/a'
             duration = 'n/a'
         trial_type = 'feeling_mouse_trajectory'
-        new_row = create_event_row(onset, duration, trial_type, modality, stim_file='n/a', situation=situation, context=context, response_x=response_x, response_y=response_y)
+        new_row = create_event_row(onset, duration, trial_type, modality, stim_file='n/a', situation=situation, context=context, response_x=feeling_response_x, response_y=feeling_response_y)
         new_beh = pd.concat([new_beh, new_row], ignore_index=True)
 
         # Event 4. expectation rating ________________________________
@@ -287,9 +315,11 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
         else:
             duration = 'n/a'  # Or some default value if neither column exists
         trial_type = 'rating_expectation'
-        response_x = get_column_value(source_beh, 'expectation_end_x')
-        response_y = get_column_value(source_beh, 'expectation_end_y')
-        new_row = create_event_row(onset, duration, trial_type, modality, stim_file='n/a', situation=situation, context=context, response_x=response_x, response_y=response_y)
+        expect_response_x = 'n/a'
+        expect_response_y = 'n/a'
+        expect_response_x = get_column_value(source_beh, 'expectation_end_x',row_index=t)
+        expect_response_y = get_column_value(source_beh, 'expectation_end_y',row_index=t)
+        new_row = create_event_row(onset, duration, trial_type, modality, stim_file='n/a', situation=situation, context=context, response_x=expect_response_x, response_y=expect_response_y)
         new_beh = pd.concat([new_beh, new_row], ignore_index=True)
 
         # Event 5. expectation mouse trajectory
@@ -300,7 +330,7 @@ def narrative_format2bids(sub, ses, run, taskname, beh_inputdir, bids_dir):
             onset = 'n/a'
             duration = 'n/a'
         trial_type = 'expectation_mouse_trajectory'
-        new_row = create_event_row(onset, duration, trial_type, modality, stim_file='n/a', situation=situation, context=context, response_x=response_x, response_y=response_y)
+        new_row = create_event_row(onset, duration, trial_type, modality, stim_file='n/a', situation=situation, context=context, response_x=expect_response_x, response_y=expect_response_y)
         new_beh = pd.concat([new_beh, new_row], ignore_index=True)
 
     # Change precisions and replace missing values
