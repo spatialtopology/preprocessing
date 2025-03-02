@@ -90,7 +90,7 @@ code_dir = args.code_dir
 source_dir = args.source_dir
 beh_inputdir = join(source_dir, 'd_beh')
 # code_dir = Path(__file__).resolve().parent
-metadata_df = pd.read_csv(join(code_dir, 'events/spacetop-prep/spacetop_prep', 'spacetop_task-fractional_run-metadata.csv'))
+metadata_df = pd.read_csv(join(code_dir, 'spacetop-prep/spacetop_prep/events', 'spacetop_task-fractional_run-metadata.csv'))
 
 # %% ---------------------------------------------------------------------------
 #  1. add task-fractional runtype metadata & 2. harmonize scans tsv and nifti files
@@ -109,7 +109,7 @@ metadata_df = pd.read_csv(join(code_dir, 'events/spacetop-prep/spacetop_prep', '
 # 'event03_question_onset', 'event04_response_onset',
 # 'event04_RT','accuracy'
 
-task_name = 'tomsaxe'
+task_name = 'tomsaxe' 
 filtered_saxe_flist = None
 if bids_string:
     # Retrieve the task name from the bids_string using the provided metadata DataFrame
