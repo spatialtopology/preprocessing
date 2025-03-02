@@ -7,4 +7,4 @@ flist = [
 for fname in flist:
     df = pd.read_csv(fname, sep='\t')
     newdf = df.sort_values(by=['onset'])
-    newdf.to_csv(fname)
+    newdf.to_csv(fname, sep='\t')
