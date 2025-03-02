@@ -588,10 +588,12 @@ if filtered_spunt_flist:
         events_spunt = pd.concat([events_spunt, blockquestion], ignore_index=True)
         precision_dic = {'onset': 3, 'duration': 3}
         events_spunt = events_spunt.round(precision_dic)
+        events_spunt['onset'] = pd.to_numeric(events_spunt['onset'], errors='coerce')
+
         # events_spunt = events_spunt.sort_values(by='onset')
         events_spunt = events_spunt.sort_values(by=['onset', 'trial_index'])
         events_spunt = events_spunt.fillna('n/a')
-
+        events_spunt = events_spunt.reset_index(drop=True)
 
         Path(beh_savedir).mkdir( parents=True, exist_ok=True )
         save_fname = f'{sub_bids}_{ses_bids}_task-fractional_acq-mb8_{run_bids}_events.tsv'
