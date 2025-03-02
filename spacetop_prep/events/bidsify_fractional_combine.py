@@ -582,6 +582,8 @@ if filtered_spunt_flist:
         blockquestion['response_accuracy'] = 'n/a'
         blockquestion['trial_index'] = block_key['trial_index']
         # block_unique = blockquestion.drop_duplicates()
+        print(df_spunt[['trial_index']].head())
+        print(blockquestion[['trial_index']].head())
 
         events_spunt = pd.concat([events_spunt, blockquestion], ignore_index=True)
         precision_dic = {'onset': 3, 'duration': 3}
