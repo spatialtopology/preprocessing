@@ -10,8 +10,9 @@ df = pd.read_csv(fname, sep='\t')
 
 # Set 'onset' and 'duration' to "n/a" when 'trial_index' is 10, 11, or 12
 df.loc[df['trial_index'].isin([10, 11, 12]), ['onset', 'duration']] = 'n/a'
-
+df_na = df.fillna('n/a')
+df_sort = df_na.sort_values(by=['onset', 'trial_index'])
 # Save the modified DataFrame to a new TSV file
-df.to_csv(fname, sep='\t', index=False)
+df_sort.to_csv(fname, sep='\t', index=False)
 
 print("Modified file saved as", fname)
