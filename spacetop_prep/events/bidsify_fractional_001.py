@@ -4,6 +4,14 @@ from pathlib import Path
 import os, re
 # load csv file
 
+def extract_bids(filename: str, key: str) -> str:
+    '''
+    Extracts BIDS information based on input 'key' prefix.
+    If filename includes an extension, code will remove it.
+    '''
+    bids_info = [match for match in filename.split('_') if key in match][0]
+    bids_info_rmext = bids_info.split(os.extsep, 1)
+    return bids_info_rmext[0]
 
 def get_task_name(bids_string, metadata_df):
     '''
